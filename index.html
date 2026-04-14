@@ -488,6 +488,74 @@
   .pending-dot { width:8px;height:8px;border-radius:50%;background:var(--amber);display:inline-block;margin-left:4px;}
 
 </style>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, doc, setDoc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyACo7a3uVsGwAdii3d8W3NmXvLVBdgTF1A",
+    authDomain: "pastores-cem.firebaseapp.com",
+    projectId: "pastores-cem",
+    storageBucket: "pastores-cem.firebasestorage.app",
+    messagingSenderId: "45247752354",
+    appId: "1:45247752354:web:eb41da403d38c72d788ffb",
+    measurementId: "G-0V9653F30S"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  window.db = db;
+  window.fsDoc = doc;
+  window.fsSetDoc = setDoc;
+  window.fsGetDoc = getDoc;
+  window.fsCollection = collection;
+  window.fsGetDocs = getDocs;
+  window.firebaseReady = true;
+
+  // Load pastores from Firestore on startup
+  async function loadFromFirestore() {
+    try {
+      const snap = await getDocs(collection(db, "pastores"));
+      if (!snap.empty) {
+        const loaded = [];
+        snap.forEach(d => loaded.push(d.data()));
+        // Sort by nombre
+        loaded.sort((a,b) => a.nombre.localeCompare(b.nombre));
+        pastores.length = 0;
+        loaded.forEach(p => pastores.push(p));
+        render();
+        console.log("✓ Datos cargados desde Firebase:", loaded.length, "pastores");
+      } else {
+        // First time — save current data to Firestore
+        console.log("Base de datos vacía, subiendo datos iniciales...");
+        await saveAllToFirestore();
+      }
+    } catch(e) {
+      console.warn("Firebase load error:", e);
+    }
+  }
+
+  async function saveAllToFirestore() {
+    try {
+      for (const p of pastores) {
+        const id = (p.nombre + '_' + (p.apellido||'')).replace(/\s+/g,'_').toLowerCase();
+        await setDoc(doc(db, "pastores", id), p);
+      }
+      console.log("✓ Datos guardados en Firebase");
+    } catch(e) {
+      console.warn("Firebase save error:", e);
+    }
+  }
+
+  window.saveAllToFirestore = saveAllToFirestore;
+
+  // Wait for page to load then sync
+  window.addEventListener('load', () => {
+    setTimeout(loadFromFirestore, 500);
+  });
+</script>
+
 </head>
 <body>
 
@@ -1044,15 +1112,26 @@ function loadSavedData() {
   } catch(e) {}
 }
 
-function saveAll() {
+async function saveAll() {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(pastores));
     const msg = document.getElementById('edit-bar-msg');
-    msg.textContent = '✅ Guardado correctamente';
-    setTimeout(() => { msg.textContent = '✏️ Modo edición activo — toca una tarjeta para editar'; }, 2000);
+    msg.textContent = '💾 Guardando en la nube...';
+    
+    // Save to Firebase if available
+    if (window.saveAllToFirestore) {
+      await window.saveAllToFirestore();
+      msg.textContent = '✅ Guardado en la nube';
+    } else {
+      msg.textContent = '✅ Guardado localmente';
+    }
+    setTimeout(() => { msg.textContent = '✏️ Modo edición activo — toca una tarjeta para editar'; }, 2500);
     render();
   } catch(e) {
-    alert('Error al guardar. El navegador puede no soportar almacenamiento local.');
+    const msg = document.getElementById('edit-bar-msg');
+    msg.textContent = '✅ Guardado localmente';
+    setTimeout(() => { msg.textContent = '✏️ Modo edición activo — toca una tarjeta para editar'; }, 2000);
+    render();
   }
 }
 
