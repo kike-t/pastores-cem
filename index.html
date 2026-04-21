@@ -532,18 +532,32 @@ const pastores = [
     iglesia_reporte:{
       nombre:"Horizonte Querétaro",
       stats:[
-        {label:"Asistencia adultos (prom.)",valor:"145+"},
-        {label:"Ruta: Bienvenida",valor:"42"},
-        {label:"Ruta: Conociéndonos",valor:"90"},
-        {label:"Ruta: Llegando",valor:"120"},
-        {label:"Bautizos marzo 2026",valor:"36"},
-        {label:"Alcance redes (nuevo)",valor:"60%"}
+        {label:"Asistencia semanal total",valor:"~1,400"},
+        {label:"Sábado",valor:"249"},
+        {label:"Domingo 10:30am",valor:"635"},
+        {label:"Domingo 1:00pm",valor:"484"},
+        {label:"Flechas (niños)",valor:"4,200+"},
+        {label:"Jóvenes (asistencias Q1)",valor:"774"},
+        {label:"Consejería: solicitudes",valor:"95"},
+        {label:"Alcance consejería",valor:"9 estados / 5 países"},
+        {label:"La Ruta: Bienvenida",valor:"277"},
+        {label:"La Ruta: Conociéndonos",valor:"150"},
+        {label:"Conversión bienvenida→conoc.",valor:"60%"},
+        {label:"Líderes graduados Restaurados",valor:"68"},
+        {label:"Matrimonios De Una Misma Carne",valor:"25"},
+        {label:"Familias graduadas Esc. Padres",valor:"24"},
+        {label:"Nuevos servidores integrados",valor:"14"}
       ],
-      logros:"42 grupos de vida. Mes de Nuevas Generaciones: 120 familias impactadas. Duplicación de alcance en redes sin publicidad pagada. Centro de consejería activo con 50 matrimonios en programa de paternidad. Luminares para padres con hijos con necesidades especiales.",
-      plan2026:"Certificación en adicciones para Omar Estrada. Programa 'Preparando el Nido' para embarazadas. Expansión Luminares. Contratación Lechuga tiempo completo."
+      logros:"Asistencia semanal ~1,400 personas en 3 servicios. La Ruta: 277 en bienvenida, 60% conversión, 68 líderes graduados de Restaurados. Consejería con alcance a 9 estados y 5 países. Flechas superó 4,200 niños con pico de 430 en un fin de semana. Jóvenes 774 asistencias, pico 150. 25 matrimonios en programa 'De Una Misma Carne'. Retiro Habitar próximo con ~200 personas.",
+      plan2026:"Oración por tercer servicio dominical o segundo servicio sábado (revisar en siguiente cuatrimestre). Propuesta de mejoras Luminares. Capacitación de consejeros. Jorge avanzando a etapa 3 de certificación. Construcción y ductos casi listos."
     },
-    notas:"Esposa Abby participa en reuniones con madres y ofrece consejería. Layla (mayor) ya pregunta por él, aprendiendo ir al baño sola. Jonathan muy cariñoso. Rutina: despertar y pasar tiempo con niños antes de comenzar el día. Situación casa: sobrina usa cuarto para negocio de uñas; planes para adaptar para su madre en vejez. Salmo 116 como texto ancla — Dios que escucha, libra, es clemente. Enfoque 2026: invocar a Dios (intimidad) y servirle como siervo.",
-    reunion:"12 diciembre 2025, 5:46pm. Profundizando en Salmo 116 (v.1-11). Equilibrio familia-ministerio bien manejado — compensa tiempo de trabajo con cuidado de niños. Celebrarán aniversario próximamente. Compra reciente: comedor nuevo y árbol de Navidad. Hermana tuvo problemas de ansiedad — apoyándola.",
+    reporte_personal:{
+      fecha:"Abril 2026",
+      metricas:{familia:8, intimidad:9, entusiasmo:9, liderazgo:8, economia:9, salud:8},
+      oracion:"Retiro ABIDE este fin de semana. Unidad de equipos. Matrimonios que van a Abide este bimestre. Salud de Jorge y Onne. Anhelo de adoptar. Recuperar 3 servicios dominicales. Diácono para Rodas. Embarazo de Carol y día del bebé. Construcción y ductos casi listos."
+    },
+    notas:"Esposa Abby participa en reuniones con madres y ofrece consejería. Layla (mayor) ya pregunta por él, aprendiendo ir al baño sola. Jonathan muy cariñoso. Rutina: despertar y pasar tiempo con niños antes de comenzar el día. Situación casa: sobrina usa cuarto para negocio de uñas; planes para adaptar para su madre en vejez. Salmo 116 como texto ancla — Dios que escucha, libra, es clemente. Enfoque 2026: invocar a Dios (intimidad) y servirle como siervo. Reflexión Hechos 11: ¿qué puede estorbar a Dios en la iglesia? Trabaja en santidad personal.",
+    reunion:"21 abril 2026 — Sinc Q1. Reporte personal: Familia 8, Intimidad 9, Entusiasmo 9, Liderazgo 8, Economía 9, Salud 8. Acuerdos: código GRACIAS30 (30% desc. consejeros), votación mejor staff Q1 (Jessica), capacitación consejeros, video Luminares niños especiales, camioneta blanca lunes, propuesta mejoras Luminares. Anterior: 12 diciembre 2025 — Salmo 116, equilibrio familia-ministerio, aniversario, comedor nuevo.",
     pendientes:[
       "SALUD URGENTE: Cirugía de vesícula programada — necesita planificación pronto.",
       "Seguimiento médico de garganta con foniatra en un mes.",
@@ -859,7 +873,10 @@ function openPanel(idx){
   if(p.notas)h+=`<div class="ps"><div class="ps-title">Notas</div><div class="ps-text">${p.notas}</div></div>`;
 
   // Iglesia stats
-  if(p.iglesia_reporte){const ir=p.iglesia_reporte;h+=`<div class="ps"><div class="ps-title">Iglesia 2025</div>`;if(ir.stats){h+=`<div class="stats-grid">`;ir.stats.forEach(s=>h+=`<div class="stat-box"><div class="stat-num">${s.valor}</div><div class="stat-lbl">${s.label}</div></div>`);h+=`</div>`;}if(ir.logros)h+=`<div class="ps-text">${ir.logros}</div>`;if(ir.plan2026){h+=`<div class="ps-title" style="margin-top:-10px;">Plan 2026</div><div class="ps-text">${ir.plan2026}</div>`;}h+=`</div>`;}
+  if(p.iglesia_reporte){const ir=p.iglesia_reporte;h+=`<div class="ps"><div class="ps-title">Iglesia — Q1 2026</div>`;if(ir.stats){h+=`<div class="stats-grid">`;ir.stats.forEach(s=>h+=`<div class="stat-box"><div class="stat-num">${s.valor}</div><div class="stat-lbl">${s.label}</div></div>`);h+=`</div>`;}if(ir.logros)h+=`<div class="ps-text">${ir.logros}</div>`;if(ir.plan2026){h+=`<div class="ps-title" style="margin-top:-10px;">Plan 2026</div><div class="ps-text">${ir.plan2026}</div>`;}h+=`</div>`;}
+
+  // Reporte personal
+  if(p.reporte_personal){const rp=p.reporte_personal;h+=`<div class="ps"><div class="ps-title">Reporte personal — ${rp.fecha||''}</div>`;if(rp.metricas){const m=rp.metricas;h+=`<div class="stats-grid">`;const keys=[['familia','Familia'],['intimidad','Intimidad'],['entusiasmo','Entusiasmo'],['liderazgo','Liderazgo'],['economia','Economía'],['salud','Salud']];keys.forEach(([k,lbl])=>{if(m[k]!==undefined)h+=`<div class="stat-box"><div class="stat-num" style="color:${m[k]>=9?'var(--green)':m[k]>=7?'var(--gold)':'var(--red)'}">${m[k]}/10</div><div class="stat-lbl">${lbl}</div></div>`;});h+=`</div>`;}if(rp.oracion)h+=`<div class="ps-title" style="margin-top:-10px;">Puntos de oración</div><div class="ps-text">${rp.oracion}</div>`;h+=`</div>`;}
 
   // Pendientes
   if(p.pendientes&&p.pendientes.length){h+=`<div class="ps"><div class="ps-title">Pendientes para Kike</div><div class="pend-list">`;p.pendientes.forEach((x,i)=>h+=`<div class="pend-item"><span class="pend-n">${i+1}</span><span class="pend-t">${x}</span></div>`);h+=`</div></div>`;}
