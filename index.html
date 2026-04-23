@@ -20,25 +20,27 @@
 
 <style>
 :root {
-  --bg: #FAFAFA;
+  --bg: #F7F7F8;
   --white: #FFFFFF;
   --ink: #0F0F0F;
   --ink2: #5C5C5C;
   --ink3: #ADADAD;
-  --line: #EBEBEB;
+  --line: #E8E8EA;
   --accent: #1A1A2E;
   --accent2: #16213E;
-  --gold: #E8A020;
-  --gold-light: #FFF4DE;
-  --green: #0F9D6A;
-  --green-light: #E6F7F1;
-  --red: #E03E3E;
+  --gold: #D4900A;
+  --gold-light: #FFF6E0;
+  --green: #0A8F5C;
+  --green-light: #E3F5EE;
+  --red: #D63939;
   --red-light: #FEF0F0;
-  --blue: #1A6BFF;
-  --blue-light: #EEF3FF;
-  --r: 20px;
+  --blue: #1560D4;
+  --blue-light: #EBF2FF;
+  --purple: #7C3AED;
+  --purple-light: #F3EEFF;
+  --r: 18px;
   --r-sm: 12px;
-  --shadow: 0 2px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+  --shadow: 0 1px 4px rgba(0,0,0,0.05), 0 2px 12px rgba(0,0,0,0.04);
   --shadow-lg: 0 8px 40px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
 }
 
@@ -47,110 +49,40 @@ html{scroll-behavior:smooth;}
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;overflow-x:hidden;}
 
 /* ── TOP BAR ── */
-.topbar {
-  background: var(--white);
-  border-bottom: 1px solid var(--line);
-  padding: calc(env(safe-area-inset-top,0px) + 16px) 20px 0;
-  position: sticky; top:0; z-index:100;
-}
-.topbar-row {
-  display:flex; align-items:center; gap:12px;
-  padding-bottom:14px;
-}
-.app-icon {
-  width:40px;height:40px;border-radius:12px;
-  background:var(--accent);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-}
-.app-icon span { font-size:18px; }
-.topbar-titles { flex:1; }
-.topbar-title {
-  font-size:20px;font-weight:800;color:var(--ink);
-  letter-spacing:-0.4px;line-height:1.1;
-}
-.topbar-sub { font-size:12px;color:var(--ink3);font-weight:500;margin-top:1px; }
-.topbar-count {
-  font-size:13px;font-weight:600;
-  background:var(--accent);color:white;
-  padding:4px 10px;border-radius:99px;
-  flex-shrink:0;
-}
-
-/* Search */
-.search-row {
-  display:flex;gap:10px;padding-bottom:12px;
-}
-.search-box {
-  flex:1;display:flex;align-items:center;gap:8px;
-  background:var(--bg);border:1.5px solid var(--line);
-  border-radius:var(--r-sm);padding:9px 14px;
-  transition:border-color 0.2s;
-}
+.topbar{background:var(--white);border-bottom:1.5px solid var(--line);padding:calc(env(safe-area-inset-top,0px)+14px) 20px 0;position:sticky;top:0;z-index:100;}
+.topbar-row{display:flex;align-items:center;gap:12px;padding-bottom:12px;}
+.app-icon{width:38px;height:38px;border-radius:11px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.app-icon span{font-size:17px;}
+.topbar-titles{flex:1;}
+.topbar-title{font-size:19px;font-weight:800;color:var(--ink);letter-spacing:-0.4px;line-height:1.1;}
+.topbar-sub{font-size:11.5px;color:var(--ink3);font-weight:500;margin-top:1px;}
+.topbar-count{font-size:13px;font-weight:700;background:var(--accent);color:white;padding:4px 11px;border-radius:99px;flex-shrink:0;}
+.search-row{display:flex;gap:10px;padding-bottom:10px;}
+.search-box{flex:1;display:flex;align-items:center;gap:8px;background:var(--bg);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:9px 13px;transition:border-color 0.2s;}
 .search-box:focus-within{border-color:var(--accent);}
-.search-box svg{width:16px;height:16px;color:var(--ink3);flex-shrink:0;}
+.search-box svg{width:15px;height:15px;color:var(--ink3);flex-shrink:0;}
 .search-inp{border:none;background:none;outline:none;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);flex:1;font-weight:500;}
 .search-inp::placeholder{color:var(--ink3);}
-
-/* Zone tabs */
-.tabs {
-  display:flex;gap:0;overflow-x:auto;scrollbar-width:none;
-  border-top:1px solid var(--line);
-  margin:0 -20px;padding:0 20px;
-}
+.tabs{display:flex;overflow-x:auto;scrollbar-width:none;border-top:1px solid var(--line);margin:0 -20px;padding:0 20px;}
 .tabs::-webkit-scrollbar{display:none;}
-.tab {
-  padding:10px 16px;font-size:13px;font-weight:600;
-  font-family:'Plus Jakarta Sans',sans-serif;
-  border:none;background:none;color:var(--ink3);
-  cursor:pointer;white-space:nowrap;
-  border-bottom:2.5px solid transparent;
-  transition:all 0.15s;margin-bottom:-1px;
-}
+.tab{padding:9px 15px;font-size:12.5px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;border:none;background:none;color:var(--ink3);cursor:pointer;white-space:nowrap;border-bottom:2.5px solid transparent;transition:all 0.15s;margin-bottom:-1px;}
 .tab.active{color:var(--accent);border-bottom-color:var(--accent);}
 
 /* ── CONTENT ── */
-.content { padding:20px 16px 140px; }
-
-.zone-section { margin-bottom:28px; }
-.zone-label {
-  font-size:11px;font-weight:700;color:var(--ink3);
-  text-transform:uppercase;letter-spacing:0.12em;
-  padding:0 4px;margin-bottom:10px;
-}
+.content{padding:18px 14px 140px;}
+.zone-section{margin-bottom:24px;}
+.zone-label{font-size:10.5px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:0.14em;padding:0 4px;margin-bottom:9px;}
 
 /* ── CARD ── */
-.card {
-  background:var(--white);
-  border:1.5px solid var(--line);
-  border-radius:var(--r);
-  padding:14px 16px;
-  display:flex;align-items:center;gap:14px;
-  cursor:pointer;
-  transition:all 0.18s cubic-bezier(0.34,1.56,0.64,1);
-  box-shadow:var(--shadow);
-  margin-bottom:8px;
-  position:relative;
-  overflow:hidden;
-}
-.card::before {
-  content:'';position:absolute;left:0;top:0;bottom:0;
-  width:3px;background:transparent;
-  transition:background 0.2s;
-}
-.card:hover{transform:translateY(-2px) scale(1.005);box-shadow:var(--shadow-lg);border-color:var(--accent);}
+.card{background:var(--white);border:1.5px solid var(--line);border-radius:var(--r);padding:13px 14px;display:flex;align-items:center;gap:13px;cursor:pointer;transition:all 0.18s cubic-bezier(0.34,1.4,0.64,1);box-shadow:var(--shadow);margin-bottom:7px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:transparent;transition:background 0.2s;border-radius:3px 0 0 3px;}
+.card:hover{transform:translateY(-2px) scale(1.004);box-shadow:var(--shadow-lg);border-color:rgba(26,26,46,0.2);}
 .card:hover::before{background:var(--accent);}
-.card:active{transform:scale(0.99);opacity:0.8;}
+.card:active{transform:scale(0.99);opacity:0.85;}
 
 /* Avatar */
-.av {
-  width:48px;height:48px;border-radius:16px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:17px;font-weight:800;flex-shrink:0;
-  overflow:hidden;
-  transition:transform 0.2s;
-}
-.card:hover .av{transform:scale(1.05);}
+.av{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;flex-shrink:0;overflow:hidden;transition:transform 0.2s;}
+.card:hover .av{transform:scale(1.06);}
 .av img{width:100%;height:100%;object-fit:cover;}
 .av-0{background:linear-gradient(135deg,#667EEA,#764BA2);}
 .av-1{background:linear-gradient(135deg,#F093FB,#F5576C);}
@@ -164,174 +96,129 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .av-9{background:linear-gradient(135deg,#FFF1EB,#ACE0F9);}
 
 .card-body{flex:1;min-width:0;}
-.card-name{font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-0.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.card-church{font-size:13px;color:var(--ink2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500;}
+.card-name{font-size:14.5px;font-weight:700;color:var(--ink);letter-spacing:-0.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.card-church{font-size:12.5px;color:var(--ink2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500;}
 .card-badges{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap;}
-.chip{font-size:11px;font-weight:700;padding:3px 8px;border-radius:99px;line-height:1.2;}
+.chip{font-size:10.5px;font-weight:700;padding:2.5px 8px;border-radius:99px;line-height:1.3;}
 .chip-orange{background:var(--gold-light);color:var(--gold);}
 .chip-red{background:var(--red-light);color:var(--red);}
 .chip-green{background:var(--green-light);color:var(--green);}
 .chip-blue{background:var(--blue-light);color:var(--blue);}
-.chip-gray{background:#F0F0F0;color:var(--ink2);}
-
-.card-arrow{
-  width:30px;height:30px;border-radius:10px;
-  background:var(--bg);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-  transition:all 0.2s;
-}
+.chip-gray{background:#EFEFEF;color:var(--ink2);}
+.chip-purple{background:var(--purple-light);color:var(--purple);}
+.card-arrow{width:28px;height:28px;border-radius:9px;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s;}
 .card:hover .card-arrow{background:var(--accent);color:white;}
-.card-arrow svg{width:14px;height:14px;color:var(--ink3);transition:color 0.2s;}
+.card-arrow svg{width:13px;height:13px;color:var(--ink3);transition:color 0.2s;}
 .card:hover .card-arrow svg{color:white;}
 
-/* ── PANEL (sheet) ── */
-.panel-bg{
-  display:none;position:fixed;inset:0;
-  background:rgba(15,15,15,0.4);
-  z-index:200;backdrop-filter:blur(6px);
-  -webkit-backdrop-filter:blur(6px);
-  align-items:flex-end;justify-content:center;
-}
+/* ── PANEL ── */
+.panel-bg{display:none;position:fixed;inset:0;background:rgba(10,10,20,0.45);z-index:200;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:flex-end;justify-content:center;}
 .panel-bg.open{display:flex;}
 @media(min-width:640px){.panel-bg.open{align-items:center;padding:20px;}.panel{border-radius:var(--r)!important;max-height:88vh!important;}}
-.panel{
-  background:var(--white);
-  width:100%;max-width:600px;max-height:93vh;
-  border-radius:var(--r) var(--r) 0 0;
-  overflow-y:auto;scrollbar-width:none;
-  animation:panelUp 0.35s cubic-bezier(0.34,1.1,0.64,1);
-  box-shadow:0 -8px 60px rgba(0,0,0,0.15);
-  padding-bottom:env(safe-area-inset-bottom,20px);
-}
+.panel{background:var(--white);width:100%;max-width:600px;max-height:93vh;border-radius:var(--r) var(--r) 0 0;overflow-y:auto;scrollbar-width:none;animation:panelUp 0.35s cubic-bezier(0.34,1.1,0.64,1);box-shadow:0 -8px 60px rgba(0,0,0,0.18);padding-bottom:env(safe-area-inset-bottom,20px);}
 .panel::-webkit-scrollbar{display:none;}
-@keyframes panelUp{from{transform:translateY(50px);opacity:0;}to{transform:translateY(0);opacity:1;}}
-
-.panel-drag{width:40px;height:4px;background:var(--line);border-radius:99px;margin:14px auto 0;}
+@keyframes panelUp{from{transform:translateY(60px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.panel-drag{width:36px;height:4px;background:var(--line);border-radius:99px;margin:13px auto 0;}
 
 /* Panel hero */
-.panel-hero{
-  padding:20px 20px 24px;
-  display:flex;gap:16px;align-items:flex-start;
-  border-bottom:1px solid var(--line);
-}
-.panel-av{
-  width:68px;height:68px;border-radius:20px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:24px;font-weight:800;
-  overflow:hidden;flex-shrink:0;
-  box-shadow:0 6px 20px rgba(0,0,0,0.15);
-}
+.panel-hero{padding:18px 20px 20px;display:flex;gap:15px;align-items:flex-start;border-bottom:1px solid var(--line);}
+.panel-av{width:66px;height:66px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:23px;font-weight:800;overflow:hidden;flex-shrink:0;box-shadow:0 6px 20px rgba(0,0,0,0.14);}
 .panel-av img{width:100%;height:100%;object-fit:cover;}
 .panel-info{flex:1;}
-.panel-name{font-size:26px;font-weight:800;color:var(--ink);letter-spacing:-0.5px;line-height:1.1;}
-.panel-church{font-size:14px;color:var(--ink2);margin-top:4px;font-weight:500;}
-.panel-zone{display:inline-flex;align-items:center;gap:4px;margin-top:6px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--blue-light);color:var(--blue);}
-.panel-close{
-  width:32px;height:32px;border-radius:99px;
-  background:var(--bg);border:1.5px solid var(--line);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;flex-shrink:0;
-  font-size:14px;color:var(--ink2);
-  transition:all 0.15s;
-}
+.panel-name{font-size:24px;font-weight:800;color:var(--ink);letter-spacing:-0.5px;line-height:1.1;}
+.panel-church{font-size:13.5px;color:var(--ink2);margin-top:4px;font-weight:500;}
+.panel-meta{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;}
+.panel-close{width:30px;height:30px;border-radius:99px;background:var(--bg);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:13px;color:var(--ink2);transition:all 0.15s;}
 .panel-close:hover{background:var(--ink);color:white;border-color:var(--ink);}
 
 /* Action row */
-.action-row{
-  display:flex;gap:8px;padding:16px 20px;
-  border-bottom:1px solid var(--line);
-  overflow-x:auto;scrollbar-width:none;
-}
+.action-row{display:flex;gap:8px;padding:14px 20px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none;}
 .action-row::-webkit-scrollbar{display:none;}
-.action-btn{
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  flex-shrink:0;cursor:pointer;
-}
-.action-ico{
-  width:52px;height:52px;border-radius:16px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:20px;
-  transition:transform 0.15s;
-}
+.action-btn{display:flex;flex-direction:column;align-items:center;gap:5px;flex-shrink:0;cursor:pointer;}
+.action-ico{width:50px;height:50px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:20px;transition:transform 0.15s;}
 .action-btn:active .action-ico{transform:scale(0.9);}
-.action-lbl{font-size:11px;font-weight:600;color:var(--ink2);}
+.action-lbl{font-size:10.5px;font-weight:600;color:var(--ink2);}
 .aico-call{background:var(--green-light);}
 .aico-mail{background:var(--blue-light);}
-.aico-web{background:#FFF4DE;}
+.aico-web{background:var(--gold-light);}
 .aico-map{background:var(--red-light);}
 .aico-fb{background:#EEF3FF;}
 .aico-ig{background:#FDF0FF;}
 
 /* Panel sections */
-.ps{padding:20px 20px 0;}
-.ps-title{font-size:11px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;}
-.ps-card{background:var(--bg);border-radius:var(--r-sm);overflow:hidden;border:1px solid var(--line);margin-bottom:20px;}
-.ps-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--line);}
+.ps{padding:18px 20px 0;}
+.ps-title{font-size:10.5px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:9px;}
+.ps-card{background:var(--bg);border-radius:var(--r-sm);overflow:hidden;border:1px solid var(--line);margin-bottom:18px;}
+.ps-row{display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid var(--line);}
 .ps-row:last-child{border-bottom:none;}
-.ps-ico{font-size:18px;width:24px;text-align:center;flex-shrink:0;}
+.ps-ico{font-size:17px;width:22px;text-align:center;flex-shrink:0;}
 .ps-info{flex:1;min-width:0;}
 .ps-key{font-size:13px;font-weight:600;color:var(--ink);}
 .ps-val{font-size:12px;color:var(--ink2);margin-top:1px;line-height:1.4;}
 .ps-val a{color:var(--blue);text-decoration:none;font-weight:600;}
-.ps-right{font-size:13px;color:var(--ink2);font-weight:500;}
-.ps-arrow{color:var(--ink3);font-size:11px;font-weight:700;margin-left:4px;}
-
-.ps-text{
-  background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);
-  padding:14px;font-size:14px;line-height:1.7;color:var(--ink2);
-  margin-bottom:20px;font-weight:500;
-}
+.ps-right{font-size:13px;color:var(--ink2);font-weight:500;text-align:right;max-width:160px;}
+.ps-text{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);padding:13px;font-size:13.5px;line-height:1.7;color:var(--ink2);margin-bottom:18px;font-weight:500;}
 
 /* Hijos */
-.hijo-card{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;margin-bottom:20px;}
-.hijo-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);}
+.hijo-card{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;margin-bottom:18px;}
+.hijo-row{display:flex;align-items:center;gap:10px;padding:10px 13px;border-bottom:1px solid var(--line);}
 .hijo-row:last-child{border-bottom:none;}
-.hijo-av{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#667EEA,#764BA2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:white;flex-shrink:0;}
-.hijo-name{font-size:14px;font-weight:700;color:var(--ink);flex:1;}
-.hijo-age{font-size:12px;font-weight:600;padding:2px 8px;background:var(--blue-light);color:var(--blue);border-radius:99px;}
-.hijo-detail{font-size:12px;color:var(--ink2);margin-top:2px;}
+.hijo-av{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#667EEA,#764BA2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white;flex-shrink:0;}
+.hijo-name{font-size:13.5px;font-weight:700;color:var(--ink);flex:1;}
+.hijo-age{font-size:11.5px;font-weight:700;padding:2px 8px;background:var(--blue-light);color:var(--blue);border-radius:99px;}
+.hijo-detail{font-size:11.5px;color:var(--ink3);margin-top:2px;}
 
 /* Pendientes */
-.pend-list{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;margin-bottom:20px;}
-.pend-item{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-bottom:1px solid var(--line);}
+.pend-list{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;margin-bottom:18px;}
+.pend-item{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border-bottom:1px solid var(--line);}
 .pend-item:last-child{border-bottom:none;}
-.pend-n{min-width:24px;height:24px;background:var(--gold-light);border-radius:8px;font-size:11px;font-weight:800;color:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
-.pend-t{font-size:14px;color:var(--ink);line-height:1.55;font-weight:500;}
+.pend-n{min-width:22px;height:22px;background:var(--gold-light);border-radius:7px;font-size:11px;font-weight:800;color:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.pend-t{font-size:13.5px;color:var(--ink);line-height:1.55;font-weight:500;}
 
-/* Stats grid */
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;}
-.stat-box{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);padding:14px;}
-.stat-num{font-size:24px;font-weight:800;color:var(--ink);letter-spacing:-0.5px;}
-.stat-lbl{font-size:12px;color:var(--ink2);margin-top:3px;line-height:1.3;font-weight:500;}
+/* Stats grid - mejorado */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:18px;}
+.stat-box{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);padding:13px;}
+.stat-num{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-0.5px;}
+.stat-lbl{font-size:11.5px;color:var(--ink2);margin-top:3px;line-height:1.3;font-weight:500;}
+
+/* Métricas personales - visual mejorado */
+.metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:18px;}
+.metric-box{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);padding:12px;text-align:center;position:relative;overflow:hidden;}
+.metric-bar{position:absolute;bottom:0;left:0;right:0;height:3px;border-radius:0;}
+.metric-num{font-size:26px;font-weight:800;letter-spacing:-1px;line-height:1;}
+.metric-lbl{font-size:10.5px;color:var(--ink3);margin-top:4px;font-weight:600;}
+.metric-avg{background:var(--accent);color:white;border-color:var(--accent);}
+.metric-avg .metric-num{color:white;font-size:28px;}
+.metric-avg .metric-lbl{color:rgba(255,255,255,0.7);}
+
+/* Oración tags */
+.oracion-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px;}
+.oracion-tag{font-size:13px;font-weight:600;padding:7px 13px;border-radius:99px;background:var(--bg);border:1.5px solid var(--line);color:var(--ink2);line-height:1.3;}
 
 /* Event rows */
-.event-list{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;margin-bottom:20px;}
-.event-row{display:flex;gap:10px;align-items:flex-start;padding:10px 14px;border-bottom:1px solid var(--line);}
+.event-list{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;margin-bottom:18px;}
+.event-row{display:flex;gap:10px;align-items:flex-start;padding:10px 13px;border-bottom:1px solid var(--line);}
 .event-row:last-child{border-bottom:none;}
-.event-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px;}
+.event-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px;}
 .event-body{flex:1;}
 .event-name{font-size:13px;font-weight:700;color:var(--ink);}
 .event-meta{font-size:11px;color:var(--ink3);font-weight:600;margin-top:2px;}
 .event-desc{font-size:12px;color:var(--ink2);margin-top:2px;line-height:1.4;}
 
+/* Próximos pasos */
+.pasos-list{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;margin-bottom:18px;}
+.paso-item{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border-bottom:1px solid var(--line);}
+.paso-item:last-child{border-bottom:none;}
+.paso-who{font-size:10px;font-weight:800;padding:2px 7px;border-radius:99px;flex-shrink:0;margin-top:2px;text-transform:uppercase;letter-spacing:0.05em;}
+.paso-who-toño{background:var(--blue-light);color:var(--blue);}
+.paso-who-yabeth{background:var(--purple-light);color:var(--purple);}
+.paso-who-ambos{background:var(--green-light);color:var(--green);}
+.paso-t{font-size:13.5px;color:var(--ink);line-height:1.55;font-weight:500;}
+
 /* ── BOTTOM BAR ── */
-.bottombar{
-  position:fixed;bottom:0;left:0;right:0;
-  background:rgba(255,255,255,0.92);
-  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-top:1px solid var(--line);
-  padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));
-  display:flex;align-items:center;gap:10px;z-index:100;
-}
+.bottombar{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,0.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;z-index:100;}
 .bb-msg{font-size:13px;color:var(--ink2);flex:1;font-weight:500;}
-.bb-btn{
-  padding:10px 20px;border-radius:99px;border:none;
-  font-size:14px;font-weight:700;
-  font-family:'Plus Jakarta Sans',sans-serif;
-  cursor:pointer;
-  transition:all 0.15s cubic-bezier(0.34,1.56,0.64,1);
-}
+.bb-btn{padding:10px 20px;border-radius:99px;border:none;font-size:13.5px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:all 0.15s cubic-bezier(0.34,1.56,0.64,1);}
 .bb-btn:active{transform:scale(0.95);}
 .bb-edit{background:var(--accent);color:white;margin-left:auto;}
 .bb-edit:hover{background:var(--accent2);}
@@ -343,51 +230,35 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 .ef-bg{display:none;position:fixed;inset:0;background:rgba(15,15,15,0.5);z-index:300;align-items:flex-end;justify-content:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
 .ef-bg.open{display:flex;}
 @media(min-width:640px){.ef-bg.open{align-items:center;padding:20px;}.ef-panel{border-radius:var(--r)!important;}}
-.ef-panel{
-  background:var(--white);width:100%;max-width:560px;max-height:93vh;
-  border-radius:var(--r) var(--r) 0 0;overflow-y:auto;scrollbar-width:none;
-  animation:panelUp 0.3s cubic-bezier(0.34,1.1,0.64,1);
-  box-shadow:0 -8px 60px rgba(0,0,0,0.15);
-  padding-bottom:env(safe-area-inset-bottom,20px);
-}
+.ef-panel{background:var(--white);width:100%;max-width:560px;max-height:93vh;border-radius:var(--r) var(--r) 0 0;overflow-y:auto;scrollbar-width:none;animation:panelUp 0.3s cubic-bezier(0.34,1.1,0.64,1);box-shadow:0 -8px 60px rgba(0,0,0,0.15);padding-bottom:env(safe-area-inset-bottom,20px);}
 .ef-panel::-webkit-scrollbar{display:none;}
-.ef-nav{
-  display:flex;align-items:center;padding:16px 20px;
-  border-bottom:1px solid var(--line);
-}
-.ef-nav-title{font-size:16px;font-weight:800;color:var(--ink);flex:1;text-align:center;letter-spacing:-0.2px;}
+.ef-nav{display:flex;align-items:center;padding:15px 20px;border-bottom:1px solid var(--line);}
+.ef-nav-title{font-size:15px;font-weight:800;color:var(--ink);flex:1;text-align:center;letter-spacing:-0.2px;}
 .ef-cancel{font-size:14px;font-weight:600;background:none;border:none;color:var(--red);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;}
 .ef-done{font-size:14px;font-weight:800;background:none;border:none;color:var(--blue);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;}
 .ef-body{padding:20px;}
 .ef-group{margin-bottom:20px;}
-.ef-group-title{font-size:11px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;}
+.ef-group-title{font-size:10.5px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:8px;}
 .ef-fields{background:var(--bg);border:1.5px solid var(--line);border-radius:var(--r-sm);overflow:hidden;}
 .ef-field{display:flex;align-items:center;padding:0 14px;border-bottom:1px solid var(--line);min-height:46px;}
 .ef-field:last-child{border-bottom:none;}
-.ef-lbl{font-size:14px;font-weight:600;color:var(--ink);min-width:90px;flex-shrink:0;}
+.ef-lbl{font-size:13.5px;font-weight:600;color:var(--ink);min-width:90px;flex-shrink:0;}
 .ef-inp,.ef-sel{flex:1;background:none;border:none;outline:none;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink2);text-align:right;padding:12px 0;font-weight:500;}
 .ef-sel option{background:white;}
-.ef-ta{width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);outline:none;min-height:80px;resize:vertical;line-height:1.6;font-weight:500;}
+.ef-ta{width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;font-size:13.5px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);outline:none;min-height:80px;resize:vertical;line-height:1.6;font-weight:500;}
 .ef-ta:focus{border-color:var(--accent);}
 .ef-row-item{display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid var(--line);}
 .ef-row-item:last-child{border-bottom:none;}
 .ef-row-item input{flex:1;background:none;border:none;outline:none;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);font-weight:500;}
 .ef-row-item input::placeholder{color:var(--ink3);}
 .ef-del{background:none;border:none;color:var(--red);font-size:20px;cursor:pointer;padding:0 4px;line-height:1;}
-.ef-add-btn{
-  display:flex;align-items:center;gap:6px;
-  width:100%;padding:12px 14px;
-  background:var(--bg);border:1.5px solid var(--line);border-radius:var(--r-sm);
-  font-size:14px;font-weight:700;color:var(--blue);
-  cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;
-  margin-top:6px;transition:all 0.15s;
-}
+.ef-add-btn{display:flex;align-items:center;gap:6px;width:100%;padding:11px 14px;background:var(--bg);border:1.5px solid var(--line);border-radius:var(--r-sm);font-size:13.5px;font-weight:700;color:var(--blue);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;margin-top:6px;transition:all 0.15s;}
 .ef-add-btn:hover{background:var(--blue-light);border-color:var(--blue);}
 .ef-pend-item{display:flex;align-items:flex-start;gap:8px;padding:8px 14px;border-bottom:1px solid var(--line);}
 .ef-pend-item:last-child{border-bottom:none;}
 .ef-pend-ta{flex:1;background:none;border:none;outline:none;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);resize:none;min-height:38px;line-height:1.5;padding:4px 0;font-weight:500;}
 .ef-pend-ta::placeholder{color:var(--ink3);}
-.ef-submit{width:100%;padding:14px;border-radius:var(--r-sm);border:none;font-size:15px;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;margin-top:8px;transition:all 0.15s;}
+.ef-submit{width:100%;padding:13px;border-radius:var(--r-sm);border:none;font-size:14.5px;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;margin-top:8px;transition:all 0.15s;}
 .ef-submit:active{transform:scale(0.98);}
 .ef-submit-save{background:var(--accent);color:white;}
 .ef-submit-delete{background:var(--red-light);color:var(--red);border:1.5px solid rgba(224,62,62,0.2);}
@@ -397,7 +268,6 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 </head>
 <body>
 
-<!-- TOP BAR -->
 <div class="topbar">
   <div class="topbar-row">
     <div class="app-icon"><span>✦</span></div>
@@ -422,20 +292,16 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
   </div>
 </div>
 
-<!-- CONTENT -->
 <div class="content" id="content"></div>
 
-<!-- PANEL -->
 <div class="panel-bg" id="panel-bg" onclick="closePanel(event)">
   <div class="panel" id="panel"></div>
 </div>
 
-<!-- EDIT FORM -->
 <div class="ef-bg" id="ef-bg" onclick="closeEF(event)">
   <div class="ef-panel" id="ef-panel"></div>
 </div>
 
-<!-- BOTTOM BAR -->
 <div class="bottombar" id="bbar">
   <span class="bb-msg" id="bb-msg"></span>
   <button class="bb-btn bb-add" id="bb-add" style="display:none" onclick="openEF(-1)">+ Nuevo</button>
@@ -476,8 +342,21 @@ const pastores = [
       {nombre:"Oscar Daniel",edad:"",cumple:"25 abril 2011",datos:"Le gusta cantar y nadar. (Gemelo de Elías)"}
     ],
     notas:"",
-    reunion:"",
+    reunion:"Dic 2025. Luis ya puede cubrir predicación. 20-21 servidores activos. Hijo mayor termina prepa en julio, entra a EBC. Roger y Gabriel reportaron ambiente positivo.",
     pendientes:["Objetivos 2026: hacerlos más específicos y medibles.","Video institucional: reducir de 6 minutos a 90 segundos máximo.","Calendario 2026: definir fechas para visitas de predicadores.","Enviar contacto de iglesia en Los Ángeles para su viaje (25 dic)."],
+    iglesia_reporte:{
+      nombre:"Horizonte Mérida",
+      stats:[
+        {label:"Bautizados 2025",valor:"7"},
+        {label:"Conferencia matrimonios",valor:"13 parejas"},
+        {label:"Retiro varones",valor:"15 asistentes"},
+        {label:"Grupos semanales",valor:"25 personas"},
+        {label:"Consejería concluidas",valor:"8"},
+        {label:"Nuevos servidores",valor:"+15"}
+      ],
+      logros:"Reinauguración exitosa. Retiro de varones: 4 hombres comprometidos más. 7 bautizos. Conferencia de hombres y matrimonios. Lanzamiento reunión 'Conociéndonos' con 3 grupos de varones y 3 de mujeres.",
+      plan2026:"Conferencias para matrimonios. Reunión de varones 1x/mes. Avanzar en La Ruta agregando clase nueva. Poner techo de lámina al terreno. Capacitación nuevos consejeros y maestros infantiles."
+    },
     tags:["objetivos","video","mérida"]
   },
   {
@@ -486,11 +365,11 @@ const pastores = [
     hijos:[
       {nombre:"Máximo",edad:"",cumple:"2 febrero 2016",datos:"Le gusta nadar, los legos y jugar béisbol."},
       {nombre:"Alanna",edad:"5",cumple:"9 septiembre 2019",datos:"Muy girly, le gusta bailar."},
-      {nombre:"Dante",edad:"2",cumple:"28 febrero 2023",datos:"Le gustan juguetes que pueda armar, bloques. Ha mejorado en lenguaje y salud del oído."}
+      {nombre:"Dante",edad:"2",cumple:"28 febrero 2023",datos:"Le gustan juguetes que pueda armar. Ha mejorado en lenguaje y salud del oído."}
     ],
-    notas:"Mejor temporada matrimonial. Max batalla con temor al hombre. ~120,000 pesos de deuda en proceso de pago. ~250,000 pesos ahorrados para terreno. Grupos de mujeres multigeneracionales exitosos (~50-60 mujeres). Palabra clave ministerial: ASIMILACIÓN. Texto ancla: Salmo 107:4-9.",
+    notas:"Mejor temporada matrimonial. Max batalla con temor al hombre. ~120,000 pesos de deuda en proceso de pago. ~250,000 pesos ahorrados para terreno. Grupos de mujeres multigeneracionales exitosos (~50-60 mujeres). Palabra clave ministerial: ASIMILACIÓN.",
     reunion:"Revisión 4F (Fe, Familia, Fitness, Finanzas). Kari combina lecturas de matrimonio y teología. Manuel enfocado en Proverbios 4:23-27. Celebran estar en su mejor temporada matrimonial.",
-    pendientes:["Esperar corrida financiera de Kari para junta con diáconos.","Participar en llamada con diáconos de Baluarte para proponer paquete pastoral justo.","Revisar con Beto acceso a contenido CTC para temas de consejería.","Enviar reporte de Panamá como ejemplo de reporte anual completo.","Organizar conversación con Paty y esposas de pastores sobre balance liderada/comunicada vs. control.","Recibir reporte actualizado de Baluarte con objetivos específicos para 2026."],
+    pendientes:["Esperar corrida financiera de Kari para junta con diáconos.","Participar en llamada con diáconos de Baluarte para proponer paquete pastoral justo.","Revisar con Beto acceso a contenido CTC para temas de consejería.","Enviar reporte de Panamá como ejemplo de reporte anual completo.","Recibir reporte actualizado de Baluarte con objetivos específicos para 2026."],
     iglesia_reporte:{
       nombre:"Baluarte",
       stats:[
@@ -499,8 +378,8 @@ const pastores = [
         {label:"2 servicios desde",valor:"mayo 2025"},
         {label:"Reunión acción gracias",valor:"120 personas"}
       ],
-      logros:"Iniciaron 2 servicios dominicales en mayo 2025. Crecimiento en membresía consolidada. Incorporación al compañerismo CEM. Fruto en retiros de matrimonios. Celebración CTC Regional.",
-      plan2026:"Junta con diáconos sobre finanzas. Corrida financiera pastoral profesional. Reporte anual con objetivos medibles. Acceso CTC para equipo. Saldar deuda ~120k pesos. Terreno iglesia: 250k ahorrados."
+      logros:"Iniciaron 2 servicios dominicales en mayo 2025. Crecimiento en membresía consolidada. Incorporación al compañerismo CEM. Fruto en retiros de matrimonios.",
+      plan2026:"Junta con diáconos sobre finanzas. Corrida financiera pastoral. Reporte anual con objetivos medibles. Saldar deuda ~120k pesos. Terreno iglesia: 250k ahorrados."
     },
     tags:["asimilación","finanzas","terreno","4F"]
   },
@@ -532,49 +411,42 @@ const pastores = [
     iglesia_reporte:{
       nombre:"Horizonte Querétaro",
       stats:[
-        {label:"Asistencia semanal total",valor:"~1,400"},
+        {label:"Asistencia semanal",valor:"~1,400"},
         {label:"Sábado",valor:"249"},
         {label:"Domingo 10:30am",valor:"635"},
         {label:"Domingo 1:00pm",valor:"484"},
         {label:"Flechas (niños)",valor:"4,200+"},
-        {label:"Jóvenes (asistencias Q1)",valor:"774"},
-        {label:"Consejería: solicitudes",valor:"95"},
-        {label:"Alcance consejería",valor:"9 estados / 5 países"},
-        {label:"La Ruta: Bienvenida",valor:"277"},
-        {label:"La Ruta: Conociéndonos",valor:"150"},
-        {label:"Conversión bienvenida→conoc.",valor:"60%"},
-        {label:"Líderes graduados Restaurados",valor:"68"},
-        {label:"Matrimonios De Una Misma Carne",valor:"25"},
-        {label:"Familias graduadas Esc. Padres",valor:"24"},
-        {label:"Nuevos servidores integrados",valor:"14"}
+        {label:"Jóvenes Q1",valor:"774"},
+        {label:"Consejería solicitudes",valor:"95"},
+        {label:"Alcance consejería",valor:"9 est / 5 países"},
+        {label:"La Ruta bienvenida",valor:"277"},
+        {label:"La Ruta conociéndonos",valor:"150"},
+        {label:"Conversión",valor:"60%"},
+        {label:"Líderes graduados",valor:"68"},
+        {label:"Matrimonios prog.",valor:"25"},
+        {label:"Nuevos servidores",valor:"14"}
       ],
-      logros:"Asistencia semanal ~1,400 personas en 3 servicios. La Ruta: 277 en bienvenida, 60% conversión, 68 líderes graduados de Restaurados. Consejería con alcance a 9 estados y 5 países. Flechas superó 4,200 niños con pico de 430 en un fin de semana. Jóvenes 774 asistencias, pico 150. 25 matrimonios en programa 'De Una Misma Carne'. Retiro Habitar próximo con ~200 personas.",
-      plan2026:"Oración por tercer servicio dominical o segundo servicio sábado (revisar en siguiente cuatrimestre). Propuesta de mejoras Luminares. Capacitación de consejeros. Jorge avanzando a etapa 3 de certificación. Construcción y ductos casi listos."
+      logros:"Asistencia ~1,400 en 3 servicios. La Ruta: 277 en bienvenida, 60% conversión, 68 graduados Restaurados. Consejería en 9 estados y 5 países. Flechas superó 4,200 niños, pico 430. Jóvenes 774 asistencias. 25 matrimonios en 'De Una Misma Carne'. Retiro Habitar ~200 personas próximamente.",
+      plan2026:"Tercer servicio dominical o segundo sábado (ligado a construcción). Propuesta mejoras Luminares. Capacitación de consejeros. Jorge → etapa 3 de certificación. Construcción y ductos casi listos."
     },
     reporte_personal:{
       fecha:"Abril 2026",
-      metricas:{familia:8, intimidad:9, entusiasmo:9, liderazgo:8, economia:9, salud:8},
-      oracion:"Retiro ABIDE este fin de semana. Unidad de equipos. Matrimonios que van a Abide este bimestre. Salud de Jorge y Onne. Anhelo de adoptar. Recuperar 3 servicios dominicales. Diácono para Rodas. Embarazo de Carol y día del bebé. Construcción y ductos casi listos."
+      metricas:{familia:8,intimidad:9,entusiasmo:9,liderazgo:8,economia:9,salud:8},
+      oracion:["Retiro ABIDE","Unidad de equipos","Matrimonios en Abide","Adopción de Jorge y Onne","Recuperar 3er servicio dominical","Diácono para Rodas","Embarazo de Carol","Construcción y ductos"]
     },
-    notas:"Esposa Abby participa en reuniones con madres y ofrece consejería. Layla (mayor) ya pregunta por él, aprendiendo ir al baño sola. Jonathan muy cariñoso. Rutina: despertar y pasar tiempo con niños antes de comenzar el día. Situación casa: sobrina usa cuarto para negocio de uñas; planes para adaptar para su madre en vejez. Salmo 116 como texto ancla — Dios que escucha, libra, es clemente. Enfoque 2026: invocar a Dios (intimidad) y servirle como siervo. Reflexión Hechos 11: ¿qué puede estorbar a Dios en la iglesia? Trabaja en santidad personal.",
-    reunion:"21 abril 2026 — Sinc Q1. Reporte personal: Familia 8, Intimidad 9, Entusiasmo 9, Liderazgo 8, Economía 9, Salud 8. Acuerdos: código GRACIAS30 (30% desc. consejeros), votación mejor staff Q1 (Jessica), capacitación consejeros, video Luminares niños especiales, camioneta blanca lunes, propuesta mejoras Luminares. Anterior: 12 diciembre 2025 — Salmo 116, equilibrio familia-ministerio, aniversario, comedor nuevo.",
+    notas:"Esposa Abby participa en reuniones con madres y consejería. Rutina: despertar y pasar tiempo con niños antes de comenzar el día. Salmo 116 como texto ancla. Reflexión Hechos 11: ¿qué puede estorbar a Dios en la iglesia?",
+    reunion:"21 abril 2026 — Sinc Q1. Reporte personal: F8 I9 E9 L8 Eco9 S8. Acuerdos: código GRACIAS30, votación mejor staff Q1, capacitación consejeros, video Luminares, camioneta blanca lunes.",
     pendientes:[
-      "SALUD URGENTE: Cirugía de vesícula programada — necesita planificación pronto.",
+      "SALUD: Cirugía de vesícula programada — necesita planificación.",
       "Seguimiento médico de garganta con foniatra en un mes.",
       "Supervisar transición tras salida de Ale Maya de Luminares.",
-      "Evaluar certificación en adicciones para Omar Estrada ($18,000 pesos) — aprobada.",
-      "Implementar apoyo a Joan: $4,100 pesos mensuales, medio tiempo — aprobado.",
-      "Intercambio de computadoras: Mac de escritorio para Gabriel.",
+      "Certificación en adicciones para Omar Estrada ($18,000 pesos) — aprobada.",
+      "Apoyo a Joan: $4,100 pesos mensuales, medio tiempo — aprobado.",
       "Aumento salarial Rodas hasta $20,000 pesos — aprobado.",
-      "Contratación Lechuga tiempo completo $18,000 — aprobado. Job description antes del 23 dic.",
-      "Licencias ChatGPT para: Flechas, Ruta, Consejería y Eventos — aprobadas.",
-      "Equipo de sonido móvil $16,000 pesos — aprobado.",
-      "Opciones educativas Layla: Querétaro Christian School (beca posible) vs. Buckingham.",
-      "Revisar con Roger capacidad para grupos de Restaurados.",
-      "Confirmar presupuestos pendientes la semana siguiente.",
-      "Dar seguimiento a situaciones de Abraham y Saúl."
+      "Licencias ChatGPT para Flechas, Ruta, Consejería y Eventos — aprobadas.",
+      "Opciones educativas Layla: Querétaro Christian School vs. Buckingham."
     ],
-    tags:["horizonte qro","consejería","salud","luminares","nuevas generaciones"]
+    tags:["horizonte qro","consejería","salud","luminares"]
   },
   {
     nombre:"Phil", apellido:"Jones", iglesia:"Horizonte El Marqués", ciudad:"El Marqués, Qro", zona:"qro",
@@ -583,22 +455,27 @@ const pastores = [
       {nombre:"Joshua",edad:"",cumple:"29 diciembre 2012",datos:"Le gustan los videojuegos."},
       {nombre:"Romi",edad:"",cumple:"3 julio 2002",datos:"Le gusta dibujar, trabaja en RenovArte Café."}
     ],
-    notas:"Apoyo: Dani Soto SEBAM. Residente pastoral: Dani y Alix Soto. Líderes clave: Álvaro Fuente, José Luis Castillo, Alex Melchor, Daniel Ávila.",
+    notas:"Residencia pastoral: Dani y Alix Soto. Líderes clave: Álvaro Fuente, José Luis Castillo, Alex Melchor, Daniel Ávila.",
     reunion:"",
     iglesia_reporte:{
       nombre:"Horizonte El Marqués",
       stats:[
-        {label:"Adultos domingos (prom.)",valor:"105"},
+        {label:"Adultos domingos",valor:"105"},
         {label:"Servidores activos",valor:"60"},
         {label:"Personas nuevas 2025",valor:"91"},
-        {label:"Asistencia Flechas (niños)",valor:"44"},
+        {label:"Flechas (niños)",valor:"44"},
         {label:"Grupos de vida",valor:"42"},
         {label:"Bautizos 2025",valor:"12"}
       ],
-      logros:"1 generación terminando Ruta completa, 3 en proceso. 2 eventos mujeres (55+65 asistentes). Koinonia cada 2 meses. 12 bautizos. 2 Worship Nites (85+ personas). Enfoque Global: 45 participantes. Residencia pastoral Dani y Alix Soto.",
-      plan2026:"Reinicio LED enero (semanal 3x mes). SEBAM para líderes clave. Diáconos: junio. Delegar liderazgo Siguiendo a Jesús. 4 nuevos maestros. Acondicionar sótano (baños + 3 salones). 6 eventos alcance grandes. Visita equipo LIFE CC julio. 2 viajes misioneros corto plazo."
+      logros:"1 generación terminando La Ruta completa, 3 en proceso. 12 bautizos. 2 Worship Nites (85+ personas). Enfoque Global: 45 participantes. Residencia pastoral Dani y Alix Soto.",
+      plan2026:"LED enero (semanal). SEBAM para líderes. Diáconos: junio. Delegar liderazgo Siguiendo a Jesús. Acondicionar sótano (baños + 3 salones). 6 eventos alcance. 2 viajes misioneros. Visión 2027: 300 adultos."
     },
-    pendientes:[],tags:["el marqués","horizonte","liderazgo"]
+    pendientes:[
+      "Beca SEBAM para Dani Soto.",
+      "Capacitación multimedia (audio y video).",
+      "Continuar apoyo Centro de Consejería."
+    ],
+    tags:["el marqués","horizonte","liderazgo"]
   },
   {
     nombre:"Roger", apellido:"Arcila", iglesia:"Horizonte Querétaro", ciudad:"Querétaro", zona:"qro",
@@ -606,11 +483,11 @@ const pastores = [
     hijos:[
       {nombre:"Josué",edad:"7",cumple:"14 junio 2017",datos:"Le encanta armar legos, homeschool."},
       {nombre:"Emanuel",edad:"5",cumple:"26 octubre 2019",datos:"Le encanta Nerf y Spiderman, homeschool."},
-      {nombre:"Natalia",edad:"3 meses",cumple:"19 diciembre 2024",datos:"Bebé."}
+      {nombre:"Natalia",edad:"",cumple:"19 diciembre 2024",datos:"Bebé."}
     ],
-    notas:"Pastor de comunidad en Horizonte Querétaro. Casados: 5/5/2013. Descansa viernes. Date: viernes en la mañana. Finanzas bien y tranquilos.",
-    reunion:"Q1 2026 — Personal/Matrimonial. Fran: siente que no es buena mamá (Natán rechazado en escuela). Roger: reconoció que rendimiento y llenar expectativas se vuelve el motivo, no el Señor. Salmo 46 cuando fue la hemorragia interna de Roger.",
-    pendientes:["Acompañar a Fran en tema de identidad de Natán y su relación con el esposo.","Roger: seguimiento a patrón de queja y motivaciones."],
+    notas:"Pastor de comunidad en Horizonte Querétaro. Casados: 5/5/2013. Descansa viernes. Finanzas bien y tranquilos.",
+    reunion:"Q1 2026. Fran siente que no es buena mamá (Natán rechazado en escuela). Roger reconoció patrón de rendir para llenar expectativas en vez de servir al Señor. Salmo 46 como ancla.",
+    pendientes:["Acompañar a Fran en tema de identidad y relación con el esposo.","Roger: seguimiento a patrón de queja y motivaciones."],
     tags:["matrimonial","identidad","Q1 2026"]
   },
   {
@@ -623,21 +500,21 @@ const pastores = [
         {label:"Asistencia promedio",valor:"55 adultos"},
         {label:"Servidores activos",valor:"17"},
         {label:"Nuevos miembros",valor:"10"},
-        {label:"Niños (semillas/saetas)",valor:"13"},
-        {label:"Bautizados",valor:"2 prog."},
-        {label:"Líderes en formación",valor:"6"}
+        {label:"Niños (Semillas/Saetas)",valor:"13"},
+        {label:"Líderes en formación",valor:"6"},
+        {label:"La Ruta (adultos)",valor:"17"}
       ],
-      logros:"Ruta Siguiendo a Jesús: 17 adultos, primera generación. Mujeres creciendo en piedad. Ágapes: Día del niño, Noche mexicana, Posada navideña.",
-      plan2026:"Liderazgo: 2 diáconos para predicar, invertir en SEBAM. Meta: 100 adultos, 30 niños. Proyectos: Multimedia $25k, Alabanza (bocinas/piano) $50k, Remodelación $30k. 2 campañas evangelísticas al año."
+      logros:"Primera generación de La Ruta completa. Mujeres creciendo en piedad. Ágapes: Día del niño, Noche mexicana, Posada navideña.",
+      plan2026:"Meta: 100 adultos, 30 niños. 2 diáconos preparándose para predicar (SEBAM). Proyectos: Multimedia $25K, Alabanza $50K, Remodelación $30K. 2 campañas evangelísticas al año."
     },
-    notas:"",reunion:"",pendientes:[],tags:["gracia irresistible"]
+    notas:"",reunion:"",pendientes:[],tags:["gracia irresistible","tequisquiapan"]
   },
   {
     nombre:"Juan Pablo", apellido:"Segismond", iglesia:"Horizonte Panamá", ciudad:"Panamá", zona:"otro",
     esposa:"", cumple:"", avatar:"JS", color:"av-purple",
     hijos:[],
-    notas:"Misión: hacerse pros en Planning Center / entrenar a alguien de la carpa en la ruta.",
-    reunion:"",pendientes:[],tags:["planning center"]
+    notas:"Misión: hacerse pros en Planning Center / entrenar a alguien de La Carpa en La Ruta. 1er aniversario Panamá: enero 2026.",
+    reunion:"",pendientes:[],tags:["planning center","panamá"]
   },
   {
     nombre:"Adrián", apellido:"Capitaine", iglesia:"Horizonte Villahermosa", ciudad:"Villahermosa", zona:"sur",
@@ -645,31 +522,88 @@ const pastores = [
     hijos:[
       {nombre:"Grace",edad:"6",cumple:"29 enero 2019",datos:"Le encanta bailar y las muñecas."},
       {nombre:"Ezra",edad:"",cumple:"18 octubre 2020",datos:"Le encanta la música."},
-      {nombre:"Elyseo",edad:"",cumple:"27 marzo 2024",datos:""}
+      {nombre:"Elyseo",edad:"",cumple:"27 marzo 2024",datos:"Bebé."}
     ],
-    notas:"Orar por un lugar nuevo para la iglesia, nuevos líderes. Acción de gracias por una iglesia que participa. Énfasis 2025: hombres.",
+    notas:"",
     reunion:"",
-    pendientes:["Invitar a comer a sus líderes 1 vez al mes (Germán sobre todo).","Pagar su deuda en enero.","Orar por su cena de año nuevo con sus líderes."],
-    tags:["local","líderes","deuda"]
+    iglesia_reporte:{
+      nombre:"Horizonte Villahermosa",
+      stats:[
+        {label:"Adultos domingos (prom.)",valor:"200"},
+        {label:"Adultos por semana",valor:"115"},
+        {label:"Niños",valor:"38"},
+        {label:"Nuevos en Horizonte",valor:"+40"},
+        {label:"Bautizados",valor:"16"},
+        {label:"Servidores",valor:"+100"}
+      ],
+      logros:"Conf. matrimonios (45 parejas), conf. hombres (110), conf. mujeres (130). 16 bautizados. Grupos: 8 de mujeres + 6 de hombres = 72 miembros. Oración miércoles: 70 adultos. Ofrendas: $133K–$185K/mes.",
+      plan2026:"Establecer membresía y gobierno. Fast Track para líderes, La Ruta para el resto. Diáconos: 2do semestre. Formalizar oración semanal. Regularizar compromiso con REINO. Alinearse con alcance. Reto: edificio llegando al tope logístico."
+    },
+    pendientes:["Invitar a comer a sus líderes 1 vez al mes (Germán sobre todo)."],
+    tags:["local","líderes"]
   },
   {
     nombre:"Toño", apellido:"García", iglesia:"Calvary Chapel Ecatepec", ciudad:"Ecatepec", zona:"centro",
-    esposa:"", cumple:"3 noviembre 1979", avatar:"TG", color:"av-teal",
-    hijos:[],
-    notas:"Para 2030 ÉNFASIS: trabajar en hombres, levantar y consolidar hombres para el servicio. Plataformas para que hombres crezcan: Simón, Martín Durazo (Biblia), Héctor Glez, M. Valencia, Gil, Roy, Dany Panda, Carlos Fierro.",
-    reunion:"",pendientes:[],tags:["hombres","2030"]
+    esposa:"Yabeth", cumple:"3 noviembre 1979", avatar:"TG", color:"av-teal",
+    hijos:[
+      {nombre:"Grace",edad:"6",cumple:"29 enero 2019",datos:"Le encanta bailar y las muñecas."},
+      {nombre:"Ezra",edad:"",cumple:"18 octubre 2020",datos:"Le encanta la música."},
+      {nombre:"Elyseo",edad:"",cumple:"27 marzo 2024",datos:"Bebé."}
+    ],
+    notas:"Para 2030 énfasis: trabajar en hombres, levantar y consolidar hombres para el servicio. Plataformas: Simón, Martín Durazo, Héctor Glez, Carlos Fierro. Lideran Ecatepec y con conexión a Texcoco.",
+    reunion:"Cuatrimestral abr 2026 con Kike. Palabra: Hechos 11 — la oposición es normal cuando Dios se mueve.",
+    reporte_personal:{
+      fecha:"Abril 2026",
+      metricas:{familia:8,intimidad:8.5,entusiasmo:8,liderazgo:7},
+      oracion:["Sabiduría en transición laboral","Unidad matrimonial","Líderes que se quedan","Finanzas iglesia"]
+    },
+    reporte_personal_yabeth:{
+      metricas:{familia:7,intimidad:8,entusiasmo:9,liderazgo:8},
+      oracion:["Matrimonio y familia","Carga escolar/ministerial","Fe más grande","Tiempo con hijos"]
+    },
+    pendientes:[
+      "Toño: reunión con Gabriel, Carlos y Sol el sábado para clarificar expectativas.",
+      "Toño: hablar con su jefe para planificar transición y renuncia a fin de año; avisar a Kike.",
+      "Toño: coordinar Consejo de Finanzas (salen Eli y esposa de Óscar).",
+      "Yabeth: enviar a Kike oración general con necesidades.",
+      "Consolidar membresía → agosto 2026.",
+      "Ruta financiera familiar → julio 2026.",
+      "Candidatos a diáconos → noviembre 2026."
+    ],
+    tags:["hombres","transición","ecatepec"]
   },
   {
     nombre:"Daniel", apellido:"Vargas", iglesia:"Comunidad El Camino", ciudad:"San José, Costa Rica", zona:"otro",
-    esposa:"", cumple:"", avatar:"DV", color:"av-amber",
-    hijos:[],notas:"",reunion:"",pendientes:[],tags:[]
+    esposa:"Edu", cumple:"", avatar:"DV", color:"av-amber",
+    hijos:[],
+    notas:"Esposa Edu embarazada, bebé esperado en julio 2026. Iglesia con 22 años de historia en Costa Rica.",
+    reunion:"Dic 2025 con Kike. Retos: ansiedad, vida espiritual mecánica, finanzas ajustadas. Avances: restructuró finanzas, eliminó ofrendas a misioneros problemáticos, equipo de oración/ayuno de 9 personas.",
+    iglesia_reporte:{
+      nombre:"Comunidad El Camino",
+      stats:[
+        {label:"Miembros",valor:"110"},
+        {label:"Servidores",valor:"48"},
+        {label:"Nuevos miembros",valor:"13"},
+        {label:"Bautizos",valor:"1"},
+        {label:"Años de historia",valor:"22"},
+        {label:"Evangelizados (calles)",valor:"3,500+"}
+      ],
+      logros:"Restructuración del cuerpo de servicio. Finanzas saneadas. Proyecto Calles: +3,500 evangelizados en 7 meses, +500 alimentados/mes, primer discipulado para personas en calle (5 perseverando). Equipo de alabanza propio formado. Alianza con comunidad VCP.",
+      plan2026:"Nueva cultura: discípulos que hacen discípulos. Predicaciones centradas en el evangelio. El pastor cuida a coordinadores uno a uno; cada coordinador cuida a sus colaboradores."
+    },
+    pendientes:[
+      "Educación financiera personal y familiar.",
+      "Conectar matrimonialmente antes del nacimiento del bebé (julio).",
+      "Liderar la iglesia en oración y ayuno.",
+      "Definir objetivos 2026 con calendario."
+    ],
+    tags:["costa rica","calles","transición"]
   },
   {
     nombre:"José", apellido:"Machado", iglesia:"Horizonte Hermosillo", ciudad:"Hermosillo", zona:"norte",
     esposa:"", cumple:"16 marzo 1968", avatar:"JM", color:"av-blue",
     hijos:[],notas:"",reunion:"",pendientes:[],tags:[]
   },
-
   {
     nombre:"Moisés", apellido:"Hernández", iglesia:"Calvary Chapel Texcoco", ciudad:"Texcoco", zona:"centro",
     esposa:"", cumple:"28 octubre", avatar:"MH", color:"av-purple",
@@ -677,26 +611,26 @@ const pastores = [
     iglesia_reporte:{
       nombre:"Calvary Chapel Texcoco",
       stats:[
-        {label:"Estudios bíblicos abiertos",valor:"3"},
+        {label:"Estudios bíblicos",valor:"3"},
         {label:"Municipios alcanzados",valor:"2"},
         {label:"Familias alcanzadas",valor:"25"},
         {label:"Grupos discipulado",valor:"3"},
-        {label:"Grupo mujeres jóvenes",valor:"20 mujeres"}
+        {label:"Grupo mujeres jóvenes",valor:"20"}
       ],
-      logros:"3 estudios bíblicos abiertos (2 en febrero, 1 en diciembre) en Tocuila, Ojo de Agua y Coatlinchán. Grupo mensual de jóvenes. Discipulado a lo largo del año.",
-      plan2026:"Continuar expansión de estudios bíblicos en colonias. Consolidar grupo de mujeres jóvenes. Seguimiento de familias alcanzadas."
+      logros:"3 estudios bíblicos en Tocuila, Ojo de Agua y Coatlinchán. Grupo mensual de jóvenes. Discipulado constante a lo largo del año.",
+      plan2026:"Continuar expansión de estudios bíblicos en colonias. Consolidar grupo de mujeres jóvenes."
     },
-    notas:"",reunion:"",pendientes:[],tags:["texcoco","calvary","estudios bíblicos"]
+    notas:"",reunion:"",pendientes:[],tags:["texcoco","calvary"]
   },
   {
     nombre:"Mario", apellido:"Salazar", iglesia:"Gracia Irresistible Calvary", ciudad:"Ciudad Valles", zona:"norte",
-    esposa:"", cumple:"20 julio 1972", avatar:"MS", color:"av-coral",
+    esposa:"Yanette", cumple:"20 julio 1972", avatar:"MS", color:"av-coral",
     hijos:[
-      {nombre:"Mario (hijo)",edad:"18",cumple:"5 julio 2006",datos:"Estudiando odontología en San Luis Potosí."},
-      {nombre:"Ivanna",edad:"14",cumple:"",datos:"3° de secundaria."},
-      {nombre:"Eliana",edad:"27",cumple:"1 junio 1997",datos:"Misionera en Osaka, Japón. Diseño gráfico."},
+      {nombre:"Eliana",edad:"27",cumple:"1 junio 1997",datos:"Misionera en Osaka, Japón."},
       {nombre:"Raquel",edad:"25",cumple:"28 marzo 1999",datos:"Casada. Diseño gráfico."},
-      {nombre:"Melisa",edad:"24",cumple:"24 septiembre 2000",datos:"Diseño gráfico. Les gusta anime, manga y ciencia ficción."}
+      {nombre:"Melisa",edad:"24",cumple:"24 septiembre 2000",datos:"Diseño gráfico. Le gusta anime y manga."},
+      {nombre:"Mario (hijo)",edad:"18",cumple:"5 julio 2006",datos:"Estudiando odontología en SLP."},
+      {nombre:"Ivanna",edad:"14",cumple:"",datos:"3° de secundaria."}
     ],
     notas:"",reunion:"",pendientes:[],tags:[]
   },
@@ -704,20 +638,7 @@ const pastores = [
     nombre:"Omar", apellido:"Linares", iglesia:"Horizonte Tijuana", ciudad:"Tijuana", zona:"norte",
     esposa:"", cumple:"", avatar:"OL", color:"av-teal",
     hijos:[],
-    iglesia_reporte:{
-      nombre:"Calvary Ecatepec",
-      stats:[
-        {label:"Asistencia promedio",valor:"200 adultos"},
-        {label:"Personas añadidas",valor:"49"},
-        {label:"Decisiones de fe",valor:"153"},
-        {label:"Bautizados",valor:"9"},
-        {label:"Curso de integración",valor:"22"},
-        {label:"Servidores activos",valor:"70"}
-      ],
-      logros:"153 personas tomaron decisión de seguir a Dios. 40 mujeres y 20 hombres alcanzados. 60 despensas entregadas. Misión apoyada en San Juan Ixtayopan. Gente abierta para predicar en plazas públicas.",
-      plan2026:"Continuar evangelismo comunitario. Fortalecer ministerio de misericordia. Atender obstáculo: costumbres arraigadas y ataque intelectual a jóvenes."
-    },
-    notas:"",reunion:"",pendientes:[],tags:["ecatepec","calvary","alcance"]
+    notas:"",reunion:"",pendientes:[],tags:[]
   },
   {
     nombre:"Erik", apellido:"Servín", iglesia:"Horizonte CDMX", ciudad:"Ciudad de México", zona:"centro",
@@ -739,67 +660,96 @@ const pastores = [
       {nombre:"Adrián (hijo)",edad:"6",cumple:"",datos:"Primaria, dice que es pro en videojuegos."},
       {nombre:"Ronaldo",edad:"4",cumple:"",datos:"Kinder, ama los dinosaurios."}
     ],
-    notas:"Antes de fin de año: presupuesto personal y calendario semanal.",
-    reunion:"",
+    notas:"",reunion:"",
     pendientes:["Entrega de presupuesto personal y calendario semanal antes de fin de año."],
     tags:["presupuesto"]
   },
-,
   {
     nombre:"Marce", apellido:"Muñoz", iglesia:"másCristo Juriquilla", ciudad:"Juriquilla, Querétaro", zona:"qro",
     esposa:"", cumple:"", avatar:"MM", color:"av-green",
     hijos:[],
-    notas:"Pastor de másCristo en Juriquilla. Iglesia con enfoque en grupos y discipulado.",
-    reunion:"",
-    pendientes:[],
-    tags:["másCristo","juriquilla"]
-  }
-  ,
+    iglesia_reporte:{
+      nombre:"másCristo",
+      stats:[
+        {label:"Adultos 2024 (prom.)",valor:"96"},
+        {label:"Adultos 2025 (prom.)",valor:"145"},
+        {label:"Crecimiento",valor:"+51%"},
+        {label:"Personas nuevas",valor:"63"},
+        {label:"Retención",valor:"77.8%"},
+        {label:"Grupo de hombres",valor:"+54%"}
+      ],
+      logros:"Crecimiento del 51% en un año. 63 personas nuevas, 49 se quedaron (77.8% de retención). Grupos activos: Bernabé (11), CTC (10), hombres en crecimiento. Calendario de eventos muy activo todo el año.",
+      plan2026:"Continuar el ritmo de eventos de alcance. Fortalecer grupos internos. Consolidar nuevos miembros."
+    },
+    notas:"Pastor de másCristo en Juriquilla. La iglesia con mayor crecimiento porcentual de la red en 2025.",
+    reunion:"",pendientes:[],tags:["másCristo","juriquilla","crecimiento"]
+  },
   {
-    nombre:"Dani", apellido:"Ávila", iglesia:"La Carpa CEM", ciudad:"Querétaro", zona:"qro",
+    nombre:"Dani", apellido:"Ávila", iglesia:"La Carpa de Reunión", ciudad:"Querétaro", zona:"qro",
     esposa:"", cumple:"18 abril 1990", avatar:"DA", color:"av-teal",
-    hijos:[],notas:"",reunion:"",pendientes:[],tags:[]
-  }
-,
-  {
-    nombre:"Marce", apellido:"Muñoz", iglesia:"másCristo", ciudad:"Juriquilla", zona:"centro",
-    esposa:"", cumple:"", avatar:"MM", color:"av-green",
     hijos:[],
-    notas:"Pastor de másCristo en Juriquilla, Querétaro.",
-    reunion:"",
-    pendientes:[],
-    tags:["másCristo","juriquilla"]
+    iglesia_reporte:{
+      nombre:"La Carpa de Reunión",
+      stats:[
+        {label:"Asistencia auditorio 2025",valor:"200"},
+        {label:"Flechas (niños)",valor:"87"},
+        {label:"Servidores",valor:"59"},
+        {label:"Total 2025",valor:"346"},
+        {label:"Bautizos",valor:"9"},
+        {label:"Finalizaron La Ruta",valor:"11"}
+      ],
+      logros:"Asistencia estable 200 adultos promedio. Cierre de Habitar: 14H + 16M. Nuevos ministerios oct 2025: Axios (jóvenes +18), Hacedores, Mantenimiento. 9 bautizos. 11 personas finalizaron La Ruta. Hospitalidad activa con kit de bienvenida y línea telefónica.",
+      plan2026:"Hospitalidad y bienvenida: salón nuevo, kit (Biblia, libro Ps. Kike, vaso, libreta). Adoración congregacional: reestructuración 2026, calendario compartido con Horizonte Qro."
+    },
+    reporte_personal:{
+      fecha:"Abril 2026",
+      metricas:{familia:9,intimidad:9,entusiasmo:10,liderazgo:8,economia:10,salud:8.5},
+      oracion:["Alma con gozo","Matrimonio y paternidad","Casa","Andresito a largo plazo"]
+    },
+    notas:"Conferencia en Torreón exitosa (35 iglesias). Finanzas estables; deuda con Horizonte casi saldada ($5K restantes). Proyecto libro: colaboración con Kike sobre el amor de Dios. Habitar 2026: lideran Héctor y Arturo.",
+    reunion:"Abr 2026 con Kike. Conf. Torreón exitosa. Casos activos: Checo (sin confesión genuina), Javi (hermético), Douglas (indiferente), Paco (crisis plantación, Berta hospitalizada), Chucho Solís Cuernavaca (adulterio). Acuerdos: estaca con Checo, límite 8 sesiones Chucho, historial médico a Omar (Chihuahua).",
+    pendientes:[
+      "Establecer 'estaca clara' con Checo: buscar confesión genuina en tiempo definido.",
+      "Caso Chucho Solís: límite de 8 sesiones. Si Álex pagaba terapia, redirigir a consejería de Dani.",
+      "Enviar historial clínico a Omar (Chihuahua) para consulta de triglicéridos.",
+      "Habitar 2026: Héctor y Arturo lideran; cada dulō saca 1 persona para delegar.",
+      "Proyecto libro con Kike: amor de Dios."
+    ],
+    tags:["la carpa","consejería","habitar","libro"]
   }
 ];
-const pastorPhotos = {
-  'Gadiel': 'data:image/jpeg;base64,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'
-};
-const BY_SEDE = {"Horizonte Panamá": [{"year": 2025, "mes": "Enero", "mes_num": 1, "categoria": "IGLESIAS", "evento": "Inaguración Panamá", "sede": "Horizonte Panamá", "descripcion": "11 personas asistieron por primera vez. 6 personas recibieron a Cristo."}, {"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "1er mes", "sede": "Horizonte Panamá", "descripcion": "44 personas entre niños, adolescentes y adultos."}, {"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Acción de gracias", "evento": "Primer grupo de bienvenida", "sede": "Horizonte Panamá", "descripcion": "Panamá"}, {"year": 2025, "mes": "Agosto", "mes_num": 8, "categoria": "IGLESIAS", "evento": "Panamá", "sede": "Horizonte Panamá", "descripcion": "Juan Pablo Segismond"}, {"year": 2026, "mes": "Enero", "mes_num": 1, "categoria": "IGLESIAS", "evento": "1er aniversario Panamá", "sede": "Horizonte Panamá", "descripcion": ""}, {"year": 2026, "mes": "Febrero", "mes_num": 2, "categoria": "IGLESIAS", "evento": "Panamá", "sede": "Horizonte Panamá", "descripcion": "Horizonte Panamá"}], "Identidad San Luis": [{"year": 2025, "mes": "Enero", "mes_num": 1, "categoria": "IGLESIAS", "evento": "Entrega de zapatos", "sede": "Identidad San Luis", "descripcion": "272 entregas de zapatos a 5 comunidades vulnerables"}, {"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Conferencia de Matrimonios con Juanpi y Clarissa Segismond \"Sexo del Bueno\"", "sede": "Identidad San Luis", "descripcion": "80 asistentes"}, {"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "PETICIÓN DE ORACIÓN", "evento": "Construcción del templo", "sede": "Identidad San Luis", "descripcion": "La siguiente etapa tiene es una inversión de alrededor 800,000 pesos para terminar las columnas, el portón y los salones y oficinas del segundo piso Con la construcción se triplicaría"}, {"year": 2025, "mes": "Marzo Abril", "mes_num": 3, "categoria": "Acción de gracias", "evento": "Movie Day", "sede": "Identidad San Luis", "descripcion": "Película: Rey de Reyes +50 personas total +30 niños (10 nuevos)"}, {"year": 2025, "mes": "Marzo Abril", "mes_num": 3, "categoria": "Petición de oración", "evento": "Construcción del segundo piso", "sede": "Identidad San Luis", "descripcion": "Ya pudimos poner el portón en el nuevo templo. Y estamos a punto de empezar la construcción del segundo piso."}, {"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Acción de gracias", "evento": "Reunión de oración", "sede": "Identidad San Luis", "descripcion": "San Luis Potosí"}, {"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Oración", "evento": "Construcción de iglesia", "sede": "Identidad San Luis", "descripcion": "San Luis Potosí"}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "IGLESIAS", "evento": "Aniversario 10: Evento Pleroma - Celebración de Aniversario", "sede": "Identidad San Luis", "descripcion": "San Luis Potosí"}, {"year": 2025, "mes": "Agosto", "mes_num": 8, "categoria": "IGLESIAS", "evento": "Identidad SLP", "sede": "Identidad San Luis", "descripcion": "Gerardo Berrones"}, {"year": 2025, "mes": "Septiembre", "mes_num": 9, "categoria": "IGLESIAS", "evento": "Identidad San Luis", "sede": "Identidad San Luis", "descripcion": "Gerardo Berrones"}, {"year": 2025, "mes": "Noviembre", "mes_num": 11, "categoria": "IGLESIAS", "evento": "Identidad SLP", "sede": "Identidad San Luis", "descripcion": "Gerardo Berrones"}, {"year": 2026, "mes": "Enero", "mes_num": 1, "categoria": "IGLESIAS", "evento": "Entrega de Zapatos en Comunidad Los Pilares, Casa Hogar Vallado, Centro de Asist", "sede": "Identidad San Luis", "descripcion": "Se apoyó a +80 niños de escasos recursos o en situación vulnerable con zapatos. Se les predico el evangelio. Hubo juegos, pizza y Rosca de Reyes."}, {"year": 2026, "mes": "Febrero", "mes_num": 2, "categoria": "IGLESIAS", "evento": "SLP", "sede": "Identidad San Luis", "descripcion": "Identidad SLP"}, {"year": 2026, "mes": "Marzo", "mes_num": 3, "categoria": "IGLESIAS", "evento": "SLP", "sede": "Identidad San Luis", "descripcion": "Identidad SLP"}], "Horizonte Querétaro": [{"year": 2025, "mes": "Enero", "mes_num": 1, "categoria": "IGLESIAS", "evento": "Jornada de ayuno y oración", "sede": "Horizonte Querétaro", "descripcion": "promedio de 210 personas por servicio. 81 personas asistieron por primera vez a la iglesia en el mes"}, {"year": 2025, "mes": "Enero", "mes_num": 1, "categoria": "ORACIÓN", "evento": "Cuarto eléctrico", "sede": "Horizonte Querétaro", "descripcion": "inversión 4 millones: garantiza seguridad, distribución eficiente de energía, reducción de ruido, facilidad de mantenimiento.  El costo por metro cuadrado puede oscilar entre $15,000 y $30,000 MXN"}, {"year": 2025, "mes": "Enero", "mes_num": 1, "categoria": "ORACIÓN", "evento": "Luminares", "sede": "Horizonte Querétaro", "descripcion": "255,000 pesos. Para impactar a 15 niños con necesidades especiales"}, {"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Conferencia de matrimonios", "sede": "Horizonte Querétaro", "descripcion": "303 matrimonios  24 iglesias representadas"}, {"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Mujer controladora", "sede": "Horizonte Querétaro", "descripcion": "570 mujeres inscritas  28 iglesias representadas"}, {"year": 2025, "mes": "Marzo Abril", "mes_num": 3, "categoria": "Acción de gracias", "evento": "Bodega flechas", "sede": "Horizonte Querétaro", "descripcion": "Nos ha dado la oprtunidad de guardar y preservar aún mejor cada uno de los materiales, articulos.  impacto en los 450 niños que asisten cada semana"}, {"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Acción de gracias", "evento": "Día del niño", "sede": "Horizonte Querétaro", "descripcion": "Querétaro"}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "IGLESIAS", "evento": "Ruta siguiendo a Jesús", "sede": "Horizonte Querétaro", "descripcion": "Querétaro"}, {"year": 2026, "mes": "Febrero", "mes_num": 2, "categoria": "IGLESIAS", "evento": "Querétaro", "sede": "Horizonte Querétaro", "descripcion": "Horizonte Querétaro"}, {"year": 2026, "mes": "Marzo", "mes_num": 3, "categoria": "IGLESIAS", "evento": "Querétaro", "sede": "Horizonte Querétaro", "descripcion": "Horizonte Querétaro"}], "Horizonte El Marqués": [{"year": 2025, "mes": "Enero", "mes_num": 1, "categoria": "IGLESIAS", "evento": "Invitación a la comunidad La Purisima a un estudio biblico", "sede": "Horizonte El Marqués", "descripcion": "10 personas interesadas, 1 persona asistió a la primera reunión"}, {"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Dia del amor y la amistad", "sede": "Horizonte El Marqués", "descripcion": "evento evangelístico para adolescentes y jóvenes 20 asistentes  3 invitados"}, {"year": 2025, "mes": "Marzo Abril", "mes_num": 3, "categoria": "Acción de gracias", "evento": "Worship nite", "sede": "Horizonte El Marqués", "descripcion": "84 asistentes. 6 no creyentes + 2 alcanzadas"}, {"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Acción de gracias", "evento": "Día del niño", "sede": "Horizonte El Marqués", "descripcion": "Querétaro"}, {"year": 2026, "mes": "Febrero", "mes_num": 2, "categoria": "ORACIÓN", "evento": "Querétaro", "sede": "Horizonte El Marqués", "descripcion": "Horizonte El Marqués"}, {"year": 2026, "mes": "Marzo", "mes_num": 3, "categoria": "IGLESIAS", "evento": "Querétaro", "sede": "Horizonte El Marqués", "descripcion": "Horizonte El Marqués"}], "másCristo": [{"year": 2025, "mes": "Enero", "mes_num": 1, "categoria": "IGLESIAS", "evento": "Grupos hombres y mujeres", "sede": "másCristo", "descripcion": "24 hombres En la noche 30 En la mañana 17"}, {"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Super Bowl", "sede": "másCristo", "descripcion": "Evento de alcance: Super bowl  47 personas asistieron 4 personas nuevas e integradas actualmente a la iglesia."}, {"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Acción de gracias", "evento": "1er aniversario. Bautizos", "sede": "másCristo", "descripcion": "Querétaro"}, {"year": 2026, "mes": "Marzo", "mes_num": 3, "categoria": "IGLESIAS", "evento": "Querétaro", "sede": "másCristo", "descripcion": "MásCristo"}], "Compañerismo CEM": [{"year": 2025, "mes": "Enero", "mes_num": 1, "categoria": "6:4", "evento": "Reunión con Vance Pitman", "sede": "Compañerismo CEM", "descripcion": ""}, {"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "IGLESIAS", "evento": "Capacitación Siguiendo a Jesús a compañerismo", "sede": "Compañerismo CEM", "descripcion": "66 asistentes promedio  15 iglesias representadas 3 países (mx, ecuador y eua)"}, {"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Enfoque Global - Misiones", "sede": "Compañerismo CEM", "descripcion": "Capacitación de misiones. 43 asistentes, 29 personas de otras iglesias"}, {"year": 2025, "mes": "Marzo Abril", "mes_num": 3, "categoria": "Petición de oración", "evento": "Chuy", "sede": "Compañerismo CEM", "descripcion": "Ordenación pastoral de Chuy Anaya. Co-pastorear Horizonte Tijuana"}, {"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Acción de gracias", "evento": "Evento de jóvenes", "sede": "Compañerismo CEM", "descripcion": "80 personas. 60 personas nuevas"}, {"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Acción de gracias", "evento": "Floreciendo", "sede": "Compañerismo CEM", "descripcion": "586 asistentes de 10 estados de la rep mexicana"}, {"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Acción de gracias", "evento": "Enfoque Global Modulo 2,", "sede": "Compañerismo CEM", "descripcion": "44 personas asistieron, 6 iglesias representadas"}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "IGLESIAS", "evento": "CTC Toluca", "sede": "Compañerismo CEM", "descripcion": "Toluca"}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "Counseling Training: Regional CTC in Toluca", "sede": "Compañerismo CEM", "descripcion": ""}, {"year": 2025, "mes": "Agosto", "mes_num": 8, "categoria": "IGLESIAS", "evento": "Horizonte Querétaro", "sede": "Compañerismo CEM", "descripcion": "120 familias impactadas en actividades familiares 150 asistentes en evento anual de jóvenes: axios Evento de alcance: 80 jóvenes asistieron y 4+ personas tomaron decisión por Cristo"}, {"year": 2026, "mes": "Enero", "mes_num": 1, "categoria": "IGLESIAS", "evento": "Jornada de ayuno y oración", "sede": "Compañerismo CEM", "descripcion": "Días apartados para ayuno y oración congregacional"}, {"year": 2026, "mes": "Enero", "mes_num": 1, "categoria": "IGLESIAS", "evento": "Retiro de apertura ABIDE", "sede": "Compañerismo CEM", "descripcion": "Programa de discipulado"}, {"year": 2026, "mes": "Febrero", "mes_num": 2, "categoria": "IGLESIAS", "evento": "Ciudad", "sede": "Compañerismo CEM", "descripcion": "Iglesia"}, {"year": 2026, "mes": "Febrero", "mes_num": 2, "categoria": "IGLESIAS", "evento": "Oaxaca", "sede": "Compañerismo CEM", "descripcion": "600 asistentes en las dos localidades (300 y 300 en cada una)"}, {"year": 2026, "mes": "Marzo", "mes_num": 3, "categoria": "IGLESIAS", "evento": "Ciudad", "sede": "Compañerismo CEM", "descripcion": "Iglesia"}], "Misiones": [{"year": 2025, "mes": "Enero", "mes_num": 1, "categoria": "MISIONES", "evento": "Entrega de juguetes", "sede": "Misiones", "descripcion": "Juguetes para 50 niños  4 computadoras para el futuro Centro Comunitario  1 proyector  5 despensas"}, {"year": 2025, "mes": "Enero", "mes_num": 1, "categoria": "MISIONES", "evento": "Plantación de 1 iglesia más", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "Marzo Abril", "mes_num": 3, "categoria": "Petición de oración", "evento": "Kifé", "sede": "Misiones", "descripcion": "ha plantado 11 iglesias en 7 años recuperación de la cirugía para que no pierda su pie derecho."}, {"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Misiones", "evento": "Día del niño amealco", "sede": "Misiones", "descripcion": "Santiago mexquititlán, amealco"}, {"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Misiones", "evento": "Día de las madres", "sede": "Misiones", "descripcion": "Santiago mexquititlán, amealco"}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "Apoyo a los Rangers de la Libre Birmania: ayuda, esperanza y amor en nombre de J", "sede": "Misiones", "descripcion": "Birmania"}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "Escuelita bíblica de verano para los niños “Asombroso”", "sede": "Misiones", "descripcion": "Santiago Mexquititlán"}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "1. Churches", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "Local Pastor: Gadiel Arriaga", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "Church: Horizonte Querétaro", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "Following Jesus Path", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "42 people decided to follow Jesus", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "90 people joined the 1st stage of the Path", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "Local Pastor: Gerardo Berrones", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "Church: Identidad", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "10th Anniversary", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "120 people attended the prayer meeting", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "180 people attended the 10th anniversary service", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "Pastor: Daniel Vargas", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "Church: Comunidad el Camino", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "Visit to the Red Zone", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "The most troubled and dangerous area of San José", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "115 people were fed", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "Six people began to be discipled.", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "2. Community, Church Plants, and Missions", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "Missionary: Marco Díaz", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "Mission: Otomí Community", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "\"Amazing\" Summer School", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "32 children received food, backpacks, and enjoyed activities", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "22 children were welcomed in collaboration with the library", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "9 volunteers from Atlanta supported us", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "Missionary: André Huegel", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "Mission: Free Burma Rangers", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "Four fully equipped specialized medical backpacks were delivered to the team in ", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "3. Pastors", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "256 pastors, leaders, and wives", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "63 churches represented", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "4 countries represented: Costa Rica, Panama, United States, and Mexico", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "21 pastors and leaders attended", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "Nine churches were represented.", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "We trust in Christ", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "We walk with Christ", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "We communicate Christ", "sede": "Misiones", "descripcion": ""}, {"year": 2025, "mes": "Agosto", "mes_num": 8, "categoria": "Pastores", "evento": "Uruguay", "sede": "Misiones", "descripcion": "40+ iglesias representadas"}, {"year": 2025, "mes": "Agosto", "mes_num": 8, "categoria": "Misiones", "evento": "Burkina Faso", "sede": "Misiones", "descripcion": "Mike"}, {"year": 2025, "mes": "Agosto", "mes_num": 8, "categoria": "Misiones", "evento": "Marruecos", "sede": "Misiones", "descripcion": "Adrián de la Cruz"}, {"year": 2026, "mes": "Febrero", "mes_num": 2, "categoria": "MISIONES", "evento": "Birmania", "sede": "Misiones", "descripcion": "Compra de casco de protección contra la guerra"}, {"year": 2026, "mes": "Febrero", "mes_num": 2, "categoria": "MISIONES", "evento": "Malovodnoe, Kirguistán", "sede": "Misiones", "descripcion": "Taller de arte para niños con enfoque de alcance. 27 niños siendo parte"}, {"year": 2026, "mes": "Febrero", "mes_num": 2, "categoria": "MISIONES", "evento": "Venezueal", "sede": "Misiones", "descripcion": "Estos hombres se entrenan con nosotros durante 52 semanas. Algunos son de nuestra iglesia y otros vienen de diferentes congregaciones. Los estamos equipando para la obra del ministerio, buscando formar pastores y líderes que amen profundamente la Pal"}, {"year": 2026, "mes": "Marzo", "mes_num": 3, "categoria": "MISIONES", "evento": "Santiago Mexquititlán", "sede": "Misiones", "descripcion": "2 personas bautizadas"}], "Horizonte Tequisquiapan": [{"year": 2025, "mes": "Enero", "mes_num": 1, "categoria": "ORACIÓN", "evento": "Espacio para jóvenes", "sede": "Horizonte Tequisquiapan", "descripcion": "10 jóvenes a impactar"}, {"year": 2025, "mes": "Noviembre", "mes_num": 11, "categoria": "IGLESIAS", "evento": "Horizonte Tequisquiapan", "sede": "Horizonte Tequisquiapan", "descripcion": "Hugo Ventura"}, {"year": 2026, "mes": "Enero", "mes_num": 1, "categoria": "IGLESIAS", "evento": "Escuela para padres", "sede": "Horizonte Tequisquiapan", "descripcion": "35 asistentes"}], "SEBAM / Liderazgo": [{"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "IGLESIAS", "evento": "Taller de predicación", "sede": "SEBAM / Liderazgo", "descripcion": "24 personas registradas"}], "Horizonte CDMX": [{"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Visita misiones", "sede": "Horizonte CDMX", "descripcion": "11 personas fueron a visitar una comunidad para empezar proyecto misionero. Visitas el primer domingo del mes  estudio bíblico para 10 adultos y clases preparadas para 5 niños.   Se han entregado varios Nuevos Testamentos y brindado consejería bíblic"}, {"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Acción de gracias", "evento": "Día del niño", "sede": "Horizonte CDMX", "descripcion": "CDMX"}, {"year": 2025, "mes": "Agosto", "mes_num": 8, "categoria": "IGLESIAS", "evento": "Horizonte CDMX", "sede": "Horizonte CDMX", "descripcion": "Erik Servín"}, {"year": 2025, "mes": "Noviembre", "mes_num": 11, "categoria": "IGLESIAS", "evento": "Horizonte CDMX", "sede": "Horizonte CDMX", "descripcion": "Erik Servín"}, {"year": 2026, "mes": "Febrero", "mes_num": 2, "categoria": "ORACIÓN", "evento": "CDMX", "sede": "Horizonte CDMX", "descripcion": "Horizonte CDMX"}, {"year": 2026, "mes": "Marzo", "mes_num": 3, "categoria": "IGLESIAS", "evento": "CDMX", "sede": "Horizonte CDMX", "descripcion": "Horizonte CDMX"}], "Horizonte Villahermosa": [{"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Cena conferencia para matrimonios \"El arte de disfrutarnos\"", "sede": "Horizonte Villahermosa", "descripcion": "84 asistentes + 18 personas nuevas"}, {"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Apoyo a construcción de casas de desplazados de la sierra", "sede": "Horizonte Villahermosa", "descripcion": "Apoyo de 40 mil pesos como ofrenda para apoyar a la construcción de casas de un grupo cristiano de desplazados en la sierra de Veracruz"}, {"year": 2025, "mes": "Noviembre", "mes_num": 11, "categoria": "IGLESIAS", "evento": "Horizonte Villahermosa", "sede": "Horizonte Villahermosa", "descripcion": "Adrián Capitaine"}, {"year": 2026, "mes": "Febrero", "mes_num": 2, "categoria": "ORACIÓN", "evento": "Villahermosa", "sede": "Horizonte Villahermosa", "descripcion": "Horizonte Villahermosa"}], "Gracia Irresistible": [{"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Conferencia para mujeres", "sede": "Gracia Irresistible", "descripcion": "80 asistentes  10 personas nuevas"}, {"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Acción de gracias", "evento": "Día del niño", "sede": "Gracia Irresistible", "descripcion": "Ciudad Valles, SLP"}, {"year": 2025, "mes": "Septiembre", "mes_num": 9, "categoria": "IGLESIAS", "evento": "Gracia Irresistible", "sede": "Gracia Irresistible", "descripcion": "Mario Salazar"}], "Calvary Texcoco": [{"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Dos estudios bíblicos nuevos", "sede": "Calvary Texcoco", "descripcion": "Comenzamos dos estudios bíblicos nuevos en diferentes lugares, uno en Coatlinchán, municipio de  Texcoco y otro en Ojo de Agua, municipio de Tecamac."}], "Vida Nueva en Cristo": [{"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Campaña evangelística en la alcaldía Tláhuac", "sede": "Vida Nueva en Cristo", "descripcion": "150 personas asistieron a una campaña evangelística y ahora se convirtió en misión"}, {"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Acción de gracias", "evento": "Desayuno de mujeres", "sede": "Vida Nueva en Cristo", "descripcion": "Milpa Alta cdmx"}, {"year": 2026, "mes": "Febrero", "mes_num": 2, "categoria": "IGLESIAS", "evento": "Milpa Alta", "sede": "Vida Nueva en Cristo", "descripcion": "Vida Nueva en Cristo"}], "Fuentes de Agua Viva": [{"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "PETICIÓN DE ORACIÓN", "evento": "Cuarto maternal", "sede": "Fuentes de Agua Viva", "descripcion": "Es un área diseñada para 5 mamás lactantes, es para bebés de brazos -diseñado para su comodidad con sillones reclinables, climatizada, con lo necesario para preparar biberones. -antirruido con ventanal para que las mamás puedan ver hacia el auditorio"}], "Horizonte Hermosillo": [{"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "PETICIÓN DE ORACIÓN", "evento": "Búsqueda de un lugar", "sede": "Horizonte Hermosillo", "descripcion": "Búsqueda de un lugar para recibir más personas"}, {"year": 2025, "mes": "Septiembre", "mes_num": 9, "categoria": "IGLESIAS", "evento": "Horizonte Hermosillo", "sede": "Horizonte Hermosillo", "descripcion": "José Machado"}], "Horizonte Mérida": [{"year": 2025, "mes": "Marzo Abril", "mes_num": 3, "categoria": "Acción de gracias", "evento": "Inauguración", "sede": "Horizonte Mérida", "descripcion": "130 personas asistieron. 6 iglesias representadas*"}, {"year": 2025, "mes": "Marzo Abril", "mes_num": 3, "categoria": "Acción de gracias", "evento": "Conferencia de hombres", "sede": "Horizonte Mérida", "descripcion": "121 asistentes más invitados. 31 iglesias representadas"}, {"year": 2026, "mes": "Febrero", "mes_num": 2, "categoria": "IGLESIAS", "evento": "Mérida", "sede": "Horizonte Mérida", "descripcion": "Horizonte Merida"}], "La Carpa del Valle": [{"year": 2025, "mes": "Marzo Abril", "mes_num": 3, "categoria": "Acción de gracias", "evento": "Aniversario", "sede": "La Carpa del Valle", "descripcion": "100 asistentes"}, {"year": 2026, "mes": "Marzo", "mes_num": 3, "categoria": "IGLESIAS", "evento": "McAllen", "sede": "La Carpa del Valle", "descripcion": "La Carpa del Valle"}], "Comunidad Baluarte": [{"year": 2025, "mes": "Marzo Abril", "mes_num": 3, "categoria": "Acción de gracias", "evento": "CTC", "sede": "Comunidad Baluarte", "descripcion": "160 asistentes. 23 iglesias representadas."}, {"year": 2026, "mes": "Febrero", "mes_num": 2, "categoria": "IGLESIAS", "evento": "Chihuahua", "sede": "Comunidad Baluarte", "descripcion": "Comunidad Baluarte"}], "Calvary Ecatepec": [{"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Acción de gracias", "evento": "Conferencia de mujeres (finales de Marzo principios de abril)", "sede": "Calvary Ecatepec", "descripcion": "Estado de México"}, {"year": 2025, "mes": "Agosto", "mes_num": 8, "categoria": "IGLESIAS", "evento": "Calvary Ecatepec", "sede": "Calvary Ecatepec", "descripcion": "Toño García"}, {"year": 2026, "mes": "Febrero", "mes_num": 2, "categoria": "ORACIÓN", "evento": "Ecatepec", "sede": "Calvary Ecatepec", "descripcion": "Calvary Chapel Ecatepec"}], "Comunidad El Camino": [{"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "IGLESIAS", "evento": "Visita a la zona roja", "sede": "Comunidad El Camino", "descripcion": "Costa Rica"}, {"year": 2025, "mes": "Septiembre", "mes_num": 9, "categoria": "IGLESIAS", "evento": "Comunidad El Camino", "sede": "Comunidad El Camino", "descripcion": "Daniel Vargas"}], "Bernabé / Pastores": [{"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "IGLESIAS", "evento": "Bernabé", "sede": "Bernabé / Pastores", "descripcion": "Querétaro"}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "Misiones", "evento": "Pastors’ Retreat: Bernabé", "sede": "Bernabé / Pastores", "descripcion": ""}, {"year": 2025, "mes": "Septiembre", "mes_num": 9, "categoria": "Pastores", "evento": "Compañerismo CEM", "sede": "Bernabé / Pastores", "descripcion": "¿Cómo dar una clase?  62 asistentes de las diferentes iglesias del compañerismo  Por Tita Camacho Dir Nacional TeachBeyond Mex. Experta en Educación."}], "La Carpa CEM": [{"year": 2025, "mes": "Agosto", "mes_num": 8, "categoria": "IGLESIAS", "evento": "El Marqués", "sede": "La Carpa CEM", "descripcion": "Phil Jones"}, {"year": 2025, "mes": "Septiembre", "mes_num": 9, "categoria": "IGLESIAS", "evento": "másCristo en Juriquilla", "sede": "La Carpa CEM", "descripcion": "Marce Muñoz"}, {"year": 2025, "mes": "Noviembre", "mes_num": 11, "categoria": "IGLESIAS", "evento": "Horizonte El Marqués", "sede": "La Carpa CEM", "descripcion": "Phil Jones"}, {"year": 2025, "mes": "Noviembre", "mes_num": 11, "categoria": "IGLESIAS", "evento": "La Carpa", "sede": "La Carpa CEM", "descripcion": "3 personas bautizadas"}, {"year": 2026, "mes": "Febrero", "mes_num": 2, "categoria": "IGLESIAS", "evento": "Querétaro", "sede": "La Carpa CEM", "descripcion": "La Carpa"}, {"year": 2026, "mes": "Marzo", "mes_num": 3, "categoria": "IGLESIAS", "evento": "Querétaro", "sede": "La Carpa CEM", "descripcion": "La Carpa de Reunión Cristo es mejor"}], "Iglesia Antioquía": [{"year": 2026, "mes": "Febrero", "mes_num": 2, "categoria": "IGLESIAS", "evento": "Mérida", "sede": "Iglesia Antioquía", "descripcion": "Antioquía"}]};
-const directorio = {'Mario': {'iglesia': 'Gracia Irresistible Calvary', 'ciudad': 'Ciudad Valles', 'estado': 'San Luis Potosí', 'pais': 'México', 'horarios': 'Miércoles 7:30pm y domingo 11am', 'facebook': 'https://www.facebook.com/share/1Ls7XMogTB/', 'instagram': 'https://www.instagram.com/iglesia_gracia_irresistible', 'tiktok': 'https://www.tiktok.com/@gracia_irresistible', 'tel': '+524813890720', 'email': 'marioyanettesalazar@gmail.com', 'dir': 'Galeana esquina con Zaragoza, Ciudad Valles, SLP'}, 'Gerry': {'iglesia': 'Identidad San Luis', 'ciudad': 'San Luis Potosí', 'estado': 'San Luis Potosí', 'pais': 'México', 'horarios': 'Domingo 10:30 y 12:15 / Hombres Miércoles 8:30 / Mujeres Martes 7:30pm y Jueves 10am', 'youtube': 'https://youtube.com/@identidadslp8479', 'facebook': 'https://www.facebook.com/share/1ZM7EvH6te/', 'instagram': '@identidadslp', 'spotify': 'https://open.spotify.com/show/1xb8C1gv7mQpg1o8Sl9FCL', 'tel': '+524441743951', 'email': 'identidadslp@gmail.com', 'dir': 'Av. Santos Degollado 1055-B, Fracc. Tangamanga, SLP'}, 'Toño': {'iglesia': 'Calvary Chapel Ecatepec', 'ciudad': 'Ecatepec', 'estado': 'Estado de México', 'pais': 'México', 'horarios': 'Domingo 10am discipulado y 11am general / Jueves discipulado 7pm / 3er viernes hombres 7:30pm / 1er sábado mujeres 9:30am', 'youtube': 'https://youtube.com/@calvaryecatepec', 'facebook': 'https://www.facebook.com/CalvaryChapelEcatepec', 'instagram': 'calvaryecatepec', 'tel': '+525542444637', 'email': 'calvary.ecatepec@gmail.com', 'dir': 'Av. Miguel Hidalgo esq. Río Nazas, Col. Jardines de Mórelos, Ecatepec'}, 'Manuel': {'iglesia': 'Comunidad Baluarte', 'ciudad': 'Chihuahua', 'estado': 'Chihuahua', 'pais': 'México', 'horarios': 'Domingo 11am y 1pm / Miércoles 8pm', 'youtube': 'https://youtube.com/@comunidadbaluarte', 'facebook': 'https://www.facebook.com/share/1V3mcx3Qz7/', 'instagram': 'https://www.instagram.com/baluarte.cuu', 'tel': '+526141000085', 'email': 'contacto@comunidadbaluarte.com', 'dir': 'Catedral de Chihuahua 9308, Chihuahua'}, 'Moisés': {'iglesia': 'Calvary Chapel Texcoco', 'ciudad': 'Texcoco', 'estado': 'Estado de México', 'pais': 'México', 'horarios': 'Domingo 11am / Miércoles 7:30pm', 'facebook': 'https://www.facebook.com/share/19PPXk5W8Q/', 'tel': '+525581655286', 'email': 'calvarychapeltexcoco@gmail.com', 'dir': 'Calle Rayón #114b, Centro, Texcoco'}, 'Daniel': {'iglesia': 'Comunidad El Camino', 'ciudad': 'San José', 'estado': 'San José', 'pais': 'Costa Rica', 'horarios': 'Domingo 10am', 'youtube': 'https://youtube.com/@comunidadelcamino4578', 'facebook': 'https://www.facebook.com/share/16qsbVQva9/', 'instagram': 'https://www.instagram.com/comuelcamino', 'tel': '+50683375222', 'email': 'infoelcaminocr@gmail.com', 'dir': 'Del KFC de Plaza Viquez 65m al este y 75m al norte, San José, Costa Rica'}, 'Marcial': {'iglesia': 'Iglesia Presbiteriana Antioquía', 'ciudad': 'Mérida', 'estado': 'Yucatán', 'pais': 'México', 'horarios': 'Domingos 9am y 12:30pm', 'youtube': 'https://youtube.com/@iglesiapresbiterianaantioq7489', 'facebook': 'https://www.facebook.com/share/1FPhioSPuu/', 'instagram': 'https://www.instagram.com/inp.antioquia', 'web': 'https://www.inpantioquia.org', 'tel': '+529999232885', 'email': 'contacto@inpantioquia.org', 'dir': 'Calle 74 x 49 y 51 Centro, Mérida, Yucatán'}, 'Adrián': {'iglesia': 'Horizonte Villahermosa', 'ciudad': 'Villahermosa', 'estado': 'Tabasco', 'pais': 'México', 'horarios': 'Domingos 10 y 12pm / Miércoles 7pm Oración y Adoración', 'youtube': 'Horizonte Villahermosa', 'facebook': 'https://www.facebook.com/share/19SnTN8rPJ/', 'instagram': '@horizontevillahermosa', 'web': 'https://horizontevillahermosa.com', 'tel': '+529331060509', 'email': 'contacto@horizontevillahermosa.com', 'dir': 'Abraham Bandala 209, Col Tamulte, Villahermosa, Tabasco'}, 'Omar': {'iglesia': 'Horizonte Tijuana', 'ciudad': 'Tijuana', 'estado': 'Baja California', 'pais': 'México', 'horarios': 'Miércoles adoración 7:15pm y Domingo 11am', 'instagram': 'Horizonte Tijuana', 'dir': 'Manuel Oviedo int 3, Col. Libertad, Tijuana'}, 'Oscar': {'iglesia': 'Vida Nueva En Cristo', 'ciudad': 'San Pablo Oztotepec', 'estado': 'Milpa Alta, CDMX', 'pais': 'México', 'horarios': 'Domingo 10 y 1pm / Miércoles estudio 7pm / Jueves estudio 7pm', 'facebook': 'https://www.facebook.com/share/14GdV9JsKJh/', 'instagram': 'https://www.instagram.com/vidanueva_encristoma', 'tel': '+525558624305', 'email': 'vidanuevaencristo59@gmail.com', 'dir': 'Matamoros #59, San Pablo Oztotepec, Milpa Alta'}, 'José': {'iglesia': 'Horizonte Hermosillo', 'ciudad': 'Hermosillo', 'estado': 'Sonora', 'pais': 'México', 'horarios': 'Domingo 10am y 12pm / Miércoles 7:30pm', 'youtube': 'https://youtube.com/@horizontehermosillo', 'facebook': 'https://www.facebook.com/horizontehermosillo', 'instagram': '@horizontehermosillo', 'web': 'https://horizontehermosillo.org', 'tel': '+526624258028', 'email': 'horizontehermosillo@gmail.com', 'dir': 'José Carmelo 334, esq. con Arizona, Hermosillo, Sonora'}, 'Dani': {'iglesia': 'La Carpa, Cristo Es Mejor', 'ciudad': 'Querétaro', 'estado': 'Querétaro', 'pais': 'México', 'horarios': 'Domingo 10am y 12pm / Miércoles adoración 7:30pm', 'facebook': 'https://www.facebook.com/LaCarpaDeReunion', 'instagram': 'https://www.instagram.com/lacarpadereunion/', 'spotify': 'https://open.spotify.com/show/0qCXgR5aELuDAvFZtNaSJS', 'web': 'https://lacarpadereunionlinks.my.canva.site', 'tel': '+524426757487', 'email': 'lacarpa@cristoesmejor.com', 'dir': 'Lib. Norponiente km29, Tlacote el Bajo, Querétaro'}, 'Erik': {'iglesia': 'Horizonte CDMX', 'ciudad': 'Ciudad de México', 'estado': 'CDMX', 'pais': 'México', 'horarios': 'Sábados 6pm / Miércoles oración 8pm (videoconferencia)', 'youtube': 'https://www.youtube.com/@HorizonteCDMX', 'facebook': 'https://www.facebook.com/VisitaHorizonteCDMX', 'instagram': 'https://www.instagram.com/horizontecdmx/', 'web': 'https://www.horizontecdmx.org', 'tel': '+525588196030', 'email': 'horizontecdmx@gmail.com', 'dir': 'Av. Paseo de la Reforma 1870, Lomas de Chapultepec, CDMX'}, 'Marce': {'iglesia': 'másCristo Juriquilla', 'ciudad': 'Juriquilla', 'estado': 'Querétaro', 'pais': 'México', 'horarios': 'Domingo 11am', 'instagram': '@mascristoenmas', 'email': 'juriquilla@cristoesmejor.com', 'dir': 'Camino Juriquilla a Acequia Blanca S/N, Querétaro'}, 'Herminio': {'iglesia': 'Horizonte Mérida', 'ciudad': 'Mérida', 'estado': 'Yucatán', 'pais': 'México', 'horarios': 'Domingo 11am / Miércoles adoración 8pm', 'facebook': 'https://www.facebook.com/share/1Cu9fMCRcA/', 'instagram': 'https://www.facebook.com/share/1Cu9fMCRcA/', 'tel': '+529992567627', 'email': 'hmerida@cristoesmejor.com', 'dir': 'C 100 no 530 x 35, Fracc. Paseo de las Fuentes, Mérida'}, 'Phil': {'iglesia': 'Horizonte El Marqués', 'ciudad': 'El Marqués', 'estado': 'Querétaro', 'pais': 'México', 'horarios': 'Domingo 11am / Miércoles 7:30pm', 'facebook': 'https://www.facebook.com/horizonteelmarques/', 'instagram': 'https://www.instagram.com/horizontemarques/', 'web': 'https://horizontemarques.churchtrac.com/', 'tel': '+524421181324', 'email': 'oficinahorizontemarques@cristoesmejor.com', 'dir': 'Salón Ébano, Concord La Purísima, El Marqués, Qro.'}, 'Juan Pablo': {'iglesia': 'Horizonte Panamá', 'ciudad': 'Panamá', 'estado': 'Panamá', 'pais': 'Panamá', 'horarios': 'Domingos 2:30pm / Miércoles 7pm', 'youtube': 'https://www.youtube.com/@HorizontePanamá', 'instagram': 'https://www.instagram.com/horizontepanama/', 'tel': '+50764547757', 'email': 'horizontepma@gmail.com', 'dir': 'Vía Fernández de Córdoba, Plaza Ágora local 23, Panamá'}, 'Gadiel': {'iglesia': 'Horizonte Querétaro', 'ciudad': 'Querétaro', 'estado': 'Querétaro', 'pais': 'México', 'horarios': 'Oración Miércoles 7:30pm / General Sábado 7:30pm / Domingo 10:30am y 1pm', 'youtube': 'https://www.youtube.com/@HorizonteCristoesmejor', 'facebook': 'facebook.com/horizonteqro', 'instagram': 'instagram.com/horizonteqro', 'web': 'https://horizonte.cristoesmejor.com/', 'dir': 'Av. Tlacote 1, Galindas, Santiago de Querétaro, Qro.'}, 'Alberto': {'iglesia': 'Iglesia Fuentes de Agua Viva', 'ciudad': 'Piedras Negras', 'estado': 'Coahuila', 'pais': 'México', 'horarios': 'Domingo 10am y 12pm / Martes estudio 6pm', 'youtube': 'https://www.youtube.com/channel/UCtgK18UlD5Ww1vpcOKm4SSQ', 'facebook': 'facebook.com/FAV-103461333051157', 'instagram': 'https://www.instagram.com/fuentesdeaguavivapn/', 'web': 'https://fuentesdeaguaviva.me/', 'tel': '(878) 122 8546', 'email': 'informes@fav1.org', 'dir': 'Margarita 103, Las Fuentes, Piedras Negras, Coahuila'}, 'Willer': {'iglesia': 'La Carpa del Valle', 'ciudad': 'McAllen', 'estado': 'Texas', 'pais': 'EE.UU.', 'horarios': 'Domingo 10:30 y 11:40 / Miércoles 7:30pm', 'facebook': 'https://www.facebook.com/p/La-Carpa-del-Valle-100091212942752/', 'instagram': 'https://www.instagram.com/lacarpadelvalle/', 'tel': '586-907-090', 'email': 'lacarpadelvalle@outlook.com', 'dir': '201 N Broadway St, McAllen, TX'}, 'Hugo': {'iglesia': 'Horizonte Tequisquiapan', 'ciudad': 'Tequisquiapan', 'estado': 'Querétaro', 'pais': 'México', 'horarios': 'Miércoles 7pm / Domingos 11am', 'youtube': 'https://www.youtube.com/@horizonte.tequis', 'facebook': 'https://www.facebook.com/people/Horizonte-Tequisquiapan/100068507286837/', 'instagram': 'https://www.instagram.com/horizonte.teq/', 'tel': '52 442 230 1269', 'dir': 'Calle Prof. Francisco Martínez Elías & Calle Juárez Oriente S/N, La Magdalena, Tequisquiapan'}};
 
+const pastorPhotos = {
+  'Gadiel': 'data:image/jpeg;base64,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'
+};
+
+const BY_SEDE = {"Horizonte Panamá": [{"year": 2025, "mes": "Enero", "mes_num": 1, "categoria": "IGLESIAS", "evento": "Inaguración Panamá", "sede": "Horizonte Panamá", "descripcion": "11 personas asistieron por primera vez. 6 personas recibieron a Cristo."}, {"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "1er mes", "sede": "Horizonte Panamá", "descripcion": "44 personas entre niños, adolescentes y adultos."}], "Identidad San Luis": [{"year": 2025, "mes": "Enero", "mes_num": 1, "categoria": "IGLESIAS", "evento": "Entrega de zapatos", "sede": "Identidad San Luis", "descripcion": "272 entregas de zapatos a 5 comunidades vulnerables"}, {"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Conferencia de Matrimonios", "sede": "Identidad San Luis", "descripcion": "80 asistentes"}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "IGLESIAS", "evento": "Aniversario 10: Pleroma", "sede": "Identidad San Luis", "descripcion": "San Luis Potosí"}], "Horizonte Querétaro": [{"year": 2025, "mes": "Enero", "mes_num": 1, "categoria": "IGLESIAS", "evento": "Jornada de ayuno y oración", "sede": "Horizonte Querétaro", "descripcion": "210 personas por servicio. 81 primeras visitas en el mes"}, {"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Conferencia de matrimonios", "sede": "Horizonte Querétaro", "descripcion": "303 matrimonios, 24 iglesias representadas"}, {"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Mujer controladora", "sede": "Horizonte Querétaro", "descripcion": "570 mujeres inscritas, 28 iglesias representadas"}, {"year": 2026, "mes": "Enero", "mes_num": 1, "categoria": "IGLESIAS", "evento": "Retiro de apertura ABIDE", "sede": "Horizonte Querétaro", "descripcion": "Programa de discipulado"}], "Horizonte El Marqués": [{"year": 2025, "mes": "Marzo Abril", "mes_num": 3, "categoria": "Acción de gracias", "evento": "Worship nite", "sede": "Horizonte El Marqués", "descripcion": "84 asistentes. 6 no creyentes + 2 alcanzadas"}, {"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Dia del amor y la amistad", "sede": "Horizonte El Marqués", "descripcion": "20 asistentes, 3 invitados"}], "másCristo": [{"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Super Bowl", "sede": "másCristo", "descripcion": "47 personas, 4 nuevas integradas"}, {"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Acción de gracias", "evento": "1er aniversario + Bautizos", "sede": "másCristo", "descripcion": "Querétaro"}], "Compañerismo CEM": [{"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "IGLESIAS", "evento": "Capacitación Siguiendo a Jesús", "sede": "Compañerismo CEM", "descripcion": "66 asistentes promedio, 15 iglesias, 3 países"}, {"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Acción de gracias", "evento": "Floreciendo", "sede": "Compañerismo CEM", "descripcion": "586 asistentes de 10 estados"}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "IGLESIAS", "evento": "Bernabé — retiro de pastores", "sede": "Compañerismo CEM", "descripcion": "Querétaro"}], "Horizonte Villahermosa": [{"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Cena conferencia matrimonios", "sede": "Horizonte Villahermosa", "descripcion": "84 asistentes + 18 personas nuevas"}, {"year": 2025, "mes": "Noviembre", "mes_num": 11, "categoria": "IGLESIAS", "evento": "Horizonte Villahermosa", "sede": "Horizonte Villahermosa", "descripcion": "Adrián Capitaine"}], "La Carpa CEM": [{"year": 2025, "mes": "Noviembre", "mes_num": 11, "categoria": "IGLESIAS", "evento": "La Carpa — 3 bautizos", "sede": "La Carpa CEM", "descripcion": "3 personas bautizadas"}, {"year": 2025, "mes": "Octubre", "mes_num": 10, "categoria": "IGLESIAS", "evento": "Cierre Habitar", "sede": "La Carpa CEM", "descripcion": "14 hombres + 16 mujeres — 'Mi historia en la historia de Dios'"}], "Comunidad El Camino": [{"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "IGLESIAS", "evento": "Visita a la zona roja", "sede": "Comunidad El Camino", "descripcion": "Costa Rica — 115 alimentados, 6 discipled"}, {"year": 2025, "mes": "Noviembre", "mes_num": 11, "categoria": "IGLESIAS", "evento": "22 Aniversario", "sede": "Comunidad El Camino", "descripcion": "Daniel Vargas"}], "Calvary Ecatepec": [{"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Acción de gracias", "evento": "Conferencia de mujeres", "sede": "Calvary Ecatepec", "descripcion": "Estado de México"}, {"year": 2025, "mes": "Agosto", "mes_num": 8, "categoria": "IGLESIAS", "evento": "Calvary Ecatepec", "sede": "Calvary Ecatepec", "descripcion": "Toño García"}], "Horizonte Mérida": [{"year": 2025, "mes": "Marzo Abril", "mes_num": 3, "categoria": "Acción de gracias", "evento": "Inauguración", "sede": "Horizonte Mérida", "descripcion": "130 personas, 6 iglesias representadas"}, {"year": 2025, "mes": "Marzo Abril", "mes_num": 3, "categoria": "Acción de gracias", "evento": "Conferencia de hombres", "sede": "Horizonte Mérida", "descripcion": "121 asistentes, 31 iglesias representadas"}]};
+
+const directorio = {'Mario': {'iglesia': 'Gracia Irresistible Calvary', 'ciudad': 'Ciudad Valles', 'estado': 'San Luis Potosí', 'pais': 'México', 'horarios': 'Miércoles 7:30pm y domingo 11am', 'facebook': 'https://www.facebook.com/share/1Ls7XMogTB/', 'instagram': 'https://www.instagram.com/iglesia_gracia_irresistible', 'tel': '+524813890720', 'email': 'marioyanettesalazar@gmail.com', 'dir': 'Galeana esquina con Zaragoza, Ciudad Valles, SLP'}, 'Gerry': {'iglesia': 'Identidad San Luis', 'ciudad': 'San Luis Potosí', 'horarios': 'Domingo 10:30 y 12:15 / Hombres Miércoles 8:30 / Mujeres Martes 7:30pm', 'youtube': 'https://youtube.com/@identidadslp8479', 'facebook': 'https://www.facebook.com/share/1ZM7EvH6te/', 'instagram': '@identidadslp', 'tel': '+524441743951', 'email': 'identidadslp@gmail.com', 'dir': 'Av. Santos Degollado 1055-B, SLP'}, 'Toño': {'iglesia': 'Calvary Chapel Ecatepec', 'ciudad': 'Ecatepec', 'horarios': 'Domingo 10am discipulado y 11am general / Jueves 7pm / 3er viernes hombres 7:30pm', 'youtube': 'https://youtube.com/@calvaryecatepec', 'facebook': 'https://www.facebook.com/CalvaryChapelEcatepec', 'instagram': 'calvaryecatepec', 'tel': '+525542444637', 'email': 'calvary.ecatepec@gmail.com', 'dir': 'Av. Miguel Hidalgo esq. Río Nazas, Jardines de Mórelos, Ecatepec'}, 'Manuel': {'iglesia': 'Comunidad Baluarte', 'ciudad': 'Chihuahua', 'horarios': 'Domingo 11am y 1pm / Miércoles 8pm', 'youtube': 'https://youtube.com/@comunidadbaluarte', 'facebook': 'https://www.facebook.com/share/1V3mcx3Qz7/', 'instagram': 'https://www.instagram.com/baluarte.cuu', 'tel': '+526141000085', 'email': 'contacto@comunidadbaluarte.com'}, 'Moisés': {'iglesia': 'Calvary Chapel Texcoco', 'ciudad': 'Texcoco', 'horarios': 'Domingo 11am / Miércoles 7:30pm', 'facebook': 'https://www.facebook.com/share/19PPXk5W8Q/', 'tel': '+525581655286', 'email': 'calvarychapeltexcoco@gmail.com'}, 'Daniel': {'iglesia': 'Comunidad El Camino', 'ciudad': 'San José, Costa Rica', 'horarios': 'Domingo 10am', 'youtube': 'https://youtube.com/@comunidadelcamino4578', 'facebook': 'https://www.facebook.com/share/16qsbVQva9/', 'instagram': 'https://www.instagram.com/comuelcamino', 'tel': '+50683375222', 'email': 'infoelcaminocr@gmail.com'}, 'Marcial': {'iglesia': 'Iglesia Presbiteriana Antioquía', 'ciudad': 'Mérida', 'horarios': 'Domingos 9am y 12:30pm', 'youtube': 'https://youtube.com/@iglesiapresbiterianaantioq7489', 'facebook': 'https://www.facebook.com/share/1FPhioSPuu/', 'web': 'https://www.inpantioquia.org', 'tel': '+529999232885', 'email': 'contacto@inpantioquia.org'}, 'Adrián': {'iglesia': 'Horizonte Villahermosa', 'ciudad': 'Villahermosa', 'horarios': 'Domingos 10 y 12pm / Miércoles 7pm', 'facebook': 'https://www.facebook.com/share/19SnTN8rPJ/', 'instagram': '@horizontevillahermosa', 'web': 'https://horizontevillahermosa.com', 'tel': '+529331060509', 'email': 'contacto@horizontevillahermosa.com'}, 'Omar': {'iglesia': 'Horizonte Tijuana', 'ciudad': 'Tijuana', 'horarios': 'Miércoles adoración 7:15pm y Domingo 11am'}, 'Oscar': {'iglesia': 'Vida Nueva En Cristo', 'ciudad': 'San Pablo Oztotepec', 'horarios': 'Domingo 10 y 1pm / Miércoles estudio 7pm', 'facebook': 'https://www.facebook.com/share/14GdV9JsKJh/', 'tel': '+525558624305', 'email': 'vidanuevaencristo59@gmail.com'}, 'José': {'iglesia': 'Horizonte Hermosillo', 'ciudad': 'Hermosillo', 'horarios': 'Domingo 10am y 12pm / Miércoles 7:30pm', 'youtube': 'https://youtube.com/@horizontehermosillo', 'facebook': 'https://www.facebook.com/horizontehermosillo', 'web': 'https://horizontehermosillo.org', 'tel': '+526624258028', 'email': 'horizontehermosillo@gmail.com'}, 'Dani': {'iglesia': 'La Carpa, Cristo Es Mejor', 'ciudad': 'Querétaro', 'horarios': 'Domingo 10am y 12pm / Miércoles adoración 7:30pm', 'facebook': 'https://www.facebook.com/LaCarpaDeReunion', 'instagram': 'https://www.instagram.com/lacarpadereunion/', 'web': 'https://lacarpadereunionlinks.my.canva.site', 'tel': '+524426757487', 'email': 'lacarpa@cristoesmejor.com'}, 'Erik': {'iglesia': 'Horizonte CDMX', 'ciudad': 'Ciudad de México', 'horarios': 'Sábados 6pm / Miércoles oración 8pm', 'youtube': 'https://www.youtube.com/@HorizonteCDMX', 'facebook': 'https://www.facebook.com/VisitaHorizonteCDMX', 'instagram': 'https://www.instagram.com/horizontecdmx/', 'web': 'https://www.horizontecdmx.org', 'tel': '+525588196030', 'email': 'horizontecdmx@gmail.com'}, 'Marce': {'iglesia': 'másCristo Juriquilla', 'ciudad': 'Juriquilla', 'horarios': 'Domingo 11am', 'instagram': '@mascristoenmas', 'email': 'juriquilla@cristoesmejor.com'}, 'Herminio': {'iglesia': 'Horizonte Mérida', 'ciudad': 'Mérida', 'horarios': 'Domingo 11am / Miércoles adoración 8pm', 'facebook': 'https://www.facebook.com/share/1Cu9fMCRcA/', 'tel': '+529992567627', 'email': 'hmerida@cristoesmejor.com'}, 'Phil': {'iglesia': 'Horizonte El Marqués', 'ciudad': 'El Marqués', 'horarios': 'Domingo 11am / Miércoles 7:30pm', 'facebook': 'https://www.facebook.com/horizonteelmarques/', 'instagram': 'https://www.instagram.com/horizontemarques/', 'web': 'https://horizontemarques.churchtrac.com/', 'tel': '+524421181324', 'email': 'oficinahorizontemarques@cristoesmejor.com'}, 'Juan Pablo': {'iglesia': 'Horizonte Panamá', 'ciudad': 'Panamá', 'horarios': 'Domingos 2:30pm / Miércoles 7pm', 'youtube': 'https://www.youtube.com/@HorizontePanamá', 'instagram': 'https://www.instagram.com/horizontepanama/', 'tel': '+50764547757', 'email': 'horizontepma@gmail.com'}, 'Gadiel': {'iglesia': 'Horizonte Querétaro', 'ciudad': 'Querétaro', 'horarios': 'Oración Miércoles 7:30pm / Sábado 7:30pm / Domingo 10:30am y 1pm', 'youtube': 'https://www.youtube.com/@HorizonteCristoesmejor', 'facebook': 'facebook.com/horizonteqro', 'instagram': 'instagram.com/horizonteqro', 'web': 'https://horizonte.cristoesmejor.com/'}, 'Alberto': {'iglesia': 'Iglesia Fuentes de Agua Viva', 'ciudad': 'Piedras Negras', 'horarios': 'Domingo 10am y 12pm / Martes estudio 6pm', 'youtube': 'https://www.youtube.com/channel/UCtgK18UlD5Ww1vpcOKm4SSQ', 'facebook': 'facebook.com/FAV-103461333051157', 'web': 'https://fuentesdeaguaviva.me/', 'tel': '(878) 122 8546', 'email': 'informes@fav1.org'}, 'Willer': {'iglesia': 'La Carpa del Valle', 'ciudad': 'McAllen TX', 'horarios': 'Domingo 10:30 y 11:40 / Miércoles 7:30pm', 'facebook': 'https://www.facebook.com/p/La-Carpa-del-Valle-100091212942752/', 'instagram': 'https://www.instagram.com/lacarpadelvalle/', 'tel': '586-907-090', 'email': 'lacarpadelvalle@outlook.com'}, 'Hugo': {'iglesia': 'Horizonte Tequisquiapan', 'ciudad': 'Tequisquiapan', 'horarios': 'Miércoles 7pm / Domingos 11am', 'youtube': 'https://www.youtube.com/@horizonte.tequis', 'facebook': 'https://www.facebook.com/people/Horizonte-Tequisquiapan/100068507286837/', 'instagram': 'https://www.instagram.com/horizonte.teq/', 'tel': '52 442 230 1269'}};
 
 let activeZ='todos', editMode=false, editIdx=-1;
-const SK='pastores_cem_v5';
+const SK='pastores_cem_v6';
 try{const s=localStorage.getItem(SK);if(s){const d=JSON.parse(s);if(d&&d.length){pastores.length=0;d.forEach(p=>pastores.push(p));}}}catch(e){}
 
 const grads=['av-0','av-1','av-2','av-3','av-4','av-5','av-6','av-7','av-8','av-9'];
 function avC(p){const map={'av-teal':'av-2','av-blue':'av-8','av-purple':'av-0','av-amber':'av-6','av-coral':'av-1','av-gold':'av-4','av-green':'av-3','av-rose':'av-1'};if(map[p.color])return map[p.color];const h=[...(p.nombre||'')].reduce((a,c)=>a+c.charCodeAt(0),0);return grads[h%grads.length];}
-function zL(z){return{centro:'Centro',norte:'Norte',sur:'Sur',otro:'Internacional'}[z]||z;}
-function zC(z){return{centro:'chip chip-blue',norte:'chip chip-green',sur:'chip chip-orange',otro:'chip chip-gray'}[z]||'chip chip-gray';}
-
+function zL(z){return{centro:'Centro',norte:'Norte',sur:'Sur',otro:'Internacional',qro:'Querétaro'}[z]||z;}
+function zC(z){return{centro:'chip chip-blue',norte:'chip chip-green',sur:'chip chip-orange',otro:'chip chip-gray',qro:'chip chip-purple'}[z]||'chip chip-gray';}
 function setZ(btn){document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');activeZ=btn.dataset.z;render();}
 
 function render(){
   const q=document.getElementById('search').value.toLowerCase();
-  const filtered=pastores.filter(p=>{const mz=activeZ==='todos'||p.zona===activeZ;const hay=[p.nombre,p.apellido||'',p.iglesia||'',p.ciudad||'',p.esposa||''].join(' ').toLowerCase();return mz&&(!q||hay.includes(q));});
+  const filtered=pastores.filter(p=>{const mz=activeZ==='todos'||(activeZ==='centro'&&(p.zona==='centro'||p.zona==='qro'))||p.zona===activeZ;const hay=[p.nombre,p.apellido||'',p.iglesia||'',p.ciudad||'',p.esposa||''].join(' ').toLowerCase();return mz&&(!q||hay.includes(q));});
   document.getElementById('top-count').textContent=filtered.length;
-  const zones=activeZ==='todos'?['centro','norte','sur','otro']:[activeZ];
+  const zones=activeZ==='todos'?['qro','centro','norte','sur','otro']:[activeZ==='centro'?'qro':'',activeZ].filter(Boolean);
   let html='';
+  const seen=new Set();
   zones.forEach(z=>{
-    const zp=filtered.filter(p=>p.zona===z);
+    const zp=filtered.filter(p=>p.zona===z&&!seen.has(p.nombre+p.apellido));
     if(!zp.length)return;
+    zp.forEach(p=>seen.add(p.nombre+p.apellido));
     html+=`<div class="zone-section">`;
-    if(activeZ==='todos')html+=`<div class="zone-label">${zL(z)}</div>`;
+    if(activeZ==='todos'||activeZ==='centro')html+=`<div class="zone-label">${zL(z)}</div>`;
     zp.forEach(p=>{
       const idx=pastores.indexOf(p);
       const photo=pastorPhotos[p.nombre];
@@ -807,6 +757,7 @@ function render(){
       const sub=[p.iglesia,p.ciudad].filter(Boolean).join(' · ');
       const hasPend=p.pendientes&&p.pendientes.length;
       const hasHealth=hasPend&&p.pendientes.some(x=>/salud|cirugía|médic/i.test(x));
+      const hasRP=!!(p.reporte_personal);
       const avHtml=photo?`<div class="av"><img src="${photo}" alt="${full}"></div>`:`<div class="av ${avC(p)}">${(p.avatar||(p.nombre[0]+(p.apellido||'')[0]||'')).toUpperCase()}</div>`;
       html+=`<div class="card" onclick="editMode?openEF(${idx}):openPanel(${idx})">
         ${avHtml}
@@ -817,7 +768,8 @@ function render(){
             <span class="${zC(p.zona)}">${zL(p.zona)}</span>
             ${p.esposa?`<span class="chip chip-gray">♡ ${p.esposa}</span>`:''}
             ${p.hijos&&p.hijos.length?`<span class="chip chip-gray">${p.hijos.length} hijo${p.hijos.length>1?'s':''}</span>`:''}
-            ${hasHealth?'<span class="chip chip-red">⚕ salud</span>':hasPend?`<span class="chip chip-orange">${p.pendientes.length} pendiente${p.pendientes.length>1?'s':''}</span>`:''}
+            ${hasRP?`<span class="chip chip-green">📊 reporte</span>`:''}
+            ${hasHealth?'<span class="chip chip-red">⚕ salud</span>':hasPend?`<span class="chip chip-orange">${p.pendientes.length} pend.</span>`:''}
           </div>
         </div>
         <div class="card-arrow">
@@ -845,7 +797,11 @@ function openPanel(idx){
     <div class="panel-info">
       <div class="panel-name">${full}</div>
       <div class="panel-church">${sub}</div>
-      <div class="${zC(p.zona)}" style="margin-top:6px;display:inline-block;">${zL(p.zona)}</div>
+      <div class="panel-meta">
+        <span class="${zC(p.zona)}">${zL(p.zona)}</span>
+        ${p.esposa?`<span class="chip chip-gray">♡ ${p.esposa}</span>`:''}
+        ${p.cumple?`<span class="chip chip-gray">🎂 ${p.cumple}</span>`:''}
+      </div>
     </div>
     <button class="panel-close" onclick="document.getElementById('panel-bg').classList.remove('open')">✕</button>
   </div>`;
@@ -859,40 +815,104 @@ function openPanel(idx){
   if(d.instagram&&d.instagram.startsWith('http'))actions.push(`<div class="action-btn" onclick="window.open('${d.instagram}','_blank')"><div class="action-ico aico-ig">📷</div><div class="action-lbl">Instagram</div></div>`);
   if(actions.length)h+=`<div class="action-row">${actions.join('')}</div>`;
 
-  // Servicios
-  if(d.horarios){h+=`<div class="ps"><div class="ps-title">Servicios</div><div class="ps-card"><div class="ps-row"><div class="ps-ico">🕐</div><div class="ps-info"><div class="ps-key">Horarios</div><div class="ps-val">${d.horarios}</div></div></div></div></div>`;}
+  if(d.horarios)h+=`<div class="ps"><div class="ps-title">Servicios</div><div class="ps-card"><div class="ps-row"><div class="ps-ico">🕐</div><div class="ps-info"><div class="ps-key">Horarios</div><div class="ps-val">${d.horarios}</div></div></div></div></div>`;
 
-  // Personal
-  if(p.esposa||p.cumple){h+=`<div class="ps"><div class="ps-title">Personal</div><div class="ps-card">`;if(p.esposa)h+=`<div class="ps-row"><div class="ps-ico">💝</div><div class="ps-info"><div class="ps-key">Esposa</div></div><div class="ps-right">${p.esposa}</div></div>`;if(p.cumple)h+=`<div class="ps-row"><div class="ps-ico">🎂</div><div class="ps-info"><div class="ps-key">Cumpleaños</div></div><div class="ps-right">${p.cumple}</div></div>`;h+=`</div></div>`;}
+  if(p.esposa||p.cumple){
+    h+=`<div class="ps"><div class="ps-title">Personal</div><div class="ps-card">`;
+    if(p.esposa)h+=`<div class="ps-row"><div class="ps-ico">💝</div><div class="ps-info"><div class="ps-key">Esposa</div></div><div class="ps-right">${p.esposa}</div></div>`;
+    if(p.cumple)h+=`<div class="ps-row"><div class="ps-ico">🎂</div><div class="ps-info"><div class="ps-key">Cumpleaños</div></div><div class="ps-right">${p.cumple}</div></div>`;
+    h+=`</div></div>`;
+  }
 
-  // Hijos
-  if(p.hijos&&p.hijos.length){h+=`<div class="ps"><div class="ps-title">Hijos</div><div class="hijo-card">`;p.hijos.forEach((c,i)=>{const initials=(c.nombre||'?')[0].toUpperCase();h+=`<div class="hijo-row"><div class="hijo-av">${initials}</div><div style="flex:1"><div class="hijo-name">${c.nombre}</div>${c.datos?`<div class="hijo-detail">${c.datos}</div>`:''}</div>${c.edad?`<span class="hijo-age">${c.edad}a`+`</span>`:''}</div>`;});h+=`</div></div>`;}
+  if(p.hijos&&p.hijos.length){
+    h+=`<div class="ps"><div class="ps-title">Hijos</div><div class="hijo-card">`;
+    p.hijos.forEach(c=>{
+      h+=`<div class="hijo-row"><div class="hijo-av">${(c.nombre||'?')[0].toUpperCase()}</div><div style="flex:1"><div class="hijo-name">${c.nombre}</div>${c.datos?`<div class="hijo-detail">${c.datos}</div>`:''}</div>${c.edad?`<span class="hijo-age">${c.edad}a</span>`:''}</div>`;
+    });
+    h+=`</div></div>`;
+  }
 
-  // Reunion
+  // Reporte personal
+  if(p.reporte_personal){
+    const rp=p.reporte_personal;
+    const keys=[['familia','Fam'],['intimidad','Int'],['entusiasmo','Ent'],['liderazgo','Lid'],['economia','Eco'],['salud','Sal']];
+    const vals=keys.filter(([k])=>rp.metricas[k]!==undefined);
+    const avg=vals.length?(vals.reduce((s,[k])=>s+rp.metricas[k],0)/vals.length).toFixed(1):null;
+    h+=`<div class="ps"><div class="ps-title">Reporte personal — ${rp.fecha||''}</div><div class="metrics-grid">`;
+    vals.forEach(([k,lbl])=>{
+      const v=rp.metricas[k];
+      const col=v>=9?'var(--green)':v>=7?'var(--gold)':'var(--red)';
+      const barW=Math.round(v*10);
+      h+=`<div class="metric-box"><div class="metric-bar" style="background:${col};width:${barW}%"></div><div class="metric-num" style="color:${col}">${v}</div><div class="metric-lbl">${lbl}</div></div>`;
+    });
+    if(avg)h+=`<div class="metric-box metric-avg"><div class="metric-num">${avg}</div><div class="metric-lbl">Promedio</div></div>`;
+    h+=`</div>`;
+    if(rp.oracion&&rp.oracion.length){
+      h+=`<div class="ps-title" style="margin-top:-4px;">Puntos de oración</div><div class="oracion-tags">`;
+      const items=Array.isArray(rp.oracion)?rp.oracion:rp.oracion.split(/[·\n,]/).map(x=>x.trim()).filter(Boolean);
+      items.forEach(x=>h+=`<span class="oracion-tag">🙏 ${x}</span>`);
+      h+=`</div>`;
+    }
+    h+=`</div>`;
+  }
+
+  // Reporte Yabeth (Toño)
+  if(p.reporte_personal_yabeth){
+    const ry=p.reporte_personal_yabeth;
+    const keys=[['familia','Fam'],['intimidad','Int'],['entusiasmo','Ent'],['liderazgo','Lid']];
+    const vals=keys.filter(([k])=>ry.metricas[k]!==undefined);
+    const avg=vals.length?(vals.reduce((s,[k])=>s+ry.metricas[k],0)/vals.length).toFixed(1):null;
+    h+=`<div class="ps"><div class="ps-title">Reporte Yabeth — Abril 2026</div><div class="metrics-grid">`;
+    vals.forEach(([k,lbl])=>{
+      const v=ry.metricas[k];
+      const col=v>=9?'var(--green)':v>=7?'var(--gold)':'var(--red)';
+      const barW=Math.round(v*10);
+      h+=`<div class="metric-box"><div class="metric-bar" style="background:${col};width:${barW}%"></div><div class="metric-num" style="color:${col}">${v}</div><div class="metric-lbl">${lbl}</div></div>`;
+    });
+    if(avg)h+=`<div class="metric-box metric-avg"><div class="metric-num">${avg}</div><div class="metric-lbl">Promedio</div></div>`;
+    h+=`</div>`;
+    if(ry.oracion&&ry.oracion.length){
+      h+=`<div class="ps-title" style="margin-top:-4px;">Oración Yabeth</div><div class="oracion-tags">`;
+      ry.oracion.forEach(x=>h+=`<span class="oracion-tag">🙏 ${x}</span>`);
+      h+=`</div>`;
+    }
+    h+=`</div>`;
+  }
+
   if(p.reunion)h+=`<div class="ps"><div class="ps-title">Última reunión</div><div class="ps-text">${p.reunion}</div></div>`;
   if(p.notas)h+=`<div class="ps"><div class="ps-title">Notas</div><div class="ps-text">${p.notas}</div></div>`;
 
-  // Iglesia stats
-  if(p.iglesia_reporte){const ir=p.iglesia_reporte;h+=`<div class="ps"><div class="ps-title">Iglesia — Q1 2026</div>`;if(ir.stats){h+=`<div class="stats-grid">`;ir.stats.forEach(s=>h+=`<div class="stat-box"><div class="stat-num">${s.valor}</div><div class="stat-lbl">${s.label}</div></div>`);h+=`</div>`;}if(ir.logros)h+=`<div class="ps-text">${ir.logros}</div>`;if(ir.plan2026){h+=`<div class="ps-title" style="margin-top:-10px;">Plan 2026</div><div class="ps-text">${ir.plan2026}</div>`;}h+=`</div>`;}
+  if(p.iglesia_reporte){
+    const ir=p.iglesia_reporte;
+    h+=`<div class="ps"><div class="ps-title">Iglesia — Reporte 2025</div>`;
+    if(ir.stats){h+=`<div class="stats-grid">`;ir.stats.forEach(s=>h+=`<div class="stat-box"><div class="stat-num">${s.valor}</div><div class="stat-lbl">${s.label}</div></div>`);h+=`</div>`;}
+    if(ir.logros)h+=`<div class="ps-text">${ir.logros}</div>`;
+    if(ir.plan2026)h+=`<div class="ps-title" style="margin-top:-4px;">Plan 2026</div><div class="ps-text">${ir.plan2026}</div>`;
+    h+=`</div>`;
+  }
 
-  // Reporte personal
-  if(p.reporte_personal){const rp=p.reporte_personal;h+=`<div class="ps"><div class="ps-title">Reporte personal — ${rp.fecha||''}</div>`;if(rp.metricas){const m=rp.metricas;h+=`<div class="stats-grid">`;const keys=[['familia','Familia'],['intimidad','Intimidad'],['entusiasmo','Entusiasmo'],['liderazgo','Liderazgo'],['economia','Economía'],['salud','Salud']];keys.forEach(([k,lbl])=>{if(m[k]!==undefined)h+=`<div class="stat-box"><div class="stat-num" style="color:${m[k]>=9?'var(--green)':m[k]>=7?'var(--gold)':'var(--red)'}">${m[k]}/10</div><div class="stat-lbl">${lbl}</div></div>`;});h+=`</div>`;}if(rp.oracion)h+=`<div class="ps-title" style="margin-top:-10px;">Puntos de oración</div><div class="ps-text">${rp.oracion}</div>`;h+=`</div>`;}
-
-  // Pendientes
-  if(p.pendientes&&p.pendientes.length){h+=`<div class="ps"><div class="ps-title">Pendientes para Kike</div><div class="pend-list">`;p.pendientes.forEach((x,i)=>h+=`<div class="pend-item"><span class="pend-n">${i+1}</span><span class="pend-t">${x}</span></div>`);h+=`</div></div>`;}
+  if(p.pendientes&&p.pendientes.length){
+    h+=`<div class="ps"><div class="ps-title">Pendientes para Kike</div><div class="pend-list">`;
+    p.pendientes.forEach((x,i)=>h+=`<div class="pend-item"><span class="pend-n">${i+1}</span><span class="pend-t">${x}</span></div>`);
+    h+=`</div></div>`;
+  }
 
   // Events
-  const nm={'Horizonte Querétaro':'Horizonte Querétaro','Identidad San Luis':'Identidad San Luis','Horizonte El Marqués':'Horizonte El Marqués','másCristo':'másCristo','Horizonte Villahermosa':'Horizonte Villahermosa','Horizonte Mérida':'Horizonte Mérida','Horizonte CDMX':'Horizonte CDMX','Comunidad Baluarte':'Comunidad Baluarte','La Carpa CEM':'La Carpa CEM','Horizonte Panamá':'Horizonte Panamá','Gracia Irresistible Calvary':'Gracia Irresistible','Calvary Ecatepec':'Calvary Ecatepec','Calvary Chapel Texcoco':'Calvary Texcoco','Horizonte Tequisquiapan':'Horizonte Tequisquiapan','Vida Nueva en Cristo':'Vida Nueva en Cristo','La Carpa del Valle':'La Carpa del Valle','Fuentes de Agua Viva':'Fuentes de Agua Viva','Horizonte Hermosillo':'Horizonte Hermosillo'};
-  const evts=(BY_SEDE[nm[p.iglesia||'']||p.iglesia]||[]).slice(0,5);
-  if(evts.length){h+=`<div class="ps"><div class="ps-title">Eventos recientes</div><div class="event-list">`;evts.forEach(e=>h+=`<div class="event-row"><div class="event-dot"></div><div class="event-body"><div class="event-name">${e.evento}</div><div class="event-meta">${e.mes} ${e.year}</div>${e.descripcion?`<div class="event-desc">${e.descripcion.substring(0,90)}${e.descripcion.length>90?'…':''}</div>`:''}</div></div>`);h+=`</div></div>`;}
+  const sedes={'Horizonte Querétaro':'Horizonte Querétaro','Identidad San Luis':'Identidad San Luis','Horizonte El Marqués':'Horizonte El Marqués','másCristo Juriquilla':'másCristo','Horizonte Villahermosa':'Horizonte Villahermosa','Horizonte Mérida':'Horizonte Mérida','Horizonte CDMX':'Horizonte CDMX','Baluarte':'Comunidad Baluarte','La Carpa de Reunión':'La Carpa CEM','Horizonte Panamá':'Horizonte Panamá','Gracia Irresistible Calvary':'Gracia Irresistible','Calvary Chapel Ecatepec':'Calvary Ecatepec','Comunidad El Camino':'Comunidad El Camino'};
+  const evts=(BY_SEDE[sedes[p.iglesia]||p.iglesia]||[]).slice(0,4);
+  if(evts.length){
+    h+=`<div class="ps"><div class="ps-title">Eventos recientes</div><div class="event-list">`;
+    evts.forEach(e=>h+=`<div class="event-row"><div class="event-dot"></div><div class="event-body"><div class="event-name">${e.evento}</div><div class="event-meta">${e.mes} ${e.year}</div>${e.descripcion?`<div class="event-desc">${e.descripcion.substring(0,90)}${e.descripcion.length>90?'…':''}</div>`:''}</div></div>`);
+    h+=`</div></div>`;
+  }
 
-  h+=`<div style="height:8px;"></div>`;
+  h+=`<div style="height:12px;"></div>`;
   document.getElementById('panel').innerHTML=h;
   document.getElementById('panel-bg').classList.add('open');
 }
+
 function closePanel(e){if(e.target===document.getElementById('panel-bg'))document.getElementById('panel-bg').classList.remove('open');}
 
-// EDIT MODE
 function toggleEdit(){
   editMode=!editMode;
   const btn=document.getElementById('bb-edit');
@@ -919,7 +939,7 @@ async function saveAll(){
 function openEF(idx){
   editIdx=idx;
   const p=idx===-1?{nombre:'',apellido:'',iglesia:'',ciudad:'',zona:'centro',esposa:'',cumple:'',avatar:'',color:'av-teal',hijos:[],notas:'',reunion:'',pendientes:[],tags:[]}:JSON.parse(JSON.stringify(pastores[idx]));
-  const zO=['centro','norte','sur','otro'].map(z=>`<option value="${z}" ${p.zona===z?'selected':''}>${zL(z)}</option>`).join('');
+  const zO=['qro','centro','norte','sur','otro'].map(z=>`<option value="${z}" ${p.zona===z?'selected':''}>${zL(z)}</option>`).join('');
   const hH=(p.hijos||[]).map((c,i)=>`<div class="ef-row-item"><input placeholder="Nombre" value="${c.nombre||''}" oninput="eH(${i},'nombre',this.value)"><input placeholder="Edad" value="${c.edad||''}" style="max-width:55px;" oninput="eH(${i},'edad',this.value)"><button class="ef-del" onclick="rH(${i})">−</button></div>`).join('');
   const pH=(p.pendientes||[]).map((x,i)=>`<div class="ef-pend-item"><textarea class="ef-pend-ta" rows="2" oninput="eP(${i},this.value)">${x}</textarea><button class="ef-del" onclick="rP(${i})">−</button></div>`).join('');
   document.getElementById('ef-panel').innerHTML=`
@@ -938,13 +958,13 @@ function openEF(idx){
         </div>
       </div>
       <div class="ef-group"><div class="ef-group-title">Hijos</div>
-        <div class="ef-fields" id="hijos-list">${hH||'<div style="padding:12px 14px;color:var(--ink3);font-size:14px;font-weight:500;">Sin hijos registrados</div>'}</div>
+        <div class="ef-fields" id="hijos-list">${hH||'<div style="padding:12px 14px;color:var(--ink3);font-size:13px;font-weight:500;">Sin hijos registrados</div>'}</div>
         <button class="ef-add-btn" onclick="addH()">+ Agregar hijo</button>
       </div>
       <div class="ef-group"><div class="ef-group-title">Notas personales</div><textarea class="ef-ta" placeholder="Escribe aquí..." oninput="eT('notas',this.value)">${p.notas||''}</textarea></div>
       <div class="ef-group"><div class="ef-group-title">Última reunión</div><textarea class="ef-ta" placeholder="Notas de la reunión..." oninput="eT('reunion',this.value)">${p.reunion||''}</textarea></div>
       <div class="ef-group"><div class="ef-group-title">Pendientes para Kike</div>
-        <div class="ef-fields" id="pend-list">${pH||'<div style="padding:12px 14px;color:var(--ink3);font-size:14px;font-weight:500;">Sin pendientes</div>'}</div>
+        <div class="ef-fields" id="pend-list">${pH||'<div style="padding:12px 14px;color:var(--ink3);font-size:13px;font-weight:500;">Sin pendientes</div>'}</div>
         <button class="ef-add-btn" onclick="addP()">+ Agregar pendiente</button>
       </div>
       <button class="ef-submit ef-submit-save" onclick="saveForm()">Guardar cambios</button>
