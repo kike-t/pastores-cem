@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Pastores CEM</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
   import { getFirestore, doc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
   const cfg={apiKey:"AIzaSyACo7a3uVsGwAdii3d8W3NmXvLVBdgTF1A",authDomain:"pastores-cem.firebaseapp.com",projectId:"pastores-cem",storageBucket:"pastores-cem.firebasestorage.app",messagingSenderId:"45247752354",appId:"1:45247752354:web:eb41da403d38c72d788ffb"};
-  const app=initializeApp(cfg); const db=getFirestore(app);
+  const app=initializeApp(cfg);const db=getFirestore(app);
   window.db=db;window.fsDoc=doc;window.fsSetDoc=setDoc;window.fsCollection=collection;window.fsGetDocs=getDocs;
-  async function load(){try{const snap=await getDocs(collection(db,"pastores"));if(!snap.empty){const d=[];snap.forEach(x=>d.push(x.data()));d.sort((a,b)=>a.nombre.localeCompare(b.nombre));pastores.length=0;d.forEach(p=>pastores.push(p));render();}else{await saveCloud();}}catch(e){console.warn(e);}}
+  async function load(){try{const snap=await getDocs(collection(db,"pastores"));if(!snap.empty){const d=[];snap.forEach(x=>d.push(x.data()));d.sort((a,b)=>a.nombre.localeCompare(b.nombre));pastores.length=0;d.forEach(p=>pastores.push(p));renderBoard();}else{await saveCloud();}}catch(e){console.warn(e);}}
   async function saveCloud(){for(const p of pastores){const id=(p.nombre+'_'+(p.apellido||'')).replace(/\s+/g,'_').toLowerCase();try{await setDoc(doc(db,"pastores",id),p);}catch(e){}}}
   window.saveCloud=saveCloud;
   window.addEventListener('load',()=>setTimeout(load,300));
@@ -20,951 +20,1154 @@
 
 <style>
 :root {
-  --bg: #F7F7F8;
-  --white: #FFFFFF;
-  --ink: #0F0F0F;
-  --ink2: #5C5C5C;
-  --ink3: #ADADAD;
-  --line: #E8E8EA;
-  --accent: #1A1A2E;
-  --accent2: #16213E;
-  --gold: #D4900A;
-  --gold-light: #FFF6E0;
-  --green: #0A8F5C;
-  --green-light: #E3F5EE;
-  --red: #D63939;
-  --red-light: #FEF0F0;
-  --blue: #1560D4;
-  --blue-light: #EBF2FF;
-  --purple: #7C3AED;
-  --purple-light: #F3EEFF;
-  --r: 18px;
-  --r-sm: 12px;
-  --shadow: 0 1px 4px rgba(0,0,0,0.05), 0 2px 12px rgba(0,0,0,0.04);
-  --shadow-lg: 0 8px 40px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+  --canvas: #F0EDE8;
+  --white: #FEFEFE;
+  --ink: #1A1614;
+  --ink2: #6B6560;
+  --ink3: #B8B2AC;
+  --line: #E2DDD8;
+
+  /* Zone colors — warm, distinct, mural-like */
+  --qro-bg: #FFF8E7;
+  --qro-border: #E8C84A;
+  --qro-label: #8B7A1A;
+  --norte-bg: #EAF4FF;
+  --norte-border: #5BA4E8;
+  --norte-label: #1A5A8B;
+  --sur-bg: #F0FFF4;
+  --sur-border: #4EC87A;
+  --sur-label: #1A6B3A;
+  --centro-bg: #FFF0F8;
+  --centro-border: #E85AB0;
+  --centro-label: #8B1A5A;
+  --intl-bg: #F5F0FF;
+  --intl-border: #9B72E8;
+  --intl-label: #4A1A8B;
+
+  /* Card accent colors */
+  --c0: #FF6B6B; --c1: #4ECDC4; --c2: #45B7D1; --c3: #96CEB4;
+  --c4: #FFEAA7; --c5: #DDA0DD; --c6: #F0A500; --c7: #87CEEB;
+  --c8: #FFB347; --c9: #98D8C8;
+
+  --r: 16px;
+  --r-sm: 10px;
+  --shadow-card: 0 2px 0 rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-card-hover: 0 6px 0 rgba(0,0,0,0.10), 0 12px 32px rgba(0,0,0,0.14);
+  --shadow-panel: 0 32px 80px rgba(0,0,0,0.22), 0 8px 24px rgba(0,0,0,0.10);
 }
 
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html{scroll-behavior:smooth;}
-body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;overflow-x:hidden;}
+html,body{height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;}
 
-/* ── TOP BAR ── */
-.topbar{background:var(--white);border-bottom:1.5px solid var(--line);padding:calc(env(safe-area-inset-top,0px)+14px) 20px 0;position:sticky;top:0;z-index:100;}
-.topbar-row{display:flex;align-items:center;gap:12px;padding-bottom:12px;}
-.app-icon{width:38px;height:38px;border-radius:11px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.app-icon span{font-size:17px;}
-.topbar-titles{flex:1;}
-.topbar-title{font-size:19px;font-weight:800;color:var(--ink);letter-spacing:-0.4px;line-height:1.1;}
-.topbar-sub{font-size:11.5px;color:var(--ink3);font-weight:500;margin-top:1px;}
-.topbar-count{font-size:13px;font-weight:700;background:var(--accent);color:white;padding:4px 11px;border-radius:99px;flex-shrink:0;}
-.search-row{display:flex;gap:10px;padding-bottom:10px;}
-.search-box{flex:1;display:flex;align-items:center;gap:8px;background:var(--bg);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:9px 13px;transition:border-color 0.2s;}
-.search-box:focus-within{border-color:var(--accent);}
-.search-box svg{width:15px;height:15px;color:var(--ink3);flex-shrink:0;}
-.search-inp{border:none;background:none;outline:none;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);flex:1;font-weight:500;}
-.search-inp::placeholder{color:var(--ink3);}
-.tabs{display:flex;overflow-x:auto;scrollbar-width:none;border-top:1px solid var(--line);margin:0 -20px;padding:0 20px;}
-.tabs::-webkit-scrollbar{display:none;}
-.tab{padding:9px 15px;font-size:12.5px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;border:none;background:none;color:var(--ink3);cursor:pointer;white-space:nowrap;border-bottom:2.5px solid transparent;transition:all 0.15s;margin-bottom:-1px;}
-.tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+/* ── CANVAS ── */
+body {
+  background: var(--canvas);
+  background-image:
+    radial-gradient(circle, #C8C0B8 1px, transparent 1px);
+  background-size: 24px 24px;
+}
 
-/* ── CONTENT ── */
-.content{padding:18px 14px 140px;}
-.zone-section{margin-bottom:24px;}
-.zone-label{font-size:10.5px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:0.14em;padding:0 4px;margin-bottom:9px;}
+/* ── TOOLBAR ── */
+.toolbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: calc(env(safe-area-inset-top,0px) + 12px) 20px 12px;
+  background: rgba(254,254,254,0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1.5px solid var(--line);
+}
 
-/* ── CARD ── */
-.card{background:var(--white);border:1.5px solid var(--line);border-radius:var(--r);padding:13px 14px;display:flex;align-items:center;gap:13px;cursor:pointer;transition:all 0.18s cubic-bezier(0.34,1.4,0.64,1);box-shadow:var(--shadow);margin-bottom:7px;position:relative;overflow:hidden;}
-.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:transparent;transition:background 0.2s;border-radius:3px 0 0 3px;}
-.card:hover{transform:translateY(-2px) scale(1.004);box-shadow:var(--shadow-lg);border-color:rgba(26,26,46,0.2);}
-.card:hover::before{background:var(--accent);}
-.card:active{transform:scale(0.99);opacity:0.85;}
+.toolbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.brand-mark {
+  width: 36px; height: 36px;
+  background: var(--ink);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  color: white;
+}
+.brand-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px;
+  color: var(--ink);
+  letter-spacing: -0.3px;
+  line-height: 1;
+}
+.brand-sub {
+  font-size: 11px;
+  color: var(--ink3);
+  font-weight: 500;
+  margin-top: 1px;
+}
 
-/* Avatar */
-.av{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;flex-shrink:0;overflow:hidden;transition:transform 0.2s;}
-.card:hover .av{transform:scale(1.06);}
-.av img{width:100%;height:100%;object-fit:cover;}
-.av-0{background:linear-gradient(135deg,#667EEA,#764BA2);}
-.av-1{background:linear-gradient(135deg,#F093FB,#F5576C);}
-.av-2{background:linear-gradient(135deg,#4FACFE,#00F2FE);}
-.av-3{background:linear-gradient(135deg,#43E97B,#38F9D7);}
-.av-4{background:linear-gradient(135deg,#FA709A,#FEE140);}
-.av-5{background:linear-gradient(135deg,#A18CD1,#FBC2EB);}
-.av-6{background:linear-gradient(135deg,#FD746C,#FF9068);}
-.av-7{background:linear-gradient(135deg,#30CFD0,#330867);}
-.av-8{background:linear-gradient(135deg,#A1C4FD,#C2E9FB);}
-.av-9{background:linear-gradient(135deg,#FFF1EB,#ACE0F9);}
+.toolbar-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--line);
+  flex-shrink: 0;
+}
 
-.card-body{flex:1;min-width:0;}
-.card-name{font-size:14.5px;font-weight:700;color:var(--ink);letter-spacing:-0.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.card-church{font-size:12.5px;color:var(--ink2);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500;}
-.card-badges{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap;}
-.chip{font-size:10.5px;font-weight:700;padding:2.5px 8px;border-radius:99px;line-height:1.3;}
-.chip-orange{background:var(--gold-light);color:var(--gold);}
-.chip-red{background:var(--red-light);color:var(--red);}
-.chip-green{background:var(--green-light);color:var(--green);}
-.chip-blue{background:var(--blue-light);color:var(--blue);}
-.chip-gray{background:#EFEFEF;color:var(--ink2);}
-.chip-purple{background:var(--purple-light);color:var(--purple);}
-.card-arrow{width:28px;height:28px;border-radius:9px;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s;}
-.card:hover .card-arrow{background:var(--accent);color:white;}
-.card-arrow svg{width:13px;height:13px;color:var(--ink3);transition:color 0.2s;}
-.card:hover .card-arrow svg{color:white;}
+/* Search */
+.search-wrap {
+  flex: 1;
+  max-width: 280px;
+  position: relative;
+}
+.search-icon {
+  position: absolute;
+  left: 11px; top: 50%;
+  transform: translateY(-50%);
+  width: 14px; height: 14px;
+  color: var(--ink3);
+  pointer-events: none;
+}
+.search-inp {
+  width: 100%;
+  padding: 8px 12px 8px 34px;
+  background: var(--canvas);
+  border: 1.5px solid var(--line);
+  border-radius: 99px;
+  font-size: 13.5px;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.search-inp:focus {
+  border-color: var(--ink);
+  background: var(--white);
+}
+.search-inp::placeholder { color: var(--ink3); }
 
-/* ── PANEL ── */
-.panel-bg{display:none;position:fixed;inset:0;background:rgba(10,10,20,0.45);z-index:200;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);align-items:flex-end;justify-content:center;}
-.panel-bg.open{display:flex;}
-@media(min-width:640px){.panel-bg.open{align-items:center;padding:20px;}.panel{border-radius:var(--r)!important;max-height:88vh!important;}}
-.panel{background:var(--white);width:100%;max-width:600px;max-height:93vh;border-radius:var(--r) var(--r) 0 0;overflow-y:auto;scrollbar-width:none;animation:panelUp 0.35s cubic-bezier(0.34,1.1,0.64,1);box-shadow:0 -8px 60px rgba(0,0,0,0.18);padding-bottom:env(safe-area-inset-bottom,20px);}
-.panel::-webkit-scrollbar{display:none;}
-@keyframes panelUp{from{transform:translateY(60px);opacity:0;}to{transform:translateY(0);opacity:1;}}
-.panel-drag{width:36px;height:4px;background:var(--line);border-radius:99px;margin:13px auto 0;}
+/* Zone filters */
+.zone-pills {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex-shrink: 0;
+}
+.zone-pills::-webkit-scrollbar { display: none; }
+.zpill {
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  background: transparent;
+  color: var(--ink2);
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.zpill:hover { background: var(--white); border-color: var(--line); }
+.zpill.active { background: var(--ink); color: white; border-color: var(--ink); }
 
-/* Panel hero */
-.panel-hero{padding:18px 20px 20px;display:flex;gap:15px;align-items:flex-start;border-bottom:1px solid var(--line);}
-.panel-av{width:66px;height:66px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:23px;font-weight:800;overflow:hidden;flex-shrink:0;box-shadow:0 6px 20px rgba(0,0,0,0.14);}
-.panel-av img{width:100%;height:100%;object-fit:cover;}
-.panel-info{flex:1;}
-.panel-name{font-size:24px;font-weight:800;color:var(--ink);letter-spacing:-0.5px;line-height:1.1;}
-.panel-church{font-size:13.5px;color:var(--ink2);margin-top:4px;font-weight:500;}
-.panel-meta{display:flex;gap:6px;margin-top:7px;flex-wrap:wrap;}
-.panel-close{width:30px;height:30px;border-radius:99px;background:var(--bg);border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:13px;color:var(--ink2);transition:all 0.15s;}
-.panel-close:hover{background:var(--ink);color:white;border-color:var(--ink);}
+.toolbar-count {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink3);
+  flex-shrink: 0;
+  background: var(--canvas);
+  padding: 5px 12px;
+  border-radius: 99px;
+  border: 1.5px solid var(--line);
+}
 
-/* Action row */
-.action-row{display:flex;gap:8px;padding:14px 20px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none;}
-.action-row::-webkit-scrollbar{display:none;}
-.action-btn{display:flex;flex-direction:column;align-items:center;gap:5px;flex-shrink:0;cursor:pointer;}
-.action-ico{width:50px;height:50px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:20px;transition:transform 0.15s;}
-.action-btn:active .action-ico{transform:scale(0.9);}
-.action-lbl{font-size:10.5px;font-weight:600;color:var(--ink2);}
-.aico-call{background:var(--green-light);}
-.aico-mail{background:var(--blue-light);}
-.aico-web{background:var(--gold-light);}
-.aico-map{background:var(--red-light);}
-.aico-fb{background:#EEF3FF;}
-.aico-ig{background:#FDF0FF;}
+.tb-btn {
+  padding: 8px 16px;
+  border-radius: 99px;
+  border: 1.5px solid var(--line);
+  background: var(--white);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--ink2);
+  cursor: pointer;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.tb-btn:hover { background: var(--ink); color: white; border-color: var(--ink); }
+.tb-btn-add { background: #1A1614; color: white; border-color: #1A1614; }
+.tb-btn-save { background: #2E8B57; color: white; border-color: #2E8B57; }
+.tb-btn-exit { background: #C0392B; color: white; border-color: #C0392B; }
+
+/* ── BOARD ── */
+.board-wrap {
+  position: fixed;
+  inset: 0;
+  top: 65px;
+  overflow: auto;
+  cursor: default;
+}
+
+.board {
+  padding: 40px 24px 80px;
+  min-width: 100%;
+}
+
+/* ── ZONE CLUSTER ── */
+.zone-cluster {
+  margin-bottom: 48px;
+}
+
+.zone-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 0 4px;
+}
+
+.zone-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.zone-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  letter-spacing: -0.3px;
+  line-height: 1;
+}
+
+.zone-count-pill {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+  border: 1.5px solid;
+}
+
+.zone-line {
+  flex: 1;
+  height: 1.5px;
+  border-radius: 99px;
+  opacity: 0.3;
+}
+
+/* Zone theming */
+.zone-qro .zone-dot { background: var(--qro-border); }
+.zone-qro .zone-title { color: var(--qro-label); }
+.zone-qro .zone-count-pill { background: var(--qro-bg); color: var(--qro-label); border-color: var(--qro-border); }
+.zone-qro .zone-line { background: var(--qro-border); }
+
+.zone-norte .zone-dot { background: var(--norte-border); }
+.zone-norte .zone-title { color: var(--norte-label); }
+.zone-norte .zone-count-pill { background: var(--norte-bg); color: var(--norte-label); border-color: var(--norte-border); }
+.zone-norte .zone-line { background: var(--norte-border); }
+
+.zone-sur .zone-dot { background: var(--sur-border); }
+.zone-sur .zone-title { color: var(--sur-label); }
+.zone-sur .zone-count-pill { background: var(--sur-bg); color: var(--sur-label); border-color: var(--sur-border); }
+.zone-sur .zone-line { background: var(--sur-border); }
+
+.zone-centro .zone-dot { background: var(--centro-border); }
+.zone-centro .zone-title { color: var(--centro-label); }
+.zone-centro .zone-count-pill { background: var(--centro-bg); color: var(--centro-label); border-color: var(--centro-border); }
+.zone-centro .zone-line { background: var(--centro-border); }
+
+.zone-otro .zone-dot { background: var(--intl-border); }
+.zone-otro .zone-title { color: var(--intl-label); }
+.zone-otro .zone-count-pill { background: var(--intl-bg); color: var(--intl-label); border-color: var(--intl-border); }
+.zone-otro .zone-line { background: var(--intl-border); }
+
+/* ── CARDS GRID ── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+@media(min-width: 768px) {
+  .cards-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+}
+@media(min-width: 1200px) {
+  .cards-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+}
+
+/* ── PASTOR CARD ── */
+.pcard {
+  background: var(--white);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.34,1.4,0.64,1), box-shadow 0.2s ease;
+  overflow: hidden;
+  position: relative;
+  animation: cardIn 0.4s ease backwards;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.pcard:hover {
+  transform: translateY(-4px) rotate(0.3deg);
+  box-shadow: var(--shadow-card-hover);
+}
+.pcard:active {
+  transform: translateY(-1px) scale(0.99);
+}
+
+/* Color stripe at top */
+.pcard-stripe {
+  height: 5px;
+  width: 100%;
+}
+
+.pcard-body {
+  padding: 16px 16px 14px;
+}
+
+/* Avatar row */
+.pcard-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.pcard-av {
+  width: 50px; height: 50px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 700;
+  color: white;
+  flex-shrink: 0;
+  overflow: hidden;
+  font-family: 'DM Serif Display', serif;
+}
+.pcard-av img { width: 100%; height: 100%; object-fit: cover; }
+
+.pcard-meta { flex: 1; min-width: 0; }
+.pcard-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 17px;
+  color: var(--ink);
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pcard-church {
+  font-size: 12px;
+  color: var(--ink2);
+  margin-top: 2px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pcard-city {
+  font-size: 11px;
+  color: var(--ink3);
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+/* Tags row */
+.pcard-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.ptag {
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 99px;
+  line-height: 1.3;
+}
+.ptag-spouse { background: #FFF0F5; color: #C04080; }
+.ptag-kids { background: #F0F8FF; color: #2060B0; }
+.ptag-report { background: #EAFFF4; color: #187040; }
+.ptag-pend { background: #FFF8E0; color: #9B7010; }
+.ptag-health { background: #FFF0F0; color: #C02020; }
+
+/* Stats mini — shown on cards with reporte */
+.pcard-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+.pm-box {
+  text-align: center;
+  padding: 5px 2px;
+  border-radius: 7px;
+  background: var(--canvas);
+}
+.pm-num {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+}
+.pm-lbl {
+  font-size: 9px;
+  color: var(--ink3);
+  font-weight: 600;
+  margin-top: 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Edit mode highlight */
+.pcard.edit-mode {
+  outline: 2.5px dashed #E85AB0;
+  outline-offset: 3px;
+}
+.pcard.edit-mode:hover {
+  outline-color: var(--ink);
+}
+
+/* ── DETAIL PANEL ── */
+.panel-bg {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(20,15,10,0.5);
+  z-index: 300;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0;
+}
+.panel-bg.open { display: flex; }
+
+@media(min-width: 640px) {
+  .panel-bg { padding: 20px; justify-content: flex-end; }
+  .panel { border-radius: var(--r) !important; max-height: calc(100vh - 40px) !important; }
+}
+
+.panel {
+  background: var(--white);
+  width: 100%;
+  max-width: 480px;
+  height: 100%;
+  max-height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  animation: slideIn 0.3s cubic-bezier(0.34,1.1,0.64,1);
+  box-shadow: var(--shadow-panel);
+}
+.panel::-webkit-scrollbar { display: none; }
+
+@keyframes slideIn {
+  from { transform: translateX(40px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
+/* Panel header — colored */
+.panel-header {
+  position: relative;
+  padding: 28px 24px 24px;
+  overflow: hidden;
+}
+.panel-header-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+}
+.panel-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 30px; height: 30px;
+  border-radius: 99px;
+  background: rgba(0,0,0,0.08);
+  border: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--ink2);
+  transition: all 0.15s;
+}
+.panel-close:hover { background: var(--ink); color: white; }
+
+.panel-av-lg {
+  width: 72px; height: 72px;
+  border-radius: 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; font-weight: 700;
+  color: white;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+  margin-bottom: 14px;
+  font-family: 'DM Serif Display', serif;
+}
+.panel-av-lg img { width: 100%; height: 100%; object-fit: cover; }
+
+.panel-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  color: var(--ink);
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+.panel-church {
+  font-size: 14px;
+  color: var(--ink2);
+  margin-top: 5px;
+  font-weight: 500;
+}
+.panel-chips {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+/* Panel actions */
+.panel-actions {
+  display: flex;
+  gap: 8px;
+  padding: 14px 20px;
+  border-bottom: 1.5px solid var(--line);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.panel-actions::-webkit-scrollbar { display: none; }
+
+.pact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.pact-ico {
+  width: 46px; height: 46px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  transition: transform 0.15s;
+}
+.pact:active .pact-ico { transform: scale(0.9); }
+.pact-lbl { font-size: 10px; font-weight: 600; color: var(--ink2); }
 
 /* Panel sections */
-.ps{padding:18px 20px 0;}
-.ps-title{font-size:10.5px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:9px;}
-.ps-card{background:var(--bg);border-radius:var(--r-sm);overflow:hidden;border:1px solid var(--line);margin-bottom:18px;}
-.ps-row{display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid var(--line);}
-.ps-row:last-child{border-bottom:none;}
-.ps-ico{font-size:17px;width:22px;text-align:center;flex-shrink:0;}
-.ps-info{flex:1;min-width:0;}
-.ps-key{font-size:13px;font-weight:600;color:var(--ink);}
-.ps-val{font-size:12px;color:var(--ink2);margin-top:1px;line-height:1.4;}
-.ps-val a{color:var(--blue);text-decoration:none;font-weight:600;}
-.ps-right{font-size:13px;color:var(--ink2);font-weight:500;text-align:right;max-width:160px;}
-.ps-text{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);padding:13px;font-size:13.5px;line-height:1.7;color:var(--ink2);margin-bottom:18px;font-weight:500;}
+.ps { padding: 18px 20px 0; }
+.ps-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink3);
+  margin-bottom: 8px;
+}
+
+.ps-block {
+  background: var(--canvas);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  margin-bottom: 16px;
+  border: 1px solid var(--line);
+}
+.ps-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.ps-row:last-child { border-bottom: none; }
+.ps-ico { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+.ps-key { font-size: 13px; font-weight: 600; color: var(--ink); flex: 1; }
+.ps-val { font-size: 12.5px; color: var(--ink2); text-align: right; font-weight: 500; max-width: 180px; line-height: 1.4; }
+
+.ps-text {
+  background: var(--canvas);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  padding: 13px 14px;
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: var(--ink2);
+  margin-bottom: 16px;
+  font-weight: 400;
+}
 
 /* Hijos */
-.hijo-card{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;margin-bottom:18px;}
-.hijo-row{display:flex;align-items:center;gap:10px;padding:10px 13px;border-bottom:1px solid var(--line);}
-.hijo-row:last-child{border-bottom:none;}
-.hijo-av{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#667EEA,#764BA2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:white;flex-shrink:0;}
-.hijo-name{font-size:13.5px;font-weight:700;color:var(--ink);flex:1;}
-.hijo-age{font-size:11.5px;font-weight:700;padding:2px 8px;background:var(--blue-light);color:var(--blue);border-radius:99px;}
-.hijo-detail{font-size:11.5px;color:var(--ink3);margin-top:2px;}
+.hijos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.hijo-tile {
+  background: var(--canvas);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  padding: 12px;
+  text-align: center;
+}
+.hijo-av-sm {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #667EEA, #764BA2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: white;
+  margin: 0 auto 8px;
+  font-family: 'DM Serif Display', serif;
+}
+.hijo-tile-name { font-size: 13px; font-weight: 700; color: var(--ink); }
+.hijo-tile-age {
+  display: inline-block;
+  font-size: 10px; font-weight: 700;
+  padding: 2px 7px; border-radius: 99px;
+  background: #EBF2FF; color: #1560D4;
+  margin-top: 4px;
+}
+.hijo-tile-detail { font-size: 11px; color: var(--ink3); margin-top: 4px; line-height: 1.3; }
 
-/* Pendientes */
-.pend-list{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;margin-bottom:18px;}
-.pend-item{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border-bottom:1px solid var(--line);}
-.pend-item:last-child{border-bottom:none;}
-.pend-n{min-width:22px;height:22px;background:var(--gold-light);border-radius:7px;font-size:11px;font-weight:800;color:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
-.pend-t{font-size:13.5px;color:var(--ink);line-height:1.55;font-weight:500;}
-
-/* Stats grid - mejorado */
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:18px;}
-.stat-box{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);padding:13px;}
-.stat-num{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-0.5px;}
-.stat-lbl{font-size:11.5px;color:var(--ink2);margin-top:3px;line-height:1.3;font-weight:500;}
-
-/* Métricas personales - visual mejorado */
-.metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:18px;}
-.metric-box{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);padding:12px;text-align:center;position:relative;overflow:hidden;}
-.metric-bar{position:absolute;bottom:0;left:0;right:0;height:3px;border-radius:0;}
-.metric-num{font-size:26px;font-weight:800;letter-spacing:-1px;line-height:1;}
-.metric-lbl{font-size:10.5px;color:var(--ink3);margin-top:4px;font-weight:600;}
-.metric-avg{background:var(--accent);color:white;border-color:var(--accent);}
-.metric-avg .metric-num{color:white;font-size:28px;}
-.metric-avg .metric-lbl{color:rgba(255,255,255,0.7);}
+/* Métricas */
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 7px;
+  margin-bottom: 16px;
+}
+.metric-tile {
+  background: var(--canvas);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  padding: 11px 8px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.metric-tile::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 0;
+}
+.metric-tile.m-green::after { background: #0A8F5C; }
+.metric-tile.m-gold::after { background: #D4900A; }
+.metric-tile.m-red::after { background: #D63939; }
+.metric-num { font-size: 22px; font-weight: 700; line-height: 1; font-family: 'DM Serif Display', serif; }
+.metric-lbl { font-size: 9.5px; color: var(--ink3); font-weight: 600; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.06em; }
+.metric-tile-avg {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.metric-tile-avg .metric-num { color: white; }
+.metric-tile-avg .metric-lbl { color: rgba(255,255,255,0.5); }
 
 /* Oración tags */
-.oracion-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px;}
-.oracion-tag{font-size:13px;font-weight:600;padding:7px 13px;border-radius:99px;background:var(--bg);border:1.5px solid var(--line);color:var(--ink2);line-height:1.3;}
+.prayer-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 16px;
+}
+.prayer-tag {
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 99px;
+  background: var(--canvas);
+  border: 1.5px solid var(--line);
+  color: var(--ink2);
+  line-height: 1.3;
+}
 
-/* Event rows */
-.event-list{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;margin-bottom:18px;}
-.event-row{display:flex;gap:10px;align-items:flex-start;padding:10px 13px;border-bottom:1px solid var(--line);}
-.event-row:last-child{border-bottom:none;}
-.event-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px;}
-.event-body{flex:1;}
-.event-name{font-size:13px;font-weight:700;color:var(--ink);}
-.event-meta{font-size:11px;color:var(--ink3);font-weight:600;margin-top:2px;}
-.event-desc{font-size:12px;color:var(--ink2);margin-top:2px;line-height:1.4;}
+/* Pendientes */
+.pend-list {
+  background: var(--canvas);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.pend-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.pend-item:last-child { border-bottom: none; }
+.pend-n {
+  min-width: 20px; height: 20px;
+  background: #FFF6E0;
+  border-radius: 6px;
+  font-size: 10px; font-weight: 800;
+  color: #9B7010;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.pend-t { font-size: 13px; color: var(--ink); line-height: 1.55; font-weight: 400; }
 
-/* Próximos pasos */
-.pasos-list{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;margin-bottom:18px;}
-.paso-item{display:flex;gap:10px;align-items:flex-start;padding:11px 13px;border-bottom:1px solid var(--line);}
-.paso-item:last-child{border-bottom:none;}
-.paso-who{font-size:10px;font-weight:800;padding:2px 7px;border-radius:99px;flex-shrink:0;margin-top:2px;text-transform:uppercase;letter-spacing:0.05em;}
-.paso-who-toño{background:var(--blue-light);color:var(--blue);}
-.paso-who-yabeth{background:var(--purple-light);color:var(--purple);}
-.paso-who-ambos{background:var(--green-light);color:var(--green);}
-.paso-t{font-size:13.5px;color:var(--ink);line-height:1.55;font-weight:500;}
+/* Stats grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 7px;
+  margin-bottom: 16px;
+}
+.stat-tile {
+  background: var(--canvas);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  padding: 12px 13px;
+}
+.stat-num { font-size: 21px; font-weight: 700; color: var(--ink); font-family: 'DM Serif Display', serif; letter-spacing: -0.3px; }
+.stat-lbl { font-size: 11px; color: var(--ink2); margin-top: 3px; font-weight: 500; line-height: 1.3; }
 
-/* ── BOTTOM BAR ── */
-.bottombar{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,0.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;z-index:100;}
-.bb-msg{font-size:13px;color:var(--ink2);flex:1;font-weight:500;}
-.bb-btn{padding:10px 20px;border-radius:99px;border:none;font-size:13.5px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:all 0.15s cubic-bezier(0.34,1.56,0.64,1);}
-.bb-btn:active{transform:scale(0.95);}
-.bb-edit{background:var(--accent);color:white;margin-left:auto;}
-.bb-edit:hover{background:var(--accent2);}
-.bb-exit{background:var(--red-light);color:var(--red);}
-.bb-add{background:var(--green-light);color:var(--green);}
-.bb-save{background:var(--green);color:white;}
+/* Events */
+.events-list {
+  background: var(--canvas);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.event-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+}
+.event-row:last-child { border-bottom: none; }
+.event-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--ink3);
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+.event-name { font-size: 12.5px; font-weight: 600; color: var(--ink); }
+.event-meta { font-size: 10.5px; color: var(--ink3); font-weight: 600; margin-top: 2px; }
+.event-desc { font-size: 11.5px; color: var(--ink2); margin-top: 2px; line-height: 1.4; }
 
 /* ── EDIT FORM ── */
-.ef-bg{display:none;position:fixed;inset:0;background:rgba(15,15,15,0.5);z-index:300;align-items:flex-end;justify-content:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+.ef-bg{display:none;position:fixed;inset:0;background:rgba(15,15,15,0.6);z-index:400;align-items:flex-end;justify-content:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
 .ef-bg.open{display:flex;}
-@media(min-width:640px){.ef-bg.open{align-items:center;padding:20px;}.ef-panel{border-radius:var(--r)!important;}}
-.ef-panel{background:var(--white);width:100%;max-width:560px;max-height:93vh;border-radius:var(--r) var(--r) 0 0;overflow-y:auto;scrollbar-width:none;animation:panelUp 0.3s cubic-bezier(0.34,1.1,0.64,1);box-shadow:0 -8px 60px rgba(0,0,0,0.15);padding-bottom:env(safe-area-inset-bottom,20px);}
+@media(min-width:640px){.ef-bg.open{align-items:center;padding:20px;}.ef-panel{border-radius:var(--r)!important;max-height:90vh!important;}}
+.ef-panel{background:var(--white);width:100%;max-width:500px;max-height:95vh;border-radius:var(--r) var(--r) 0 0;overflow-y:auto;scrollbar-width:none;animation:panelUp 0.3s cubic-bezier(0.34,1.1,0.64,1);box-shadow:var(--shadow-panel);padding-bottom:env(safe-area-inset-bottom,20px);}
 .ef-panel::-webkit-scrollbar{display:none;}
-.ef-nav{display:flex;align-items:center;padding:15px 20px;border-bottom:1px solid var(--line);}
-.ef-nav-title{font-size:15px;font-weight:800;color:var(--ink);flex:1;text-align:center;letter-spacing:-0.2px;}
-.ef-cancel{font-size:14px;font-weight:600;background:none;border:none;color:var(--red);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;}
-.ef-done{font-size:14px;font-weight:800;background:none;border:none;color:var(--blue);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;}
+@keyframes panelUp{from{transform:translateY(50px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.ef-nav{display:flex;align-items:center;padding:14px 20px;border-bottom:1.5px solid var(--line);}
+.ef-nav-title{font-family:'DM Serif Display',serif;font-size:18px;color:var(--ink);flex:1;text-align:center;}
+.ef-cancel{font-size:13.5px;font-weight:600;background:none;border:none;color:#C02020;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.ef-done{font-size:13.5px;font-weight:700;background:none;border:none;color:#1560D4;cursor:pointer;font-family:'DM Sans',sans-serif;}
 .ef-body{padding:20px;}
 .ef-group{margin-bottom:20px;}
-.ef-group-title{font-size:10.5px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:8px;}
-.ef-fields{background:var(--bg);border:1.5px solid var(--line);border-radius:var(--r-sm);overflow:hidden;}
-.ef-field{display:flex;align-items:center;padding:0 14px;border-bottom:1px solid var(--line);min-height:46px;}
+.ef-group-title{font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:8px;}
+.ef-fields{background:var(--canvas);border:1.5px solid var(--line);border-radius:var(--r-sm);overflow:hidden;}
+.ef-field{display:flex;align-items:center;padding:0 14px;border-bottom:1px solid var(--line);min-height:44px;}
 .ef-field:last-child{border-bottom:none;}
-.ef-lbl{font-size:13.5px;font-weight:600;color:var(--ink);min-width:90px;flex-shrink:0;}
-.ef-inp,.ef-sel{flex:1;background:none;border:none;outline:none;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink2);text-align:right;padding:12px 0;font-weight:500;}
-.ef-sel option{background:white;}
-.ef-ta{width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;font-size:13.5px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);outline:none;min-height:80px;resize:vertical;line-height:1.6;font-weight:500;}
-.ef-ta:focus{border-color:var(--accent);}
+.ef-lbl{font-size:13px;font-weight:600;color:var(--ink);min-width:90px;flex-shrink:0;}
+.ef-inp,.ef-sel{flex:1;background:none;border:none;outline:none;font-size:13.5px;font-family:'DM Sans',sans-serif;color:var(--ink2);text-align:right;padding:11px 0;font-weight:400;}
+.ef-ta{width:100%;background:var(--canvas);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;font-size:13.5px;font-family:'DM Sans',sans-serif;color:var(--ink);outline:none;min-height:80px;resize:vertical;line-height:1.6;}
+.ef-ta:focus{border-color:var(--ink);}
 .ef-row-item{display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid var(--line);}
 .ef-row-item:last-child{border-bottom:none;}
-.ef-row-item input{flex:1;background:none;border:none;outline:none;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);font-weight:500;}
+.ef-row-item input{flex:1;background:none;border:none;outline:none;font-size:13.5px;font-family:'DM Sans',sans-serif;color:var(--ink);}
 .ef-row-item input::placeholder{color:var(--ink3);}
-.ef-del{background:none;border:none;color:var(--red);font-size:20px;cursor:pointer;padding:0 4px;line-height:1;}
-.ef-add-btn{display:flex;align-items:center;gap:6px;width:100%;padding:11px 14px;background:var(--bg);border:1.5px solid var(--line);border-radius:var(--r-sm);font-size:13.5px;font-weight:700;color:var(--blue);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;margin-top:6px;transition:all 0.15s;}
-.ef-add-btn:hover{background:var(--blue-light);border-color:var(--blue);}
+.ef-del{background:none;border:none;color:#C02020;font-size:20px;cursor:pointer;padding:0 4px;line-height:1;}
+.ef-add-btn{display:flex;align-items:center;gap:6px;width:100%;padding:10px 14px;background:var(--canvas);border:1.5px solid var(--line);border-radius:var(--r-sm);font-size:13.5px;font-weight:600;color:#1560D4;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:6px;transition:all 0.15s;}
+.ef-add-btn:hover{background:#EBF2FF;border-color:#5BA4E8;}
 .ef-pend-item{display:flex;align-items:flex-start;gap:8px;padding:8px 14px;border-bottom:1px solid var(--line);}
 .ef-pend-item:last-child{border-bottom:none;}
-.ef-pend-ta{flex:1;background:none;border:none;outline:none;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);resize:none;min-height:38px;line-height:1.5;padding:4px 0;font-weight:500;}
+.ef-pend-ta{flex:1;background:none;border:none;outline:none;font-size:13.5px;font-family:'DM Sans',sans-serif;color:var(--ink);resize:none;min-height:36px;line-height:1.5;padding:4px 0;}
 .ef-pend-ta::placeholder{color:var(--ink3);}
-.ef-submit{width:100%;padding:13px;border-radius:var(--r-sm);border:none;font-size:14.5px;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;margin-top:8px;transition:all 0.15s;}
-.ef-submit:active{transform:scale(0.98);}
-.ef-submit-save{background:var(--accent);color:white;}
-.ef-submit-delete{background:var(--red-light);color:var(--red);border:1.5px solid rgba(224,62,62,0.2);}
+.ef-submit{width:100%;padding:13px;border-radius:var(--r-sm);border:none;font-size:14px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:8px;transition:all 0.15s;}
+.ef-submit-save{background:var(--ink);color:white;}
+.ef-submit-delete{background:#FFF0F0;color:#C02020;border:1.5px solid rgba(192,32,32,0.2);}
 
-.empty{text-align:center;padding:80px 20px;color:var(--ink3);font-size:15px;font-weight:600;}
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--ink3);
+}
+.empty-icon { font-size: 40px; margin-bottom: 12px; }
+.empty-text { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--ink2); }
+.empty-sub { font-size: 13px; margin-top: 6px; }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="topbar-row">
-    <div class="app-icon"><span>✦</span></div>
-    <div class="topbar-titles">
-      <div class="topbar-title">Pastores CEM</div>
-      <div class="topbar-sub">Compañerismo · Kike</div>
-    </div>
-    <div class="topbar-count" id="top-count">—</div>
-  </div>
-  <div class="search-row">
-    <div class="search-box">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input class="search-inp" id="search" type="search" placeholder="Buscar pastor, iglesia..." oninput="render()">
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <div class="toolbar-brand">
+    <div class="brand-mark">✦</div>
+    <div>
+      <div class="brand-name">Pastores CEM</div>
+      <div class="brand-sub">Compañerismo · Kike</div>
     </div>
   </div>
-  <div class="tabs">
-    <button class="tab active" data-z="todos" onclick="setZ(this)">Todos</button>
-    <button class="tab" data-z="centro" onclick="setZ(this)">Centro</button>
-    <button class="tab" data-z="norte" onclick="setZ(this)">Norte</button>
-    <button class="tab" data-z="sur" onclick="setZ(this)">Sur</button>
-    <button class="tab" data-z="otro" onclick="setZ(this)">Internacional</button>
+
+  <div class="toolbar-divider"></div>
+
+  <div class="search-wrap">
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input class="search-inp" id="search" type="search" placeholder="Buscar..." oninput="renderBoard()">
   </div>
+
+  <div class="zone-pills" id="zone-pills">
+    <button class="zpill active" data-z="todos" onclick="setZ(this)">Todos</button>
+    <button class="zpill" data-z="qro" onclick="setZ(this)">Querétaro</button>
+    <button class="zpill" data-z="norte" onclick="setZ(this)">Norte</button>
+    <button class="zpill" data-z="sur" onclick="setZ(this)">Sur</button>
+    <button class="zpill" data-z="centro" onclick="setZ(this)">Centro</button>
+    <button class="zpill" data-z="otro" onclick="setZ(this)">Internacional</button>
+  </div>
+
+  <div class="toolbar-count" id="top-count">—</div>
+
+  <button class="tb-btn" id="tb-edit" onclick="toggleEdit()">✎ Editar</button>
+  <button class="tb-btn tb-btn-add" id="tb-add" style="display:none" onclick="openEF(-1)">+ Nuevo</button>
+  <button class="tb-btn tb-btn-save" id="tb-save" style="display:none" onclick="saveAll()">↑ Guardar</button>
 </div>
 
-<div class="content" id="content"></div>
+<!-- BOARD -->
+<div class="board-wrap" id="board-wrap">
+  <div class="board" id="board"></div>
+</div>
 
+<!-- DETAIL PANEL -->
 <div class="panel-bg" id="panel-bg" onclick="closePanel(event)">
   <div class="panel" id="panel"></div>
 </div>
 
+<!-- EDIT FORM -->
 <div class="ef-bg" id="ef-bg" onclick="closeEF(event)">
   <div class="ef-panel" id="ef-panel"></div>
 </div>
 
-<div class="bottombar" id="bbar">
-  <span class="bb-msg" id="bb-msg"></span>
-  <button class="bb-btn bb-add" id="bb-add" style="display:none" onclick="openEF(-1)">+ Nuevo</button>
-  <button class="bb-btn bb-save" id="bb-save" style="display:none" onclick="saveAll()">Guardar</button>
-  <button class="bb-btn bb-edit" id="bb-edit" onclick="toggleEdit()">Editar</button>
-</div>
-
 <script>
+/* ─── DATA ─── */
 const pastores = [
-  {
-    nombre:"Chava", apellido:"", iglesia:"Horizonte Querétaro", ciudad:"Querétaro", zona:"qro",
-    esposa:"", cumple:"", avatar:"CH", color:"av-teal",
-    hijos:[],
-    notas:"Residente pastoral en Horizonte Querétaro. Tendencia al hiperfocus — cuando se concentra en algo, todo lo demás desaparece (fotografía, letreros, tablitas). Ha decidido enfocarse en familia y hogar. Trabaja intencionalmente en profundizar amistades. Recibió confrontación difícil de amiga en Holanda sobre infertilidad y falta de seguimiento.",
-    reunion:"Compartió sobre hiperfocus y prioridades familiares. Kike compartió Salmo 16 sobre contentamiento. Está en paz priorizando el hogar sobre emprendimientos o ministerio activo — temporada de estar presente con hijos adolescentes.",
-    pendientes:["Oportunidad de pastoreo en Xalapa: amigos de toda la vida buscan acompañamiento mensual/bimensual después de 8-10 años solos. Kike respondió positivamente, ofreció disponibilidad y posibles becas CEBADA.","Hablar con Chava para verano del grupo de jóvenes."],
-    tags:["hiperfocus","familia","xalapa"]
-  },
-  {
-    nombre:"Gerry", apellido:"Berrones", iglesia:"Identidad San Luis", ciudad:"San Luis Potosí", zona:"norte",
-    esposa:"Sally", cumple:"26 octubre 1985", avatar:"GB", color:"av-blue",
-    hijos:[
-      {nombre:"Melissa",edad:"23",cumple:"15 marzo",datos:"Lic. Comercio y Negocios Internacionales, trabaja en The Palace Company."},
-      {nombre:"Alan",edad:"17",cumple:"18 marzo",datos:"2° de prepa, baterista y aficionado al fut."},
-      {nombre:"Emilio",edad:"14",cumple:"",datos:"2° de secundaria, toca piano y guitarra."}
-    ],
-    notas:"Palabra del año 2026: 'miembros'. Transición de liderazgo en proceso con Arturo (familia González).",
-    reunion:"Q1 2026. Revisión de transición de liderazgo, salud de Sally y finanzas de iglesia.",
-    pendientes:["Comunicar cambios de responsabilidades con Arturo (González) antes de viaje a EE.UU. y fin de año.","Orar por salud de Sally: resistencia a insulina, quiste programado, inflamación sistémica.","Transición de finanzas de iglesia a 2-3 personas identificadas.","Coordinar regalos pastorales con David (pendiente recibir 3-5 ideas).","Clarificar objetivos 2026 conectados con calendario."],
-    tags:["transición","finanzas","salud Sally"]
-  },
-  {
-    nombre:"Herminio", apellido:"Navidad", iglesia:"Horizonte Mérida", ciudad:"Mérida", zona:"sur",
-    esposa:"Sara", cumple:"15 mayo", avatar:"HN", color:"av-purple",
-    hijos:[
-      {nombre:"Adriel",edad:"",cumple:"17 abril 2007",datos:"Le gusta el futbol y squash."},
-      {nombre:"Elías",edad:"",cumple:"25 abril 2011",datos:"Le gusta nadar y pintar."},
-      {nombre:"Oscar Daniel",edad:"",cumple:"25 abril 2011",datos:"Le gusta cantar y nadar. (Gemelo de Elías)"}
-    ],
-    notas:"",
-    reunion:"Dic 2025. Luis ya puede cubrir predicación. 20-21 servidores activos. Hijo mayor termina prepa en julio, entra a EBC. Roger y Gabriel reportaron ambiente positivo.",
-    pendientes:["Objetivos 2026: hacerlos más específicos y medibles.","Video institucional: reducir de 6 minutos a 90 segundos máximo.","Calendario 2026: definir fechas para visitas de predicadores.","Enviar contacto de iglesia en Los Ángeles para su viaje (25 dic)."],
-    iglesia_reporte:{
-      nombre:"Horizonte Mérida",
-      stats:[
-        {label:"Bautizados 2025",valor:"7"},
-        {label:"Conferencia matrimonios",valor:"13 parejas"},
-        {label:"Retiro varones",valor:"15 asistentes"},
-        {label:"Grupos semanales",valor:"25 personas"},
-        {label:"Consejería concluidas",valor:"8"},
-        {label:"Nuevos servidores",valor:"+15"}
-      ],
-      logros:"Reinauguración exitosa. Retiro de varones: 4 hombres comprometidos más. 7 bautizos. Conferencia de hombres y matrimonios. Lanzamiento reunión 'Conociéndonos' con 3 grupos de varones y 3 de mujeres.",
-      plan2026:"Conferencias para matrimonios. Reunión de varones 1x/mes. Avanzar en La Ruta agregando clase nueva. Poner techo de lámina al terreno. Capacitación nuevos consejeros y maestros infantiles."
-    },
-    tags:["objetivos","video","mérida"]
-  },
-  {
-    nombre:"Manuel", apellido:"Jaquez", iglesia:"Baluarte", ciudad:"Chihuahua", zona:"norte",
-    esposa:"Karina", cumple:"10 agosto 1989", avatar:"MJ", color:"av-amber",
-    hijos:[
-      {nombre:"Máximo",edad:"",cumple:"2 febrero 2016",datos:"Le gusta nadar, los legos y jugar béisbol."},
-      {nombre:"Alanna",edad:"5",cumple:"9 septiembre 2019",datos:"Muy girly, le gusta bailar."},
-      {nombre:"Dante",edad:"2",cumple:"28 febrero 2023",datos:"Le gustan juguetes que pueda armar. Ha mejorado en lenguaje y salud del oído."}
-    ],
-    notas:"Mejor temporada matrimonial. Max batalla con temor al hombre. ~120,000 pesos de deuda en proceso de pago. ~250,000 pesos ahorrados para terreno. Grupos de mujeres multigeneracionales exitosos (~50-60 mujeres). Palabra clave ministerial: ASIMILACIÓN.",
-    reunion:"Revisión 4F (Fe, Familia, Fitness, Finanzas). Kari combina lecturas de matrimonio y teología. Manuel enfocado en Proverbios 4:23-27. Celebran estar en su mejor temporada matrimonial.",
-    pendientes:["Esperar corrida financiera de Kari para junta con diáconos.","Participar en llamada con diáconos de Baluarte para proponer paquete pastoral justo.","Revisar con Beto acceso a contenido CTC para temas de consejería.","Enviar reporte de Panamá como ejemplo de reporte anual completo.","Recibir reporte actualizado de Baluarte con objetivos específicos para 2026."],
-    iglesia_reporte:{
-      nombre:"Baluarte",
-      stats:[
-        {label:"Asistencia 2024",valor:"~150"},
-        {label:"Asistencia 2025",valor:"~190"},
-        {label:"2 servicios desde",valor:"mayo 2025"},
-        {label:"Reunión acción gracias",valor:"120 personas"}
-      ],
-      logros:"Iniciaron 2 servicios dominicales en mayo 2025. Crecimiento en membresía consolidada. Incorporación al compañerismo CEM. Fruto en retiros de matrimonios.",
-      plan2026:"Junta con diáconos sobre finanzas. Corrida financiera pastoral. Reporte anual con objetivos medibles. Saldar deuda ~120k pesos. Terreno iglesia: 250k ahorrados."
-    },
-    tags:["asimilación","finanzas","terreno","4F"]
-  },
-  {
-    nombre:"Oscar", apellido:"García", iglesia:"Vida Nueva en Cristo", ciudad:"San Pablo Oztotepec", zona:"centro",
-    esposa:"Marlen Gómez", cumple:"28 agosto 1976", avatar:"OG", color:"av-teal",
-    hijos:[
-      {nombre:"Mariana",edad:"12",cumple:"14 abril 2012",datos:""},
-      {nombre:"Erick",edad:"6",cumple:"15 abril 2018",datos:""}
-    ],
-    notas:"",reunion:"",pendientes:[],tags:[]
-  },
-  {
-    nombre:"Marcial", apellido:"Magadán", iglesia:"Iglesia Antioquía", ciudad:"Mérida", zona:"sur",
-    esposa:"", cumple:"9 junio 1983", avatar:"MM", color:"av-blue",
-    hijos:[
-      {nombre:"José Pablo",edad:"8",cumple:"21 octubre 2016",datos:"Le encanta la robótica y los legos, estudia primaria."},
-      {nombre:"Juan Marcos",edad:"6",cumple:"4 enero 2019",datos:"Le gusta la música y los rompecabezas."}
-    ],
-    notas:"",reunion:"",pendientes:[],tags:[]
-  },
-  {
-    nombre:"Gadiel", apellido:"Arriaga", iglesia:"Horizonte Querétaro", ciudad:"Querétaro", zona:"qro",
-    esposa:"Abby", cumple:"16 agosto 1987", avatar:"GA", color:"av-purple",
-    hijos:[
-      {nombre:"Layla",edad:"",cumple:"",datos:"Ya pregunta por papá, aprendiendo a ir al baño sola."},
-      {nombre:"Jonathan",edad:"",cumple:"",datos:"Muy cariñoso, disfruta el contacto físico."}
-    ],
-    iglesia_reporte:{
-      nombre:"Horizonte Querétaro",
-      stats:[
-        {label:"Asistencia semanal",valor:"~1,400"},
-        {label:"Sábado",valor:"249"},
-        {label:"Domingo 10:30am",valor:"635"},
-        {label:"Domingo 1:00pm",valor:"484"},
-        {label:"Flechas (niños)",valor:"4,200+"},
-        {label:"Jóvenes Q1",valor:"774"},
-        {label:"Consejería solicitudes",valor:"95"},
-        {label:"Alcance consejería",valor:"9 est / 5 países"},
-        {label:"La Ruta bienvenida",valor:"277"},
-        {label:"La Ruta conociéndonos",valor:"150"},
-        {label:"Conversión",valor:"60%"},
-        {label:"Líderes graduados",valor:"68"},
-        {label:"Matrimonios prog.",valor:"25"},
-        {label:"Nuevos servidores",valor:"14"}
-      ],
-      logros:"Asistencia ~1,400 en 3 servicios. La Ruta: 277 en bienvenida, 60% conversión, 68 graduados Restaurados. Consejería en 9 estados y 5 países. Flechas superó 4,200 niños, pico 430. Jóvenes 774 asistencias. 25 matrimonios en 'De Una Misma Carne'. Retiro Habitar ~200 personas próximamente.",
-      plan2026:"Tercer servicio dominical o segundo sábado (ligado a construcción). Propuesta mejoras Luminares. Capacitación de consejeros. Jorge → etapa 3 de certificación. Construcción y ductos casi listos."
-    },
-    reporte_personal:{
-      fecha:"Abril 2026",
-      metricas:{familia:8,intimidad:9,entusiasmo:9,liderazgo:8,economia:9,salud:8},
-      oracion:["Retiro ABIDE","Unidad de equipos","Matrimonios en Abide","Adopción de Jorge y Onne","Recuperar 3er servicio dominical","Diácono para Rodas","Embarazo de Carol","Construcción y ductos"]
-    },
-    notas:"Esposa Abby participa en reuniones con madres y consejería. Rutina: despertar y pasar tiempo con niños antes de comenzar el día. Salmo 116 como texto ancla. Reflexión Hechos 11: ¿qué puede estorbar a Dios en la iglesia?",
-    reunion:"21 abril 2026 — Sinc Q1. Reporte personal: F8 I9 E9 L8 Eco9 S8. Acuerdos: código GRACIAS30, votación mejor staff Q1, capacitación consejeros, video Luminares, camioneta blanca lunes.",
-    pendientes:[
-      "SALUD: Cirugía de vesícula programada — necesita planificación.",
-      "Seguimiento médico de garganta con foniatra en un mes.",
-      "Supervisar transición tras salida de Ale Maya de Luminares.",
-      "Certificación en adicciones para Omar Estrada ($18,000 pesos) — aprobada.",
-      "Apoyo a Joan: $4,100 pesos mensuales, medio tiempo — aprobado.",
-      "Aumento salarial Rodas hasta $20,000 pesos — aprobado.",
-      "Licencias ChatGPT para Flechas, Ruta, Consejería y Eventos — aprobadas.",
-      "Opciones educativas Layla: Querétaro Christian School vs. Buckingham."
-    ],
-    tags:["horizonte qro","consejería","salud","luminares"]
-  },
-  {
-    nombre:"Phil", apellido:"Jones", iglesia:"Horizonte El Marqués", ciudad:"El Marqués, Qro", zona:"qro",
-    esposa:"", cumple:"21 febrero 1984", avatar:"PJ", color:"av-coral",
-    hijos:[
-      {nombre:"Joshua",edad:"",cumple:"29 diciembre 2012",datos:"Le gustan los videojuegos."},
-      {nombre:"Romi",edad:"",cumple:"3 julio 2002",datos:"Le gusta dibujar, trabaja en RenovArte Café."}
-    ],
-    notas:"Residencia pastoral: Dani y Alix Soto. Líderes clave: Álvaro Fuente, José Luis Castillo, Alex Melchor, Daniel Ávila.",
-    reunion:"",
-    iglesia_reporte:{
-      nombre:"Horizonte El Marqués",
-      stats:[
-        {label:"Adultos domingos",valor:"105"},
-        {label:"Servidores activos",valor:"60"},
-        {label:"Personas nuevas 2025",valor:"91"},
-        {label:"Flechas (niños)",valor:"44"},
-        {label:"Grupos de vida",valor:"42"},
-        {label:"Bautizos 2025",valor:"12"}
-      ],
-      logros:"1 generación terminando La Ruta completa, 3 en proceso. 12 bautizos. 2 Worship Nites (85+ personas). Enfoque Global: 45 participantes. Residencia pastoral Dani y Alix Soto.",
-      plan2026:"LED enero (semanal). SEBAM para líderes. Diáconos: junio. Delegar liderazgo Siguiendo a Jesús. Acondicionar sótano (baños + 3 salones). 6 eventos alcance. 2 viajes misioneros. Visión 2027: 300 adultos."
-    },
-    pendientes:[
-      "Beca SEBAM para Dani Soto.",
-      "Capacitación multimedia (audio y video).",
-      "Continuar apoyo Centro de Consejería."
-    ],
-    tags:["el marqués","horizonte","liderazgo"]
-  },
-  {
-    nombre:"Roger", apellido:"Arcila", iglesia:"Horizonte Querétaro", ciudad:"Querétaro", zona:"qro",
-    esposa:"Fran", cumple:"", avatar:"RA", color:"av-teal",
-    hijos:[
-      {nombre:"Josué",edad:"7",cumple:"14 junio 2017",datos:"Le encanta armar legos, homeschool."},
-      {nombre:"Emanuel",edad:"5",cumple:"26 octubre 2019",datos:"Le encanta Nerf y Spiderman, homeschool."},
-      {nombre:"Natalia",edad:"",cumple:"19 diciembre 2024",datos:"Bebé."}
-    ],
-    notas:"Pastor de comunidad en Horizonte Querétaro. Casados: 5/5/2013. Descansa viernes. Finanzas bien y tranquilos.",
-    reunion:"Q1 2026. Fran siente que no es buena mamá (Natán rechazado en escuela). Roger reconoció patrón de rendir para llenar expectativas en vez de servir al Señor. Salmo 46 como ancla.",
-    pendientes:["Acompañar a Fran en tema de identidad y relación con el esposo.","Roger: seguimiento a patrón de queja y motivaciones."],
-    tags:["matrimonial","identidad","Q1 2026"]
-  },
-  {
-    nombre:"Hugo", apellido:"Ventura", iglesia:"Horizonte Tequisquiapan", ciudad:"Tequisquiapan", zona:"centro",
-    esposa:"", cumple:"", avatar:"HV", color:"av-blue",
-    hijos:[],
-    iglesia_reporte:{
-      nombre:"Horizonte Tequisquiapan",
-      stats:[
-        {label:"Asistencia promedio",valor:"55 adultos"},
-        {label:"Servidores activos",valor:"17"},
-        {label:"Nuevos miembros",valor:"10"},
-        {label:"Niños (Semillas/Saetas)",valor:"13"},
-        {label:"Líderes en formación",valor:"6"},
-        {label:"La Ruta (adultos)",valor:"17"}
-      ],
-      logros:"Primera generación de La Ruta completa. Mujeres creciendo en piedad. Ágapes: Día del niño, Noche mexicana, Posada navideña.",
-      plan2026:"Meta: 100 adultos, 30 niños. 2 diáconos preparándose para predicar (SEBAM). Proyectos: Multimedia $25K, Alabanza $50K, Remodelación $30K. 2 campañas evangelísticas al año."
-    },
-    notas:"",reunion:"",pendientes:[],tags:["gracia irresistible","tequisquiapan"]
-  },
-  {
-    nombre:"Juan Pablo", apellido:"Segismond", iglesia:"Horizonte Panamá", ciudad:"Panamá", zona:"otro",
-    esposa:"", cumple:"", avatar:"JS", color:"av-purple",
-    hijos:[],
-    notas:"Misión: hacerse pros en Planning Center / entrenar a alguien de La Carpa en La Ruta. 1er aniversario Panamá: enero 2026.",
-    reunion:"",pendientes:[],tags:["planning center","panamá"]
-  },
-  {
-    nombre:"Adrián", apellido:"Capitaine", iglesia:"Horizonte Villahermosa", ciudad:"Villahermosa", zona:"sur",
-    esposa:"Llanura González", cumple:"15 abril 1989", avatar:"AC", color:"av-coral",
-    hijos:[
-      {nombre:"Grace",edad:"6",cumple:"29 enero 2019",datos:"Le encanta bailar y las muñecas."},
-      {nombre:"Ezra",edad:"",cumple:"18 octubre 2020",datos:"Le encanta la música."},
-      {nombre:"Elyseo",edad:"",cumple:"27 marzo 2024",datos:"Bebé."}
-    ],
-    notas:"",
-    reunion:"",
-    iglesia_reporte:{
-      nombre:"Horizonte Villahermosa",
-      stats:[
-        {label:"Adultos domingos (prom.)",valor:"200"},
-        {label:"Adultos por semana",valor:"115"},
-        {label:"Niños",valor:"38"},
-        {label:"Nuevos en Horizonte",valor:"+40"},
-        {label:"Bautizados",valor:"16"},
-        {label:"Servidores",valor:"+100"}
-      ],
-      logros:"Conf. matrimonios (45 parejas), conf. hombres (110), conf. mujeres (130). 16 bautizados. Grupos: 8 de mujeres + 6 de hombres = 72 miembros. Oración miércoles: 70 adultos. Ofrendas: $133K–$185K/mes.",
-      plan2026:"Establecer membresía y gobierno. Fast Track para líderes, La Ruta para el resto. Diáconos: 2do semestre. Formalizar oración semanal. Regularizar compromiso con REINO. Alinearse con alcance. Reto: edificio llegando al tope logístico."
-    },
-    pendientes:["Invitar a comer a sus líderes 1 vez al mes (Germán sobre todo)."],
-    tags:["local","líderes"]
-  },
-  {
-    nombre:"Toño", apellido:"García", iglesia:"Calvary Chapel Ecatepec", ciudad:"Ecatepec", zona:"centro",
-    esposa:"Yabeth", cumple:"3 noviembre 1979", avatar:"TG", color:"av-teal",
-    hijos:[
-      {nombre:"Grace",edad:"6",cumple:"29 enero 2019",datos:"Le encanta bailar y las muñecas."},
-      {nombre:"Ezra",edad:"",cumple:"18 octubre 2020",datos:"Le encanta la música."},
-      {nombre:"Elyseo",edad:"",cumple:"27 marzo 2024",datos:"Bebé."}
-    ],
-    notas:"Para 2030 énfasis: trabajar en hombres, levantar y consolidar hombres para el servicio. Plataformas: Simón, Martín Durazo, Héctor Glez, Carlos Fierro. Lideran Ecatepec y con conexión a Texcoco.",
-    reunion:"Cuatrimestral abr 2026 con Kike. Palabra: Hechos 11 — la oposición es normal cuando Dios se mueve.",
-    reporte_personal:{
-      fecha:"Abril 2026",
-      metricas:{familia:8,intimidad:8.5,entusiasmo:8,liderazgo:7},
-      oracion:["Sabiduría en transición laboral","Unidad matrimonial","Líderes que se quedan","Finanzas iglesia"]
-    },
-    reporte_personal_yabeth:{
-      metricas:{familia:7,intimidad:8,entusiasmo:9,liderazgo:8},
-      oracion:["Matrimonio y familia","Carga escolar/ministerial","Fe más grande","Tiempo con hijos"]
-    },
-    pendientes:[
-      "Toño: reunión con Gabriel, Carlos y Sol el sábado para clarificar expectativas.",
-      "Toño: hablar con su jefe para planificar transición y renuncia a fin de año; avisar a Kike.",
-      "Toño: coordinar Consejo de Finanzas (salen Eli y esposa de Óscar).",
-      "Yabeth: enviar a Kike oración general con necesidades.",
-      "Consolidar membresía → agosto 2026.",
-      "Ruta financiera familiar → julio 2026.",
-      "Candidatos a diáconos → noviembre 2026."
-    ],
-    tags:["hombres","transición","ecatepec"]
-  },
-  {
-    nombre:"Daniel", apellido:"Vargas", iglesia:"Comunidad El Camino", ciudad:"San José, Costa Rica", zona:"otro",
-    esposa:"Edu", cumple:"", avatar:"DV", color:"av-amber",
-    hijos:[],
-    notas:"Esposa Edu embarazada, bebé esperado en julio 2026. Iglesia con 22 años de historia en Costa Rica.",
-    reunion:"Dic 2025 con Kike. Retos: ansiedad, vida espiritual mecánica, finanzas ajustadas. Avances: restructuró finanzas, eliminó ofrendas a misioneros problemáticos, equipo de oración/ayuno de 9 personas.",
-    iglesia_reporte:{
-      nombre:"Comunidad El Camino",
-      stats:[
-        {label:"Miembros",valor:"110"},
-        {label:"Servidores",valor:"48"},
-        {label:"Nuevos miembros",valor:"13"},
-        {label:"Bautizos",valor:"1"},
-        {label:"Años de historia",valor:"22"},
-        {label:"Evangelizados (calles)",valor:"3,500+"}
-      ],
-      logros:"Restructuración del cuerpo de servicio. Finanzas saneadas. Proyecto Calles: +3,500 evangelizados en 7 meses, +500 alimentados/mes, primer discipulado para personas en calle (5 perseverando). Equipo de alabanza propio formado. Alianza con comunidad VCP.",
-      plan2026:"Nueva cultura: discípulos que hacen discípulos. Predicaciones centradas en el evangelio. El pastor cuida a coordinadores uno a uno; cada coordinador cuida a sus colaboradores."
-    },
-    pendientes:[
-      "Educación financiera personal y familiar.",
-      "Conectar matrimonialmente antes del nacimiento del bebé (julio).",
-      "Liderar la iglesia en oración y ayuno.",
-      "Definir objetivos 2026 con calendario."
-    ],
-    tags:["costa rica","calles","transición"]
-  },
-  {
-    nombre:"José", apellido:"Machado", iglesia:"Horizonte Hermosillo", ciudad:"Hermosillo", zona:"norte",
-    esposa:"", cumple:"16 marzo 1968", avatar:"JM", color:"av-blue",
-    hijos:[],notas:"",reunion:"",pendientes:[],tags:[]
-  },
-  {
-    nombre:"Moisés", apellido:"Hernández", iglesia:"Calvary Chapel Texcoco", ciudad:"Texcoco", zona:"centro",
-    esposa:"", cumple:"28 octubre", avatar:"MH", color:"av-purple",
-    hijos:[],
-    iglesia_reporte:{
-      nombre:"Calvary Chapel Texcoco",
-      stats:[
-        {label:"Estudios bíblicos",valor:"3"},
-        {label:"Municipios alcanzados",valor:"2"},
-        {label:"Familias alcanzadas",valor:"25"},
-        {label:"Grupos discipulado",valor:"3"},
-        {label:"Grupo mujeres jóvenes",valor:"20"}
-      ],
-      logros:"3 estudios bíblicos en Tocuila, Ojo de Agua y Coatlinchán. Grupo mensual de jóvenes. Discipulado constante a lo largo del año.",
-      plan2026:"Continuar expansión de estudios bíblicos en colonias. Consolidar grupo de mujeres jóvenes."
-    },
-    notas:"",reunion:"",pendientes:[],tags:["texcoco","calvary"]
-  },
-  {
-    nombre:"Mario", apellido:"Salazar", iglesia:"Gracia Irresistible Calvary", ciudad:"Ciudad Valles", zona:"norte",
-    esposa:"Yanette", cumple:"20 julio 1972", avatar:"MS", color:"av-coral",
-    hijos:[
-      {nombre:"Eliana",edad:"27",cumple:"1 junio 1997",datos:"Misionera en Osaka, Japón."},
-      {nombre:"Raquel",edad:"25",cumple:"28 marzo 1999",datos:"Casada. Diseño gráfico."},
-      {nombre:"Melisa",edad:"24",cumple:"24 septiembre 2000",datos:"Diseño gráfico. Le gusta anime y manga."},
-      {nombre:"Mario (hijo)",edad:"18",cumple:"5 julio 2006",datos:"Estudiando odontología en SLP."},
-      {nombre:"Ivanna",edad:"14",cumple:"",datos:"3° de secundaria."}
-    ],
-    notas:"",reunion:"",pendientes:[],tags:[]
-  },
-  {
-    nombre:"Omar", apellido:"Linares", iglesia:"Horizonte Tijuana", ciudad:"Tijuana", zona:"norte",
-    esposa:"", cumple:"", avatar:"OL", color:"av-teal",
-    hijos:[],
-    notas:"",reunion:"",pendientes:[],tags:[]
-  },
-  {
-    nombre:"Erik", apellido:"Servín", iglesia:"Horizonte CDMX", ciudad:"Ciudad de México", zona:"centro",
-    esposa:"", cumple:"26 febrero 1990", avatar:"ES", color:"av-blue",
-    hijos:[],notas:"",reunion:"",pendientes:[],tags:[]
-  },
-  {
-    nombre:"Willer", apellido:"Montesinos", iglesia:"La Carpa del Valle", ciudad:"McAllen, TX", zona:"otro",
-    esposa:"", cumple:"22 febrero 1983", avatar:"WM", color:"av-purple",
-    hijos:[],
-    notas:"Abril 2026: 24 libres más Infonavit.",
-    reunion:"",pendientes:[],tags:[]
-  },
-  {
-    nombre:"Alberto", apellido:"Pando", iglesia:"Fuentes de Agua Viva", ciudad:"Piedras Negras", zona:"norte",
-    esposa:"", cumple:"", avatar:"AP", color:"av-coral",
-    hijos:[
-      {nombre:"Keira",edad:"7",cumple:"",datos:"Primaria, le encantan los videojuegos."},
-      {nombre:"Adrián (hijo)",edad:"6",cumple:"",datos:"Primaria, dice que es pro en videojuegos."},
-      {nombre:"Ronaldo",edad:"4",cumple:"",datos:"Kinder, ama los dinosaurios."}
-    ],
-    notas:"",reunion:"",
-    pendientes:["Entrega de presupuesto personal y calendario semanal antes de fin de año."],
-    tags:["presupuesto"]
-  },
-  {
-    nombre:"Marce", apellido:"Muñoz", iglesia:"másCristo Juriquilla", ciudad:"Juriquilla, Querétaro", zona:"qro",
-    esposa:"", cumple:"", avatar:"MM", color:"av-green",
-    hijos:[],
-    iglesia_reporte:{
-      nombre:"másCristo",
-      stats:[
-        {label:"Adultos 2024 (prom.)",valor:"96"},
-        {label:"Adultos 2025 (prom.)",valor:"145"},
-        {label:"Crecimiento",valor:"+51%"},
-        {label:"Personas nuevas",valor:"63"},
-        {label:"Retención",valor:"77.8%"},
-        {label:"Grupo de hombres",valor:"+54%"}
-      ],
-      logros:"Crecimiento del 51% en un año. 63 personas nuevas, 49 se quedaron (77.8% de retención). Grupos activos: Bernabé (11), CTC (10), hombres en crecimiento. Calendario de eventos muy activo todo el año.",
-      plan2026:"Continuar el ritmo de eventos de alcance. Fortalecer grupos internos. Consolidar nuevos miembros."
-    },
-    notas:"Pastor de másCristo en Juriquilla. La iglesia con mayor crecimiento porcentual de la red en 2025.",
-    reunion:"",pendientes:[],tags:["másCristo","juriquilla","crecimiento"]
-  },
-  {
-    nombre:"Dani", apellido:"Ávila", iglesia:"La Carpa de Reunión", ciudad:"Querétaro", zona:"qro",
-    esposa:"", cumple:"18 abril 1990", avatar:"DA", color:"av-teal",
-    hijos:[],
-    iglesia_reporte:{
-      nombre:"La Carpa de Reunión",
-      stats:[
-        {label:"Asistencia auditorio 2025",valor:"200"},
-        {label:"Flechas (niños)",valor:"87"},
-        {label:"Servidores",valor:"59"},
-        {label:"Total 2025",valor:"346"},
-        {label:"Bautizos",valor:"9"},
-        {label:"Finalizaron La Ruta",valor:"11"}
-      ],
-      logros:"Asistencia estable 200 adultos promedio. Cierre de Habitar: 14H + 16M. Nuevos ministerios oct 2025: Axios (jóvenes +18), Hacedores, Mantenimiento. 9 bautizos. 11 personas finalizaron La Ruta. Hospitalidad activa con kit de bienvenida y línea telefónica.",
-      plan2026:"Hospitalidad y bienvenida: salón nuevo, kit (Biblia, libro Ps. Kike, vaso, libreta). Adoración congregacional: reestructuración 2026, calendario compartido con Horizonte Qro."
-    },
-    reporte_personal:{
-      fecha:"Abril 2026",
-      metricas:{familia:9,intimidad:9,entusiasmo:10,liderazgo:8,economia:10,salud:8.5},
-      oracion:["Alma con gozo","Matrimonio y paternidad","Casa","Andresito a largo plazo"]
-    },
-    notas:"Conferencia en Torreón exitosa (35 iglesias). Finanzas estables; deuda con Horizonte casi saldada ($5K restantes). Proyecto libro: colaboración con Kike sobre el amor de Dios. Habitar 2026: lideran Héctor y Arturo.",
-    reunion:"Abr 2026 con Kike. Conf. Torreón exitosa. Casos activos: Checo (sin confesión genuina), Javi (hermético), Douglas (indiferente), Paco (crisis plantación, Berta hospitalizada), Chucho Solís Cuernavaca (adulterio). Acuerdos: estaca con Checo, límite 8 sesiones Chucho, historial médico a Omar (Chihuahua).",
-    pendientes:[
-      "Establecer 'estaca clara' con Checo: buscar confesión genuina en tiempo definido.",
-      "Caso Chucho Solís: límite de 8 sesiones. Si Álex pagaba terapia, redirigir a consejería de Dani.",
-      "Enviar historial clínico a Omar (Chihuahua) para consulta de triglicéridos.",
-      "Habitar 2026: Héctor y Arturo lideran; cada dulō saca 1 persona para delegar.",
-      "Proyecto libro con Kike: amor de Dios."
-    ],
-    tags:["la carpa","consejería","habitar","libro"]
-  }
+  {nombre:"Chava",apellido:"",iglesia:"Horizonte Querétaro",ciudad:"Querétaro",zona:"qro",esposa:"",cumple:"",avatar:"CH",hijos:[],notas:"Residente pastoral en Horizonte Querétaro. Tendencia al hiperfocus — cuando se concentra en algo, todo lo demás desaparece. Ha decidido enfocarse en familia y hogar.",reunion:"Kike compartió Salmo 16. Temporada de estar presente con hijos adolescentes.",pendientes:["Oportunidad pastoreo en Xalapa: amigos buscan acompañamiento mensual.","Hablar con Chava para verano grupo jóvenes."],tags:[]},
+  {nombre:"Gerry",apellido:"Berrones",iglesia:"Identidad San Luis",ciudad:"San Luis Potosí",zona:"norte",esposa:"Sally",cumple:"26 oct 1985",avatar:"GB",hijos:[{nombre:"Melissa",edad:"23",datos:"Lic. Comercio, The Palace Company."},{nombre:"Alan",edad:"17",datos:"2° prepa, baterista."},{nombre:"Emilio",edad:"14",datos:"Piano y guitarra."}],notas:"Palabra 2026: 'miembros'. Transición de liderazgo con Arturo González.",reunion:"Q1 2026. Transición liderazgo, salud Sally, finanzas iglesia.",pendientes:["Comunicar cambios con Arturo antes del viaje.","Orar por salud Sally: insulina, quiste, inflamación.","Transición finanzas a 2-3 personas.","Regalos pastorales con David."],tags:["transición","Sally"]},
+  {nombre:"Herminio",apellido:"Navidad",iglesia:"Horizonte Mérida",ciudad:"Mérida",zona:"sur",esposa:"Sara",cumple:"15 mayo",avatar:"HN",hijos:[{nombre:"Adriel",edad:"",datos:"Fútbol y squash."},{nombre:"Elías",edad:"",datos:"Nadar y pintar."},{nombre:"Oscar Daniel",edad:"",datos:"Cantar y nadar. Gemelo de Elías."}],notas:"",reunion:"Dic 2025. Luis ya predica en su ausencia. 20-21 servidores. Hijo mayor entra EBC.",pendientes:["Objetivos 2026 más específicos.","Video institucional: de 6 min a 90 seg.","Fechas para predicadores visitantes."],iglesia_reporte:{nombre:"Horizonte Mérida",stats:[{label:"Bautizados 2025",valor:"7"},{label:"Conf. matrimonios",valor:"13 parejas"},{label:"Retiro varones",valor:"15 asist."},{label:"Grupos semanales",valor:"25"},{label:"Consejería",valor:"8 concluidas"},{label:"Nuevos serv.",valor:"+15"}],logros:"Reinauguración. Retiro varones: 4 comprometidos. 7 bautizos. Conf. hombres y matrimonios. 'Conociéndonos' con 6 grupos.",plan2026:"Conf. matrimonios. Varones 1x/mes. Avanzar La Ruta. Techo de lámina al terreno."},tags:["mérida"]},
+  {nombre:"Manuel",apellido:"Jaquez",iglesia:"Baluarte",ciudad:"Chihuahua",zona:"norte",esposa:"Karina",cumple:"10 ago 1989",avatar:"MJ",hijos:[{nombre:"Máximo",edad:"",datos:"Natación, legos, béisbol."},{nombre:"Alanna",edad:"5",datos:"Le gusta bailar."},{nombre:"Dante",edad:"2",datos:"Bloques. Mejoró lenguaje y audición."}],notas:"Mejor temporada matrimonial. ~$120K deuda en pago. ~$250K ahorros para terreno. Mujeres multigeneracionales (~50-60). ASIMILACIÓN como palabra clave.",reunion:"4F: Fe, Familia, Fitness, Finanzas. Temporada matrimonial excelente.",pendientes:["Corrida financiera Kari → junta diáconos.","Proponer paquete pastoral a diáconos.","Acceso CTC para consejería.","Reporte anual con objetivos 2026."],iglesia_reporte:{nombre:"Baluarte",stats:[{label:"Asistencia 2024",valor:"~150"},{label:"Asistencia 2025",valor:"~190"},{label:"2 servicios desde",valor:"mayo 2025"},{label:"Acción de gracias",valor:"120 pers."}],logros:"2 servicios dominicales desde mayo 2025. Incorporación CEM.",plan2026:"Junta diáconos finanzas. Saldar deuda $120K. Terreno $250K ahorrados."},tags:["ASIMILACIÓN","terreno","4F"]},
+  {nombre:"Oscar",apellido:"García",iglesia:"Vida Nueva en Cristo",ciudad:"San Pablo Oztotepec",zona:"centro",esposa:"Marlen",cumple:"28 ago 1976",avatar:"OG",hijos:[{nombre:"Mariana",edad:"12",datos:""},{nombre:"Erick",edad:"6",datos:""}],notas:"",reunion:"",pendientes:[],tags:[]},
+  {nombre:"Marcial",apellido:"Magadán",iglesia:"Iglesia Antioquía",ciudad:"Mérida",zona:"sur",esposa:"",cumple:"9 jun 1983",avatar:"MM",hijos:[{nombre:"José Pablo",edad:"8",datos:"Robótica y legos."},{nombre:"Juan Marcos",edad:"6",datos:"Música y rompecabezas."}],notas:"",reunion:"",pendientes:[],tags:[]},
+  {nombre:"Gadiel",apellido:"Arriaga",iglesia:"Horizonte Querétaro",ciudad:"Querétaro",zona:"qro",esposa:"Abby",cumple:"16 ago 1987",avatar:"GA",hijos:[{nombre:"Layla",edad:"",datos:"Ya pregunta por papá."},{nombre:"Jonathan",edad:"",datos:"Muy cariñoso."}],iglesia_reporte:{nombre:"Horizonte Querétaro",stats:[{label:"Asistencia semanal",valor:"~1,400"},{label:"Sábado",valor:"249"},{label:"Dom 10:30am",valor:"635"},{label:"Dom 1:00pm",valor:"484"},{label:"Flechas",valor:"4,200+"},{label:"Jóvenes Q1",valor:"774"},{label:"Consejería",valor:"95 sol."},{label:"Alcance",valor:"9 est/5 paises"},{label:"La Ruta bienvenida",valor:"277"},{label:"Conversión",valor:"60%"},{label:"Líderes grad.",valor:"68"},{label:"Matr. prog.",valor:"25"},{label:"Nuevos serv.",valor:"14"}],logros:"~1,400/semana en 3 servicios. Flechas 4,200+. Consejería 9 estados y 5 países. 25 matrimonios. Habitar ~200 próximamente.",plan2026:"3er servicio dom. ligado a construcción. Mejoras Luminares. Capacitación consejeros."},reporte_personal:{fecha:"Abril 2026",metricas:{familia:8,intimidad:9,entusiasmo:9,liderazgo:8,economia:9,salud:8},oracion:["Retiro ABIDE","Unidad equipos","Matrimonios Abide","Adopción Jorge y Onne","3er servicio dominical","Diácono Rodas","Embarazo Carol","Construcción y ductos"]},notas:"Salmo 116 como texto ancla. Reflexión Hechos 11. Esposa Abby en consejería y grupos.",reunion:"21 abr 2026. F8 I9 E9 L8 Eco9 S8. Acuerdos: GRACIAS30, votación staff Q1, capac. consejeros.",pendientes:["SALUD: Cirugía vesícula — planificar.","Seguimiento garganta con foniatra.","Transición Ale Maya → Luminares.","Certificación adicciones Omar Estrada $18K — aprobada.","Apoyo Joan $4,100/mes — aprobado.","Aumento Rodas $20K — aprobado.","Licencias ChatGPT Flechas/Ruta/Consejería — aprobadas.","Educación Layla: QCS vs Buckingham."],tags:["consejería","Luminares","salud"]},
+  {nombre:"Phil",apellido:"Jones",iglesia:"Horizonte El Marqués",ciudad:"El Marqués, Qro",zona:"qro",esposa:"",cumple:"21 feb 1984",avatar:"PJ",hijos:[{nombre:"Joshua",edad:"",datos:"Videojuegos."},{nombre:"Romi",edad:"",datos:"Dibujo, trabaja en RenovArte Café."}],notas:"Residencia: Dani y Alix Soto. Líderes: Álvaro Fuente, José Luis Castillo, Alex Melchor.",reunion:"",iglesia_reporte:{nombre:"Horizonte El Marqués",stats:[{label:"Adultos dom.",valor:"105"},{label:"Servidores",valor:"60"},{label:"Personas nuevas",valor:"91"},{label:"Flechas",valor:"44"},{label:"Grupos de vida",valor:"42"},{label:"Bautizos",valor:"12"}],logros:"La Ruta 1ra generación completa. 12 bautizos. 2 Worship Nites. Enfoque Global 45 personas.",plan2026:"LED enero. SEBAM. Diáconos junio. Acondicionar sótano. 6 eventos alcance. Visión 2027: 300 adultos."},pendientes:["Beca SEBAM Dani Soto.","Capacitación multimedia.","Continuar apoyo consejería."],tags:["liderazgo"]},
+  {nombre:"Roger",apellido:"Arcila",iglesia:"Horizonte Querétaro",ciudad:"Querétaro",zona:"qro",esposa:"Fran",cumple:"",avatar:"RA",hijos:[{nombre:"Josué",edad:"7",datos:"Legos, homeschool."},{nombre:"Emanuel",edad:"5",datos:"Nerf y Spiderman, homeschool."},{nombre:"Natalia",edad:"",datos:"Bebé (dic 2024)."}],notas:"Pastor de comunidad HQ. Descansa viernes. Finanzas bien.",reunion:"Q1 2026. Fran: identidad como mamá. Roger: patrón rendir para llenar expectativas. Salmo 46.",pendientes:["Acompañar Fran en identidad.","Roger: seguimiento patrón de queja."],tags:["matrimonial"]},
+  {nombre:"Hugo",apellido:"Ventura",iglesia:"Horizonte Tequisquiapan",ciudad:"Tequisquiapan",zona:"centro",esposa:"",cumple:"",avatar:"HV",hijos:[],iglesia_reporte:{nombre:"Horizonte Tequisquiapan",stats:[{label:"Asistencia",valor:"55 adultos"},{label:"Servidores",valor:"17"},{label:"Nuevos miembros",valor:"10"},{label:"Niños",valor:"13"},{label:"Líderes formac.",valor:"6"},{label:"La Ruta",valor:"17"}],logros:"Primera generación La Ruta. Mujeres creciendo en piedad.",plan2026:"Meta 100 adultos. 2 diáconos SEBAM. Multimedia $25K, Alabanza $50K, Remodelación $30K."},notas:"",reunion:"",pendientes:[],tags:[]},
+  {nombre:"Juan Pablo",apellido:"Segismond",iglesia:"Horizonte Panamá",ciudad:"Panamá",zona:"otro",esposa:"",cumple:"",avatar:"JS",hijos:[],notas:"1er aniversario enero 2026. Planning Center en proceso.",reunion:"",pendientes:[],tags:["panamá"]},
+  {nombre:"Adrián",apellido:"Capitaine",iglesia:"Horizonte Villahermosa",ciudad:"Villahermosa",zona:"sur",esposa:"Llanura González",cumple:"15 abr 1989",avatar:"AC",hijos:[{nombre:"Grace",edad:"6",datos:"Bailar y muñecas."},{nombre:"Ezra",edad:"",datos:"Le encanta la música."},{nombre:"Elyseo",edad:"",datos:"Bebé (mar 2024)."}],notas:"",reunion:"",iglesia_reporte:{nombre:"Horizonte Villahermosa",stats:[{label:"Adultos dom.",valor:"200"},{label:"Niños",valor:"38"},{label:"Nuevos",valor:"+40"},{label:"Bautizados",valor:"16"},{label:"Servidores",valor:"+100"},{label:"Ofrendas/mes",valor:"$133-185K"}],logros:"Conf. matrimonios 45 parejas, hombres 110, mujeres 130. 16 bautizados. 72 en grupos.",plan2026:"Membresía y gobierno. Fast Track líderes. Diáconos 2S. Alinearse con alcance."},pendientes:["Comer con líderes 1x/mes (Germán)."],tags:["líderes"]},
+  {nombre:"Toño",apellido:"García",iglesia:"Calvary Chapel Ecatepec",ciudad:"Ecatepec",zona:"centro",esposa:"Yabeth",cumple:"3 nov 1979",avatar:"TG",hijos:[{nombre:"Grace",edad:"6",datos:"Bailar y muñecas."},{nombre:"Ezra",edad:"",datos:"Le encanta la música."},{nombre:"Elyseo",edad:"",datos:"Bebé (mar 2024)."}],notas:"Énfasis 2030: levantar hombres. Plataformas: Simón, Martín Durazo, Héctor Glez, Carlos Fierro.",reunion:"Cuatrimestral abr 2026. Hechos 11 — oposición normal cuando Dios se mueve.",reporte_personal:{fecha:"Abril 2026",metricas:{familia:8,intimidad:8.5,entusiasmo:8,liderazgo:7},oracion:["Transición laboral","Unidad matrimonial","Líderes que se quedan","Finanzas iglesia"]},reporte_personal_yabeth:{metricas:{familia:7,intimidad:8,entusiasmo:9,liderazgo:8},oracion:["Matrimonio y familia","Carga escolar","Fe más grande","Tiempo hijos"]},pendientes:["Toño: reunión Gabriel/Carlos/Sol el sábado.","Toño: planificar transición laboral a fin de año.","Toño: consejo de finanzas (salen Eli y esposa Óscar).","Yabeth: enviar oración general a Kike.","Membresía → agosto.","Ruta financiera → julio.","Diáconos → noviembre."],tags:["transición","hombres"]},
+  {nombre:"Daniel",apellido:"Vargas",iglesia:"Comunidad El Camino",ciudad:"San José, Costa Rica",zona:"otro",esposa:"Edu",cumple:"",avatar:"DV",hijos:[],notas:"Bebé esperado julio 2026. 22 años de historia en Costa Rica.",reunion:"Dic 2025. Ansiedad, vida espiritual mecánica, finanzas ajustadas. Finanzas restructuradas, equipo oración/ayuno 9 personas.",iglesia_reporte:{nombre:"Comunidad El Camino",stats:[{label:"Miembros",valor:"110"},{label:"Servidores",valor:"48"},{label:"Nuevos miembros",valor:"13"},{label:"Bautizos",valor:"1"},{label:"Años historia",valor:"22"},{label:"Evangelizados",valor:"3,500+"}],logros:"Proyecto Calles: 3,500+ evangelizados, 500+ alimentados/mes. Primer discipulado personas en calle. VCP alianza.",plan2026:"Cultura de discipulado. Predicación centrada evangelio. Pastor cuida coordinadores 1 a 1."},pendientes:["Educación financiera personal.","Conectar matrimonialmente antes del bebé.","Liderar iglesia en oración y ayuno.","Definir objetivos 2026 con calendario."],tags:["Costa Rica","bebé"]},
+  {nombre:"José",apellido:"Machado",iglesia:"Horizonte Hermosillo",ciudad:"Hermosillo",zona:"norte",esposa:"",cumple:"16 mar 1968",avatar:"JM",hijos:[],notas:"",reunion:"",pendientes:[],tags:[]},
+  {nombre:"Moisés",apellido:"Hernández",iglesia:"Calvary Chapel Texcoco",ciudad:"Texcoco",zona:"centro",esposa:"",cumple:"28 oct",avatar:"MH",hijos:[],iglesia_reporte:{nombre:"Calvary Texcoco",stats:[{label:"Estudios bíblicos",valor:"3"},{label:"Municipios",valor:"2"},{label:"Familias",valor:"25"},{label:"Grupos discip.",valor:"3"}],logros:"Estudios bíblicos en Tocuila, Ojo de Agua y Coatlinchán.",plan2026:"Expandir estudios bíblicos. Consolidar grupo mujeres."},notas:"",reunion:"",pendientes:[],tags:[]},
+  {nombre:"Mario",apellido:"Salazar",iglesia:"Gracia Irresistible Calvary",ciudad:"Ciudad Valles",zona:"norte",esposa:"Yanette",cumple:"20 jul 1972",avatar:"MS",hijos:[{nombre:"Eliana",edad:"27",datos:"Misionera Osaka, Japón."},{nombre:"Raquel",edad:"25",datos:"Casada. Diseño gráfico."},{nombre:"Melisa",edad:"24",datos:"Diseño gráfico. Anime y manga."},{nombre:"Mario (hijo)",edad:"18",datos:"Odontología en SLP."},{nombre:"Ivanna",edad:"14",datos:"3° secundaria."}],notas:"",reunion:"",pendientes:[],tags:[]},
+  {nombre:"Omar",apellido:"Linares",iglesia:"Horizonte Tijuana",ciudad:"Tijuana",zona:"norte",esposa:"",cumple:"",avatar:"OL",hijos:[],notas:"",reunion:"",pendientes:[],tags:[]},
+  {nombre:"Erik",apellido:"Servín",iglesia:"Horizonte CDMX",ciudad:"Ciudad de México",zona:"centro",esposa:"",cumple:"26 feb 1990",avatar:"ES",hijos:[],notas:"",reunion:"",pendientes:[],tags:[]},
+  {nombre:"Willer",apellido:"Montesinos",iglesia:"La Carpa del Valle",ciudad:"McAllen, TX",zona:"otro",esposa:"",cumple:"22 feb 1983",avatar:"WM",hijos:[],notas:"Abr 2026: 24 libres más Infonavit.",reunion:"",pendientes:[],tags:[]},
+  {nombre:"Alberto",apellido:"Pando",iglesia:"Fuentes de Agua Viva",ciudad:"Piedras Negras",zona:"norte",esposa:"",cumple:"",avatar:"AP",hijos:[{nombre:"Keira",edad:"7",datos:"Videojuegos."},{nombre:"Adrián",edad:"6",datos:"Videojuegos."},{nombre:"Ronaldo",edad:"4",datos:"Dinosaurios."}],notas:"",reunion:"",pendientes:["Presupuesto y calendario semanal antes de fin de año."],tags:[]},
+  {nombre:"Marce",apellido:"Muñoz",iglesia:"másCristo Juriquilla",ciudad:"Juriquilla, Qro",zona:"qro",esposa:"",cumple:"",avatar:"MM",hijos:[],iglesia_reporte:{nombre:"másCristo",stats:[{label:"Adultos 2024",valor:"96"},{label:"Adultos 2025",valor:"145"},{label:"Crecimiento",valor:"+51%"},{label:"Personas nuevas",valor:"63"},{label:"Retención",valor:"77.8%"},{label:"Grupo hombres",valor:"+54%"}],logros:"+51% en un año. 63 nuevas personas, 49 se quedaron (77.8%). Grupos activos: Bernabé, CTC, hombres.",plan2026:"Eventos de alcance. Grupos internos. Consolidar nuevos."},notas:"Mayor crecimiento porcentual de la red en 2025.",reunion:"",pendientes:[],tags:["crecimiento"]},
+  {nombre:"Dani",apellido:"Ávila",iglesia:"La Carpa de Reunión",ciudad:"Querétaro",zona:"qro",esposa:"",cumple:"18 abr 1990",avatar:"DA",hijos:[],iglesia_reporte:{nombre:"La Carpa de Reunión",stats:[{label:"Auditorio 2025",valor:"200"},{label:"Flechas",valor:"87"},{label:"Servidores",valor:"59"},{label:"Total",valor:"346"},{label:"Bautizos",valor:"9"},{label:"La Ruta",valor:"11"}],logros:"Asistencia estable 200 adultos. Habitar 14H+16M. Nuevos min.: Axios, Hacedores, Mantenimiento. 9 bautizos.",plan2026:"Hospitalidad: salón nuevo, kit bienvenida. Adoración congregacional reestructuración."},reporte_personal:{fecha:"Abril 2026",metricas:{familia:9,intimidad:9,entusiasmo:10,liderazgo:8,economia:10,salud:8.5},oracion:["Alma con gozo","Matrimonio y paternidad","Casa","Andresito"]},notas:"Conf. Torreón (35 iglesias). Deuda Horizonte casi saldada ($5K). Libro colaborativo con Kike. Habitar: Héctor y Arturo.",reunion:"Abr 2026. Casos: Checo (sin confesión), Javi (hermético), Douglas (indiferente), Paco (crisis plantación), Chucho Solís (adulterio). Acuerdos: estaca Checo, 8 sesiones Chucho, historial médico Omar.",pendientes:["Estaca clara con Checo — confesión en tiempo definido.","Chucho Solís: límite 8 sesiones, redirigir terapia.","Historial clínico a Omar Chihuahua (triglicéridos).","Habitar: Héctor y Arturo lideran, cada dulō saca 1 persona.","Proyecto libro con Kike."],tags:["consejería","habitar","libro"]}
 ];
 
 const pastorPhotos = {
-  'Gadiel': 'data:image/jpeg;base64,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'
+  'Gadiel':'data:image/jpeg;base64,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'
 };
 
-const BY_SEDE = {"Horizonte Panamá": [{"year": 2025, "mes": "Enero", "mes_num": 1, "categoria": "IGLESIAS", "evento": "Inaguración Panamá", "sede": "Horizonte Panamá", "descripcion": "11 personas asistieron por primera vez. 6 personas recibieron a Cristo."}, {"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "1er mes", "sede": "Horizonte Panamá", "descripcion": "44 personas entre niños, adolescentes y adultos."}], "Identidad San Luis": [{"year": 2025, "mes": "Enero", "mes_num": 1, "categoria": "IGLESIAS", "evento": "Entrega de zapatos", "sede": "Identidad San Luis", "descripcion": "272 entregas de zapatos a 5 comunidades vulnerables"}, {"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Conferencia de Matrimonios", "sede": "Identidad San Luis", "descripcion": "80 asistentes"}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "IGLESIAS", "evento": "Aniversario 10: Pleroma", "sede": "Identidad San Luis", "descripcion": "San Luis Potosí"}], "Horizonte Querétaro": [{"year": 2025, "mes": "Enero", "mes_num": 1, "categoria": "IGLESIAS", "evento": "Jornada de ayuno y oración", "sede": "Horizonte Querétaro", "descripcion": "210 personas por servicio. 81 primeras visitas en el mes"}, {"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Conferencia de matrimonios", "sede": "Horizonte Querétaro", "descripcion": "303 matrimonios, 24 iglesias representadas"}, {"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Mujer controladora", "sede": "Horizonte Querétaro", "descripcion": "570 mujeres inscritas, 28 iglesias representadas"}, {"year": 2026, "mes": "Enero", "mes_num": 1, "categoria": "IGLESIAS", "evento": "Retiro de apertura ABIDE", "sede": "Horizonte Querétaro", "descripcion": "Programa de discipulado"}], "Horizonte El Marqués": [{"year": 2025, "mes": "Marzo Abril", "mes_num": 3, "categoria": "Acción de gracias", "evento": "Worship nite", "sede": "Horizonte El Marqués", "descripcion": "84 asistentes. 6 no creyentes + 2 alcanzadas"}, {"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Dia del amor y la amistad", "sede": "Horizonte El Marqués", "descripcion": "20 asistentes, 3 invitados"}], "másCristo": [{"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Super Bowl", "sede": "másCristo", "descripcion": "47 personas, 4 nuevas integradas"}, {"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Acción de gracias", "evento": "1er aniversario + Bautizos", "sede": "másCristo", "descripcion": "Querétaro"}], "Compañerismo CEM": [{"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "IGLESIAS", "evento": "Capacitación Siguiendo a Jesús", "sede": "Compañerismo CEM", "descripcion": "66 asistentes promedio, 15 iglesias, 3 países"}, {"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Acción de gracias", "evento": "Floreciendo", "sede": "Compañerismo CEM", "descripcion": "586 asistentes de 10 estados"}, {"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "IGLESIAS", "evento": "Bernabé — retiro de pastores", "sede": "Compañerismo CEM", "descripcion": "Querétaro"}], "Horizonte Villahermosa": [{"year": 2025, "mes": "Febrero", "mes_num": 2, "categoria": "Acción de gracias", "evento": "Cena conferencia matrimonios", "sede": "Horizonte Villahermosa", "descripcion": "84 asistentes + 18 personas nuevas"}, {"year": 2025, "mes": "Noviembre", "mes_num": 11, "categoria": "IGLESIAS", "evento": "Horizonte Villahermosa", "sede": "Horizonte Villahermosa", "descripcion": "Adrián Capitaine"}], "La Carpa CEM": [{"year": 2025, "mes": "Noviembre", "mes_num": 11, "categoria": "IGLESIAS", "evento": "La Carpa — 3 bautizos", "sede": "La Carpa CEM", "descripcion": "3 personas bautizadas"}, {"year": 2025, "mes": "Octubre", "mes_num": 10, "categoria": "IGLESIAS", "evento": "Cierre Habitar", "sede": "La Carpa CEM", "descripcion": "14 hombres + 16 mujeres — 'Mi historia en la historia de Dios'"}], "Comunidad El Camino": [{"year": 2025, "mes": "juniojulio", "mes_num": 6, "categoria": "IGLESIAS", "evento": "Visita a la zona roja", "sede": "Comunidad El Camino", "descripcion": "Costa Rica — 115 alimentados, 6 discipled"}, {"year": 2025, "mes": "Noviembre", "mes_num": 11, "categoria": "IGLESIAS", "evento": "22 Aniversario", "sede": "Comunidad El Camino", "descripcion": "Daniel Vargas"}], "Calvary Ecatepec": [{"year": 2025, "mes": "AbrilMayo", "mes_num": 4, "categoria": "Acción de gracias", "evento": "Conferencia de mujeres", "sede": "Calvary Ecatepec", "descripcion": "Estado de México"}, {"year": 2025, "mes": "Agosto", "mes_num": 8, "categoria": "IGLESIAS", "evento": "Calvary Ecatepec", "sede": "Calvary Ecatepec", "descripcion": "Toño García"}], "Horizonte Mérida": [{"year": 2025, "mes": "Marzo Abril", "mes_num": 3, "categoria": "Acción de gracias", "evento": "Inauguración", "sede": "Horizonte Mérida", "descripcion": "130 personas, 6 iglesias representadas"}, {"year": 2025, "mes": "Marzo Abril", "mes_num": 3, "categoria": "Acción de gracias", "evento": "Conferencia de hombres", "sede": "Horizonte Mérida", "descripcion": "121 asistentes, 31 iglesias representadas"}]};
+const directorio={'Mario':{tel:'+524813890720',email:'marioyanettesalazar@gmail.com',horarios:'Mié 7:30pm / Dom 11am',facebook:'https://www.facebook.com/share/1Ls7XMogTB/',instagram:'https://www.instagram.com/iglesia_gracia_irresistible'},'Gerry':{tel:'+524441743951',email:'identidadslp@gmail.com',horarios:'Dom 10:30 y 12:15 / Hom Mié 8:30',youtube:'https://youtube.com/@identidadslp8479',facebook:'https://www.facebook.com/share/1ZM7EvH6te/'},'Toño':{tel:'+525542444637',email:'calvary.ecatepec@gmail.com',horarios:'Dom 10am discipulado y 11am general',youtube:'https://youtube.com/@calvaryecatepec',facebook:'https://www.facebook.com/CalvaryChapelEcatepec'},'Manuel':{tel:'+526141000085',email:'contacto@comunidadbaluarte.com',horarios:'Dom 11am y 1pm / Mié 8pm',youtube:'https://youtube.com/@comunidadbaluarte'},'Daniel':{tel:'+50683375222',email:'infoelcaminocr@gmail.com',horarios:'Dom 10am',youtube:'https://youtube.com/@comunidadelcamino4578',facebook:'https://www.facebook.com/share/16qsbVQva9/'},'Adrián':{tel:'+529331060509',email:'contacto@horizontevillahermosa.com',horarios:'Dom 10 y 12pm / Mié 7pm',web:'https://horizontevillahermosa.com'},'Dani':{tel:'+524426757487',email:'lacarpa@cristoesmejor.com',horarios:'Dom 10am y 12pm / Mié 7:30pm',facebook:'https://www.facebook.com/LaCarpaDeReunion',instagram:'https://www.instagram.com/lacarpadereunion/',web:'https://lacarpadereunionlinks.my.canva.site'},'Erik':{tel:'+525588196030',email:'horizontecdmx@gmail.com',horarios:'Sáb 6pm / Mié 8pm',web:'https://www.horizontecdmx.org'},'Marce':{email:'juriquilla@cristoesmejor.com',horarios:'Dom 11am',instagram:'@mascristoenmas'},'Herminio':{tel:'+529992567627',email:'hmerida@cristoesmejor.com',horarios:'Dom 11am / Mié 8pm',facebook:'https://www.facebook.com/share/1Cu9fMCRcA/'},'Phil':{tel:'+524421181324',email:'oficinahorizontemarques@cristoesmejor.com',horarios:'Dom 11am / Mié 7:30pm',facebook:'https://www.facebook.com/horizonteelmarques/',instagram:'https://www.instagram.com/horizontemarques/',web:'https://horizontemarques.churchtrac.com/'},'Juan Pablo':{tel:'+50764547757',email:'horizontepma@gmail.com',horarios:'Dom 2:30pm / Mié 7pm',youtube:'https://www.youtube.com/@HorizontePanamá',instagram:'https://www.instagram.com/horizontepanama/'},'Gadiel':{horarios:'Mié 7:30pm / Sáb 7:30pm / Dom 10:30am y 1pm',youtube:'https://www.youtube.com/@HorizonteCristoesmejor',facebook:'facebook.com/horizonteqro',web:'https://horizonte.cristoesmejor.com/'},'Alberto':{tel:'(878) 122 8546',email:'informes@fav1.org',horarios:'Dom 10am y 12pm / Mar 6pm',web:'https://fuentesdeaguaviva.me/'},'Willer':{tel:'586-907-090',email:'lacarpadelvalle@outlook.com',horarios:'Dom 10:30 y 11:40 / Mié 7:30pm',facebook:'https://www.facebook.com/p/La-Carpa-del-Valle-100091212942752/'},'Hugo':{tel:'52 442 230 1269',horarios:'Mié 7pm / Dom 11am',youtube:'https://www.youtube.com/@horizonte.tequis',facebook:'https://www.facebook.com/people/Horizonte-Tequisquiapan/100068507286837/'},'José':{tel:'+526624258028',email:'horizontehermosillo@gmail.com',horarios:'Dom 10am y 12pm / Mié 7:30pm',web:'https://horizontehermosillo.org'}};
 
-const directorio = {'Mario': {'iglesia': 'Gracia Irresistible Calvary', 'ciudad': 'Ciudad Valles', 'estado': 'San Luis Potosí', 'pais': 'México', 'horarios': 'Miércoles 7:30pm y domingo 11am', 'facebook': 'https://www.facebook.com/share/1Ls7XMogTB/', 'instagram': 'https://www.instagram.com/iglesia_gracia_irresistible', 'tel': '+524813890720', 'email': 'marioyanettesalazar@gmail.com', 'dir': 'Galeana esquina con Zaragoza, Ciudad Valles, SLP'}, 'Gerry': {'iglesia': 'Identidad San Luis', 'ciudad': 'San Luis Potosí', 'horarios': 'Domingo 10:30 y 12:15 / Hombres Miércoles 8:30 / Mujeres Martes 7:30pm', 'youtube': 'https://youtube.com/@identidadslp8479', 'facebook': 'https://www.facebook.com/share/1ZM7EvH6te/', 'instagram': '@identidadslp', 'tel': '+524441743951', 'email': 'identidadslp@gmail.com', 'dir': 'Av. Santos Degollado 1055-B, SLP'}, 'Toño': {'iglesia': 'Calvary Chapel Ecatepec', 'ciudad': 'Ecatepec', 'horarios': 'Domingo 10am discipulado y 11am general / Jueves 7pm / 3er viernes hombres 7:30pm', 'youtube': 'https://youtube.com/@calvaryecatepec', 'facebook': 'https://www.facebook.com/CalvaryChapelEcatepec', 'instagram': 'calvaryecatepec', 'tel': '+525542444637', 'email': 'calvary.ecatepec@gmail.com', 'dir': 'Av. Miguel Hidalgo esq. Río Nazas, Jardines de Mórelos, Ecatepec'}, 'Manuel': {'iglesia': 'Comunidad Baluarte', 'ciudad': 'Chihuahua', 'horarios': 'Domingo 11am y 1pm / Miércoles 8pm', 'youtube': 'https://youtube.com/@comunidadbaluarte', 'facebook': 'https://www.facebook.com/share/1V3mcx3Qz7/', 'instagram': 'https://www.instagram.com/baluarte.cuu', 'tel': '+526141000085', 'email': 'contacto@comunidadbaluarte.com'}, 'Moisés': {'iglesia': 'Calvary Chapel Texcoco', 'ciudad': 'Texcoco', 'horarios': 'Domingo 11am / Miércoles 7:30pm', 'facebook': 'https://www.facebook.com/share/19PPXk5W8Q/', 'tel': '+525581655286', 'email': 'calvarychapeltexcoco@gmail.com'}, 'Daniel': {'iglesia': 'Comunidad El Camino', 'ciudad': 'San José, Costa Rica', 'horarios': 'Domingo 10am', 'youtube': 'https://youtube.com/@comunidadelcamino4578', 'facebook': 'https://www.facebook.com/share/16qsbVQva9/', 'instagram': 'https://www.instagram.com/comuelcamino', 'tel': '+50683375222', 'email': 'infoelcaminocr@gmail.com'}, 'Marcial': {'iglesia': 'Iglesia Presbiteriana Antioquía', 'ciudad': 'Mérida', 'horarios': 'Domingos 9am y 12:30pm', 'youtube': 'https://youtube.com/@iglesiapresbiterianaantioq7489', 'facebook': 'https://www.facebook.com/share/1FPhioSPuu/', 'web': 'https://www.inpantioquia.org', 'tel': '+529999232885', 'email': 'contacto@inpantioquia.org'}, 'Adrián': {'iglesia': 'Horizonte Villahermosa', 'ciudad': 'Villahermosa', 'horarios': 'Domingos 10 y 12pm / Miércoles 7pm', 'facebook': 'https://www.facebook.com/share/19SnTN8rPJ/', 'instagram': '@horizontevillahermosa', 'web': 'https://horizontevillahermosa.com', 'tel': '+529331060509', 'email': 'contacto@horizontevillahermosa.com'}, 'Omar': {'iglesia': 'Horizonte Tijuana', 'ciudad': 'Tijuana', 'horarios': 'Miércoles adoración 7:15pm y Domingo 11am'}, 'Oscar': {'iglesia': 'Vida Nueva En Cristo', 'ciudad': 'San Pablo Oztotepec', 'horarios': 'Domingo 10 y 1pm / Miércoles estudio 7pm', 'facebook': 'https://www.facebook.com/share/14GdV9JsKJh/', 'tel': '+525558624305', 'email': 'vidanuevaencristo59@gmail.com'}, 'José': {'iglesia': 'Horizonte Hermosillo', 'ciudad': 'Hermosillo', 'horarios': 'Domingo 10am y 12pm / Miércoles 7:30pm', 'youtube': 'https://youtube.com/@horizontehermosillo', 'facebook': 'https://www.facebook.com/horizontehermosillo', 'web': 'https://horizontehermosillo.org', 'tel': '+526624258028', 'email': 'horizontehermosillo@gmail.com'}, 'Dani': {'iglesia': 'La Carpa, Cristo Es Mejor', 'ciudad': 'Querétaro', 'horarios': 'Domingo 10am y 12pm / Miércoles adoración 7:30pm', 'facebook': 'https://www.facebook.com/LaCarpaDeReunion', 'instagram': 'https://www.instagram.com/lacarpadereunion/', 'web': 'https://lacarpadereunionlinks.my.canva.site', 'tel': '+524426757487', 'email': 'lacarpa@cristoesmejor.com'}, 'Erik': {'iglesia': 'Horizonte CDMX', 'ciudad': 'Ciudad de México', 'horarios': 'Sábados 6pm / Miércoles oración 8pm', 'youtube': 'https://www.youtube.com/@HorizonteCDMX', 'facebook': 'https://www.facebook.com/VisitaHorizonteCDMX', 'instagram': 'https://www.instagram.com/horizontecdmx/', 'web': 'https://www.horizontecdmx.org', 'tel': '+525588196030', 'email': 'horizontecdmx@gmail.com'}, 'Marce': {'iglesia': 'másCristo Juriquilla', 'ciudad': 'Juriquilla', 'horarios': 'Domingo 11am', 'instagram': '@mascristoenmas', 'email': 'juriquilla@cristoesmejor.com'}, 'Herminio': {'iglesia': 'Horizonte Mérida', 'ciudad': 'Mérida', 'horarios': 'Domingo 11am / Miércoles adoración 8pm', 'facebook': 'https://www.facebook.com/share/1Cu9fMCRcA/', 'tel': '+529992567627', 'email': 'hmerida@cristoesmejor.com'}, 'Phil': {'iglesia': 'Horizonte El Marqués', 'ciudad': 'El Marqués', 'horarios': 'Domingo 11am / Miércoles 7:30pm', 'facebook': 'https://www.facebook.com/horizonteelmarques/', 'instagram': 'https://www.instagram.com/horizontemarques/', 'web': 'https://horizontemarques.churchtrac.com/', 'tel': '+524421181324', 'email': 'oficinahorizontemarques@cristoesmejor.com'}, 'Juan Pablo': {'iglesia': 'Horizonte Panamá', 'ciudad': 'Panamá', 'horarios': 'Domingos 2:30pm / Miércoles 7pm', 'youtube': 'https://www.youtube.com/@HorizontePanamá', 'instagram': 'https://www.instagram.com/horizontepanama/', 'tel': '+50764547757', 'email': 'horizontepma@gmail.com'}, 'Gadiel': {'iglesia': 'Horizonte Querétaro', 'ciudad': 'Querétaro', 'horarios': 'Oración Miércoles 7:30pm / Sábado 7:30pm / Domingo 10:30am y 1pm', 'youtube': 'https://www.youtube.com/@HorizonteCristoesmejor', 'facebook': 'facebook.com/horizonteqro', 'instagram': 'instagram.com/horizonteqro', 'web': 'https://horizonte.cristoesmejor.com/'}, 'Alberto': {'iglesia': 'Iglesia Fuentes de Agua Viva', 'ciudad': 'Piedras Negras', 'horarios': 'Domingo 10am y 12pm / Martes estudio 6pm', 'youtube': 'https://www.youtube.com/channel/UCtgK18UlD5Ww1vpcOKm4SSQ', 'facebook': 'facebook.com/FAV-103461333051157', 'web': 'https://fuentesdeaguaviva.me/', 'tel': '(878) 122 8546', 'email': 'informes@fav1.org'}, 'Willer': {'iglesia': 'La Carpa del Valle', 'ciudad': 'McAllen TX', 'horarios': 'Domingo 10:30 y 11:40 / Miércoles 7:30pm', 'facebook': 'https://www.facebook.com/p/La-Carpa-del-Valle-100091212942752/', 'instagram': 'https://www.instagram.com/lacarpadelvalle/', 'tel': '586-907-090', 'email': 'lacarpadelvalle@outlook.com'}, 'Hugo': {'iglesia': 'Horizonte Tequisquiapan', 'ciudad': 'Tequisquiapan', 'horarios': 'Miércoles 7pm / Domingos 11am', 'youtube': 'https://www.youtube.com/@horizonte.tequis', 'facebook': 'https://www.facebook.com/people/Horizonte-Tequisquiapan/100068507286837/', 'instagram': 'https://www.instagram.com/horizonte.teq/', 'tel': '52 442 230 1269'}};
+/* ─── ZONE CONFIG ─── */
+const ZONES=[
+  {id:'qro',label:'Querétaro',cls:'zone-qro'},
+  {id:'norte',label:'Norte',cls:'zone-norte'},
+  {id:'sur',label:'Sur',cls:'zone-sur'},
+  {id:'centro',label:'Centro',cls:'zone-centro'},
+  {id:'otro',label:'Internacional',cls:'zone-otro'}
+];
 
-let activeZ='todos', editMode=false, editIdx=-1;
+const CARD_COLORS=['#FF6B6B','#4ECDC4','#45B7D1','#96CEB4','#F0A500','#DDA0DD','#87CEEB','#FF8C69','#7EC8E3','#C3B1E1'];
+function cardColor(p){let h=0;for(const c of (p.nombre||''))h=(h*31+c.charCodeAt(0))&0xFFFFFF;return CARD_COLORS[h%CARD_COLORS.length];}
+
+let activeZ='todos', editMode=false;
 const SK='pastores_cem_v6';
 try{const s=localStorage.getItem(SK);if(s){const d=JSON.parse(s);if(d&&d.length){pastores.length=0;d.forEach(p=>pastores.push(p));}}}catch(e){}
 
-const grads=['av-0','av-1','av-2','av-3','av-4','av-5','av-6','av-7','av-8','av-9'];
-function avC(p){const map={'av-teal':'av-2','av-blue':'av-8','av-purple':'av-0','av-amber':'av-6','av-coral':'av-1','av-gold':'av-4','av-green':'av-3','av-rose':'av-1'};if(map[p.color])return map[p.color];const h=[...(p.nombre||'')].reduce((a,c)=>a+c.charCodeAt(0),0);return grads[h%grads.length];}
-function zL(z){return{centro:'Centro',norte:'Norte',sur:'Sur',otro:'Internacional',qro:'Querétaro'}[z]||z;}
-function zC(z){return{centro:'chip chip-blue',norte:'chip chip-green',sur:'chip chip-orange',otro:'chip chip-gray',qro:'chip chip-purple'}[z]||'chip chip-gray';}
-function setZ(btn){document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');activeZ=btn.dataset.z;render();}
+function setZ(btn){
+  document.querySelectorAll('.zpill').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  activeZ=btn.dataset.z;
+  renderBoard();
+}
 
-function render(){
-  const q=document.getElementById('search').value.toLowerCase();
-  const filtered=pastores.filter(p=>{const mz=activeZ==='todos'||(activeZ==='centro'&&(p.zona==='centro'||p.zona==='qro'))||p.zona===activeZ;const hay=[p.nombre,p.apellido||'',p.iglesia||'',p.ciudad||'',p.esposa||''].join(' ').toLowerCase();return mz&&(!q||hay.includes(q));});
-  document.getElementById('top-count').textContent=filtered.length;
-  const zones=activeZ==='todos'?['qro','centro','norte','sur','otro']:[activeZ==='centro'?'qro':'',activeZ].filter(Boolean);
+function renderBoard(){
+  const q=document.getElementById('search').value.toLowerCase().trim();
+  const board=document.getElementById('board');
+
+  const filtered=pastores.filter(p=>{
+    const mz=activeZ==='todos'||p.zona===activeZ;
+    const hay=[p.nombre,p.apellido||'',p.iglesia||'',p.ciudad||'',p.esposa||''].join(' ').toLowerCase();
+    return mz&&(!q||hay.includes(q));
+  });
+
+  document.getElementById('top-count').textContent=filtered.length+' pastores';
+
+  const zones=activeZ==='todos'?ZONES:ZONES.filter(z=>z.id===activeZ);
   let html='';
+
   const seen=new Set();
   zones.forEach(z=>{
-    const zp=filtered.filter(p=>p.zona===z&&!seen.has(p.nombre+p.apellido));
+    const zp=filtered.filter(p=>p.zona===z.id&&!seen.has(p.nombre+p.apellido));
     if(!zp.length)return;
     zp.forEach(p=>seen.add(p.nombre+p.apellido));
-    html+=`<div class="zone-section">`;
-    if(activeZ==='todos'||activeZ==='centro')html+=`<div class="zone-label">${zL(z)}</div>`;
-    zp.forEach(p=>{
+
+    html+=`<div class="zone-cluster zone-${z.id}">
+      <div class="zone-header">
+        <div class="zone-dot"></div>
+        <div class="zone-title">${z.label}</div>
+        <div class="zone-count-pill">${zp.length}</div>
+        <div class="zone-line"></div>
+      </div>
+      <div class="cards-grid">`;
+
+    zp.forEach((p,i)=>{
       const idx=pastores.indexOf(p);
-      const photo=pastorPhotos[p.nombre];
       const full=(p.nombre+' '+(p.apellido||'')).trim();
-      const sub=[p.iglesia,p.ciudad].filter(Boolean).join(' · ');
+      const photo=pastorPhotos[p.nombre];
+      const col=cardColor(p);
       const hasPend=p.pendientes&&p.pendientes.length;
       const hasHealth=hasPend&&p.pendientes.some(x=>/salud|cirugía|médic/i.test(x));
-      const hasRP=!!(p.reporte_personal);
-      const avHtml=photo?`<div class="av"><img src="${photo}" alt="${full}"></div>`:`<div class="av ${avC(p)}">${(p.avatar||(p.nombre[0]+(p.apellido||'')[0]||'')).toUpperCase()}</div>`;
-      html+=`<div class="card" onclick="editMode?openEF(${idx}):openPanel(${idx})">
-        ${avHtml}
-        <div class="card-body">
-          <div class="card-name">${full}</div>
-          <div class="card-church">${sub||'—'}</div>
-          <div class="card-badges">
-            <span class="${zC(p.zona)}">${zL(p.zona)}</span>
-            ${p.esposa?`<span class="chip chip-gray">♡ ${p.esposa}</span>`:''}
-            ${p.hijos&&p.hijos.length?`<span class="chip chip-gray">${p.hijos.length} hijo${p.hijos.length>1?'s':''}</span>`:''}
-            ${hasRP?`<span class="chip chip-green">📊 reporte</span>`:''}
-            ${hasHealth?'<span class="chip chip-red">⚕ salud</span>':hasPend?`<span class="chip chip-orange">${p.pendientes.length} pend.</span>`:''}
+      const hasRP=!!p.reporte_personal;
+      const avHtml=photo
+        ?`<div class="pcard-av" style="background:${col}"><img src="${photo}"></div>`
+        :`<div class="pcard-av" style="background:${col}">${(p.avatar||(p.nombre[0]+(p.apellido||'')[0]||'')).toUpperCase()}</div>`;
+
+      // Mini metrics
+      let metricsHtml='';
+      if(p.reporte_personal&&p.reporte_personal.metricas){
+        const m=p.reporte_personal.metricas;
+        const keys=[['familia','Fam'],['intimidad','Int'],['entusiasmo','Ent']];
+        metricsHtml=`<div class="pcard-metrics">`;
+        keys.forEach(([k,lbl])=>{
+          if(m[k]===undefined)return;
+          const v=m[k];
+          const col2=v>=9?'#0A8F5C':v>=7?'#D4900A':'#D63939';
+          metricsHtml+=`<div class="pm-box"><div class="pm-num" style="color:${col2}">${v}</div><div class="pm-lbl">${lbl}</div></div>`;
+        });
+        metricsHtml+=`</div>`;
+      }
+
+      html+=`<div class="pcard${editMode?' edit-mode':''}" style="animation-delay:${i*0.04}s" onclick="${editMode?`openEF(${idx})`:`openPanel(${idx})`}">
+        <div class="pcard-stripe" style="background:${col}"></div>
+        <div class="pcard-body">
+          <div class="pcard-top">
+            ${avHtml}
+            <div class="pcard-meta">
+              <div class="pcard-name">${full}</div>
+              <div class="pcard-church">${p.iglesia||'—'}</div>
+              <div class="pcard-city">${p.ciudad||''}</div>
+            </div>
           </div>
-        </div>
-        <div class="card-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+          <div class="pcard-tags">
+            ${p.esposa?`<span class="ptag ptag-spouse">♡ ${p.esposa}</span>`:''}
+            ${p.hijos&&p.hijos.length?`<span class="ptag ptag-kids">${p.hijos.length} hijo${p.hijos.length>1?'s':''}</span>`:''}
+            ${hasRP?`<span class="ptag ptag-report">📊 ${p.reporte_personal.fecha||'Reporte'}</span>`:''}
+            ${hasHealth?`<span class="ptag ptag-health">⚕ salud</span>`:hasPend?`<span class="ptag ptag-pend">${p.pendientes.length} pend.</span>`:''}
+          </div>
+          ${metricsHtml}
         </div>
       </div>`;
     });
-    html+=`</div>`;
+
+    html+=`</div></div>`;
   });
-  if(!html)html='<div class="empty">Sin resultados</div>';
-  document.getElementById('content').innerHTML=html;
+
+  if(!html){
+    html=`<div class="empty-state">
+      <div class="empty-icon">🔍</div>
+      <div class="empty-text">Sin resultados</div>
+      <div class="empty-sub">Intenta con otro término o zona</div>
+    </div>`;
+  }
+
+  board.innerHTML=html;
 }
 
+/* ─── PANEL ─── */
 function openPanel(idx){
   const p=pastores[idx];
   const d=directorio[p.nombre]||directorio[(p.nombre||'').split(' ')[0]]||{};
-  const photo=pastorPhotos[p.nombre];
   const full=(p.nombre+' '+(p.apellido||'')).trim();
-  const sub=[p.iglesia,p.ciudad].filter(Boolean).join(' · ');
-  const avHtml=photo?`<div class="panel-av"><img src="${photo}"></div>`:`<div class="panel-av ${avC(p)}">${(p.avatar||(p.nombre[0]+(p.apellido||'')[0]||'')).toUpperCase()}</div>`;
+  const photo=pastorPhotos[p.nombre];
+  const col=cardColor(p);
 
-  let h=`<div class="panel-drag"></div>
-  <div class="panel-hero">
-    ${avHtml}
-    <div class="panel-info">
+  const avHtml=photo
+    ?`<div class="panel-av-lg" style="background:${col}"><img src="${photo}"></div>`
+    :`<div class="panel-av-lg" style="background:${col}">${(p.avatar||(p.nombre[0]+(p.apellido||'')[0]||'')).toUpperCase()}</div>`;
+
+  let h=`
+    <div class="panel-header">
+      <div class="panel-header-bg" style="background:${col}"></div>
+      <button class="panel-close" onclick="document.getElementById('panel-bg').classList.remove('open')">✕</button>
+      ${avHtml}
       <div class="panel-name">${full}</div>
-      <div class="panel-church">${sub}</div>
-      <div class="panel-meta">
-        <span class="${zC(p.zona)}">${zL(p.zona)}</span>
-        ${p.esposa?`<span class="chip chip-gray">♡ ${p.esposa}</span>`:''}
-        ${p.cumple?`<span class="chip chip-gray">🎂 ${p.cumple}</span>`:''}
+      <div class="panel-church">${p.iglesia||''} · ${p.ciudad||''}</div>
+      <div class="panel-chips">
+        ${p.esposa?`<span class="ptag ptag-spouse">♡ ${p.esposa}</span>`:''}
+        ${p.cumple?`<span class="ptag ptag-kids">🎂 ${p.cumple}</span>`:''}
       </div>
-    </div>
-    <button class="panel-close" onclick="document.getElementById('panel-bg').classList.remove('open')">✕</button>
-  </div>`;
+    </div>`;
 
-  // Action buttons
-  const actions=[];
-  if(d.tel)actions.push(`<div class="action-btn" onclick="window.location='tel:${d.tel}'"><div class="action-ico aico-call">📞</div><div class="action-lbl">Llamar</div></div>`);
-  if(d.email)actions.push(`<div class="action-btn" onclick="window.location='mailto:${d.email}'"><div class="action-ico aico-mail">✉️</div><div class="action-lbl">Email</div></div>`);
-  if(d.web)actions.push(`<div class="action-btn" onclick="window.open('${d.web}','_blank')"><div class="action-ico aico-web">🌐</div><div class="action-lbl">Web</div></div>`);
-  if(d.facebook)actions.push(`<div class="action-btn" onclick="window.open('${d.facebook}','_blank')"><div class="action-ico aico-fb">📘</div><div class="action-lbl">Facebook</div></div>`);
-  if(d.instagram&&d.instagram.startsWith('http'))actions.push(`<div class="action-btn" onclick="window.open('${d.instagram}','_blank')"><div class="action-ico aico-ig">📷</div><div class="action-lbl">Instagram</div></div>`);
-  if(actions.length)h+=`<div class="action-row">${actions.join('')}</div>`;
+  // Actions
+  const acts=[];
+  if(d.tel)acts.push(`<div class="pact" onclick="window.location='tel:${d.tel}'"><div class="pact-ico" style="background:#EAFFF4">📞</div><div class="pact-lbl">Llamar</div></div>`);
+  if(d.email)acts.push(`<div class="pact" onclick="window.location='mailto:${d.email}'"><div class="pact-ico" style="background:#EBF2FF">✉️</div><div class="pact-lbl">Email</div></div>`);
+  if(d.web)acts.push(`<div class="pact" onclick="window.open('${d.web}','_blank')"><div class="pact-ico" style="background:#FFF8E0">🌐</div><div class="pact-lbl">Web</div></div>`);
+  if(d.facebook)acts.push(`<div class="pact" onclick="window.open('${d.facebook}','_blank')"><div class="pact-ico" style="background:#EEF3FF">📘</div><div class="pact-lbl">Facebook</div></div>`);
+  if(d.instagram&&d.instagram.startsWith('http'))acts.push(`<div class="pact" onclick="window.open('${d.instagram}','_blank')"><div class="pact-ico" style="background:#FDF0FF">📷</div><div class="pact-lbl">Instagram</div></div>`);
+  if(acts.length)h+=`<div class="panel-actions">${acts.join('')}</div>`;
 
-  if(d.horarios)h+=`<div class="ps"><div class="ps-title">Servicios</div><div class="ps-card"><div class="ps-row"><div class="ps-ico">🕐</div><div class="ps-info"><div class="ps-key">Horarios</div><div class="ps-val">${d.horarios}</div></div></div></div></div>`;
+  if(d.horarios)h+=`<div class="ps"><div class="ps-label">Servicios</div><div class="ps-block"><div class="ps-row"><div class="ps-ico">🕐</div><div class="ps-key">Horarios</div><div class="ps-val">${d.horarios}</div></div></div></div>`;
 
   if(p.esposa||p.cumple){
-    h+=`<div class="ps"><div class="ps-title">Personal</div><div class="ps-card">`;
-    if(p.esposa)h+=`<div class="ps-row"><div class="ps-ico">💝</div><div class="ps-info"><div class="ps-key">Esposa</div></div><div class="ps-right">${p.esposa}</div></div>`;
-    if(p.cumple)h+=`<div class="ps-row"><div class="ps-ico">🎂</div><div class="ps-info"><div class="ps-key">Cumpleaños</div></div><div class="ps-right">${p.cumple}</div></div>`;
+    h+=`<div class="ps"><div class="ps-label">Personal</div><div class="ps-block">`;
+    if(p.esposa)h+=`<div class="ps-row"><div class="ps-ico">💝</div><div class="ps-key">Esposa</div><div class="ps-val">${p.esposa}</div></div>`;
+    if(p.cumple)h+=`<div class="ps-row"><div class="ps-ico">🎂</div><div class="ps-key">Cumpleaños</div><div class="ps-val">${p.cumple}</div></div>`;
     h+=`</div></div>`;
   }
 
   if(p.hijos&&p.hijos.length){
-    h+=`<div class="ps"><div class="ps-title">Hijos</div><div class="hijo-card">`;
+    h+=`<div class="ps"><div class="ps-label">Hijos</div><div class="hijos-grid">`;
     p.hijos.forEach(c=>{
-      h+=`<div class="hijo-row"><div class="hijo-av">${(c.nombre||'?')[0].toUpperCase()}</div><div style="flex:1"><div class="hijo-name">${c.nombre}</div>${c.datos?`<div class="hijo-detail">${c.datos}</div>`:''}</div>${c.edad?`<span class="hijo-age">${c.edad}a</span>`:''}</div>`;
+      h+=`<div class="hijo-tile"><div class="hijo-av-sm">${(c.nombre||'?')[0].toUpperCase()}</div><div class="hijo-tile-name">${c.nombre}</div>${c.edad?`<div class="hijo-tile-age">${c.edad}a</div>`:''}</div>`;
     });
     h+=`</div></div>`;
   }
 
   // Reporte personal
-  if(p.reporte_personal){
-    const rp=p.reporte_personal;
+  function renderMetrics(rp, titulo){
     const keys=[['familia','Fam'],['intimidad','Int'],['entusiasmo','Ent'],['liderazgo','Lid'],['economia','Eco'],['salud','Sal']];
-    const vals=keys.filter(([k])=>rp.metricas[k]!==undefined);
-    const avg=vals.length?(vals.reduce((s,[k])=>s+rp.metricas[k],0)/vals.length).toFixed(1):null;
-    h+=`<div class="ps"><div class="ps-title">Reporte personal — ${rp.fecha||''}</div><div class="metrics-grid">`;
+    const vals=keys.filter(([k])=>rp.metricas&&rp.metricas[k]!==undefined);
+    if(!vals.length)return'';
+    const avg=(vals.reduce((s,[k])=>s+rp.metricas[k],0)/vals.length).toFixed(1);
+    let out=`<div class="ps"><div class="ps-label">${titulo}</div><div class="metrics-row">`;
     vals.forEach(([k,lbl])=>{
       const v=rp.metricas[k];
-      const col=v>=9?'var(--green)':v>=7?'var(--gold)':'var(--red)';
-      const barW=Math.round(v*10);
-      h+=`<div class="metric-box"><div class="metric-bar" style="background:${col};width:${barW}%"></div><div class="metric-num" style="color:${col}">${v}</div><div class="metric-lbl">${lbl}</div></div>`;
+      const cls=v>=9?'m-green':v>=7?'m-gold':'m-red';
+      const numcol=v>=9?'#0A8F5C':v>=7?'#D4900A':'#D63939';
+      out+=`<div class="metric-tile ${cls}"><div class="metric-num" style="color:${numcol}">${v}</div><div class="metric-lbl">${lbl}</div></div>`;
     });
-    if(avg)h+=`<div class="metric-box metric-avg"><div class="metric-num">${avg}</div><div class="metric-lbl">Promedio</div></div>`;
-    h+=`</div>`;
+    out+=`<div class="metric-tile metric-tile-avg"><div class="metric-num">${avg}</div><div class="metric-lbl">Prom.</div></div>`;
+    out+=`</div>`;
     if(rp.oracion&&rp.oracion.length){
-      h+=`<div class="ps-title" style="margin-top:-4px;">Puntos de oración</div><div class="oracion-tags">`;
       const items=Array.isArray(rp.oracion)?rp.oracion:rp.oracion.split(/[·\n,]/).map(x=>x.trim()).filter(Boolean);
-      items.forEach(x=>h+=`<span class="oracion-tag">🙏 ${x}</span>`);
-      h+=`</div>`;
+      out+=`<div class="ps-label" style="margin:0 20px 8px;">Oración</div><div style="padding:0 20px"><div class="prayer-tags">`;
+      items.forEach(x=>out+=`<span class="prayer-tag">🙏 ${x}</span>`);
+      out+=`</div></div>`;
     }
-    h+=`</div>`;
+    out+=`</div>`;
+    return out;
   }
 
-  // Reporte Yabeth (Toño)
-  if(p.reporte_personal_yabeth){
-    const ry=p.reporte_personal_yabeth;
-    const keys=[['familia','Fam'],['intimidad','Int'],['entusiasmo','Ent'],['liderazgo','Lid']];
-    const vals=keys.filter(([k])=>ry.metricas[k]!==undefined);
-    const avg=vals.length?(vals.reduce((s,[k])=>s+ry.metricas[k],0)/vals.length).toFixed(1):null;
-    h+=`<div class="ps"><div class="ps-title">Reporte Yabeth — Abril 2026</div><div class="metrics-grid">`;
-    vals.forEach(([k,lbl])=>{
-      const v=ry.metricas[k];
-      const col=v>=9?'var(--green)':v>=7?'var(--gold)':'var(--red)';
-      const barW=Math.round(v*10);
-      h+=`<div class="metric-box"><div class="metric-bar" style="background:${col};width:${barW}%"></div><div class="metric-num" style="color:${col}">${v}</div><div class="metric-lbl">${lbl}</div></div>`;
-    });
-    if(avg)h+=`<div class="metric-box metric-avg"><div class="metric-num">${avg}</div><div class="metric-lbl">Promedio</div></div>`;
-    h+=`</div>`;
-    if(ry.oracion&&ry.oracion.length){
-      h+=`<div class="ps-title" style="margin-top:-4px;">Oración Yabeth</div><div class="oracion-tags">`;
-      ry.oracion.forEach(x=>h+=`<span class="oracion-tag">🙏 ${x}</span>`);
-      h+=`</div>`;
-    }
-    h+=`</div>`;
-  }
+  if(p.reporte_personal)h+=renderMetrics(p.reporte_personal,'Reporte '+(p.reporte_personal.fecha||''));
+  if(p.reporte_personal_yabeth)h+=renderMetrics(p.reporte_personal_yabeth,'Reporte Yabeth — Abril 2026');
 
-  if(p.reunion)h+=`<div class="ps"><div class="ps-title">Última reunión</div><div class="ps-text">${p.reunion}</div></div>`;
-  if(p.notas)h+=`<div class="ps"><div class="ps-title">Notas</div><div class="ps-text">${p.notas}</div></div>`;
+  if(p.reunion)h+=`<div class="ps"><div class="ps-label">Última reunión</div><div class="ps-text">${p.reunion}</div></div>`;
+  if(p.notas)h+=`<div class="ps"><div class="ps-label">Notas</div><div class="ps-text">${p.notas}</div></div>`;
 
   if(p.iglesia_reporte){
     const ir=p.iglesia_reporte;
-    h+=`<div class="ps"><div class="ps-title">Iglesia — Reporte 2025</div>`;
-    if(ir.stats){h+=`<div class="stats-grid">`;ir.stats.forEach(s=>h+=`<div class="stat-box"><div class="stat-num">${s.valor}</div><div class="stat-lbl">${s.label}</div></div>`);h+=`</div>`;}
+    h+=`<div class="ps"><div class="ps-label">Iglesia — Reporte 2025</div>`;
+    if(ir.stats){h+=`<div class="stats-grid">`;ir.stats.forEach(s=>h+=`<div class="stat-tile"><div class="stat-num">${s.valor}</div><div class="stat-lbl">${s.label}</div></div>`);h+=`</div>`;}
     if(ir.logros)h+=`<div class="ps-text">${ir.logros}</div>`;
-    if(ir.plan2026)h+=`<div class="ps-title" style="margin-top:-4px;">Plan 2026</div><div class="ps-text">${ir.plan2026}</div>`;
+    if(ir.plan2026)h+=`<div class="ps-label" style="margin:0 20px 8px;">Plan 2026</div><div style="padding:0 20px"><div class="ps-text">${ir.plan2026}</div></div>`;
     h+=`</div>`;
   }
 
   if(p.pendientes&&p.pendientes.length){
-    h+=`<div class="ps"><div class="ps-title">Pendientes para Kike</div><div class="pend-list">`;
+    h+=`<div class="ps"><div class="ps-label">Pendientes</div><div class="pend-list">`;
     p.pendientes.forEach((x,i)=>h+=`<div class="pend-item"><span class="pend-n">${i+1}</span><span class="pend-t">${x}</span></div>`);
     h+=`</div></div>`;
   }
 
-  // Events
-  const sedes={'Horizonte Querétaro':'Horizonte Querétaro','Identidad San Luis':'Identidad San Luis','Horizonte El Marqués':'Horizonte El Marqués','másCristo Juriquilla':'másCristo','Horizonte Villahermosa':'Horizonte Villahermosa','Horizonte Mérida':'Horizonte Mérida','Horizonte CDMX':'Horizonte CDMX','Baluarte':'Comunidad Baluarte','La Carpa de Reunión':'La Carpa CEM','Horizonte Panamá':'Horizonte Panamá','Gracia Irresistible Calvary':'Gracia Irresistible','Calvary Chapel Ecatepec':'Calvary Ecatepec','Comunidad El Camino':'Comunidad El Camino'};
-  const evts=(BY_SEDE[sedes[p.iglesia]||p.iglesia]||[]).slice(0,4);
-  if(evts.length){
-    h+=`<div class="ps"><div class="ps-title">Eventos recientes</div><div class="event-list">`;
-    evts.forEach(e=>h+=`<div class="event-row"><div class="event-dot"></div><div class="event-body"><div class="event-name">${e.evento}</div><div class="event-meta">${e.mes} ${e.year}</div>${e.descripcion?`<div class="event-desc">${e.descripcion.substring(0,90)}${e.descripcion.length>90?'…':''}</div>`:''}</div></div>`);
-    h+=`</div></div>`;
-  }
-
-  h+=`<div style="height:12px;"></div>`;
+  h+=`<div style="height:20px"></div>`;
   document.getElementById('panel').innerHTML=h;
   document.getElementById('panel-bg').classList.add('open');
 }
 
 function closePanel(e){if(e.target===document.getElementById('panel-bg'))document.getElementById('panel-bg').classList.remove('open');}
 
+/* ─── EDIT MODE ─── */
 function toggleEdit(){
   editMode=!editMode;
-  const btn=document.getElementById('bb-edit');
-  btn.textContent=editMode?'Salir':'Editar';
-  btn.className='bb-btn '+(editMode?'bb-exit':'bb-edit');
-  document.getElementById('bb-add').style.display=editMode?'':'none';
-  document.getElementById('bb-save').style.display=editMode?'':'none';
-  document.getElementById('bb-msg').textContent=editMode?'Toca una tarjeta para editar':'';
-  render();
+  const btn=document.getElementById('tb-edit');
+  btn.textContent=editMode?'✕ Salir':'✎ Editar';
+  btn.className='tb-btn'+(editMode?' tb-btn-exit':'');
+  document.getElementById('tb-add').style.display=editMode?'':'none';
+  document.getElementById('tb-save').style.display=editMode?'':'none';
+  renderBoard();
 }
 
 async function saveAll(){
   try{
     localStorage.setItem(SK,JSON.stringify(pastores));
-    const msg=document.getElementById('bb-msg');
-    msg.textContent='Guardando…';
-    if(window.saveCloud){await window.saveCloud();msg.textContent='✓ Guardado en la nube';}
-    else msg.textContent='✓ Guardado';
-    setTimeout(()=>{msg.textContent=editMode?'Toca una tarjeta para editar':'';},2000);
-    render();
+    const btn=document.getElementById('tb-save');
+    const orig=btn.textContent;
+    btn.textContent='✓ Guardado';
+    if(window.saveCloud)await window.saveCloud();
+    setTimeout(()=>btn.textContent=orig,2000);
+    renderBoard();
   }catch(e){}
 }
 
+/* ─── EDIT FORM ─── */
+let editIdx=-1;
 function openEF(idx){
   editIdx=idx;
-  const p=idx===-1?{nombre:'',apellido:'',iglesia:'',ciudad:'',zona:'centro',esposa:'',cumple:'',avatar:'',color:'av-teal',hijos:[],notas:'',reunion:'',pendientes:[],tags:[]}:JSON.parse(JSON.stringify(pastores[idx]));
-  const zO=['qro','centro','norte','sur','otro'].map(z=>`<option value="${z}" ${p.zona===z?'selected':''}>${zL(z)}</option>`).join('');
-  const hH=(p.hijos||[]).map((c,i)=>`<div class="ef-row-item"><input placeholder="Nombre" value="${c.nombre||''}" oninput="eH(${i},'nombre',this.value)"><input placeholder="Edad" value="${c.edad||''}" style="max-width:55px;" oninput="eH(${i},'edad',this.value)"><button class="ef-del" onclick="rH(${i})">−</button></div>`).join('');
+  const p=idx===-1?{nombre:'',apellido:'',iglesia:'',ciudad:'',zona:'qro',esposa:'',cumple:'',avatar:'',hijos:[],notas:'',reunion:'',pendientes:[],tags:[]}:JSON.parse(JSON.stringify(pastores[idx]));
+  const zO=ZONES.map(z=>`<option value="${z.id}" ${p.zona===z.id?'selected':''}>${z.label}</option>`).join('');
+  const hH=(p.hijos||[]).map((c,i)=>`<div class="ef-row-item"><input placeholder="Nombre" value="${c.nombre||''}" oninput="eH(${i},'nombre',this.value)"><input placeholder="Edad" value="${c.edad||''}" style="max-width:55px" oninput="eH(${i},'edad',this.value)"><button class="ef-del" onclick="rH(${i})">−</button></div>`).join('');
   const pH=(p.pendientes||[]).map((x,i)=>`<div class="ef-pend-item"><textarea class="ef-pend-ta" rows="2" oninput="eP(${i},this.value)">${x}</textarea><button class="ef-del" onclick="rP(${i})">−</button></div>`).join('');
   document.getElementById('ef-panel').innerHTML=`
-    <div class="ef-nav"><button class="ef-cancel" onclick="closeEF()">Cancelar</button><div class="ef-nav-title">${idx===-1?'Nuevo pastor':'Editar pastor'}</div><button class="ef-done" onclick="saveForm()">Listo</button></div>
+    <div class="ef-nav"><button class="ef-cancel" onclick="closeEF()">Cancelar</button><div class="ef-nav-title">${idx===-1?'Nuevo pastor':'Editar'}</div><button class="ef-done" onclick="saveForm()">Listo</button></div>
     <div class="ef-body">
       <div class="ef-group"><div class="ef-group-title">Información</div>
         <div class="ef-fields">
-          <div class="ef-field"><span class="ef-lbl">Nombre</span><input class="ef-inp" value="${p.nombre}" placeholder="Nombre" oninput="eT('nombre',this.value)"></div>
-          <div class="ef-field"><span class="ef-lbl">Apellido</span><input class="ef-inp" value="${p.apellido||''}" placeholder="Apellido" oninput="eT('apellido',this.value)"></div>
-          <div class="ef-field"><span class="ef-lbl">Iglesia</span><input class="ef-inp" value="${p.iglesia||''}" placeholder="Nombre iglesia" oninput="eT('iglesia',this.value)"></div>
-          <div class="ef-field"><span class="ef-lbl">Ciudad</span><input class="ef-inp" value="${p.ciudad||''}" placeholder="Ciudad" oninput="eT('ciudad',this.value)"></div>
+          <div class="ef-field"><span class="ef-lbl">Nombre</span><input class="ef-inp" value="${p.nombre}" oninput="eT('nombre',this.value)"></div>
+          <div class="ef-field"><span class="ef-lbl">Apellido</span><input class="ef-inp" value="${p.apellido||''}" oninput="eT('apellido',this.value)"></div>
+          <div class="ef-field"><span class="ef-lbl">Iglesia</span><input class="ef-inp" value="${p.iglesia||''}" oninput="eT('iglesia',this.value)"></div>
+          <div class="ef-field"><span class="ef-lbl">Ciudad</span><input class="ef-inp" value="${p.ciudad||''}" oninput="eT('ciudad',this.value)"></div>
           <div class="ef-field"><span class="ef-lbl">Zona</span><select class="ef-sel" onchange="eT('zona',this.value)">${zO}</select></div>
-          <div class="ef-field"><span class="ef-lbl">Esposa</span><input class="ef-inp" value="${p.esposa||''}" placeholder="Nombre" oninput="eT('esposa',this.value)"></div>
-          <div class="ef-field"><span class="ef-lbl">Cumpleaños</span><input class="ef-inp" value="${p.cumple||''}" placeholder="15 ene 1985" oninput="eT('cumple',this.value)"></div>
-          <div class="ef-field"><span class="ef-lbl">Iniciales</span><input class="ef-inp" value="${p.avatar||''}" placeholder="GA" maxlength="3" oninput="eT('avatar',this.value)"></div>
+          <div class="ef-field"><span class="ef-lbl">Esposa</span><input class="ef-inp" value="${p.esposa||''}" oninput="eT('esposa',this.value)"></div>
+          <div class="ef-field"><span class="ef-lbl">Cumpleaños</span><input class="ef-inp" value="${p.cumple||''}" oninput="eT('cumple',this.value)"></div>
+          <div class="ef-field"><span class="ef-lbl">Iniciales</span><input class="ef-inp" value="${p.avatar||''}" maxlength="3" oninput="eT('avatar',this.value)"></div>
         </div>
       </div>
       <div class="ef-group"><div class="ef-group-title">Hijos</div>
-        <div class="ef-fields" id="hijos-list">${hH||'<div style="padding:12px 14px;color:var(--ink3);font-size:13px;font-weight:500;">Sin hijos registrados</div>'}</div>
+        <div class="ef-fields" id="hijos-list">${hH||'<div style="padding:11px 14px;color:#B8B2AC;font-size:13px">Sin hijos</div>'}</div>
         <button class="ef-add-btn" onclick="addH()">+ Agregar hijo</button>
       </div>
-      <div class="ef-group"><div class="ef-group-title">Notas personales</div><textarea class="ef-ta" placeholder="Escribe aquí..." oninput="eT('notas',this.value)">${p.notas||''}</textarea></div>
-      <div class="ef-group"><div class="ef-group-title">Última reunión</div><textarea class="ef-ta" placeholder="Notas de la reunión..." oninput="eT('reunion',this.value)">${p.reunion||''}</textarea></div>
-      <div class="ef-group"><div class="ef-group-title">Pendientes para Kike</div>
-        <div class="ef-fields" id="pend-list">${pH||'<div style="padding:12px 14px;color:var(--ink3);font-size:13px;font-weight:500;">Sin pendientes</div>'}</div>
+      <div class="ef-group"><div class="ef-group-title">Notas</div><textarea class="ef-ta" oninput="eT('notas',this.value)">${p.notas||''}</textarea></div>
+      <div class="ef-group"><div class="ef-group-title">Última reunión</div><textarea class="ef-ta" oninput="eT('reunion',this.value)">${p.reunion||''}</textarea></div>
+      <div class="ef-group"><div class="ef-group-title">Pendientes</div>
+        <div class="ef-fields" id="pend-list">${pH||'<div style="padding:11px 14px;color:#B8B2AC;font-size:13px">Sin pendientes</div>'}</div>
         <button class="ef-add-btn" onclick="addP()">+ Agregar pendiente</button>
       </div>
       <button class="ef-submit ef-submit-save" onclick="saveForm()">Guardar cambios</button>
@@ -980,11 +1183,11 @@ function addH(){if(window._et){if(!window._et.hijos)window._et.hijos=[];window._
 function eP(i,v){if(window._et&&window._et.pendientes)window._et.pendientes[i]=v;}
 function rP(i){if(window._et){window._et.pendientes.splice(i,1);openEF(editIdx);}}
 function addP(){if(window._et){if(!window._et.pendientes)window._et.pendientes=[];window._et.pendientes.push('');openEF(editIdx);}}
-function saveForm(){const p=window._et;if(!p||!p.nombre){alert('El nombre es obligatorio');return;}if(!p.avatar)p.avatar=(p.nombre[0]+((p.apellido||'')[0]||'')).toUpperCase();if(!p.tags)p.tags=[];p.pendientes=(p.pendientes||[]).filter(x=>x.trim());p.hijos=(p.hijos||[]).filter(h=>h.nombre);if(editIdx===-1)pastores.push(p);else pastores[editIdx]=p;saveAll();closeEF();render();}
-function delP(i){if(!confirm('¿Eliminar a '+pastores[i].nombre+'?'))return;pastores.splice(i,1);saveAll();closeEF();render();}
+function saveForm(){const p=window._et;if(!p||!p.nombre)return alert('Nombre requerido');if(!p.avatar)p.avatar=(p.nombre[0]+((p.apellido||'')[0]||'')).toUpperCase();if(!p.tags)p.tags=[];p.pendientes=(p.pendientes||[]).filter(x=>x.trim());p.hijos=(p.hijos||[]).filter(h=>h.nombre);if(editIdx===-1)pastores.push(p);else pastores[editIdx]=p;saveAll();closeEF();renderBoard();}
+function delP(i){if(!confirm('¿Eliminar a '+pastores[i].nombre+'?'))return;pastores.splice(i,1);saveAll();closeEF();renderBoard();}
 function closeEF(e){if(e&&e.target!==document.getElementById('ef-bg'))return;document.getElementById('ef-bg').classList.remove('open');window._et=null;editIdx=-1;}
 
-render();
+renderBoard();
 </script>
 </body>
 </html>
