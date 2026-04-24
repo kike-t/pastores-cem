@@ -990,6 +990,52 @@ img { display: block; }
 .ssp-stable { background: rgba(74,155,111,0.07); border-color: rgba(74,155,111,0.2);  color: #4A9B6F; }
 .ss-sep { width: 1px; height: 14px; background: var(--border2); flex-shrink: 0; }
 .ss-pill.active { filter: brightness(1.2); font-weight: 600; }
+
+/* ── STRUCTURED NOTES ── */
+.snotes { margin-bottom: 12px; }
+.snotes-sect {
+  margin-bottom: 8px;
+}
+.snotes-sect-hdr {
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 5px;
+}
+.snotes-sect-ico { font-size: 12px; flex-shrink: 0; }
+.snotes-sect-lbl {
+  font-size: 10px; font-weight: 600; color: var(--ink3);
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.snotes-bullets {
+  display: flex; flex-direction: column; gap: 3px;
+  padding-left: 4px;
+}
+.snotes-bullet {
+  display: flex; align-items: flex-start; gap: 7px;
+  font-size: 12.5px; color: var(--ink2); line-height: 1.55;
+}
+.snotes-bullet-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--border3); flex-shrink: 0; margin-top: 6px;
+}
+.snotes-bullet.sb-action { color: var(--ink); }
+.snotes-bullet.sb-action .snotes-bullet-dot { background: var(--qro); }
+.snotes-bullet.sb-code {
+  font-size: 11.5px; font-weight: 600; color: var(--qro);
+  background: rgba(200,147,58,0.08); border-radius: 4px;
+  padding: 2px 8px; margin-left: -4px;
+  font-family: var(--sans);
+}
+.snotes-bullet.sb-health { color: #C07070; }
+.snotes-bullet.sb-health .snotes-bullet-dot { background: var(--urgent); }
+.snotes-date-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 600; color: var(--ink2);
+  background: var(--surface2); border: 1px solid var(--border2);
+  border-radius: 6px; padding: 4px 10px; margin-bottom: 10px;
+}
+.snotes-divider {
+  height: 1px; background: var(--border); margin: 8px 0;
+}
 </style>
 </head>
 <body>
@@ -1385,6 +1431,81 @@ function updatePriorityCounts(){
   if(el('ssc-watch'))el('ssc-watch').textContent=c.watch;
   if(el('ssc-stable'))el('ssc-stable').textContent=c.stable;
 }
+
+/* ── STRUCTURED NOTES RENDERER ── */
+function parseReunion(text, fecha) {
+  if(!text) return '';
+  
+  // Split into sentences/lines
+  const lines = text
+    .replace(/\. /g, '.\n')
+    .replace(/; /g, ';\n')
+    .split('\n')
+    .map(l => l.trim())
+    .filter(l => l.length > 3);
+
+  // Categorize each line
+  const sections = {
+    acciones: [],
+    reflexion: [],
+    familia: [],
+    otros: [],
+  };
+
+  lines.forEach(line => {
+    const l = line.toLowerCase();
+    const isAction = /acuerdo|aprobad|pendiente|reunión|visitar|llamar|enviar|acompañar|dar seguimiento|próxima|comer|hablar|comunicar|seguimiento|código|gracias/i.test(line);
+    const isFamilia = /esposa|abby|fran|edu|yabeth|hijo|niño|layla|jonathan|natán|chris|familia|embarazo|bebé|matrimon/i.test(line);
+    const isReflexion = /salmo|hechos|reflexión|texto|inti|temporada|oración|predic|mensaje|aprendiz|crecer|dios|señor|cristo|corintios|filipenses|efesios|génesis|lucas/i.test(line);
+    const isCode = /GRACIAS\d+|code:/i.test(line);
+
+    if(isCode) sections.acciones.unshift({text: line, type:'code'});
+    else if(isAction) sections.acciones.push({text: line, type:'action'});
+    else if(isFamilia) sections.familia.push({text: line, type:'normal'});
+    else if(isReflexion) sections.reflexion.push({text: line, type:'normal'});
+    else sections.otros.push({text: line, type:'normal'});
+  });
+
+  let h = `<div class="snotes">`;
+  
+  if(fecha) {
+    h += `<div class="snotes-date-badge">📅 ${fecha}</div>`;
+  }
+
+  function renderSection(ico, lbl, items) {
+    if(!items.length) return '';
+    let s = `<div class="snotes-sect">
+      <div class="snotes-sect-hdr">
+        <span class="snotes-sect-ico">${ico}</span>
+        <span class="snotes-sect-lbl">${lbl}</span>
+      </div>
+      <div class="snotes-bullets">`;
+    items.forEach(item => {
+      const isHealth = /salud|cirugía|médic|foniatra/i.test(item.text);
+      const cls = item.type==='code' ? 'sb-code' : item.type==='action' ? 'sb-action' : isHealth ? 'sb-health' : '';
+      if(item.type === 'code') {
+        s += `<div class="snotes-bullet sb-code">${item.text}</div>`;
+      } else {
+        s += `<div class="snotes-bullet ${cls}">
+          <div class="snotes-bullet-dot"></div>
+          <span>${item.text}</span>
+        </div>`;
+      }
+    });
+    s += `</div></div>`;
+    return s;
+  }
+
+  h += renderSection('✓', 'Acuerdos & acciones', sections.acciones);
+  if(sections.acciones.length && (sections.familia.length || sections.reflexion.length || sections.otros.length)) {
+    h += `<div class="snotes-divider"></div>`;
+  }
+  h += renderSection('👪', 'Familia', sections.familia);
+  h += renderSection('📖', 'Reflexión pastoral', sections.reflexion);
+  h += renderSection('💬', 'Notas', sections.otros);
+  h += `</div>`;
+  return h;
+}
 function renderPastores(){
   const q = (document.getElementById('search')||{value:''}).value.toLowerCase().trim();
   const filtered = pastores.filter(p=>{
@@ -1678,8 +1799,13 @@ function openPanel(idx){
   if(p.reporte_personal_yabeth) h += renderRP(p.reporte_personal_yabeth, 'Reporte Yabeth — Abril 2026');
 
   // Reunión y notas
-  if(p.reunion)       h += `<div class="ps"><div class="ps-lbl">Última reunión</div><div class="text-block">${p.reunion}</div></div>`;
-  if(nd.notasClean)   h += `<div class="ps"><div class="ps-lbl">Notas</div><div class="text-block">${nd.notasClean}</div></div>`;
+  if(p.reunion){
+    const reunionDate = p.reporte_personal ? p.reporte_personal.fecha : '';
+    h += `<div class="ps"><div class="ps-lbl">Última reunión</div>${parseReunion(p.reunion, reunionDate)}</div>`;
+  }
+  if(nd.notasClean){
+    h += `<div class="ps"><div class="ps-lbl">Notas pastorales</div>${parseReunion(nd.notasClean, '')}</div>`;
+  }
 
   // Iglesia reporte
   if(p.iglesia_reporte){
