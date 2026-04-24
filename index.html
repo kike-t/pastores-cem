@@ -12,7 +12,11 @@
   const cfg={apiKey:"AIzaSyACo7a3uVsGwAdii3d8W3NmXvLVBdgTF1A",authDomain:"pastores-cem.firebaseapp.com",projectId:"pastores-cem",storageBucket:"pastores-cem.firebasestorage.app",messagingSenderId:"45247752354",appId:"1:45247752354:web:eb41da403d38c72d788ffb"};
   const app=initializeApp(cfg);const db=getFirestore(app);
   window.db=db;window.fsDoc=doc;window.fsSetDoc=setDoc;window.fsCollection=collection;window.fsGetDocs=getDocs;
-  async function load(){try{const snap=await getDocs(collection(db,"pastores"));if(!snap.empty){const d=[];snap.forEach(x=>d.push(x.data()));d.sort((a,b)=>a.nombre.localeCompare(b.nombre));pastores.length=0;d.forEach(p=>pastores.push(p));renderBoard();}else{await saveCloud();}}catch(e){console.warn(e);}}
+  async function load(){try{const snap=await getDocs(collection(db,"pastores"));if(!snap.empty){const d=[];snap.forEach(x=>d.push(x.data()));d.sort((a,b)=>a.nombre.localeCompare(b.nombre));pastores.length=0;d.forEach(p=>pastores.push(p));renderBoard();
+updateNavCounts();
+renderDashboard();
+renderReportes();
+renderSeguimiento();}else{await saveCloud();}}catch(e){console.warn(e);}}
   async function saveCloud(){for(const p of pastores){const id=(p.nombre+'_'+(p.apellido||'')).replace(/\s+/g,'_').toLowerCase();try{await setDoc(doc(db,"pastores",id),p);}catch(e){}}}
   window.saveCloud=saveCloud;
   window.addEventListener('load',()=>setTimeout(load,300));
@@ -388,69 +392,6 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font
 .empty-text{font-family:var(--display);font-size:26px;color:var(--ink2);letter-spacing:2px;}
 
 /* ══════════════════════════════════════════════════
-   LOGIN
-══════════════════════════════════════════════════ */
-.login-screen{
-  position:fixed;inset:0;z-index:9999;
-  background:var(--bg);
-  display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:0;
-}
-.login-screen.hidden{display:none;}
-.login-box{
-  width:100%;max-width:360px;
-  padding:40px 32px;
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:8px;
-  margin:0 16px;
-}
-.login-logo{
-  display:flex;align-items:center;gap:10px;
-  margin-bottom:28px;
-}
-.login-mark{
-  width:40px;height:40px;
-  background:var(--amber);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--display);font-size:13px;color:#000;
-  clip-path:polygon(0 0,calc(100% - 6px) 0,100% 6px,100% 100%,6px 100%,0 calc(100% - 6px));
-}
-.login-title{font-family:var(--display);font-size:26px;letter-spacing:2px;color:var(--ink);}
-.login-sub{font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:0.12em;text-transform:uppercase;margin-top:2px;}
-.login-notice{
-  background:rgba(232,168,32,0.08);
-  border:1px solid rgba(232,168,32,0.2);
-  border-radius:4px;
-  padding:8px 12px;
-  font-family:var(--mono);font-size:9.5px;
-  color:var(--amber);letter-spacing:0.04em;
-  margin-bottom:24px;line-height:1.5;
-}
-.login-field{margin-bottom:14px;}
-.login-lbl{font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;display:block;}
-.login-inp{
-  width:100%;padding:10px 14px;
-  background:var(--surface2);border:1px solid var(--border2);
-  border-radius:4px;font-size:14px;font-family:var(--sans);
-  color:var(--ink);outline:none;transition:border-color 0.2s;
-}
-.login-inp:focus{border-color:var(--amber);}
-.login-btn{
-  width:100%;padding:12px;
-  background:var(--amber);border:none;border-radius:4px;
-  font-family:var(--display);font-size:18px;letter-spacing:2px;
-  color:#000;cursor:pointer;margin-top:8px;
-  transition:opacity 0.15s;
-}
-.login-btn:hover{opacity:0.9;}
-.login-error{
-  font-family:var(--mono);font-size:10px;color:var(--red);
-  margin-top:8px;text-align:center;min-height:16px;
-  letter-spacing:0.06em;
-}
-
-/* ══════════════════════════════════════════════════
    APP SHELL — NAV
 ══════════════════════════════════════════════════ */
 .app-shell{display:flex;height:100vh;overflow:hidden;}
@@ -696,28 +637,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font
 <body>
 
 
-<!-- LOGIN SCREEN -->
-<div class="login-screen" id="login-screen">
-  <div class="login-box">
-    <div class="login-logo">
-      <div class="login-mark">CEM</div>
-      <div>
-        <div class="login-title">Pastores CEM</div>
-        <div class="login-sub">Repositorio Pastoral Interno</div>
-      </div>
-    </div>
-    <div class="login-notice">🔒 Uso interno exclusivo — Cristo es Mejor</div>
-    <div class="login-field">
-      <label class="login-lbl">Acceso</label>
-      <input class="login-inp" id="login-pass" type="password" placeholder="Contraseña" onkeydown="if(event.key==='Enter')doLogin()">
-    </div>
-    <button class="login-btn" onclick="doLogin()">ENTRAR</button>
-    <div class="login-error" id="login-error"></div>
-  </div>
-</div>
-
 <!-- APP SHELL -->
-<div class="app-shell hidden" id="app-shell">
+<div class="app-shell" id="app-shell">
 
   <!-- SIDEBAR (desktop) -->
   <nav class="sidenav">
@@ -1135,9 +1056,6 @@ function delP(i){if(!confirm('¿Eliminar a '+pastores[i].nombre+'?'))return;past
 function closeEF(e){if(e&&e.target!==document.getElementById('ef-bg'))return;document.getElementById('ef-bg').classList.remove('open');window._et=null;editIdx=-1;}
 
 renderBoard();
-</script>
-</body>
-</html>
 
 /* Church placeholder gradients — replace values with real base64 photos later */
 const churchPhotos = {
@@ -1451,25 +1369,6 @@ function saveForm(){const p=window._et;if(!p||!p.nombre)return alert('Nombre req
 function delP(i){if(!confirm('¿Eliminar a '+pastores[i].nombre+'?'))return;pastores.splice(i,1);saveAll();closeEF();renderBoard();}
 function closeEF(e){if(e&&e.target!==document.getElementById('ef-bg'))return;document.getElementById('ef-bg').classList.remove('open');window._et=null;editIdx=-1;}
 
-
-/* ══════════════════════════════════════════════════
-   LOGIN
-══════════════════════════════════════════════════ */
-const LOGIN_PASS = 'cem2026';
-function doLogin(){
-  const v=document.getElementById('login-pass').value;
-  if(v===LOGIN_PASS){
-    document.getElementById('login-screen').classList.add('hidden');
-    document.getElementById('app-shell').classList.remove('hidden');
-    updateNavCounts();
-    renderDashboard();
-    renderReportes();
-    renderSeguimiento();
-  } else {
-    document.getElementById('login-error').textContent='Contraseña incorrecta';
-    setTimeout(()=>document.getElementById('login-error').textContent='',2000);
-  }
-}
 
 /* ══════════════════════════════════════════════════
    NAVIGATION
@@ -1841,5 +1740,8 @@ renderBoard();
 <div class="view" id="view-seguimiento">
   <div class="seg-wrap" id="seg-content"></div>
 </div>
+</body>
+</html>
+</script>
 </body>
 </html>
