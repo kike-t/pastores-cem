@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Pastores CEM — Repositorio Pastoral</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -66,7 +66,6 @@
 
   /* Tipografía */
   --serif:  'DM Serif Display', Georgia, serif;
-  --display: 'Bebas Neue', var(--serif);
   --sans:   'Inter', system-ui, sans-serif;
   --mono:   'IBM Plex Mono', 'Courier New', monospace;
 
@@ -242,7 +241,7 @@ img { display: block; }
 .view.active { display: block; }
 .view-wrap { padding: var(--space-lg) var(--space-md) 80px; max-width: 1100px; }
 .view-title {
-  font-family: var(--display); font-size: 28px; color: var(--ink);
+  font-family: var(--serif); font-size: 28px; color: var(--ink);
   margin-bottom: 4px;
 }
 .view-sub {
@@ -272,7 +271,7 @@ img { display: block; }
   border-bottom: 1px solid var(--border);
 }
 .zone-num { font-family: var(--mono); font-size: 9px; color: var(--ink3); letter-spacing: 0.1em; }
-.zone-ttl { font-family: var(--display); font-size: 26px; line-height: 1; }
+.zone-ttl { font-family: var(--serif); font-size: 26px; line-height: 1; }
 .zone-badge {
   font-family: var(--mono); font-size: 9px; font-weight: 600;
   padding: 2px 9px; border-radius: 99px;
@@ -321,13 +320,15 @@ img { display: block; }
   align-items: center; justify-content: center; gap: 3px;
 }
 .php-city {
-  font-family: var(--display); font-size: 26px; letter-spacing: 2px;
-  color: rgba(255,255,255,0.85); position: relative; z-index: 1;
+  font-family: var(--sans); font-size: 22px; font-weight: 800;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.92); position: relative; z-index: 1;
 }
 .php-church {
-  font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.12em;
-  text-transform: uppercase; color: rgba(255,255,255,0.45);
-  position: relative; z-index: 1; text-align: center; padding: 0 10px;
+  font-family: var(--sans); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45); position: relative; z-index: 1;
+  text-align: center; padding: 0 10px;
 }
 .card-hero-overlay {
   position: absolute; inset: 0;
@@ -349,7 +350,7 @@ img { display: block; }
 /* Card body */
 .card-body { padding: 26px 14px 14px; }
 .card-name {
-  font-family: var(--display); font-size: 18px; color: var(--ink);
+  font-family: var(--serif); font-size: 18px; color: var(--ink);
   line-height: 1.15; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .card-church {
@@ -437,7 +438,7 @@ img { display: block; }
 }
 .panel-av img { width: 100%; height: 100%; object-fit: cover; }
 .panel-info { flex: 1; padding-bottom: 4px; }
-.panel-name { font-family: var(--display); font-size: 30px; color: var(--ink); line-height: 1; }
+.panel-name { font-family: var(--serif); font-size: 30px; color: var(--ink); line-height: 1; }
 .panel-location { font-family: var(--mono); font-size: 9.5px; color: var(--ink2); margin-top: 5px; letter-spacing: 0.05em; }
 .panel-badges { display: flex; gap: 5px; margin-top: 8px; flex-wrap: wrap; }
 .pbadge {
@@ -564,7 +565,7 @@ img { display: block; }
   background: var(--surface2); border: 1px solid var(--border);
   border-radius: var(--r); padding: 11px 13px;
 }
-.stat-n { font-family: var(--display); font-size: 22px; color: var(--ink); letter-spacing: -0.3px; line-height: 1; }
+.stat-n { font-family: var(--serif); font-size: 22px; color: var(--ink); letter-spacing: -0.3px; line-height: 1; }
 .stat-l { font-family: var(--mono); font-size: 9.5px; color: var(--ink3); margin-top: 3px; }
 
 /* Pendientes */
@@ -631,10 +632,10 @@ img { display: block; }
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
 }
-.rp-hero-num  { font-family: var(--display); font-size: 30px; line-height: 1; }
+.rp-hero-num  { font-family: var(--serif); font-size: 30px; line-height: 1; }
 .rp-hero-den  { font-family: var(--mono); font-size: 9px; color: var(--ink3); margin-top: -2px; }
 .rp-hero-info { flex: 1; }
-.rp-hero-title{ font-family: var(--display); font-size: 20px; color: var(--ink); margin-bottom: 3px; }
+.rp-hero-title{ font-family: var(--serif); font-size: 20px; color: var(--ink); margin-bottom: 3px; }
 .rp-hero-date { font-family: var(--mono); font-size: 9px; color: var(--ink3); letter-spacing: 0.08em; text-transform: uppercase; }
 .rp-hero-estado {
   display: inline-flex; align-items: center; gap: 5px;
@@ -678,7 +679,7 @@ img { display: block; }
   position: absolute; inset: 0;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
-.rp-mini-num { font-family: var(--display); font-size: 14px; line-height: 1; }
+.rp-mini-num { font-family: var(--serif); font-size: 14px; line-height: 1; }
 .rp-mini-den { font-family: var(--mono); font-size: 6.5px; color: var(--ink3); }
 .rp-card-name { font-size: 10.5px; font-weight: 600; color: var(--ink); text-align: center; line-height: 1.3; z-index: 1; }
 .rp-card-estado { font-family: var(--mono); font-size: 8.5px; text-align: center; text-transform: uppercase; letter-spacing: 0.05em; z-index: 1; }
@@ -707,14 +708,14 @@ img { display: block; }
 }
 .rp-modal-close:hover { background: var(--critical); color: white; border-color: var(--critical); }
 .rp-modal-ico { font-size: 32px; display: block; margin-bottom: 8px; }
-.rp-modal-area { font-family: var(--display); font-size: 24px; color: var(--ink); margin-bottom: 18px; }
+.rp-modal-area { font-family: var(--serif); font-size: 24px; color: var(--ink); margin-bottom: 18px; }
 .rp-modal-ring { position: relative; width: 120px; height: 120px; margin: 0 auto 18px; }
 .rp-modal-ring svg { transform: rotate(-90deg); display: block; }
 .rp-modal-ring-center {
   position: absolute; inset: 0;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
-.rp-modal-num { font-family: var(--display); font-size: 40px; line-height: 1; }
+.rp-modal-num { font-family: var(--serif); font-size: 40px; line-height: 1; }
 .rp-modal-den { font-family: var(--mono); font-size: 11px; color: var(--ink3); margin-top: -2px; }
 .rp-modal-estado {
   display: inline-flex; align-items: center; gap: 5px;
@@ -747,10 +748,10 @@ img { display: block; }
 .kpi-b::before { background: var(--norte); }
 .kpi-r::before { background: var(--critical); }
 .kpi-g::before { background: var(--healthy); }
-.kpi-num { font-family: var(--display); font-size: 38px; letter-spacing: -0.5px; line-height: 1; color: var(--ink); }
+.kpi-num { font-family: var(--serif); font-size: 38px; letter-spacing: -0.5px; line-height: 1; color: var(--ink); }
 .kpi-lbl { font-family: var(--mono); font-size: 9px; color: var(--ink3); margin-top: 4px; letter-spacing: 0.08em; text-transform: uppercase; }
 
-.dash-sec { font-family: var(--display); font-size: 20px; color: var(--ink2); margin: var(--space-lg) 0 var(--space-sm); padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.dash-sec { font-family: var(--serif); font-size: 20px; color: var(--ink2); margin: var(--space-lg) 0 var(--space-sm); padding-bottom: 8px; border-bottom: 1px solid var(--border); }
 
 .bday-list, .alert-list { display: flex; flex-direction: column; gap: 7px; margin-bottom: var(--space-lg); }
 .bday-row {
@@ -803,7 +804,7 @@ img { display: block; }
 .rcard-hdr:hover { background: var(--surface2); }
 .rcard-date { font-family: var(--mono); font-size: 9.5px; color: var(--qro); letter-spacing: 0.06em; flex-shrink: 0; }
 .rcard-info { flex: 1; }
-.rcard-name { font-family: var(--display); font-size: 17px; color: var(--ink); }
+.rcard-name { font-family: var(--serif); font-size: 17px; color: var(--ink); }
 .rcard-sub { font-family: var(--mono); font-size: 9px; color: var(--ink3); margin-top: 2px; }
 .rcard-avg { font-family: var(--serif); font-size: 26px; flex-shrink: 0; line-height: 1; }
 .rcard-chev { font-size: 10px; color: var(--ink3); transition: transform 0.2s; flex-shrink: 0; }
@@ -835,7 +836,7 @@ img { display: block; }
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--r); padding: 10px;
 }
-.sk-n { font-family: var(--display); font-size: 26px; line-height: 1; }
+.sk-n { font-family: var(--serif); font-size: 26px; line-height: 1; }
 .sk-l { font-family: var(--mono); font-size: 8.5px; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 3px; }
 
 .task-list { display: flex; flex-direction: column; gap: 7px; }
@@ -957,6 +958,61 @@ img { display: block; }
 @media(min-width: 900px) {
   .cards-grid { grid-template-columns: repeat(auto-fill, minmax(250px,1fr)); }
 }
+
+/* ── PRIORITY STATES (subtle, non-intrusive) ── */
+.pcard.pri-urgent { border-top: 3px solid rgba(184,64,64,0.7); }
+.pcard.pri-watch  { border-top: 3px solid rgba(200,147,58,0.5); }
+.pcard.pri-stable { border-top: 1px solid var(--border); }
+
+/* Alert line inside card */
+.card-alert-line {
+  display: flex; align-items: flex-start; gap: 7px;
+  padding: 6px 14px 8px;
+  border-top: 1px solid var(--border);
+  font-size: 11.5px; line-height: 1.45; color: var(--ink2);
+}
+.cal-ico { flex-shrink: 0; font-size: 11px; margin-top: 1px; }
+.cal-urgent { color: #C07070; }
+.cal-watch  { color: #C8A050; }
+.cal-text   { flex: 1; }
+.cal-count  { font-family: var(--mono); font-size: 9px; color: var(--ink3); flex-shrink: 0; margin-top: 2px; }
+
+/* Priority group headers in board */
+.pri-group { margin-bottom: 30px; }
+.pri-group-hdr {
+  display: flex; align-items: center; gap: 9px;
+  padding-bottom: 10px; margin-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.pri-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.pri-title { font-family: var(--display); font-size: 18px; letter-spacing: 1.5px; line-height: 1; }
+.pri-count { font-family: var(--mono); font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 99px; letter-spacing: 0.06em; }
+.pri-rule  { flex: 1; height: 1px; background: var(--border); }
+
+/* Smart summary strip below toolbar */
+.smart-strip {
+  flex-shrink: 0;
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto; scrollbar-width: none;
+}
+.smart-strip::-webkit-scrollbar { display: none; }
+.ss-pill {
+  display: flex; align-items: center; gap: 5px;
+  padding: 4px 11px; border-radius: 99px; border: 1px solid;
+  font-size: 11px; font-weight: 600; cursor: pointer;
+  white-space: nowrap; transition: all 0.14s; flex-shrink: 0;
+}
+.ss-pill:hover { filter: brightness(1.15); }
+.ss-pill.active { filter: brightness(1.2); }
+.ss-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.ssp-all    { background: rgba(200,147,58,0.08); border-color: rgba(200,147,58,0.25); color: var(--qro); }
+.ssp-urgent { background: rgba(184,64,64,0.08);  border-color: rgba(184,64,64,0.28);  color: #B84040; }
+.ssp-watch  { background: rgba(200,147,58,0.08); border-color: rgba(200,147,58,0.25); color: var(--qro); }
+.ssp-stable { background: rgba(74,155,111,0.08); border-color: rgba(74,155,111,0.22); color: #4A9B6F; }
+.ss-sep { width: 1px; height: 14px; background: var(--border2); flex-shrink: 0; }
 </style>
 </head>
 <body>
@@ -1023,6 +1079,27 @@ img { display: block; }
       <button class="tb-btn" id="tb-edit" onclick="toggleEdit()">Editar</button>
       <button class="tb-btn tb-btn-add" id="tb-add" style="display:none" onclick="openEF(-1)">+ Nuevo</button>
       <button class="tb-btn tb-btn-save" id="tb-save" style="display:none" onclick="saveAll()">↑ Guardar</button>
+    </div>
+
+    <!-- SMART SUMMARY STRIP -->
+    <div class="smart-strip" id="smart-strip">
+      <button class="ss-pill ssp-all active" onclick="setPriorityFilter('all',this)">
+        <span class="ss-dot" style="background:var(--qro)"></span>
+        <span id="ssc-all">—</span> todos
+      </button>
+      <button class="ss-pill ssp-urgent" onclick="setPriorityFilter('urgent',this)">
+        <span class="ss-dot" style="background:#B84040"></span>
+        <span id="ssc-urgent">—</span> atención hoy
+      </button>
+      <button class="ss-pill ssp-watch" onclick="setPriorityFilter('watch',this)">
+        <span class="ss-dot" style="background:var(--qro)"></span>
+        <span id="ssc-watch">—</span> esta semana
+      </button>
+      <div class="ss-sep"></div>
+      <button class="ss-pill ssp-stable" onclick="setPriorityFilter('stable',this)">
+        <span class="ss-dot" style="background:#4A9B6F"></span>
+        <span id="ssc-stable">—</span> estables
+      </button>
     </div>
 
     <!-- VISTAS -->
@@ -1290,12 +1367,76 @@ function setZ(btn){
   renderPastores();
 }
 
+
+/* ── PRIORITY ENGINE ── */
+function calcPriority(p){
+  const pends = p.pendientes || [];
+  const rp = p.reporte_personal;
+  const hasHealth = pends.some(x => /salud|cirugía|médic|foniatra/i.test(x));
+  const manyPends = pends.length >= 6;
+  let critMetric = false, lowAvg = false;
+  if(rp && rp.metricas){
+    const vals = Object.values(rp.metricas).filter(v => typeof v === 'number');
+    if(vals.some(v => v < 6)) critMetric = true;
+    if(vals.length && vals.reduce((a,b)=>a+b,0)/vals.length < 6.5) lowAvg = true;
+  }
+  if(hasHealth || manyPends || critMetric || lowAvg) return 'urgent';
+  const modPends = pends.length >= 3;
+  const hasTags = p.tags && (p.tags.includes('transición') || p.tags.includes('crisis') || p.tags.includes('matrimonial'));
+  let watchAvg = false;
+  if(rp && rp.metricas){
+    const vals = Object.values(rp.metricas).filter(v => typeof v === 'number');
+    if(vals.length && vals.reduce((a,b)=>a+b,0)/vals.length < 7.5) watchAvg = true;
+    if(vals.some(v => v < 7)) watchAvg = true;
+  }
+  if(modPends || hasTags || watchAvg) return 'watch';
+  if(!rp && !pends.length) return 'none';
+  return 'stable';
+}
+
+function getTopAlert(p){
+  const pends = p.pendientes || [];
+  if(!pends.length) return null;
+  const health = pends.find(x => /salud|cirugía|médic|foniatra/i.test(x));
+  if(health) return {text: health, cls: 'cal-urgent', ico: '⚕'};
+  return {text: pends[0], cls: 'cal-watch', ico: '📋'};
+}
+
+let activePriFilter = 'all';
+function setPriorityFilter(f, btn){
+  activePriFilter = f;
+  document.querySelectorAll('.ss-pill').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  renderPastores();
+}
+
+function updatePriorityCounts(){
+  const c = {urgent:0, watch:0, stable:0, none:0};
+  pastores.forEach(p => c[calcPriority(p)]++);
+  const el = id => document.getElementById(id);
+  if(el('ssc-all'))    el('ssc-all').textContent    = pastores.length;
+  if(el('ssc-urgent')) el('ssc-urgent').textContent = c.urgent;
+  if(el('ssc-watch'))  el('ssc-watch').textContent  = c.watch;
+  if(el('ssc-stable')) el('ssc-stable').textContent = c.stable;
+}
+
 function renderPastores(){
   const q = (document.getElementById('search')||{value:''}).value.toLowerCase().trim();
-  const filtered = pastores.filter(p=>{
+  let filtered = pastores.filter(p=>{
     const mz = activeZ==='todos' || p.zona===activeZ;
     const hay = [p.nombre,p.apellido||'',p.iglesia||'',p.ciudad||'',p.esposa||''].join(' ').toLowerCase();
     return mz && (!q || hay.includes(q));
+  });
+  if(activePriFilter && activePriFilter !== 'all'){
+    filtered = filtered.filter(p => calcPriority(p) === activePriFilter);
+  }
+  // Sort by priority: urgent first, then watch, then stable, then none
+  const priOrder = {urgent:0, watch:1, stable:2, none:3};
+  filtered.sort((a,b) => {
+    const pa = priOrder[calcPriority(a)] ?? 3;
+    const pb = priOrder[calcPriority(b)] ?? 3;
+    if(pa !== pb) return pa - pb;
+    return (a.nombre||'').localeCompare(b.nombre||'');
   });
   document.getElementById('tb-count').textContent = `${filtered.length} / ${pastores.length}`;
 
@@ -1355,7 +1496,9 @@ function renderPastores(){
         scoreHtml += '</div>';
       }
 
-      html += `<div class="pcard${editMode?' edit-mode':''}" style="animation-delay:${i*0.03}s"
+      const pPri = calcPriority(p);
+      const topAlert = getTopAlert(p);
+      html += `<div class="pcard pri-${pPri}${editMode?' edit-mode':''}" style="animation-delay:${i*0.03}s"
           onclick="${editMode?`openEF(${idx})`:`openPanel(${idx})`}">
         <div class="card-hero">
           <div class="card-hero-ph" style="background:${ch.grad}">
@@ -1420,7 +1563,7 @@ function openPanel(idx){
   let h = `
   <div class="panel-hero">
     <div class="panel-hero-ph" style="background:${ch.grad}">
-      <div style="font-family:var(--display);font-size:52px;color:rgba(255,255,255,0.1);letter-spacing:4px">${(ch.city||'').toUpperCase()}</div>
+      <div style="font-family:var(--serif);font-size:52px;color:rgba(255,255,255,0.1);letter-spacing:4px">${(ch.city||'').toUpperCase()}</div>
     </div>
     <div class="panel-hero-overlay"></div>
     <div class="panel-church-lbl">${p.iglesia||''}</div>
@@ -1894,7 +2037,7 @@ async function saveAll(){
     const orig=btn.textContent; btn.textContent='✓ Guardado';
     if(window.saveCloud) await window.saveCloud();
     setTimeout(()=>btn.textContent=orig, 2000);
-    renderPastores(); updateBadges();
+    renderPastores(); updateBadges(); updatePriorityCounts();
   }catch(e){ console.error(e); }
 }
 
@@ -1982,6 +2125,7 @@ window.saveCloud = saveCloud;
 ═══════════════════════════════════════════════════ */
 renderPastores();
 updateBadges();
+updatePriorityCounts();
 </script>
 </body>
 </html>
