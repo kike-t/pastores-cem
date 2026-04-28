@@ -1087,8 +1087,9 @@ img { display: block; }
   flex-shrink:0;
 }
 
+
 /* ═══════════════════════════════════════
-   PASTOR CARD v2 — compact SaaS style
+   PASTOR CARD v3 — decision-first
 ═══════════════════════════════════════ */
 .pcard {
   background: var(--surface);
@@ -1097,108 +1098,156 @@ img { display: block; }
   cursor: pointer; overflow: hidden;
   transition: transform 0.18s cubic-bezier(0.34,1.4,0.64,1), box-shadow 0.18s, border-color 0.15s;
   animation: cardIn 0.3s ease backwards;
-  position: relative;
+  display: flex; flex-direction: column;
 }
 @keyframes cardIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
-.pcard:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.4); border-color: var(--border2); }
+.pcard:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
 .pcard.edit-mode { outline: 1.5px dashed var(--urgent); outline-offset: 2px; }
 
-/* Priority top bar */
-.pcard.pri-urgent { border-top: 2px solid rgba(184,64,64,0.6); }
-.pcard.pri-watch  { border-top: 2px solid rgba(200,147,58,0.5); }
+/* Status border left — the most important visual signal */
+.pcard.pri-urgent { border-left: 3px solid rgba(184,64,64,0.8); }
+.pcard.pri-watch  { border-left: 3px solid rgba(200,147,58,0.7); }
+.pcard.pri-stable { border-left: 3px solid rgba(74,155,111,0.5); }
+.pcard.pri-none   { border-left: 3px solid var(--border2); }
 
-/* Image strip — 72px, context only */
+/* Image strip — context only, max 20-30% opacity */
 .card-hero {
-  position: relative; height: 148px; overflow: hidden;
+  position: relative; height: 100px; overflow: hidden; flex-shrink: 0;
 }
 .card-hero-ph {
   width: 100%; height: 100%;
   background-size: cover; background-position: center 30%;
-  display: flex; align-items: flex-end; padding: 0 10px 8px;
   transform: scale(1.05);
   transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+  filter: brightness(0.4);
 }
-.pcard:hover .card-hero-ph {
-  transform: scale(1.0);
-}
+.pcard:hover .card-hero-ph { transform: scale(1.0); }
 .card-hero-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.08), rgba(0,0,0,0.62));
+  background: linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.75));
 }
-.card-hero-label {
-  position: relative; z-index: 1;
-  display: flex; align-items: center; justify-content: space-between;
-  width: 100%;
-}
-.card-iglesia-lbl {
-  font-size: 10.5px; font-weight: 500; color: rgba(255,255,255,0.72);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  letter-spacing: 0.01em; text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-}
-.card-zone-lbl {
-  font-size: 8.5px; font-weight: 600; padding: 1px 6px; border-radius: 99px;
-  background: rgba(0,0,0,0.3); color: rgba(255,255,255,0.7);
-  text-transform: uppercase; letter-spacing: 0.06em; flex-shrink: 0;
-  margin-left: 6px; backdrop-filter: blur(4px);
-}
-
-/* Card body */
-.card-body { padding: 10px 12px 12px; }
-
-/* Pastor row: avatar + name + status badge */
-.card-pastor-row {
-  display: flex; align-items: flex-start; gap: 10px;
-  margin-bottom: 8px; padding-top: 2px;
-}
-/* Avatar — top-left of header, absolutely positioned */
+/* Avatar top-left absolutely positioned */
 .card-av-wrap {
   position: absolute; top: 10px; left: 12px; z-index: 20;
 }
 .card-av {
-  width: 52px; height: 52px; border-radius: 50%;
+  width: 48px; height: 48px; border-radius: 50%;
   overflow: hidden;
   display: flex; align-items: center; justify-content: center;
-  font-family: var(--sans); font-size: 16px; font-weight: 700; color: #000;
-  border: 2px solid rgba(255,255,255,0.18);
+  font-family: var(--sans); font-size: 15px; font-weight: 700; color: #000;
+  border: 2px solid rgba(255,255,255,0.2);
   box-shadow: 0 2px 10px rgba(0,0,0,0.5);
   transition: transform 0.18s cubic-bezier(0.34,1.4,0.64,1);
 }
-.pcard:hover .card-av { transform: scale(1.08); }
+.pcard:hover .card-av { transform: scale(1.06); }
 .card-av img { width: 100%; height: 100%; object-fit: cover; }
-.card-pastor-info { flex: 1; min-width: 0; }
-.card-name {
-  font-family: var(--sans); font-size: 15px; font-weight: 600;
-  letter-spacing: -0.01em; color: var(--ink); line-height: 1.2;
+/* Status badge top-right on hero */
+.card-hero-status {
+  position: absolute; top: 10px; right: 10px; z-index: 20;
+  display: flex; align-items: center; gap: 4px;
+  padding: 3px 9px; border-radius: 99px;
+  font-size: 10px; font-weight: 700; backdrop-filter: blur(8px);
+}
+.chs-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+/* Hero bottom label */
+.card-hero-label {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 12px 7px;
+}
+.card-iglesia-lbl {
+  font-size: 10.5px; font-weight: 500; color: rgba(255,255,255,0.65);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.card-church {
-  font-size: 10.5px; color: var(--ink2); margin-top: 1px;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+.card-zone-lbl {
+  font-size: 8.5px; font-weight: 600; padding: 1px 6px; border-radius: 99px;
+  background: rgba(0,0,0,0.35); color: rgba(255,255,255,0.7);
+  text-transform: uppercase; letter-spacing: 0.06em; flex-shrink: 0;
+  backdrop-filter: blur(4px);
 }
-.card-city { font-size: 10px; color: var(--ink3); margin-top: 1px; }
 
-/* Status badge */
-.card-status {
-  font-size: 9.5px; font-weight: 600; padding: 2px 7px;
-  border-radius: 99px; flex-shrink: 0; align-self: flex-start; margin-top: 2px;
-}
-.cs-urgent { background: rgba(184,64,64,0.12); color: #B84040; border: 1px solid rgba(184,64,64,0.25); }
-.cs-watch  { background: rgba(200,147,58,0.12); color: var(--qro); border: 1px solid rgba(200,147,58,0.25); }
-.cs-stable { background: rgba(74,155,111,0.1);  color: var(--stable); border: 1px solid rgba(74,155,111,0.2); }
-.cs-none   { background: var(--surface3); color: var(--ink3); border: 1px solid var(--border2); }
+/* Card body */
+.card-body { padding: 11px 13px 12px; display: flex; flex-direction: column; gap: 9px; flex: 1; }
 
-/* Chips */
-.card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 8px; }
-.ctag {
-  font-family: var(--sans); font-size: 10px; font-weight: 500;
-  padding: 2px 7px; border-radius: 99px; letter-spacing: 0;
+/* Name + location row */
+.card-id-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.card-name { font-family: var(--display); font-size: 18px; letter-spacing: 0.3px; color: var(--ink); line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card-city { font-size: 10.5px; color: var(--ink3); margin-top: 2px; }
+
+/* HEALTH SCORE — main indicator */
+.card-health-score {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 8px 11px;
 }
-.ctag-spouse  { background: rgba(155,74,111,0.1);  color: #C080A0; border: 1px solid rgba(155,74,111,0.2); }
-.ctag-kids    { background: rgba(74,122,184,0.1);  color: #7A9ECE; border: 1px solid rgba(74,122,184,0.2); }
-.ctag-report  { background: rgba(74,155,111,0.1);  color: var(--stable); border: 1px solid rgba(74,155,111,0.2); }
-.ctag-pend    { background: rgba(200,147,58,0.1);  color: var(--qro); border: 1px solid rgba(200,147,58,0.2); }
-.ctag-health  { background: rgba(184,64,64,0.1);   color: var(--urgent); border: 1px solid rgba(184,64,64,0.2); }
-.ctag-nuevo   { background: rgba(74,155,111,0.1);  color: var(--stable); border: 1px solid rgba(74,155,111,0.2); }
+.chs-label { font-size: 10.5px; font-weight: 600; color: var(--ink2); }
+.chs-value { font-size: 20px; font-weight: 700; line-height: 1; letter-spacing: -0.02em; margin-left: auto; }
+.chs-sub { font-size: 9.5px; color: var(--ink3); margin-left: 4px; margin-top: 2px; }
+
+/* Metrics with targets */
+.card-metrics-row {
+  display: flex; gap: 1px; border-radius: var(--r); overflow: hidden;
+  border: 1px solid var(--border);
+}
+.card-metric {
+  flex: 1; background: var(--surface2); padding: 7px 6px;
+  display: flex; flex-direction: column; align-items: center; gap: 1px;
+  border-right: 1px solid var(--border); position: relative;
+}
+.card-metric:last-child { border-right: none; }
+.cm-val { font-size: 15px; font-weight: 700; line-height: 1; }
+.cm-trend { font-size: 8.5px; position: absolute; top: 5px; right: 5px; }
+.cm-key { font-size: 8px; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 1px; }
+.cm-target { font-size: 7.5px; color: var(--ink4); }
+
+/* Alert line */
+.card-alerts { display: flex; flex-direction: column; gap: 3px; }
+.card-alert-item {
+  display: flex; align-items: flex-start; gap: 6px;
+  font-size: 11px; color: var(--ink2); line-height: 1.45;
+}
+.cai-ico { flex-shrink: 0; font-size: 10px; margin-top: 1px; }
+.cai-text { flex: 1; }
+.cai-count { font-family: var(--mono); font-size: 9px; color: var(--ink3); flex-shrink: 0; margin-top: 2px; }
+
+/* Secondary info */
+.card-secondary { display: flex; gap: 8px; flex-wrap: wrap; }
+.card-sec-item { display: flex; align-items: center; gap: 3px; font-size: 10.5px; color: var(--ink3); }
+.card-sec-ico { font-size: 10px; }
+
+/* Action buttons */
+.card-actions { display: flex; gap: 5px; margin-top: auto; }
+.ca-btn {
+  flex: 1; padding: 6px 8px; border-radius: var(--r);
+  font-size: 10.5px; font-weight: 600; text-align: center;
+  border: 1px solid var(--border2); background: var(--surface2);
+  color: var(--ink2); cursor: pointer; transition: all 0.14s;
+}
+.ca-btn:hover { border-color: var(--qro); color: var(--qro); }
+.ca-btn-primary { background: rgba(200,147,58,0.1); border-color: rgba(200,147,58,0.3); color: var(--qro); }
+.ca-btn-primary:hover { background: rgba(200,147,58,0.18); }
+.ca-btn-urgent { background: rgba(184,64,64,0.1); border-color: rgba(184,64,64,0.3); color: var(--urgent); }
+
+/* TORRE DE CONTROL */
+.torre-control {
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: var(--r-lg); padding: 14px 16px; margin: 14px 14px 0;
+}
+.tc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.tc-title { font-size: 11px; font-weight: 600; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.07em; }
+.tc-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-bottom: 12px; }
+@media(max-width:500px) { .tc-grid { grid-template-columns: repeat(2,1fr); } }
+.tc-kpi { background: var(--surface2); border-radius: var(--r); padding: 9px 11px; }
+.tc-kpi-num { font-size: 26px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+.tc-kpi-lbl { font-size: 10px; color: var(--ink3); margin-top: 2px; }
+.tc-divider { height: 1px; background: var(--border); margin: 10px 0; }
+.tc-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.tc-avg { display: flex; align-items: baseline; gap: 4px; }
+.tc-avg-key { font-size: 10px; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.05em; }
+.tc-avg-val { font-size: 14px; font-weight: 700; }
+.tc-sep { width: 1px; height: 14px; background: var(--border2); }
+.tc-pend { font-size: 11px; color: var(--ink2); margin-left: auto; }
+.tc-pend-urg { color: var(--urgent); font-weight: 700; }
 
 /* Metrics row */
 .card-score {
@@ -1222,6 +1271,184 @@ img { display: block; }
 }
 .cal-urgent { color: #C07070; }
 .cal-watch  { color: #C8A050; }
+
+/* ═══════════════════════════════════════
+   VISTA GENERAL (BIG PICTURE)
+═══════════════════════════════════════ */
+.bp-wrap { padding: 18px 16px 80px; max-width: 900px; display: flex; flex-direction: column; gap: 16px; }
+.bp-hdr { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.bp-title { font-size: 22px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); margin: 0; }
+.bp-sub { font-size: 12px; color: var(--ink3); margin: 3px 0 0; }
+.bp-filters { display: flex; gap: 5px; flex-wrap: wrap; }
+.bp-pill { font-size: 11px; font-weight: 500; padding: 3px 11px; border-radius: 99px; border: 1px solid var(--border2); background: transparent; color: var(--ink2); cursor: pointer; transition: all .14s; }
+.bp-pill.active,.bp-pill:hover { background: var(--qro); border-color: var(--qro); color: #000; }
+
+/* Status cards */
+.bp-status-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
+@media(max-width:600px) { .bp-status-grid { grid-template-columns: repeat(2,1fr); } }
+.bp-sc {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-lg); padding: 14px;
+  border-top: 2.5px solid; position: relative; overflow: hidden;
+}
+.bp-sc-num { font-size: 32px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; margin-bottom: 4px; }
+.bp-sc-label { font-size: 12px; font-weight: 600; color: var(--ink); }
+.bp-sc-sub { font-size: 10.5px; color: var(--ink3); margin-top: 3px; }
+.bp-sc-r { border-top-color: var(--urgent); } .bp-sc-r .bp-sc-num { color: var(--urgent); }
+.bp-sc-a { border-top-color: var(--qro); }    .bp-sc-a .bp-sc-num { color: var(--qro); }
+.bp-sc-g { border-top-color: var(--stable); } .bp-sc-g .bp-sc-num { color: var(--stable); }
+.bp-sc-gr{ border-top-color: var(--border3);} .bp-sc-gr .bp-sc-num { color: var(--ink3); }
+
+/* Two-col layout */
+.bp-two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media(max-width:640px) { .bp-two { grid-template-columns: 1fr; } }
+
+/* Panel */
+.bp-panel { background: var(--surface); border: 1px solid var(--border2); border-radius: var(--r-lg); overflow: hidden; }
+.bp-panel-hdr { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid var(--border); }
+.bp-panel-title { font-size: 12px; font-weight: 600; color: var(--ink); }
+.bp-panel-count { font-size: 10px; color: var(--ink3); }
+
+/* Alert rows */
+.bp-alert { display: flex; align-items: flex-start; gap: 10px; padding: 9px 14px; border-bottom: 1px solid var(--border); }
+.bp-alert:last-child { border-bottom: none; }
+.bp-alert-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+.bp-alert-main { flex: 1; min-width: 0; }
+.bp-alert-name { font-size: 12px; font-weight: 600; color: var(--ink); }
+.bp-alert-meta { font-size: 11px; color: var(--ink2); margin-top: 1px; }
+.bp-alert-reason { font-size: 11px; color: var(--ink2); margin-top: 2px; }
+.bp-alert-action { font-size: 10px; margin-top: 5px; padding: 2px 8px; border-radius: 4px; display: inline-block; font-weight: 500; }
+.bp-badge { font-size: 9px; font-weight: 600; padding: 2px 7px; border-radius: 99px; flex-shrink: 0; white-space: nowrap; margin-top: 2px; }
+
+/* Health rows */
+.bp-health { display: flex; align-items: center; gap: 10px; padding: 9px 14px; border-bottom: 1px solid var(--border); }
+.bp-health:last-child { border-bottom: none; }
+.bp-health-ico { font-size: 14px; width: 20px; text-align: center; flex-shrink: 0; }
+.bp-health-main { flex: 1; min-width: 0; }
+.bp-health-name { font-size: 12px; font-weight: 600; color: var(--ink); }
+.bp-health-insight { font-size: 10px; color: var(--ink2); margin-top: 1px; }
+.bp-health-status { font-size: 9px; font-weight: 600; padding: 2px 8px; border-radius: 99px; flex-shrink: 0; }
+
+/* Trend grid */
+.bp-trend-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; padding: 12px; }
+@media(max-width:500px) { .bp-trend-grid { grid-template-columns: repeat(2,1fr); } }
+.bp-tc { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r); padding: 12px; }
+.bp-tc-arrow { font-size: 14px; margin-bottom: 5px; }
+.bp-tc-val { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 2px; }
+.bp-tc-label { font-size: 10px; color: var(--ink2); }
+.bp-tc-insight { font-size: 9px; color: var(--ink3); margin-top: 5px; line-height: 1.45; }
+
+/* Funnel */
+.bp-funnel { display: flex; overflow: hidden; border-radius: var(--r); border: 1px solid var(--border); margin: 0 12px 12px; }
+.bp-fn { flex: 1; padding: 12px 8px; background: var(--surface2); display: flex; flex-direction: column; align-items: center; text-align: center; border-right: 1px solid var(--border); position: relative; }
+.bp-fn:last-child { border-right: none; }
+.bp-fn-num { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); line-height: 1; }
+.bp-fn-lbl { font-size: 9.5px; color: var(--ink3); margin-top: 3px; }
+.bp-fn-arrow { position: absolute; right: -6px; top: 50%; transform: translateY(-50%); font-size: 12px; color: var(--ink3); z-index: 1; }
+
+/* Actions */
+.bp-actions { display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; }
+.bp-action { display: flex; align-items: center; gap: 10px; padding: 9px 12px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r); }
+.bp-action-check { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--border3); flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 9px; transition: all .14s; }
+.bp-action-check.done { background: var(--stable); border-color: var(--stable); color: white; }
+.bp-action-check.prog { border-color: var(--qro); background: rgba(200,147,58,0.12); }
+.bp-action-body { flex: 1; min-width: 0; }
+.bp-action-text { font-size: 12px; font-weight: 500; color: var(--ink); line-height: 1.4; }
+.bp-action-text.done { text-decoration: line-through; color: var(--ink3); }
+.bp-action-meta { font-size: 10px; color: var(--ink3); margin-top: 2px; }
+.bp-action-pri { font-size: 9px; font-weight: 600; padding: 2px 7px; border-radius: 99px; flex-shrink: 0; }
+
+/* ═══════════════════════════════════════
+   VISTA GENERAL v2 — decision-first
+═══════════════════════════════════════ */
+.bp2 { padding: 14px 16px 80px; display: flex; flex-direction: column; gap: 12px; max-width: 900px; }
+.bp2-hdr { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.bp2-title { font-size: 20px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); }
+.bp2-sub { font-size: 11px; color: var(--ink3); margin-top: 2px; }
+.bp2-filters { display: flex; gap: 5px; flex-wrap: wrap; }
+.bp2-pill { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 99px; border: 1px solid var(--border2); background: transparent; color: var(--ink2); cursor: pointer; transition: all .14s; }
+.bp2-pill.active { background: var(--qro); border-color: var(--qro); color: #000; }
+
+/* Block wrapper */
+.bp2-block { background: var(--surface); border: 1px solid var(--border2); border-radius: var(--r-lg); overflow: hidden; }
+.bp2-block-hdr { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--border); }
+.bp2-block-hdr-ico { font-size: 13px; flex-shrink: 0; }
+.bp2-block-hdr-title { font-size: 12px; font-weight: 700; color: var(--ink); flex: 1; letter-spacing: -0.01em; }
+.bp2-block-hdr-badge { font-size: 9.5px; font-weight: 600; padding: 2px 8px; border-radius: 99px; }
+.bp2-body { padding: 12px 14px; }
+
+/* Block 1 — Decisión hoy */
+.b1-counts { display: flex; gap: 8px; margin-bottom: 12px; }
+.b1-count { flex: 1; padding: 10px 12px; border-radius: var(--r); display: flex; flex-direction: column; }
+.b1-count-num { font-size: 28px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+.b1-count-lbl { font-size: 10px; color: var(--ink2); margin-top: 3px; }
+.b1-critical { background: rgba(184,64,64,0.08); border: 1px solid rgba(184,64,64,0.2); }
+.b1-critical .b1-count-num { color: var(--urgent); }
+.b1-watch { background: rgba(200,147,58,0.08); border: 1px solid rgba(200,147,58,0.2); }
+.b1-watch .b1-count-num { color: var(--qro); }
+.b1-stable { background: rgba(74,155,111,0.06); border: 1px solid rgba(74,155,111,0.15); }
+.b1-stable .b1-count-num { color: var(--stable); }
+
+/* Priority people */
+.b1-people { display: flex; flex-direction: column; gap: 6px; }
+.b1-person { display: flex; align-items: center; gap: 10px; padding: 9px 11px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--r); border-left: 3px solid; }
+.b1-person.p-urgent { border-left-color: var(--urgent); }
+.b1-person.p-watch  { border-left-color: var(--qro); }
+.b1-rank { font-family: var(--mono); font-size: 9px; font-weight: 700; color: var(--ink3); min-width: 16px; }
+.b1-av { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #000; flex-shrink: 0; }
+.b1-av img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.b1-info { flex: 1; min-width: 0; }
+.b1-name { font-size: 13px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.b1-reason { font-size: 10.5px; color: var(--ink2); margin-top: 1px; }
+.b1-score { font-size: 11px; font-weight: 700; flex-shrink: 0; }
+.b1-actions { display: flex; gap: 5px; flex-shrink: 0; }
+.b1-action-btn { font-size: 9.5px; font-weight: 600; padding: 4px 9px; border-radius: var(--r); border: 1px solid; cursor: pointer; transition: all .14s; white-space: nowrap; }
+
+/* Block 2 — Salud de la red */
+.b2-score-row { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; padding: 10px 12px; background: var(--surface2); border-radius: var(--r); border: 1px solid var(--border); }
+.b2-big-num { font-size: 32px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+.b2-areas { display: grid; grid-template-columns: repeat(6,1fr); gap: 6px; }
+.b2-area { background: var(--surface2); border-radius: var(--r); padding: 8px 6px; text-align: center; border: 1px solid; }
+.b2-area-val { font-size: 15px; font-weight: 700; line-height: 1; }
+.b2-area-key { font-size: 8.5px; color: var(--ink3); text-transform: uppercase; letter-spacing: .04em; margin-top: 2px; }
+.b2-insights { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+.b2-insight { padding: 8px 11px; border-radius: var(--r); border: 1px solid; }
+.b2-insight-lbl { font-size: 9.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 5px; }
+.b2-insight-item { font-size: 11px; color: var(--ink2); display: flex; align-items: center; gap: 5px; margin-top: 3px; }
+
+/* Block 3 — Alertas */
+.b3-patterns { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.b3-tag { display: flex; align-items: center; gap: 5px; padding: 5px 11px; border-radius: 99px; border: 1px solid; font-size: 11px; font-weight: 600; }
+.b3-tag-count { font-size: 13px; font-weight: 700; }
+.b3-trends { display: flex; gap: 8px; }
+.b3-trend { flex: 1; display: flex; align-items: center; gap: 7px; padding: 8px 10px; background: var(--surface2); border-radius: var(--r); border: 1px solid var(--border); font-size: 11.5px; }
+.b3-trend-arrow { font-size: 16px; flex-shrink: 0; }
+
+/* Block 4 — Zonas */
+.b4-zones { display: flex; flex-direction: column; gap: 7px; }
+.b4-zone { display: flex; align-items: center; gap: 10px; padding: 8px 11px; background: var(--surface2); border-radius: var(--r); border: 1px solid var(--border); }
+.b4-zone-name { font-size: 11px; font-weight: 600; color: var(--ink); min-width: 50px; }
+.b4-dots { display: flex; gap: 4px; flex: 1; }
+.b4-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.b4-zone-avg { font-family: var(--mono); font-size: 11px; font-weight: 700; flex-shrink: 0; }
+
+/* Block 5 — Seguimiento */
+.b5-counts { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 10px; }
+.b5-count { padding: 10px; background: var(--surface2); border-radius: var(--r); border: 1px solid var(--border); text-align: center; }
+.b5-num { font-size: 24px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
+.b5-lbl { font-size: 10px; color: var(--ink3); margin-top: 3px; }
+.b5-types { display: flex; gap: 8px; flex-wrap: wrap; }
+.b5-type { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--ink2); }
+
+/* Block 6 — Acción hoy */
+.b6-actions { display: flex; flex-direction: column; gap: 7px; }
+.b6-action { display: flex; align-items: center; gap: 10px; padding: 10px 13px; background: var(--surface2); border-radius: var(--r); border: 1px solid var(--border); cursor: pointer; transition: border-color .14s; }
+.b6-action:hover { border-color: var(--qro); }
+.b6-action-ico { font-size: 16px; flex-shrink: 0; }
+.b6-action-body { flex: 1; }
+.b6-action-title { font-size: 12.5px; font-weight: 600; color: var(--ink); }
+.b6-action-sub { font-size: 10.5px; color: var(--ink3); margin-top: 1px; }
+.b6-action-pri { font-size: 9.5px; font-weight: 700; padding: 2px 8px; border-radius: 99px; flex-shrink: 0; }
 </style>
 </head>
 <body>
@@ -1295,6 +1522,7 @@ img { display: block; }
     <div class="view" id="view-dashboard"></div>
     <div class="view" id="view-reportes"></div>
     <div class="view" id="view-seguimiento"></div>
+    <div class="view" id="view-bigpicture"></div>
   </div>
 </div>
 
@@ -1304,6 +1532,7 @@ img { display: block; }
   <button class="bn-item" data-view="dashboard" onclick="goTo('dashboard',this)"><span class="bn-ico">◈</span>Dashboard</button>
   <button class="bn-item" data-view="reportes" onclick="goTo('reportes',this)"><span class="bn-ico">📋</span>Reportes</button>
   <button class="bn-item" data-view="seguimiento" onclick="goTo('seguimiento',this)"><span class="bn-ico">✓</span>Tareas</button>
+  <button class="bn-item" data-view="bigpicture" onclick="goTo('bigpicture',this)"><span class="bn-ico">◉</span>General</button>
 </div>
 
 <!-- PANEL DETALLE -->
@@ -1360,7 +1589,7 @@ const pastores = [
   {nombre:"Phil",apellido:"Jones",iglesia:"Horizonte El Marqués",ciudad:"El Marqués, Qro",zona:"qro",esposa:"Sandy Jones",cumple:"21 feb 1984",avatar:"PJ",hijos:[{nombre:"Joshua",edad:"",datos:"Nació 29 dic 2012. Videojuegos. 6° primaria."},{nombre:"Romi",edad:"",datos:"Nació 3 jul 2002. Le gusta dibujar. Trabaja en RenovArte Café."}],notas:"Residencia: Dani y Alix Soto. Líderes: Álvaro Fuente, José Luis Castillo, Alex Melchor. Pasatiempo: Tomar café y escuchar jazz. Cumple esposa: 15 abr 1980. Aniversario bodas: 7 feb 2010. Amazon: pwfjones@gmail.com. Zapatos: 30mx, 12US | Camisa: Mediana, solo G si es muy slim fit, pero no me gustan wangos jaja | Pantalón: 33 | Email regalo: pwfjones@gmail.com | Dirección: Paseo de las Pitahayas 40, Thandi 7C, Zibata, El Marques, QRO, 76269",reunion:"",iglesia_reporte:{nombre:"Horizonte El Marqués",stats:[{label:"Adultos dom.",valor:"105"},{label:"Servidores",valor:"60"},{label:"Personas nuevas",valor:"91"},{label:"Flechas",valor:"44"},{label:"Grupos de vida",valor:"42"},{label:"Bautizos",valor:"12"}],logros:"La Ruta 1ra generación completa. 12 bautizos. 2 Worship Nites. Enfoque Global 45 personas.",plan2026:"LED enero. SEBAM. Diáconos junio. Acondicionar sótano. 6 eventos alcance. Visión 2027: 300 adultos."},pendientes:["Beca SEBAM Dani Soto.","Capacitación multimedia.","Continuar apoyo consejería."],tags:["liderazgo"],discipulos:["Álvaro Fuente","Alberto Vicenteño","José Luis Castillo","Daniel Ávila","Daniel Viramontes","Jair Vicenteño","Alex Melchor","Daniel García"]},
   {nombre:"Roger",apellido:"Arcila",iglesia:"Horizonte Querétaro",ciudad:"Querétaro",zona:"qro",esposa:"Fran",cumple:"",avatar:"RA",hijos:[{nombre:"Natán",edad:"",datos:""}],notas:"Pastor de comunidad HQ. Descansa viernes. Finanzas bien.",reunion:"Q1 2026. Fran: identidad como mamá. Roger: patrón rendir para llenar expectativas. Salmo 46.",pendientes:["Acompañar Fran en identidad.","Roger: seguimiento patrón de queja."],tags:["matrimonial"]},
   {nombre:"Hugo",apellido:"Ventura",iglesia:"Horizonte Tequisquiapan",ciudad:"Tequisquiapan",zona:"centro",esposa:"",cumple:"",avatar:"HV",hijos:[],iglesia_reporte:{nombre:"Horizonte Tequisquiapan",stats:[{label:"Asistencia",valor:"55 adultos"},{label:"Servidores",valor:"17"},{label:"Nuevos miembros",valor:"10"},{label:"Niños",valor:"13"},{label:"Líderes formac.",valor:"6"},{label:"La Ruta",valor:"17"}],logros:"Primera generación La Ruta. Mujeres creciendo en piedad.",plan2026:"Meta 100 adultos. 2 diáconos SEBAM. Multimedia $25K, Alabanza $50K, Remodelación $30K."},notas:"",reunion:"",pendientes:[],tags:[],email:"venturahugo10@gmail.com"},
-  {nombre:"Juan Pablo",apellido:"Segismond",iglesia:"Horizonte Panamá",ciudad:"Panamá",zona:"otro",esposa:"Clarissa Segismond",cumple:"4 ago 1986",avatar:"JS",hijos:[{nombre:"Brielle Marie",edad:"9",datos:"Nació 5 dic 2015. Gimnasia rítmica, ballet, lectura. 4° primaria."},{nombre:"Libby",edad:"6",datos:"Nació 11 ago 2018. Muñecas, peinados. 1° primaria."}],notas:"1er aniversario enero 2026. Planning Center en proceso. Pasatiempo: juegos de mesa y padel.. Cumple esposa: 19 dic 1983. Aniversario bodas: 2 jun 2012. Amazon: clsegismond@gmail.com. Zapatos: 13 USA | Camisa: XL | Pantalón: 32 | Email regalo: clsegismond@gmail.com",reunion:"",pendientes:[],tags:["panamá"],discipulos:["Luis Ortiz","Ramiro Cruz","Tony Jones","Yaismel Perez","Aidor Batista","Ottoniel Morales","Alejandro Ramirez","Nacian Torrero","Noah Brown"]},
+  {nombre:"Juan Pablo",apellido:"Segismond",iglesia:"Horizonte Panamá",ciudad:"Panamá",zona:"otro",esposa:"Clarissa Segismond",cumple:"4 ago 1986",avatar:"JS",hijos:[{nombre:"Brielle Marie",edad:"9",datos:"Nació 5 dic 2015. Gimnasia rítmica, ballet, lectura. 4° primaria."},{nombre:"Libby",edad:"6",datos:"Nació 11 ago 2018. Muñecas, peinados. 1° primaria."}],notas:"1er aniversario enero 2026. Planning Center en proceso. Pasatiempo: juegos de mesa y padel.. Cumple esposa: 19 dic 1983. Aniversario bodas: 2 jun 2012. Amazon: clsegismond@gmail.com. Zapatos: 13 USA | Camisa: XL | Pantalón: 32 | Email regalo: clsegismond@gmail.com",reunion:"",pendientes:["Consolidar entrevista de membresía y definirla.","Programa Thelab: ejercicios y nutrición para dolor de espalda.","Ministerio niños: seguir con Lifeway (Proyecto Evangelio).","Evaluar e implementar Habitar con grupos pequeños.","Grupos por género para fortalecer liderazgo.","Preparar primera actividad de mujeres con Clari.","Orar por posible campus Mission (250 personas, menor renta).","Orar por esfuerzo en inglés para próxima generación bilingüe."],tags:["panamá"],discipulos:["Luis Ortiz","Ramiro Cruz","Tony Jones","Yaismel Perez","Aidor Batista","Ottoniel Morales","Alejandro Ramirez","Nacian Torrero","Noah Brown"],reporte_personal:{fecha:"Abr 2026",metricas:{familia:8,intimidad:7.5,entusiasmo:8.5,liderazgo:6,economia:8,salud:5},oracion:["BiLab Vitality para Juanpi","Sesión de mañana con Clari y mujeres","Cómo implementar Abide y atender a los que están y a los que vienen"]},reunion_data:{fecha:"24 abr 2026",badges:["Reunión pastoral","Con Kike Torres"],metricas:["Fam 8","Int 7","Ent 8","Lid 5","Eco 8","Sal 5"],secciones:[{tipo:"acuerdos",items:[{texto:"Programa Thelab",sub:"Ejercicios, nutrición y fortalecimiento — 3 meses con garantía"},{texto:"Finalizar 2° grupo ruta de membresía",sub:"Fortalecer compromiso y participación"},{texto:"Habitar: grupos pequeños por género",sub:"Luis, Clark y Ana como líderes base"},{texto:"Pedir formato de membresía a Yesa",sub:"Entrevistas estructuradas para nuevos miembros"},{texto:"Orar por campus Mission",sub:"250 personas, menor renta, ciudad 88% latina"},{texto:"Primera actividad de mujeres",sub:"Ser testigo del trabajo de Dios, compartir testimonio"}]},{tipo:"reflexion",label:"Reflexión pastoral",items:[{texto:"Santidad y vida privada con Dios",sub:"La batalla es por distraer del escuchar, no solo por el pecado"},{texto:"Liderazgo bajo presión",sub:"Diferencias eclesiológicas con pastor titular en McAllen"}]}]}},
   {nombre:"Adrián",apellido:"Capitaine",iglesia:"Horizonte Villahermosa",ciudad:"Villahermosa",zona:"sur",esposa:"Llanura Gonzalez",cumple:"15 abr 1989",avatar:"AC",hijos:[{nombre:"Keira",edad:"7",datos:"Primaria. Le encantan los videojuegos."},{nombre:"Adrián Jr.",edad:"6",datos:"Primaria. Dice que es pro en videojuegos."},{nombre:"Ronaldo",edad:"4",datos:"Kinder. Ama los dinosaurios."}],notas:"Pasatiempo: Ir al cine, videojuegos, carpintería.. Cumple esposa: 5 nov 1994. Aniversario bodas: 5 may 2013. Amazon: kpo31_mppl@hotmail.com. Zapatos: 9.5mx | Camisa: L | Pantalón: 32 | Dirección: Prolongación de Av Méndez 111, Casa 3. 86153, Villahermosa, Tabasco.",reunion:"",iglesia_reporte:{nombre:"Horizonte Villahermosa",stats:[{label:"Adultos dom.",valor:"200"},{label:"Niños",valor:"38"},{label:"Nuevos",valor:"+40"},{label:"Bautizados",valor:"16"},{label:"Servidores",valor:"+100"},{label:"Ofrendas/mes",valor:"$133-185K"}],logros:"Conf. matrimonios 45 parejas, hombres 110, mujeres 130. 16 bautizados. 72 en grupos.",plan2026:"Membresía y gobierno. Fast Track líderes. Diáconos 2S. Alinearse con alcance."},pendientes:["Comer con líderes 1x/mes (Germán)."],tags:["líderes"],discipulos:["Alberto","Germán","Román","Juan","Luis","José","Manuel","Abraham","Rafa"]},
   {nombre:"Toño",apellido:"García",iglesia:"Calvary Chapel Ecatepec",ciudad:"Ecatepec",zona:"centro",esposa:"Yabeth Larrea",cumple:"3 nov 1979",avatar:"TG",hijos:[{nombre:"Grace",edad:"6",datos:"Nació 29 ene 2019. Le encanta bailar y las muñecas."},{nombre:"Ezra",edad:"4",datos:"Nació 18 oct 2020. Le encanta la música."},{nombre:"Elyseo",edad:"1",datos:"Nació 27 mar 2024."}],notas:"Énfasis 2030: levantar hombres. Plataformas: Simón, Martín Durazo, Héctor Glez, Carlos Fierro. Pasatiempo: Conocer lugares. Cumple esposa: 21 mar 1988. Aniversario bodas: 12 abr 2017. Amazon: tonygarcia0311@gmail.com. Zapatos: Mex 6 | Camisa: Large | Pantalón: 34 | Email regalo: tonygarcia0311@gmail.com | Dirección: Fco. I Madero 11 Col. Ejidal Emiliano Zapata Ecatepec Edo Mex C.P. 55020",reunion:"Cuatrimestral abr 2026. Hechos 11 — oposición normal cuando Dios se mueve.",reporte_personal:{fecha:"Abril 2026",metricas:{familia:8,intimidad:8.5,entusiasmo:8,liderazgo:7},oracion:["Transición laboral","Unidad matrimonial","Líderes que se quedan","Finanzas iglesia"]},reporte_personal_yabeth:{metricas:{familia:7,intimidad:8,entusiasmo:9,liderazgo:8},oracion:["Matrimonio y familia","Carga escolar","Fe más grande","Tiempo hijos"]},pendientes:["Toño: reunión Gabriel/Carlos/Sol el sábado.","Toño: planificar transición laboral a fin de año.","Toño: consejo de finanzas (salen Eli y esposa Óscar).","Yabeth: enviar oración general a Kike.","Membresía → agosto.","Ruta financiera → julio.","Diáconos → noviembre."],tags:["transición","hombres"],discipulos:["Irving González","Cristian Sánchez","Fernando Rojo","Hugo Irala","Carlos López","Sedrick"]},
   {nombre:"Daniel",apellido:"Vargas",iglesia:"Comunidad El Camino",ciudad:"San José",zona:"otro",esposa:"Eugenia Zuñiga Hernandez",cumple:"9 ene 1989",avatar:"DV",hijos:[],notas:"Bebé esperado julio 2026. 22 años de historia en Costa Rica. Pasatiempo: Entrenar y los videojuegos. Cumple esposa: 8 jun 1994. Aniversario bodas: 4 mar 2023. Amazon: dvargasmonge@gmail.com. Zapatos: Soy talla 28.5 o 29 mx | Camisa: Soy L | Pantalón: Soy 38 | Email regalo: dvargasmonge@gmail.com | Dirección: Heredia, san rafael, Los Ángeles. Servidumbre mano derecha antes de la entrada del restaurante añoranzas. Segunda casa muro color beige portón café cerrado",reunion:"Dic 2025. Ansiedad, vida espiritual mecánica, finanzas ajustadas. Finanzas restructuradas, equipo oración/ayuno 9 personas.",iglesia_reporte:{nombre:"Comunidad El Camino",stats:[{label:"Miembros",valor:"110"},{label:"Servidores",valor:"48"},{label:"Nuevos miembros",valor:"13"},{label:"Bautizos",valor:"1"},{label:"Años historia",valor:"22"},{label:"Evangelizados",valor:"3,500+"}],logros:"Proyecto Calles: 3,500+ evangelizados, 500+ alimentados/mes. Primer discipulado personas en calle. VCP alianza.",plan2026:"Cultura de discipulado. Predicación centrada evangelio. Pastor cuida coordinadores 1 a 1."},pendientes:["Educación financiera personal.","Conectar matrimonialmente antes del bebé.","Liderar iglesia en oración y ayuno.","Definir objetivos 2026 con calendario."],tags:["Costa Rica","bebé"]},
@@ -1370,7 +1599,7 @@ const pastores = [
   {nombre:"Omar",apellido:"Linares",iglesia:"Horizonte Tijuana",ciudad:"Tijuana",zona:"norte",esposa:"",cumple:"",avatar:"OL",hijos:[],notas:"Zapatos: 9 americano | Camisa: M (USA) | Pantalón: 32/30 | Email regalo: omar_linares@hotmail.com",reunion:"",pendientes:[],tags:[],email:"omar_linares@hotmail.com"},
   {nombre:"Erik",apellido:"Servín",iglesia:"Horizonte CDMX",ciudad:"Ciudad de México",zona:"centro",esposa:"Ale",cumple:"18 feb 1998",avatar:"ES",hijos:[{nombre:"Josué",edad:"7",datos:"Nació 14 jun 2017. Legos. 1° primaria homeschool."},{nombre:"Emanuel",edad:"5",datos:"Nació 26 oct 2019. Nerf y Spiderman. 3° preescolar homeschool."},{nombre:"Natalia",edad:"0",datos:"Nació 19 dic 2024. Bebé."}],notas:"Pasatiempo: Pasear con mi familia; escuchar música solo; videojuegos: Age of Empires PC, Call of Duty Mobile; ver anime: Dragon Ball, Naruto, KNY.. Cumple esposa: 18 nov 1990. Aniversario bodas: 21 may 2016. Amazon: erik.servin.lara@gmail.com. Zapatos: 9 - 9.5 US / 27 -27.5 cm | Camisa: Grande / Large | Pantalón: 33-34 US | Email regalo: erik.servin.lara@gmai.com | Dirección: / Calle Tlatelolco #28, Col. San Mateo Xoloc, CP 54602, Edo Mex, México",reunion:"",pendientes:[],tags:[]},
   {nombre:"Alberto",apellido:"Pando",iglesia:"Fuentes de Agua Viva",ciudad:"Piedras Negras",zona:"norte",esposa:"",cumple:"",avatar:"AP",hijos:[],notas:"Zapatos: 11 | Camisa: Xxl | Pantalón: 38 | Email regalo: alberto@fav1.org | Dirección: Email Amazon  476 S Bibb A. Ste C 150. Eagle Pass TX 78852. MEX. Segunda 114 Col Dan Pedro Piedras Negras Coahuila 26017",reunion:"",pendientes:["Presupuesto y calendario semanal antes de fin de año."],tags:[],discipulos:["Oscar","Rogelio","Juan","Fernando","Gabriel","Martín","Santiago","Ricardo","Moisés"]},
-  {nombre:"Marce",apellido:"Muñoz",iglesia:"másCristo Juriquilla",ciudad:"Juriquilla, Qro",zona:"qro",esposa:"Andi",cumple:"5 oct 1991",avatar:"MM",hijos:[],iglesia_reporte:{nombre:"másCristo Juriquilla",periodo:"Q2 2025",stats:[{label:"Asist. promedio",valor:"124"},{label:"Crecimiento",valor:"+15%"},{label:"Personas nuevas",valor:"16"},{label:"Nuevos creyentes",valor:"7"},{label:"En grupos",valor:"89"},{label:"Servidores",valor:"54"},{label:"En Esencia",valor:"25"},{label:"No congregantes",valor:"37%"}],logros:"124 asistentes promedio Q2. +15% crecimiento trimestral. 7 nuevos creyentes. 89 en grupos (72%). 54 servidores (43%).",plan2026:"Kickoff hombres sept. Wellness Day. Grabar sermones en audio."},notas:"Mayor crecimiento porcentual de la red en 2025. Pasatiempo: Boxeo, Comer pan. Cumple esposa: 3 jun 1993. Aniversario bodas: 27 mar 2015. Amazon: andilinos2703@gmail.com. Zapatos: 7.5/8 | Camisa: M pero respiro mejor en la L | Pantalón: 34 | Email regalo: andilinos2703@gmail.com",reunion:"",pendientes:[],tags:[],discipulos:["Dan","Dano","Joe","Diego","Alexis G.","Alexis R.","Jaaziel","Tom","Jorge A.","Adolfo","David G.","David F."]},
+  {nombre:"Marce",apellido:"Muñoz",iglesia:"másCristo Juriquilla",ciudad:"Juriquilla, Qro",zona:"qro",esposa:"Andi",cumple:"5 oct 1991",avatar:"MM",hijos:[],iglesia_reporte:{nombre:"másCristo Juriquilla",periodo:"Ene-Abr 2026",stats:[{label:"Asist. promedio",valor:"148"},{label:"Crecimiento",valor:"+19.4%"},{label:"Bautizos",valor:"17"},{label:"Servicio Resurrección",valor:"155"},{label:"Personas nuevas",valor:"18"},{label:"Nuevos creyentes",valor:"7"},{label:"En grupos",valor:"85"},{label:"En grupos %",valor:"60%"},{label:"Servidores",valor:"67"},{label:"Servidores %",valor:"45%"},{label:"En Esencia",valor:"25"},{label:"No congregantes",valor:"37%"}],logros:"148 asistentes promedio. +19.4% crecimiento vs año anterior. 17 bautizos ene-abr. 85 en grupos (60%). 67 servidores (45%). Servicio Resurrección: 155 personas.",plan2026:"La Ruta en domingos. 15 a CTC. 4 matrimonios Bernabé 2027. 10 voluntarios montaje.",proyectos:[{fecha:"23 may",nombre:"Worship Night",sub:"Evento familiar"},{fecha:"19-20 jun",nombre:"Conf. Matrimonios",sub:"Viernes y sábado"},{fecha:"18 jul",nombre:"Día del Amigo",sub:"Juegos de mesa"},{fecha:"15 ago",nombre:"Aventura en Familia",sub:"Actividad al aire libre"}],areas_mejora:["Espacios — espacio propio con montaje fijo","másNiños — relevo de liderazgo (David → Angie/Alex)","Grupos de mujeres — reorganización y descanso de Mariana"]},notas:"Mayor crecimiento porcentual de la red en 2025. Pasatiempo: Boxeo, Comer pan. Cumple esposa: 3 jun 1993. Aniversario bodas: 27 mar 2015. Amazon: andilinos2703@gmail.com. Zapatos: 7.5/8 | Camisa: M pero respiro mejor en la L | Pantalón: 34 | Email regalo: andilinos2703@gmail.com",reunion:"",pendientes:["másNiños: transición de liderazgo (David ya no puede solo).","Jahaziel y Carmelita para cuidar los grupos.","Dano para rol de portero/diácono.","Resolver tema Marisol.","Coordinar reapertura La Ruta domingos.","Buscar espacio propio — hablar con Don Pablo.","Organizar eventos: Worship Night (23 may), Conf. Matrimonios (19-20 jun), Día del Amigo (18 jul), Aventura en Familia (15 ago)."],tags:[],discipulos:["Dan","Dano","Joe","Diego","Alexis G.","Alexis R.","Jaaziel","Tom","Jorge A.","Adolfo","David G.","David F."],reporte_personal:{fecha:"Abr 2026",metricas:{familia:10,intimidad:10,entusiasmo:10,liderazgo:8,economia:8,salud:8},oracion:["Reunión consejo de adopciones (28 abr)","Salud de Andrea","Un lugar propio para la iglesia"]},reunion_data:{fecha:"Abr 2026",badges:["Eval. anual Q1"],metricas:["Int 10","Lid 8","Eco 8","Fam 8","Ent 9","Sal 8"],secciones:[{tipo:"acuerdos",items:[{texto:"Reapertura La Ruta domingos",sub:"Integración de nuevos a grupos"},{texto:"Buscar espacio propio",sub:"Hablar con Don Pablo sobre compra"},{texto:"Relevo liderazgo niños",sub:"David al límite — evaluar Angie y Alex"},{texto:"Dano como diácono",sub:"Evaluar tras graduación del viernes"},{texto:"Iván en discipulado de nuevos creyentes",sub:"Tom inicia el proceso"},{texto:"Descanso 2 meses para grupo Marisol",sub:"Reorganizar y reducir drama"}]},{tipo:"proyectos",label:"Próximos eventos",items:[{texto:"Worship Night",sub:"23 mayo · toda la familia"},{texto:"Conferencia de Matrimonios",sub:"19-20 junio"},{texto:"Día del Amigo",sub:"18 julio · juegos de mesa"},{texto:"Aventura en Familia",sub:"15 agosto"}]}]}},
   {nombre:"Dani",apellido:"Ávila",iglesia:"La Carpa de Reunión",ciudad:"Querétaro",zona:"qro",esposa:"Andi",cumple:"18 abr 1990",avatar:"DA",hijos:[],iglesia_reporte:{nombre:"La Carpa de Reunión",stats:[{label:"Auditorio 2025",valor:"200"},{label:"Flechas",valor:"87"},{label:"Servidores",valor:"59"},{label:"Total",valor:"346"},{label:"Bautizos",valor:"9"},{label:"La Ruta",valor:"11"}],logros:"Asistencia estable 200 adultos. Habitar 14H+16M. Nuevos min.: Axios, Hacedores, Mantenimiento. 9 bautizos.",plan2026:"Hospitalidad: salón nuevo, kit bienvenida. Adoración congregacional reestructuración."},reporte_personal:{fecha:"Abril 2026",metricas:{familia:9,intimidad:9,entusiasmo:10,liderazgo:8,economia:10,salud:8.5},oracion:["Alma con gozo","Matrimonio y paternidad","Casa","Andresito"]},notas:"Conf. Torreón (35 iglesias). Deuda Horizonte casi saldada ($5K). Libro colaborativo con Kike. Habitar: Héctor y Arturo. Pasatiempo: CoD con amigos, jaja hay varios que no he empezado o dado seguimiento, golf, Bonsai, modelismo mi hobbie es buscar un buen hobbie. Cumple esposa: 19 ene 1991. Aniversario bodas: 8 ago 2015. Amazon: daniel.avila@cristoesmejor.com. Zapatos: 27, 27.5 depende de la marca, normalmente es 27 | Camisa: G o XG | Pantalón: 34W 30L | Dirección: Ya he llenado antes la encuesta · Aniversario iglesia: 1 jun 2025. Aniversario bodas: 8 ago 2015.",reunion:"Abr 2026. Casos: Checo (sin confesión), Javi (hermético), Douglas (indiferente), Paco (crisis plantación), Chucho Solís (adulterio). Acuerdos: estaca Checo, 8 sesiones Chucho, historial médico Omar.",pendientes:["Estaca clara con Checo — confesión en tiempo definido.","Chucho Solís: límite 8 sesiones, redirigir terapia.","Historial clínico a Omar Chihuahua (triglicéridos).","Habitar: Héctor y Arturo lideran, cada dulō saca 1 persona.","Proyecto libro con Kike."],tags:["consejería","habitar","libro"]}  ,
   {nombre:"Isaí",apellido:"Ramos",iglesia:"Monte Horeb",ciudad:"Querétaro",zona:"qro",
     esposa:"Esther Cruz Hernández",cumple:"29 abr 1989",avatar:"IR",
@@ -1381,13 +1610,40 @@ const pastores = [
     tags:["nuevo","Monte Horeb"],
     aniversario_iglesia:"Diciembre (cada año)"}  ,
   {nombre:"Chuy",apellido:"Anaya",iglesia:"Horizonte Tijuana",ciudad:"Tijuana",zona:"norte",
-    esposa:"",cumple:"",avatar:"CA",
+    esposa:"Anita",cumple:"",avatar:"CA",
     hijos:[],
     notas:"Co-pastor de Horizonte Tijuana junto con Omar Linares. Ordenado pastoralmente en CEM. Zapatos: 8 US | Camisa: M | Pantalón: 32x30 | Email regalo: jesus.emmanuel.3009@gmail.com | Dirección: San Bartolomé 7557 valle sur Tijuana Baja California C.p. 22637",
-    reunion:"",pendientes:[],tags:["co-pastor","Tijuana"]}
+    reunion:"",pendientes:["Orar durante 9 días por claridad sobre mudanza a Reynosa, TX.","Informar a Kike sobre dirección del Señor respecto a Reynosa.","Participar en grupo WhatsApp de transición (Omar).","Evaluar grupos de discipulado/célula en Reynosa con familias locales.","Proceso de entrega y transición honrosa en Tijuana."],tags:["co-pastor","Tijuana","transición"],reunion_data:{fecha:"21 abr 2026",badges:["Reunión pastoral","Transición"],secciones:[{tipo:"acuerdos",items:[{texto:"Posible mudanza a Reynosa, TX",sub:"Kike apoya con renta y proceso de residencia pastoral"},{texto:"Grupo de 22 personas en Reynosa",sub:"Han firmado membresía — base para plantar"},{texto:"9 días de oración",sub:"Buscar claridad y confirmación del llamado"},{texto:"Apoyo escolar para los hijos",sub:"Coordinación con Heriberto"},{texto:"Participar en WhatsApp de transición",sub:"Grupo de Omar para transición honrosa"}]},{tipo:"reflexion",label:"Reflexión pastoral",items:[{texto:"Salmo 81 — prueba en el desierto",sub:"Escuchar la voz de Dios en lugar de seguir apariencias"},{texto:"Dios trabajando en el orgullo de Chuy",sub:"Necesidad de escuchar mejor — proceso personal"}]}]}}
+
+
 ,
-  {nombre:"José",apellido:"Walther",iglesia:"Centro Cristiano Filadelfia",ciudad:"Chiapas",zona:"sur",esposa:"Janeth",cumple:"6 oct 1984",avatar:"JW",hijos:[{nombre:"Jessika",edad:"17",datos:"Nació 14 jun 2007. Último cuatrimestre de prepa, quiere estudiar biología."},{nombre:"Josselyn",edad:"11",datos:"Nació 30 ene 2014. 4° primaria. Le encanta Minecraft y el parque."},{nombre:"Jimena",edad:"10",datos:"Nació 12 feb 2015. 3° primaria. Minecraft y jugar con amigos."},{nombre:"Juliette",edad:"3",datos:"Nació 3 may 2021. 1° kinder. Le encanta pintar y ver Bluey."}],notas:"Aniversario iglesia: 20 sep 2020. Pasatiempo: Jugar Call of Duty.",reunion:"",pendientes:[],tags:["sur"]}
-];
+  {nombre:"Willer",apellido:"Montesinos",iglesia:"La Carpa del Valle",ciudad:"McAllen, TX",zona:"otro",
+    esposa:"Leticia",cumple:"28 feb 1983",avatar:"WM",
+    hijos:[
+      {nombre:"Willer Alejandro",edad:"16",datos:"Fútbol, Junior."},
+      {nombre:"Zoe",edad:"12",datos:"Le encantan los deportes y la música. 7mo grado."}
+    ],
+    notas:"La Carpa del Valle, McAllen TX. Proceso de residencia USA en curso (Leti prevé residencia finales de mayo 2026). Hobbies: deportes. Correo: willerna@yahoo.com. Zapatos: — | Camisa: — | Pantalón: —",
+    reunion_data:{fecha:"21 abr 2026",badges:["Reunión pastoral","Ministerio McAllen"],secciones:[{tipo:"acuerdos",items:[
+      {texto:"Camilo lidera clase Habitando",sub:"Kike evalúa liderar Perteneciendo"},
+      {texto:"Seguimiento a Temo",sub:"Necesita evidencia de fruto en discipulado antes de predicar"},
+      {texto:"Proceso de discipulado 6 pasos",sub:"Habitando · Equipando · Llegando · Perteneciendo · Liderando"},
+      {texto:"Inventario de 20-22 miembros",sub:"Definir cómo guiar a cada uno en los próximos 4 meses"},
+      {texto:"Miércoles de equipamiento",sub:"Espacio estructurado para desarrollar relación con la Palabra y finanzas"}
+    ]},{tipo:"reflexion",label:"Contexto ministerial",items:[
+      {texto:"Diferencias eclesiológicas con pastor Wheeler",sub:"Prioridad familia vs vida congregacional"},
+      
+      {texto:"Proceso residencia en curso",sub:"Leti prevé residencia a finales de mayo"}
+    ]}]},
+    pendientes:[
+      "Definir y comunicar expectativas del ciclo de discipulado a participantes.",
+      "Seguimiento a Temo: fruto de discipulado antes de asignar predicación.",
+      "Ajustar currículo de clases para miembros en limbo.",
+      "Evaluar con Dani conducción de sesiones de Equipando.",
+      "Orar por claridad sobre modelo ministerial en campus McAllen.",
+      "Proceso de residencia — dar seguimiento a cita de julio."
+    ],
+    tags:["norte","mcallen"]}];
 const pastorPhotos = {
   'Willer':'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAUEBAYFBQUGBgYHCQ4JCQgICRINDQoOFRIWFhUSFBQXGiEcFxgfGRQUHScdHyIjJSUlFhwpLCgkKyEkJST/2wBDAQYGBgkICREJCREkGBQYJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCT/wAARCADIAKADASIAAhEBAxEB/8QAHQAAAQUBAQEBAAAAAAAAAAAAAAQFBgcIAwIBCf/EAEsQAAEDAwIDBAcEBgUKBwEAAAECAwQABREGEgchMRNBUWEIFCJxgZGhQlKxwRUjMqKy0SQzcsLhFjRTYmNzgrPw8SUnNUNFdJKj/8QAGgEAAgMBAQAAAAAAAAAAAAAABAUAAgMGAf/EACoRAAICAgECBgIDAAMAAAAAAAABAgMEESESMQUTIjJBUTNhI3GxFOHw/9oADAMBAAIRAxEAPwC66KKKPOYCiiioQKKKKhAoooqECiiioQKKKKhAoooqECihKSogJBJPcBXZcKS2jephwJ8SmvNllFvlI40UUV6VCiiioQKKKKhAoooqECiiioQK+ttqdWlCElSlHAA76+UutbiIqJc1YyIzCnPkCfyqsnpbNaa/Mmo/Y33i7aY0utpnUGoYcCQ8AUtLWM48cczjzOBXa2v2bUUZ2Rp68RbmlhW1wNLCik+B8PzrLK9N3bXl3dvl0kv+rzXFO9r1U8c4PuA6DyFL9PpuHB3XNpvcSU+7a330RZaFfaaWcEHuOOoPcRQcsjps6G+R+vCoyp8xR4NJ0UuvLAYnK242rG8YpDRqe1s56yDhJxfwFfUJK1BKRkqOAK+V1iLDctlR6BY/GozyK20mQvi5xhjcKmW7PaWmJV/fQla1vAluOk9CoDqTzwnPQZNU1b/Sc19bLiZkybDukdSgFQ3GUoSR37VJAKTUr4xaego4o3m43aI7KbfYi+r7QCEqKCDyPhtqIO8PLaud+j2oEpS1p3B3JCQfgPHuJFLrLVF8nX4+JuC6OxozSmrbRxH0q3qWztrYwstSYzn7TLgxlJ+YIPeDSyqw9Fq3y7fpPVjclKktmYkNgjAJSgpUoeWR9Ks+jKJdUTnvEaVXbwtbCiiitheFFFFQgV9SkrUEpGSTgDxr5S+0IbQ45MfISzGQVqUe7l/LNVk9LZpVW5zUV8jNqfVelNBIbTqCesy3E70xWElayPHA6DzJFMVh408OdRyBFTJlWxxS+zSuUnajPdlQJA+OKozW6ZeudbTLg7IKEPvrW4rdyYYRgAeXLl781LU6d0dI0+GzGjIZdSG0uJG1RVjlgjv76W3ZMoM6vG8Lqsg+EXrOhLhOhCiFJUMpUOhFdYTHrcC5xQCVPRlIABwTlJHL51DeDF8kam0C9apTypNw09MVby6o+04hOC2T57CB/wANSu43iz6Fj/pK/wB2YhDadjW7K3PJKeqvgPjRin1Q/Yl/4sqcnhcIpW+RYFqFkjTLm3Cjx4zTad5Cdhxkgkd5Oc++ovNt0O+Wl9uNcDPcedSlAQrOT2gIxjv7hTnxJakG6Q9XtWZblrubPrLCBlS4xXzAIHLpgkDlzxTdw/kvxL87rJ+zlFmsLXrcpSkbVSXEjHsjkN3PIB+7Ql0JOezpKb4KrsabvII9V3p2OdiN6B9k+HzzXFNv2RjKmSWIccf+48oJHzOAK46c1NpjXzjc+xX2LPBwpcfdh1HkUHCh8qpjWqJvFG/yLu/cnE2GJKXGtsNAyhwNnap093tKB+AFESuUICKrAd9zcl3LtYgsz2VPW24RJ6E8iWHEqwfeCaSc0noQQe/uNZZYc1BwZ1Xb73FkqeiF4BwoylL6ftNrT4kZx58616Ike9IYukV9IhymkPpX94KGQfkRXtWQpLbM8zw11vUFz9ER4qMOKgRLwyyhxpaA08oAZB6p5n3qFV9Euyyw+++2ULPQ4Az7sE1a2q5sZ7T79ltrZkOzQptsqOAtQBUdpPf7OAemarTS2jZ9/nf0kSItvjLIefeTs2gdUgHqr8KByqnL2nSeG5ShX02d0WVpizs6b0cwhpJL1wAfdX3DcM49wHIe817r7F1PHiAMOsbretYbbT/okAYHvHIfOnRVqjzE9pAkJI67FHpRGJkVuPQmIPE8W6yx299jVRXt5lyO4W3UlKh3GvFHiNprhhRRRXp4FM3FjUjOjOH76FqAkS0KynPPGOf5CpVBix2o5nzF7WkHkPHHjVF8drHd9bqduLFwYQwyNqYa0qBCO7n0yev/AGoW+xLgd+GYU3/Loi2hZiWLxeUvNpWXghSQru5f9fOpKuREDIbuFua9WbKn1FxI2jl1znHdVf6LlFN4kRZaSl/sWkrJGDlI2n8qS8aLvMZi262svvJjuFS3CFEBWOgP40smuuzR1NdnlU7aGyy8XtR6Tfv69PzvUGrtK7Ve1tO4Y3BOCRlPI0yuX6ffbguZdJ8ibIeO1bzzhWrB8zUWkPEhGSSVEqJPea9MvrRgpJB6j300qaSEVq3JtmytcR7hE0Mx6g/HjQ2G2+1bU2FFxOABgnISrpyA5+NMUuNcG+Cl3emz2ZLL8NxSWgylIYAz7IIAycjnnPlSm66lZ1LwgtF1a5pk9j2ifurGQofBQNRHX2p0W3gWmA2vDk+YuIgZ+zu3r+gx8ay233L9kURDuT1ulNvR33WHkn2HG1lKknyI5ir84cQ2HtJ2OeiW40lERbbjewHKwtXPOM86zhuHapUo9/yqxOEeqDGuhsEhHrMGXucQknm06kdR5EdfhVLo+lhGFNRsXUTjibbots0XIW7IU9JfktlrckAoO7OOXlnrU34Sa8kTuHkC3PL3mEpcbCjy2g5SD5AKxVU8Xn5DohtY2sIWrY2noOX44r5wtnTbWw8JUeQ3b5StzUkIJbCxyIJHTurCj0x2zbNXXPUV2NAyZ6nmVSw+hpyJGffS64fZbIQRuPuFQTgLOlq0ZPkfpZ6Y3cJSw5FfJV2Khj20k96gfa8eXhXLVl7LOgb65kBX6Oda5eKsJH45rjwcbcs/D23oUNr81bkhIA57FHAJ+AHzradr8sChX6yw3kNlGVbCoHGe9Q8PdTpabm80oJQohQHI550yNrCEKUoEr7ge4V9hvkyEKHTJFKpVLug9TfyWPOUJ1rizUqC1AbVqAx9O7nTXXbTEgyLXc4qlb+xOU58CnI/D6Vxp9iT6602ct4nUoXcfIUUV6aGXUA96h+NEi9CjVbzdtsDTKwFHkdp71f8Ac1V1ymPS2i24pPabdoWRkK8iPzqfcSlHfHyfYTjI+NV2+sZB/wBsUfWlt3LSZ3WDFQq4GSXpqNK1BaZ8cNNu+qqS6G8keyRj39ce4Vx1zoKPqe1qhqc7OQ3+taWE/aHd7qk8cLRIS6kZO3bknoPL+VKJiisJWgZW3zGSAD5Gg3BqWw/0uOmZCu1rkQHHochktvxlEK+FIGlbhz61pa5aBh3fUq75dksCDDhvyXmEA/rw20tYCvkBkdazKyaOqbfcSZUFCWkWzw11mtOk7jpJ9ef6Q3NiBXQdziP4VfOo7r/UTlydi2hJPq1uLigPFxwgq+QAHzqLwprsCWzKawHGlhQycZ8q5yH3JD7rzpytaypRHiTW6QNs9wILlznMxm2nnEqWkL7NJUUpJwTV7ab4at2pbcuLBcRsBSCCFK3jrkdcfyqqeHmr29K3CX/QTKfnIbjtHftSj9YCcjBznl08K1ZGnBKArenoRyGKssXz1rZevI8l71srDiHpZ0ad9afCi+0+0crPUqUE48B+1SjhVCfhafafVMZbbU66W0r3HKUrIJ5A4HLvp54l3H1qLDt7DCjHQv1yUsk+0EAlCPLK8fKm3TNsnW2zWHtdyEKjlScKwMqJWCR8T86ytw6opxabS7hVWVZOSkmk2fOINmm3O1zoMQJDFwS3hxpQKf207yO/G0ZPLqDUms0ZuKw0Ep2ttoS00j7qEjCR8vqTTde7823DbTLS8gglI7FkEFahtSeQyBz556c+dLrYHXm0k5xjuoG6NcUlXLaLvrcm5rTHdayWlK6Z5Uh0/MVJRvcACkynm+XgFkD6Yr3L3txylvO49T92m/SjXqyHY5JKkSVOHv8A2gDWK1pnjLa0m0EQrpIHVaQkjwwD/OvFe9HnfFuLeeSkBXxwRXMdKZ4P4xD4x+VH2vTX9a3/AGh+Nea9Nf1qP7Q/GjBSu4l4lAFtJ8k/if5VWbyz64EY5Z7XPvGP51ZHE9exLKfvEfnVZvKxcGsnALP4K/xoC33L+ju8T8Q5tnGB417UcGuLK84wefzxXt10hJypPLvxWb0EpFccZ9STLPY0sQJK2HJIcbdKDzU0pJSpPuO76Vntry+tbB4g2azDgRfbu9FZVPcUln1hSApaR2ycJSe74eNZFcbCF8gQO4GiK4enYmybN2NABy518cyByr6ogDxryVA92PjWhhs5BxTTiXEKKVoO5JHcRWw7MozbJCltFb3rLKHAoI2g5AyeeO+sdLHOtf6MtTw0vaXG8kGKgbMdNoxn6ZonBb62jO1Lp2Okyxpu8JyM+yVNrAStKV+1s+1jHeRkfGm++qILK22kttpUhISdw2pyABg4HId/0qQxipuMpTaUOOYwEj+fdVacQn5nrqG1ZDwWltlCACSrI6ZxyyD8q3zJxhW39mmHBzmlvsOF1H6pR7wofQ062YlUdJOedM8/ctCW8p3uEA56Dxp5tuWWwnqnrXJ18pjzM9y/oXOIShpWSokjAGabNNNrN1uKicnc2AO7ODTm+UpZ37hgiuOmGgWpEgkYdfUc92AAn8jVtghZ2iQns5pSCAWxkFWefOuY6V90SQGbgoEYDY5JGB318HSmmB+MQ+MfkX/vo+0pt8VcqUhKeiSFKPgBSanWznESZt5L29fgaMm9IXY1anYosiXEqW1NWAw6k+rrAX16kdKreWXWrkwXEAI7Fe1QOcqyOVTu4wlrZe7XOXXc8+nIYqK3OLujk5BU0rcnn86Av953VFahDSPUdwJCfcSfpXR5xJQvyHT4UlUrs0q8kgfM12RhS1pPeUj6VRxLpsjHFa/9hwQuMIOYW7emEJHltKz/AA1mbcV8yoknxq/OJtnlXfhrdnWFDbabg1MeQeqmyC0SPcVp+BNUE3RNb4SE+THVrPak4TXg8xmuiiMHxNc8Y5VcwBtlch5tlsbluKCEjxJOBW4LYgR7ZHtkTcVstIbUrBASgAAnPfnmBisd6Dtbt41pZobLZcUqUhwpCgnKUHeRk9OSTWu2Lm/HWl9FveCHVHc2hxKkpV4q3Y2nxPQ9edG4TUW2/kwvTekhY8r9Ht4Cd76/ZbSrknx5mobOSp+4OKkFLy2Vbi7txlZHQeQB+tP94uB9ZQoltcp1soQ22vchlOeZz4nvPkAKa24BeX2ZB2HKlK7zyJ+tYeJz6tUV8yf+B/h1fT/PZ2X+kVRckzNRCCghQbaWpR/1hjl8s1MISE9mMg58qqfVeqIWlOI8cuZQ044hcghPJDSm9pPz5/CrXt77MplD0Z5p9tY3JW0oKSoeRFJbKfL9IS7vNk5MUSw2llRCT078V30ykptMc4BUsFftdPaJP5013ua1CguLeUhCQDkqUEj6066Fu+n51oYiXG6PxLikc+3jFprH2QleNqgBjnkGs1W5Lgm9fBP9Io7K03J4ncT7JV4nHd8680tYYbten22G3O0MlXaBQHVPL8sfOkVNsSDjWkzm/FLFK7j4ClEKauC6VpAUlQwpJ7xSevh6US1vhi+MnF9Ue4o1YhoWVt2Oyhhx3H7I6ZI/nVPX6TJTLU2H8IacKdoSPaTnoeXgauTVquyhR0dAhrd7un8qp+6pVPYWW2E9rhOVoHMkEA/n9PGg8iLcItHc+HbcfUzm45mG64D1Df8AEKUNLxMKfNJ/dpv5otkwE57PYPkulCVf+JrT4JSf3RVNchHwIZUBy6aS13bWUlTjlvkLSkDqW9jmP3DWWE8xWyeHYbVreRFeALUhxxhQPeFtYIrIN3gKtV3nW9f7USQ4wR5pUU/lV6xZmL1ni3WyZebgzb4DKn5T6trbaeqjjP5VwSScVP8AgAUjjHprfjap9xJz5srH51A3QEvuBPQLV+NaJ8grJJwxStXEKxobzuVKCeuMgg5rUoeitOKckpWoKQUpXs3hKv7JOAruIrPXArSr+odVy7iw9sVZIpnBvbkvHcEBI8P2ifhWnNzpc7VqGw+HgFKKWwVpV4KzR2JvTcWYW64TIyy0lDi3tjYUs+2pKQMn4U7R1dmhR5byCB8Rz+ld5VtCny68E9oc7UIACQB1Jx1pPkdrgdEJ/EV5iYbrlKc3tsJycyNsYwgtJGa+OjezWTavvQ0fRShUEhPuNKPZuLQfFKiPwqx+PzWzU0JXjFUn5OKpw4ucNbTofQPD65wIjjU27RFOz3VrKi44UNrAweQA3HAFAz4mypX1ijfpbUFtiSFqW25IQF71Z9nOT18hWoNMW+VqFcW3R2Vdu7hbgA9lpJ55PgAPyFZOQopUlaFFKgcgg4INbT9HVpUDg5DufaOuzLhJeW486oqVgLKQAT3AJ5DxJrC6jzGthdOcsauT1yWHelo7dthByGWwim+gkkkk5J76KPitLRyVtjsm5v5CvradziU+KgK+V2hJ3zGE+Kx+NevsVittI+a2V7Lifus4/GqvcSETbcOY7STtOD1GFVZGtHMuyB4JSPoKrmV/ntm85f8AdXWNq9MV+jt8VagMylA2q8H7qv75rqlWbysf6qf4RSf/AOJ1CPuqP8Rr22rN9WP9mj+EUP8AIU+w6aRd9W4gNqBxiUwfmkCs78c7ULNxd1VFSNqVT1vpHk5hf96r/iuep6vaf/3DnyVj8qp70pmg1xovHLG9thfvy0mrQ+Rdme5Ma/R5YVK40aWQBnElSz7g2smoXqCEbZf7nBUMGNLeZI8NqyPyqz/RQiCRxkgOkZ9WiSXvd+r2/wB6opxqgptvFnVkdHJIuTyx/wAR3fnXqfIGTz0X1qak6ydb5ON2ttaT7n0n8qvNm9pu7nq0JtUdsDfJePINp7wPM9M1RvovOBDmsirH/pzBPu9YTmrqiWVbMp2Ek7Y3alTqs81AdE+6meBvpevsGv1vkWrHbt9qlJQlwewPutDp8zTKlw9q8rnyUAR7zipG+tO4kp9lRSjlywO76D61F2TulOA9O0A+tMH3SMYPhlL+kBbnJOpbQy0klb7jrCQOpJWnA/eq0vTCtyYXD7SraEYTEm+rjHcOwxj9yoBx+lrtGodP3No4cizFPpPmktqH4VevpK2trUnBS5zEAFUXsLi0fD2gD+6s1z9/FjD49kYfb6Ct0cJ46YfBXSDSOjkUOn3qUpR/GsLoPIVurhWor4LaOUrqIaR8ioflUj7kYZX4ZD7RRRRIgCldqTuuDPkc/SklOFiRuuAP3UE1WftZrQt2RX7GTWDmXpX9sCoE5+sl2Q/7d0/JtyptqZe8vq8XD+JqGITmRZOX2nz8m3K8uXZfo7Wj2DElO63aqA+ypX4E14SrF/P+6b/hFLYjJXD1anxeUP8A+efzpsCj/lCjzYbP7tC65CN8C655aujDo5ZZP0Vn86qz0qlhzik49j+thRVe/wDVCrWvI/Ww1eO9P0H8qpz0kZS5WvIq1DCVWmEpJ8R2QB+oNexetgGYt6ZIfQ5Y7TifOd/0Vpe+rjYqI+kUEDjVqkI6esoJ9/ZIzUz9DVX/AJkXQeNoc/5rdQX0gVFXGXVZOf8APcc/7Ca8XcCJH6NMhw3zUcBLZUmZa9pV90pdQofPFaYYSsNhT5HbKSCvHTPhWffRgg9j+lbmRzcdbjJJ8AlSj+KavydJDMZasjOCc5p7gV6r39gGTLc9DdLlocfbY3frHEuvBPilOE/TNMUY5fUT3uJ/iFIp1xLet7dHQThu3rbVjxWd392u8Y5kJIz/AFyf4q1607Gvr/ov0ONaf2Vf6SyOdrX39s6P3U1d2rb3HufotO3BbyAJOnmUgqPVeEJx79wxVMekkndBtzmD7MtY+aP8K9a7nwbp6LeiHoKlpMOauC+lR578LUoe7ISofCkeQt2yC4+1FGtZwK3nw6bDPCHRiB0/R7R+ac/nWD4bDkp5mOynLryktoHionA+pr9CYtoRprTdj08g7v0dDbZJ8SlIBPzBqkPcjDMeqWeKKKKKEIU6afGH3l/db/OmunW0nsoMx49wx9D/ADqk+2gnDW7kRK9q3IPmrNReO3l+0HrhMk/uLqTXbmnHnTBb07vUT91Mn8xVruZHZV8QEVsjnsdR5H9ZKP8AykVFirF/Z/8Art/w1O4TW1i5J++7v/dSPyqBOcr815MoH40NJaaNU97Hi9f1UVXg5+INVj6R1oBhaNvqEjMiA9CcI+8y6SPo59Ksq8nMNo/dcTVU8cdVOTLdY9NdiOzgKflF3qSXFAADwxtNUXcFyl6Nkk9DCMV67vcjBw1a9pPhudR/Kox6U9kVaeMdzfwQi5MsTEcvFAQf3kGrX9ErQ9503abpqu6NNxYF0jIRECiC48ArPaeSe4A8zzNdfSs0BO1bZbLqu1IDqrePVJiAPaCFqG1XuSokHw3Zqa+Rd1LfT8ka4KMm0aFhPkYU66uSrzBVgfQCrFus8FhLQIJWoD4dfwqEafCYNiahN4DbEfsx8BilT12Sxa5tykODsoMcrwe9R5D6A/Sn9NihBR/QNOvqbYzQbm5c+IMtbSuTb/ZnyQlB3fialtvWPW2Tk5Lqe/zqrOHM51d+ddX+2+hal58VIJNWTBdAnxk+LqfxoTFs3Jy+2F5MNRUfpEK9IdHbWPcercxpXzQsVXTdxlJ4IyLa4pSo/wDlI042COSFerL3YPn7PLyrRSuHkPifqJdnubj7duZSiVI7EgKXtUQlAV9nJPXrgGq29KL9BaelWHh/peFHhw7W2qXIZYBJ7Z3ASVKJypWxOSTz5il973ZL+z3Wkv6Ku4Z29V24g6ahJSVF25xwQPAOAn6Ct7Xxe+5OY7gB/wBfOsl+ipZIk/itFkT0rS7CjPPxkhOQt0Dbk+ACVE+/FaqmLLkp5SupWa9q5kL/ABF6gl9nKiiiiBOFOkIFyzTEIGV56Dr0FNdK7ZNEN5XaAlpY2qA/Gqy3raCcWxV2qT7EZufcfEk00WtolppSgRtQ+R5gr61Nb3ptyS2h62fr21cgndzH+FR2ZbH7NJREkKaK0xiSEHPIkda8c1KWzsK7YyhwxDF5iUkd/wDhVdzU9lqIDwQn8TTlN1HcLJq320OIt7qUocStB7/tJBHUcunWpvI4TSLzGZu8aZ6tPdHtMSQezKPskYGUq58/yoeck+3waOShzL5K81LOXGskh9pIU40AsA95BFUxD0Rr7iPe3G4VmnSX3VFt1xTSm2mwFctylABIHLlWoWuDV3mO+r3V+EiCsgPKbcKipHeAMdT51Yku6KYxFglLUdpIQnaO4DHKq1pyYuz8qEEnvY2wbSNNaXsene2S8u2w2mFrSMBRSkDOPM5r1cLe/etI3m1Q1JEqQ0Q2FHkenL6Y+NeFKKiVKJJPUnvrrFkKivpdQeaTzHiO8UT0ajpHPxyf5/NZRSbZcIDbsZ+MtpSQoZ7s1HeIDcuPoSLbY5S3NuTipDhXyw0jGB8fzq9OJ8JuK8iY0Etsy07t2ORX3/EjB+dZ04qP3W5X6C9AgrfhxYvZrZQrG9BWfZ9+E55VpZkxdfHDHVdcm/tCThTckzZstbrSkSEtK57cJ6pHw5GrFirBusJZV+y8OVRnRcpnU3bu2q2yRMZQhhxnsSXEEnO3kOY9n6VLpek9RWVuLdZlqlNwxJS2pZRkoJ+0odUp7tx5ZrGiajFbNrFz32WFp3VcDR2ltVaimpCkwEIdI73PZIQgHzVgfGscS77cdSagm6iuwdfkTXluvO4wApXcPJI5AdwFa60Pp226ztOobNeGkvQXgwtaVDIykqIOPI0sg8A+HMF9Eh6KzKDZ3JQ684tH/wCCsj6GsZtuTaRSbjF+p6Il6LGjDYdK3HWUxkiVcCWIaljBDKTzUPJSsfBNWmSSSTzJ5mls+a0403FithuMyAEpAwOXIYHcBSKt6odK5EeberZ+nsgooorUCCiiioQ6syn4+eydWgHqAeRpaq7MOEOPW9hx7ABWQOePhRRVXBPubV5FlftYKvzylZLDBx+zkZKaRyZj0tze6skjoByA91FFRQS7I8nfZNakzkXFqGCtRHgTXyiirGYUUUVDw7SGbde7Uu0XlguxVc0qSSFNnuII5gjxqI3TgtpG4utvs3+9QZaE7DIYcSd6M52lKkFPXvxmiisZ1RfIdTn21pRT7D9pLS2n+H7Mr9DGXOmzFJVImzHN7jhSClPPAAABPIAdaeW7qp3tGpyRIjupKFoKRjB8qKKsqopaKTzLZT6tia122w6bamG0IeSuWAFJWokJxnGM9OprjRRXsYKPYzvyJ3Pcwoooq5gFFFFQh//Z',
   'Chava':'data:image/jpeg;base64,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',
@@ -1871,104 +2127,555 @@ function renderNotasData(nd_data) {
   return h;
 }
 
+
+/* ═══════════════════════════════════════
+   VISTA GENERAL
+═══════════════════════════════════════ */
+var activePriFilter = 'all';
+var _bpZone = 'todos';
+var _bpActions = [
+  {text:'Contactar a los 3 pastores en riesgo alto',meta:'Gadiel · Phil · Dani',pri:'urgente',priStyle:'background:rgba(184,64,64,.12);color:#B84040',state:'pend'},
+  {text:'Actualizar información de pastores sin datos',meta:'2 perfiles incompletos',pri:'alta',priStyle:'background:rgba(200,147,58,.12);color:var(--qro)',state:'prog'},
+  {text:'Revisar capacidad de consejería por alta demanda',meta:'95 solicitudes · +18%',pri:'alta',priStyle:'background:rgba(200,147,58,.12);color:var(--qro)',state:'pend'},
+  {text:'Dar seguimiento a pendientes de Luminares',meta:'Propuesta en revisión con Gadiel',pri:'media',priStyle:'background:var(--surface3);color:var(--ink3)',state:'pend'},
+  {text:'Preparar plan para 3er servicio dominical',meta:'Ligado a construcción HQ',pri:'media',priStyle:'background:var(--surface3);color:var(--ink3)',state:'pend'},
+  {text:'Acompañar a Daniel Vargas antes del bebé',meta:'Julio 2026 · finanzas y matrimonio',pri:'alta',priStyle:'background:rgba(200,147,58,.12);color:var(--qro)',state:'done'},
+];
+
+function bpCycleAction(i) {
+  var map = {pend:'prog',prog:'done',done:'pend'};
+  _bpActions[i].state = map[_bpActions[i].state];
+  renderBigPicture();
+}
+
+function renderBigPicture(){
+  var zone = _bpZone || 'todos';
+  var filtered = zone==='todos' ? pastores : pastores.filter(function(p){ return p.zona===zone; });
+
+  var ZONES_CFG = [
+    {id:'qro',   label:'QRO',   color:'#C8933A'},
+    {id:'norte', label:'Norte', color:'#4A7AB8'},
+    {id:'sur',   label:'Sur',   color:'#4A9B6F'},
+    {id:'centro',label:'Centro',color:'#9B4A6F'},
+    {id:'otro',  label:'Intl.', color:'#7A5AB8'},
+  ];
+  var ZONE_LABELS2 = {todos:'Todos',qro:'QRO',norte:'Norte',sur:'Sur',centro:'Centro',otro:'Intl.'};
+  var ZONES2 = ['todos','qro','norte','sur','centro','otro'];
+
+  // ── CALCULATIONS ──────────────────────────────────────────────────────
+  var counts = {urgent:0, watch:0, stable:0, none:0};
+  filtered.forEach(function(p){ counts[calcPriority(p)]++; });
+
+  // Top priority pastors (sorted by urgency + lowest health)
+  function getHealthAvg(p){
+    if(!p.reporte_personal||!p.reporte_personal.metricas) return null;
+    var vals=Object.values(p.reporte_personal.metricas).filter(function(v){return typeof v==='number';});
+    return vals.length ? vals.reduce(function(a,b){return a+b;},0)/vals.length : null;
+  }
+  var priOrder={urgent:0,watch:1,stable:2,none:3};
+  var topPastors = filtered.slice().sort(function(a,b){
+    var pa=priOrder[calcPriority(a)]||3, pb=priOrder[calcPriority(b)]||3;
+    if(pa!==pb) return pa-pb;
+    var ha=getHealthAvg(a)??10, hb=getHealthAvg(b)??10;
+    return ha-hb;
+  }).slice(0,3).filter(function(p){ return calcPriority(p)==='urgent'||calcPriority(p)==='watch'; });
+
+  // Area averages across all filtered pastors
+  var areaKeys=['familia','intimidad','entusiasmo','liderazgo','economia','salud'];
+  var areaLabels={familia:'FAM',intimidad:'INT',entusiasmo:'ENT',liderazgo:'LID',economia:'ECO',salud:'SAL'};
+  var areaData={};
+  areaKeys.forEach(function(k){ areaData[k]=[]; });
+  filtered.forEach(function(p){
+    if(p.reporte_personal&&p.reporte_personal.metricas){
+      var m=p.reporte_personal.metricas;
+      areaKeys.forEach(function(k){ if(typeof m[k]==='number') areaData[k].push(m[k]); });
+    }
+  });
+  function areaAvg(k){ var a=areaData[k]; return a.length?(a.reduce(function(s,v){return s+v;},0)/a.length):null; }
+  var overallVals=[];
+  areaKeys.forEach(function(k){ var v=areaAvg(k); if(v!==null) overallVals.push(v); });
+  var overallAvg = overallVals.length?(overallVals.reduce(function(a,b){return a+b;},0)/overallVals.length).toFixed(1):'—';
+
+  // Sort areas to find strengths/weaknesses
+  var areasSorted = areaKeys.map(function(k){ return {k:k,v:areaAvg(k)||0}; })
+    .filter(function(a){ return a.v>0; })
+    .sort(function(a,b){ return b.v-a.v; });
+  var strengths = areasSorted.slice(0,2);
+  var weaknesses = areasSorted.slice(-2).reverse();
+
+  // Pattern counting
+  var patterns = {liderazgo:0, salud:0, economia:0, familia:0};
+  filtered.forEach(function(p){
+    if(p.reporte_personal&&p.reporte_personal.metricas){
+      var m=p.reporte_personal.metricas;
+      if(typeof m.liderazgo==='number'&&m.liderazgo<7) patterns.liderazgo++;
+      if(typeof m.salud==='number'&&m.salud<7) patterns.salud++;
+      if(typeof m.economia==='number'&&m.economia<7) patterns.economia++;
+      if(typeof m.familia==='number'&&m.familia<7) patterns.familia++;
+    }
+  });
+
+  // Pending counts
+  var pendTotal=0, pendUrgent=0, pendWeek=0;
+  filtered.forEach(function(p){
+    pendTotal += (p.pendientes||[]).length;
+    if(calcPriority(p)==='urgent') pendUrgent += (p.pendientes||[]).length;
+    if(calcPriority(p)==='watch')  pendWeek   += (p.pendientes||[]).length;
+  });
+
+  // Zone health
+  var zoneHealth={};
+  ZONES_CFG.forEach(function(z){
+    var zp=filtered.filter(function(p){return p.zona===z.id;});
+    var scores=[];
+    zp.forEach(function(p){var v=getHealthAvg(p);if(v!==null)scores.push(v);});
+    var avg=scores.length?(scores.reduce(function(a,b){return a+b;},0)/scores.length):null;
+    var priCounts={urgent:0,watch:0,stable:0,none:0};
+    zp.forEach(function(p){priCounts[calcPriority(p)]++;});
+    zoneHealth[z.id]={avg:avg,counts:priCounts,total:zp.length};
+  });
+
+  // ── BUILD HTML ────────────────────────────────────────────────────────
+  var h = '<div class="bp2">';
+
+  // Header
+  h += '<div class="bp2-hdr">';
+  h += '<div><div class="bp2-title">Vista general</div><div class="bp2-sub">Compañerismo CEM · '+filtered.length+' pastores</div></div>';
+  h += '<div class="bp2-filters">';
+  ZONES2.forEach(function(z){ h += '<button class="bp2-pill'+(z===zone?' active':'')+'" onclick="_bpZone=\''+z+'\';renderBigPicture()">'+ZONE_LABELS2[z]+'</button>'; });
+  h += '</div></div>';
+
+  // ── BLOQUE 1: Decisión hoy ────────────────────────────────────────────
+  h += '<div class="bp2-block">';
+  h += '<div class="bp2-block-hdr"><span class="bp2-block-hdr-ico">🚨</span><span class="bp2-block-hdr-title">Decisión hoy</span>';
+  h += '<span class="bp2-block-hdr-badge" style="background:rgba(184,64,64,.1);color:var(--urgent)">Hoy no puedes ignorar esto</span></div>';
+  h += '<div class="bp2-body">';
+
+  // Count cards
+  h += '<div class="b1-counts">';
+  h += '<div class="b1-count b1-critical"><div class="b1-count-num">'+counts.urgent+'</div><div class="b1-count-lbl">🔴 Críticos — acción ahora</div></div>';
+  h += '<div class="b1-count b1-watch"><div class="b1-count-num">'+counts.watch+'</div><div class="b1-count-lbl">🟡 En riesgo — esta semana</div></div>';
+  h += '<div class="b1-count b1-stable"><div class="b1-count-num">'+counts.stable+'</div><div class="b1-count-lbl">🟢 Estables — solo monitorear</div></div>';
+  h += '</div>';
+
+  // Top 3 priority people
+  if(topPastors.length){
+    h += '<div style="font-size:10px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px">Prioridad hoy</div>';
+    h += '<div class="b1-people">';
+    topPastors.forEach(function(p,i){
+      var pri=calcPriority(p);
+      var ha=getHealthAvg(p);
+      var photo=pastorPhotos[p.nombre];
+      var col=pcol(p);
+      var av=photo?'<img src="'+photo+'">':'<span style="font-size:10px;font-weight:700;color:#000">'+(p.nombre[0]+(p.apellido||'')[0]||'').toUpperCase()+'</span>';
+      var reasons=[];
+      if(p.pendientes&&p.pendientes.some(function(x){return /salud|cirugía|endometriosis/i.test(x);})) reasons.push('salud');
+      if(p.reporte_personal&&p.reporte_personal.metricas){
+        var m=p.reporte_personal.metricas;
+        if(typeof m.liderazgo==='number'&&m.liderazgo<7) reasons.push('liderazgo bajo');
+        if(typeof m.salud==='number'&&m.salud<7) reasons.push('salud baja');
+        if(typeof m.economia==='number'&&m.economia<7) reasons.push('finanzas');
+      }
+      if(p.pendientes&&p.pendientes.length>=3) reasons.push((p.pendientes.length)+' pendientes');
+      var reasonStr=reasons.slice(0,2).join(' + ')||'requiere atención';
+      var haColor=ha===null?'var(--ink3)':ha>=8?'var(--stable)':ha>=7?'var(--qro)':'var(--urgent)';
+      var idx=pastores.indexOf(p);
+      h += '<div class="b1-person p-'+(pri==='urgent'?'urgent':'watch')+'">';
+      h += '<span class="b1-rank">'+(i+1)+'.</span>';
+      h += '<div class="b1-av" style="background:'+(photo?'transparent':col)+'">'+av+'</div>';
+      h += '<div class="b1-info">';
+      h += '<div class="b1-name">'+(p.nombre+' '+(p.apellido||'')).trim()+'</div>';
+      h += '<div class="b1-reason">⚠ '+reasonStr+'</div>';
+      h += '</div>';
+      if(ha!==null) h += '<div class="b1-score" style="color:'+haColor+'">'+ha.toFixed(1)+'</div>';
+      h += '<div class="b1-actions">';
+      h += '<button class="b1-action-btn" style="background:rgba(74,122,184,.1);border-color:rgba(74,122,184,.3);color:#4A7AB8" onclick="event.stopPropagation();openPanel('+idx+')">📋 Ver</button>';
+      if(pri==='urgent') h += '<button class="b1-action-btn" style="background:rgba(184,64,64,.1);border-color:rgba(184,64,64,.3);color:var(--urgent)" onclick="event.stopPropagation()">📞 Llamar</button>';
+      else h += '<button class="b1-action-btn" style="background:rgba(200,147,58,.1);border-color:rgba(200,147,58,.3);color:var(--qro)" onclick="event.stopPropagation()">🤝 Acompañar</button>';
+      h += '</div></div>';
+    });
+    h += '</div>';
+  } else {
+    h += '<div style="padding:16px;text-align:center;color:var(--ink3);font-size:12px">✓ Sin pastores en estado crítico en esta zona</div>';
+  }
+  h += '</div></div>';
+
+  // ── BLOQUE 2: Salud de la red ─────────────────────────────────────────
+  h += '<div class="bp2-block">';
+  h += '<div class="bp2-block-hdr"><span class="bp2-block-hdr-ico">📊</span><span class="bp2-block-hdr-title">Salud de la red</span>';
+  var oc=parseFloat(overallAvg);var ocColor=isNaN(oc)?'var(--ink3)':oc>=8?'var(--stable)':oc>=7?'var(--qro)':'var(--urgent)';
+  h += '<span class="bp2-block-hdr-badge" style="background:'+ocColor+'18;color:'+ocColor+'">Promedio '+overallAvg+' / 10</span></div>';
+  h += '<div class="bp2-body">';
+
+  // Big score + areas grid
+  h += '<div class="b2-areas">';
+  areaKeys.forEach(function(k){
+    var v=areaAvg(k); var vc=v===null?'var(--ink3)':v>=8?'var(--stable)':v>=7?'var(--qro)':'var(--urgent)';
+    var bc=v===null?'var(--border)':v>=8?'rgba(74,155,111,.2)':v>=7?'rgba(200,147,58,.2)':'rgba(184,64,64,.2)';
+    h += '<div class="b2-area" style="border-color:'+bc+'">';
+    h += '<div class="b2-area-val" style="color:'+vc+'">'+(v?v.toFixed(1):'—')+'</div>';
+    h += '<div class="b2-area-key">'+areaLabels[k]+'</div>';
+    h += '</div>';
+  });
+  h += '</div>';
+
+  // Strengths & weaknesses
+  var areaNames={familia:'Familia',intimidad:'Intimidad',entusiasmo:'Entusiasmo',liderazgo:'Liderazgo',economia:'Economía',salud:'Salud'};
+  var areaIcos={familia:'👪',intimidad:'🙏',entusiasmo:'🔥',liderazgo:'🧭',economia:'💰',salud:'❤️'};
+  h += '<div class="b2-insights">';
+  h += '<div class="b2-insight" style="background:rgba(74,155,111,.05);border-color:rgba(74,155,111,.2)">';
+  h += '<div class="b2-insight-lbl" style="color:var(--stable)">🟢 Fortalezas</div>';
+  strengths.forEach(function(a){ h += '<div class="b2-insight-item">'+areaIcos[a.k]+' '+areaNames[a.k]+' <b style="color:var(--stable)">'+a.v.toFixed(1)+'</b></div>'; });
+  h += '</div>';
+  h += '<div class="b2-insight" style="background:rgba(200,147,58,.05);border-color:rgba(200,147,58,.2)">';
+  h += '<div class="b2-insight-lbl" style="color:var(--qro)">🟡 Debilidades</div>';
+  weaknesses.forEach(function(a){ h += '<div class="b2-insight-item">'+areaIcos[a.k]+' '+areaNames[a.k]+' <b style="color:var(--urgent)">'+a.v.toFixed(1)+'</b></div>'; });
+  h += '</div></div>';
+  h += '</div></div>';
+
+  // ── BLOQUE 3: Alertas del sistema ────────────────────────────────────
+  h += '<div class="bp2-block">';
+  h += '<div class="bp2-block-hdr"><span class="bp2-block-hdr-ico">⚠️</span><span class="bp2-block-hdr-title">Alertas del sistema</span><span class="bp2-block-hdr-badge" style="background:rgba(200,147,58,.1);color:var(--qro)">Lo que se repite</span></div>';
+  h += '<div class="bp2-body">';
+
+  h += '<div class="b3-patterns">';
+  var patternList=[
+    {k:'liderazgo',ico:'👥',label:'liderazgo bajo',color:'rgba(74,122,184,.2)',tc:'#4A7AB8'},
+    {k:'salud',ico:'❤️',label:'salud comprometida',color:'rgba(184,64,64,.2)',tc:'var(--urgent)'},
+    {k:'economia',ico:'💰',label:'presión económica',color:'rgba(200,147,58,.2)',tc:'var(--qro)'},
+    {k:'familia',ico:'👪',label:'familia en tensión',color:'rgba(155,74,111,.2)',tc:'#9B4A6F'},
+  ];
+  patternList.forEach(function(pt){
+    if(patterns[pt.k]>0){
+      h += '<div class="b3-tag" style="background:'+pt.color+';border-color:'+pt.color+';color:'+pt.tc+'">';
+      h += '<span>'+pt.ico+'</span><span class="b3-tag-count">'+patterns[pt.k]+'</span><span>'+pt.label+'</span></div>';
+    }
+  });
+  h += '</div>';
+
+  // Trends
+  h += '<div class="b3-trends" style="margin-top:8px">';
+  h += '<div class="b3-trend"><span class="b3-trend-arrow" style="color:var(--urgent)">↑</span><span>Pendientes acumulándose — revisar carga pastoral</span></div>';
+  h += '<div class="b3-trend"><span class="b3-trend-arrow" style="color:var(--stable)">↑</span><span>Consejería en aumento — considerar más capacitación</span></div>';
+  h += '</div>';
+  h += '</div></div>';
+
+  // ── BLOQUE 4: Enfoque por zona ────────────────────────────────────────
+  h += '<div class="bp2-block">';
+  h += '<div class="bp2-block-hdr"><span class="bp2-block-hdr-ico">🌎</span><span class="bp2-block-hdr-title">Enfoque por zona</span><span class="bp2-block-hdr-badge" style="background:rgba(74,122,184,.1);color:#4A7AB8">Dónde necesitas estar</span></div>';
+  h += '<div class="bp2-body"><div class="b4-zones">';
+
+  var worstZone=null, worstAvg=10, bestZone=null, bestAvgVal=0;
+  ZONES_CFG.forEach(function(z){
+    var zd=zoneHealth[z.id];
+    if(!zd||!zd.total) return;
+    var dots='';
+    var zp2=filtered.filter(function(p){return p.zona===z.id;});
+    zp2.forEach(function(p){
+      var pri=calcPriority(p);
+      var dc=pri==='urgent'?'var(--urgent)':pri==='watch'?'var(--qro)':pri==='stable'?'var(--stable)':'var(--border3)';
+      dots+='<div class="b4-dot" style="background:'+dc+'"></div>';
+    });
+    var zAvg=zd.avg;
+    var zColor=zAvg===null?'var(--ink3)':zAvg>=8?'var(--stable)':zAvg>=7?'var(--qro)':'var(--urgent)';
+    if(zAvg!==null){if(zAvg<worstAvg){worstAvg=zAvg;worstZone=z.label;}if(zAvg>bestAvgVal){bestAvgVal=zAvg;bestZone=z.label;}}
+    h += '<div class="b4-zone"><span class="b4-zone-name" style="color:'+z.color+'">'+z.label+'</span>';
+    h += '<div class="b4-dots">'+dots+'</div>';
+    if(zAvg!==null) h += '<span class="b4-zone-avg" style="color:'+zColor+'">'+zAvg.toFixed(1)+'</span>';
+    h += '</div>';
+  });
+  h += '</div>';
+  if(worstZone||bestZone){
+    h += '<div style="display:flex;gap:12px;margin-top:8px;font-size:11px">';
+    if(worstZone) h += '<span>🔥 Zona más débil: <b style="color:var(--urgent)">'+worstZone+'</b></span>';
+    if(bestZone)  h += '<span>💪 Zona más fuerte: <b style="color:var(--stable)">'+bestZone+'</b></span>';
+    h += '</div>';
+  }
+  h += '</div></div>';
+
+  // ── BLOQUE 5: Seguimiento pastoral ────────────────────────────────────
+  h += '<div class="bp2-block">';
+  h += '<div class="bp2-block-hdr"><span class="bp2-block-hdr-ico">📋</span><span class="bp2-block-hdr-title">Seguimiento pastoral</span><span class="bp2-block-hdr-badge" style="background:rgba(200,147,58,.1);color:var(--qro)">Qué estás cargando</span></div>';
+  h += '<div class="bp2-body"><div class="b5-counts">';
+  h += '<div class="b5-count"><div class="b5-num" style="color:var(--urgent)">'+pendUrgent+'</div><div class="b5-lbl">🚨 Urgente</div></div>';
+  h += '<div class="b5-count"><div class="b5-num" style="color:var(--qro)">'+pendWeek+'</div><div class="b5-lbl">📅 Esta semana</div></div>';
+  h += '<div class="b5-count"><div class="b5-num" style="color:var(--ink2)">'+pendTotal+'</div><div class="b5-lbl">📦 Total</div></div>';
+  h += '</div>';
+  h += '<div class="b5-types">';
+  if(patterns.salud>0) h += '<div class="b5-type"><span>❤️</span>'+patterns.salud+' salud</div>';
+  if(patterns.liderazgo>0) h += '<div class="b5-type"><span>👥</span>'+patterns.liderazgo+' liderazgo</div>';
+  if(patterns.economia>0) h += '<div class="b5-type"><span>💰</span>'+patterns.economia+' economía</div>';
+  h += '</div></div></div>';
+
+  // ── BLOQUE 6: Acción hoy ──────────────────────────────────────────────
+  h += '<div class="bp2-block">';
+  h += '<div class="bp2-block-hdr"><span class="bp2-block-hdr-ico">⚡</span><span class="bp2-block-hdr-title">Acción hoy</span><span class="bp2-block-hdr-badge" style="background:rgba(74,155,111,.1);color:var(--stable)">Máximo 3 acciones</span></div>';
+  h += '<div class="bp2-body"><div class="b6-actions">';
+
+  var actions6=[];
+  if(topPastors.length>0){
+    var p0=topPastors[0], idx0=pastores.indexOf(p0);
+    actions6.push({ico:'📞',title:'Llamar a '+(p0.nombre+' '+(p0.apellido||'')).trim(),sub:'Crítico — salud o múltiples urgentes',pri:'urgente',priStyle:'background:rgba(184,64,64,.1);color:var(--urgent)',onclick:'openPanel('+idx0+')'});
+  }
+  if(topPastors.length>1){
+    var p1=topPastors[1], idx1=pastores.indexOf(p1);
+    actions6.push({ico:'🤝',title:'Acompañar a '+(p1.nombre+' '+(p1.apellido||'')).trim(),sub:'En riesgo — necesita seguimiento',pri:'alta',priStyle:'background:rgba(200,147,58,.1);color:var(--qro)',onclick:'openPanel('+idx1+')'});
+  }
+  if(counts.none>0){
+    actions6.push({ico:'📋',title:'Actualizar '+counts.none+' pastores sin datos',sub:'Sin reporte reciente — información desactualizada',pri:'media',priStyle:'background:var(--surface3);color:var(--ink3)',onclick:''});
+  } else if(patterns.liderazgo>=3){
+    actions6.push({ico:'📋',title:'Revisar liderazgo en '+patterns.liderazgo+' pastores',sub:'Patrón sistémico — considerar capacitación o apoyo',pri:'media',priStyle:'background:var(--surface3);color:var(--ink3)',onclick:''});
+  }
+
+  actions6.slice(0,3).forEach(function(a){
+    h += '<div class="b6-action" onclick="'+(a.onclick?a.onclick:'')+'">';
+    h += '<span class="b6-action-ico">'+a.ico+'</span>';
+    h += '<div class="b6-action-body"><div class="b6-action-title">'+a.title+'</div><div class="b6-action-sub">'+a.sub+'</div></div>';
+    h += '<span class="b6-action-pri" style="'+a.priStyle+'">'+a.pri+'</span>';
+    h += '</div>';
+  });
+  h += '</div></div></div>';
+
+  h += '</div>'; // bp2
+  document.getElementById('view-bigpicture').innerHTML = h;
+}
+
+
+
+/* ── PRIORITY ENGINE ── */
+function calcPriority(p){
+  var pends=p.pendientes||[]; var rp=p.reporte_personal;
+  var hasHealth=pends.some(function(x){return /salud|cirugía|médic|foniatra|endometriosis/i.test(x);});
+  var manyPends=pends.length>=6;
+  var critMetric=false, lowAvg=false;
+  if(rp&&rp.metricas){
+    var vals=Object.values(rp.metricas).filter(function(v){return typeof v==='number';});
+    if(vals.some(function(v){return v<6;})) critMetric=true;
+    if(vals.length&&vals.reduce(function(a,b){return a+b;},0)/vals.length<6.5) lowAvg=true;
+  }
+  if(hasHealth||manyPends||critMetric||lowAvg) return 'urgent';
+  var hasTags=p.tags&&(p.tags.includes('transición')||p.tags.includes('crisis'));
+  var watchAvg=false;
+  if(rp&&rp.metricas){
+    var vals2=Object.values(rp.metricas).filter(function(v){return typeof v==='number';});
+    if(vals2.length&&vals2.reduce(function(a,b){return a+b;},0)/vals2.length<7.5) watchAvg=true;
+    if(vals2.some(function(v){return v<7;})) watchAvg=true;
+  }
+  if(pends.length>=3||hasTags||watchAvg) return 'watch';
+  if(!rp&&!pends.length) return 'none';
+  return 'stable';
+}
+
+function getTopAlert(p){
+  var pends=p.pendientes||[];
+  if(!pends.length) return null;
+  var h=pends.find(function(x){return /salud|cirugía|médic|foniatra|endometriosis/i.test(x);});
+  if(h) return {text:h, cls:'cal-urgent', ico:'⚕'};
+  return {text:pends[0], cls:'cal-watch', ico:'📋'};
+}
+
+function setPriorityFilter(f, btn){
+  activePriFilter=f;
+  document.querySelectorAll('.ss-pill').forEach(function(b){b.classList.remove('active');});
+  if(btn) btn.classList.add('active');
+  renderPastores();
+}
+
+function updatePriorityCounts(){
+  var c={urgent:0,watch:0,stable:0,none:0};
+  pastores.forEach(function(p){c[calcPriority(p)]++;});
+  var el=function(id){return document.getElementById(id);};
+  if(el('ssc-all'))    el('ssc-all').textContent    = pastores.length;
+  if(el('ssc-urgent')) el('ssc-urgent').textContent = c.urgent;
+  if(el('ssc-watch'))  el('ssc-watch').textContent  = c.watch;
+  if(el('ssc-stable')) el('ssc-stable').textContent = c.stable;
+}
+
 function renderPastores(){
-  const q = (document.getElementById('search')||{value:''}).value.toLowerCase().trim();
-  const filtered = pastores.filter(p=>{
-    const mz = activeZ==='todos' || p.zona===activeZ;
-    const hay = [p.nombre,p.apellido||'',p.iglesia||'',p.ciudad||'',p.esposa||''].join(' ').toLowerCase();
+  var q = (document.getElementById('search')||{value:''}).value.toLowerCase().trim();
+  var zone = activeZ;
+
+  var filtered = pastores.filter(function(p){
+    var mz = zone==='todos' || p.zona===zone;
+    var hay = [p.nombre,p.apellido||'',p.iglesia||'',p.ciudad||'',p.esposa||''].join(' ').toLowerCase();
     return mz && (!q || hay.includes(q));
   });
-  document.getElementById('tb-count').textContent = `${filtered.length} / ${pastores.length}`;
 
-  const zones = activeZ==='todos' ? ZONES : ZONES.filter(z=>z.id===activeZ);
-  const seen = new Set();
-  let html = '<div class="view-wrap" style="max-width:none">';
+  if(activePriFilter && activePriFilter !== 'all'){
+    filtered = filtered.filter(function(p){ return calcPriority(p) === activePriFilter; });
+  }
 
-  const AREA_CFG = [
+  var AREA_CFG = [
     {key:'familia',    color:'#4ECDC4', lbl:'FAM'},
     {key:'intimidad',  color:'#9B72E8', lbl:'INT'},
     {key:'entusiasmo', color:'#E8766A', lbl:'ENT'},
+    {key:'liderazgo',  color:'#4A7AB8', lbl:'LID'},
+    {key:'economia',   color:'#4A9B6F', lbl:'ECO'},
+    {key:'salud',      color:'#C8933A', lbl:'SAL'},
   ];
 
-  zones.forEach((z,zi)=>{
-    const zp = filtered.filter(p=>p.zona===z.id && !seen.has(p.nombre+p.apellido));
-    if(!zp.length) return;
-    zp.forEach(p=>seen.add(p.nombre+p.apellido));
-    const zc = ZCOLORS[z.id]||'#888';
+  // ── Torre de control ────────────────────────────────────────────────
+  var tc = {urgent:0,watch:0,stable:0,none:0};
+  filtered.forEach(function(p){ tc[calcPriority(p)]++; });
+  var tcAvgs = {familia:[],intimidad:[],entusiasmo:[],liderazgo:[],economia:[],salud:[]};
+  var tcPend=0, tcUrg=0;
+  filtered.forEach(function(p){
+    tcPend += (p.pendientes||[]).length;
+    tcUrg  += (p.pendientes||[]).filter(function(x){ return /salud|cirugía/i.test(x); }).length;
+    if(p.reporte_personal&&p.reporte_personal.metricas){
+      var m=p.reporte_personal.metricas;
+      Object.keys(tcAvgs).forEach(function(k){ if(typeof m[k]==='number') tcAvgs[k].push(m[k]); });
+    }
+  });
+  function avg(k){ var a=tcAvgs[k]; return a.length?(a.reduce(function(s,v){return s+v;},0)/a.length).toFixed(1):'—'; }
+  function avgColor(k){ var v=parseFloat(avg(k)); return isNaN(v)?'var(--ink3)':v>=8?'var(--stable)':v>=7?'var(--qro)':'var(--urgent)'; }
 
-    html += `<div class="zone-cluster zc-${z.id}">
-      <div class="zone-hdr">
-        <span class="zone-num">0${zi+1}</span>
-        <span class="zone-ttl">${z.label}</span>
-        <span class="zone-badge">${zp.length}</span>
-        <div class="zone-rule"></div>
-      </div>
-      <div class="cards-grid">`;
+  var html = '';
+  html += '<div class="torre-control">';
+  html += '<div class="tc-top"><span class="tc-title">Resumen de red</span><span style="font-size:10px;color:var(--ink3)">'+filtered.length+' pastores'+(zone!=='todos'?' · '+zone.toUpperCase():'')+'</span></div>';
+  html += '<div class="tc-grid">';
+  html += '<div class="tc-kpi"><div class="tc-kpi-num" style="color:var(--urgent)">'+tc.urgent+'</div><div class="tc-kpi-lbl">Atención hoy</div></div>';
+  html += '<div class="tc-kpi"><div class="tc-kpi-num" style="color:var(--qro)">'+tc.watch+'</div><div class="tc-kpi-lbl">Esta semana</div></div>';
+  html += '<div class="tc-kpi"><div class="tc-kpi-num" style="color:var(--stable)">'+tc.stable+'</div><div class="tc-kpi-lbl">Estables</div></div>';
+  html += '<div class="tc-kpi"><div class="tc-kpi-num" style="color:var(--ink3)">'+tc.none+'</div><div class="tc-kpi-lbl">Sin datos</div></div>';
+  html += '</div><div class="tc-divider"></div><div class="tc-row">';
+  [{k:'familia',l:'FAM'},{k:'intimidad',l:'INT'},{k:'entusiasmo',l:'ENT'},{k:'liderazgo',l:'LID'},{k:'economia',l:'ECO'},{k:'salud',l:'SAL'}].forEach(function(a){
+    html += '<div class="tc-avg"><span class="tc-avg-key">'+a.l+'</span><span class="tc-avg-val" style="color:'+avgColor(a.k)+'">'+avg(a.k)+'</span></div>';
+    html += '<div class="tc-sep"></div>';
+  });
+  html += '<span class="tc-pend">'+tcPend+' pend.'+(tcUrg?' <b style="color:var(--urgent)">('+tcUrg+' urg.)</b>':'')+'</span>';
+  html += '</div></div>';
 
-    zp.forEach((p,i)=>{
-      const idx = pastores.indexOf(p);
-      const full = (p.nombre+' '+(p.apellido||'')).trim();
-      const photo = pastorPhotos[p.nombre];
-      const col = pcol(p);
-      const ch = churchPhotos[p.iglesia]||{grad:'linear-gradient(135deg,#111,#1a1a1a)',city:p.ciudad||''};
+  // ── Sort by priority then by zona ──────────────────────────────────
+  var priOrder={urgent:0,watch:1,stable:2,none:3};
+  filtered.sort(function(a,b){
+    var pa=priOrder[calcPriority(a)]??3, pb=priOrder[calcPriority(b)]??3;
+    if(pa!==pb) return pa-pb;
+    return (a.zona||'').localeCompare(b.zona||'');
+  });
 
-      const hasPend = p.pendientes&&p.pendientes.length;
-      const hasHealth = hasPend&&p.pendientes.some(x=>/salud|cirugía/i.test(x));
-      const hasRP = !!p.reporte_personal;
+  // ── Priority group headers ─────────────────────────────────────────
+  var GROUPS=[
+    {id:'urgent',label:'Atención hoy',    color:'var(--urgent)', bg:'rgba(184,64,64,0.06)'},
+    {id:'watch', label:'Esta semana',     color:'var(--qro)',    bg:'rgba(200,147,58,0.04)'},
+    {id:'stable',label:'Estables',        color:'var(--stable)', bg:'transparent'},
+    {id:'none',  label:'Sin información', color:'var(--ink3)',   bg:'transparent'},
+  ];
+
+  html += '<div class="board-wrap">';
+
+  GROUPS.forEach(function(grp){
+    var gps = filtered.filter(function(p){ return calcPriority(p)===grp.id; });
+    if(!gps.length) return;
+
+    html += '<div class="pgroup" style="margin-bottom:28px">';
+    html += '<div style="display:flex;align-items:center;gap:10px;padding-bottom:10px;margin-bottom:14px;border-bottom:1px solid var(--border)">';
+    html += '<div style="width:8px;height:8px;border-radius:50%;background:'+grp.color+';flex-shrink:0"></div>';
+    html += '<div style="font-family:var(--sans);font-size:13px;font-weight:600;color:'+grp.color+';letter-spacing:-0.01em">'+grp.label+'</div>';
+    html += '<div style="font-family:var(--sans);font-size:10px;font-weight:500;padding:2px 8px;border-radius:99px;background:'+grp.color+'1a;color:'+grp.color+'">'+gps.length+'</div>';
+    html += '<div style="flex:1;height:1px;background:var(--border)"></div>';
+    html += '</div>';
+    html += '<div class="cards-grid">';
+
+    gps.forEach(function(p, i){
+      var idx = pastores.indexOf(p);
+      var full = (p.nombre+' '+(p.apellido||'')).trim();
+      var photo = pastorPhotos[p.nombre];
+      var col = pcol(p);
+      var ch = churchPhotos[p.iglesia]||{grad:'linear-gradient(135deg,#111,#1a1a1a)',city:p.ciudad||''};
+      var hasPend = !!(p.pendientes&&p.pendientes.length);
+      var hasRP = !!p.reporte_personal;
+      var pri = calcPriority(p);
+      var zLabel = p.zona==='otro'?'Intl.':( p.zona||'').toUpperCase();
 
       var avHtml = photo
         ? '<div class="card-av"><img src="'+photo+'" loading="lazy"></div>'
         : '<div class="card-av" style="background:'+col+'">'+(p.avatar||(p.nombre[0]+(p.apellido||'')[0]||'')).toUpperCase()+'</div>';
 
-      // Mini score dots
-      let scoreHtml = '';
-      if(hasRP && p.reporte_personal.metricas){
-        const m = p.reporte_personal.metricas;
-        scoreHtml = '<div class="card-score">';
-        AREA_CFG.forEach(a=>{
-          if(m[a.key]===undefined) return;
-          const v=m[a.key], est=getEstado(v);
-          scoreHtml += `<div class="cs-area">
-            <div class="cs-dot" style="background:${est.color}"></div>
-            <div class="cs-val" style="color:${est.color}">${v}</div>
-            <div class="cs-lbl">${a.lbl}</div>
-          </div>`;
-        });
-        scoreHtml += '</div>';
+      var imgStyle = ch.photo
+        ? 'background-image:url('+ch.photo+');background-size:cover;background-position:center 30%'
+        : 'background:'+ch.grad;
+
+      var priCfg = {
+        urgent:{dot:'#B84040',bg:'rgba(184,64,64,0.2)',  color:'#C87070',label:'Atención hoy'},
+        watch: {dot:'#C8933A',bg:'rgba(200,147,58,0.18)',color:'#C8933A',label:'Esta semana'},
+        stable:{dot:'#4A9B6F',bg:'rgba(74,155,111,0.15)',color:'#4A9B6F',label:'Saludable'},
+        none:  {dot:'#4A4A56',bg:'rgba(58,58,72,0.2)',   color:'#6A6A80',label:'Sin datos'}
+      }[pri] || {dot:'#4A4A56',bg:'rgba(58,58,72,0.2)',color:'#6A6A80',label:'Sin datos'};
+
+      // Health score
+      var healthNum='', healthColor='var(--ink3)';
+      if(hasRP&&p.reporte_personal.metricas){
+        var hvals=Object.values(p.reporte_personal.metricas).filter(function(v){return typeof v==='number';});
+        if(hvals.length){var havg=hvals.reduce(function(a,b){return a+b;},0)/hvals.length;healthNum=havg.toFixed(1);healthColor=getEstado(havg).color;}
       }
 
-      html += `<div class="pcard${editMode?' edit-mode':''}" style="animation-delay:${i*0.03}s"
-          onclick="${editMode?`openEF(${idx})`:`openPanel(${idx})`}">
-        <div class="card-hero">
-          <div class="card-hero-ph" style="${ch.photo ? 'background-image:url(' + ch.photo + ');background-size:cover;background-position:center top' : 'background:' + ch.grad}">
-            <div class="php-city">${(ch.city||'').toUpperCase()}</div>
-            <div class="php-church">${p.iglesia||''}</div>
-          </div>
-          <div class="card-hero-overlay"></div>
-          <div class="card-av-wrap">${avHtml}</div>
-          <div class="card-accent" style="background:${zc}"></div>
-        </div>
-        <div class="card-body">
-          <div class="card-name">${full}</div>
-          <div class="card-church">${p.iglesia||'—'}</div>
-          <div class="card-city">${p.ciudad||''}</div>
-          <div class="card-tags">
-            ${p.esposa ? `<span class="ctag ctag-spouse">♡ ${p.esposa}</span>` : ''}
-            ${p.hijos&&p.hijos.length ? `<span class="ctag ctag-kids">${p.hijos.length} hijos</span>` : ''}
-            ${hasRP ? `<span class="ctag ctag-report">◎ ${p.reporte_personal.fecha||'Reporte'}</span>` : ''}
-            ${hasHealth ? `<span class="ctag ctag-health">⚕ Salud</span>` : hasPend ? `<span class="ctag ctag-pend">${p.pendientes.length} pend.</span>` : ''}
-            ${p.tags&&p.tags.includes('nuevo') ? `<span class="ctag ctag-nuevo">Nuevo</span>` : ''}
-          </div>
-          ${scoreHtml}
-        </div>
-      </div>`;
+      // Metrics
+      var metricsHtml='';
+      if(hasRP&&p.reporte_personal.metricas){
+        var m3=p.reporte_personal.metricas;
+        var tgts={familia:8,intimidad:9,entusiasmo:8,liderazgo:8,economia:8,salud:8};
+        var shown=AREA_CFG.filter(function(a){return m3[a.key]!==undefined;});
+        if(shown.length){
+          metricsHtml='<div class="card-metrics-row">';
+          shown.forEach(function(a){
+            var v=m3[a.key],t=tgts[a.key]||8,vc=getEstado(v).color;
+            var arr=v>=8.5?'↑':v>=7?'→':'↓';
+            var ac=v>=8.5?'var(--stable)':v>=7?'var(--qro)':'var(--urgent)';
+            metricsHtml+='<div class="card-metric"><span class="cm-trend" style="color:'+ac+'">'+arr+'</span><div class="cm-val" style="color:'+vc+'">'+v+'</div><div class="cm-key">'+a.lbl+'</div><div class="cm-target">m'+t+'</div></div>';
+          });
+          metricsHtml+='</div>';
+        }
+      }
+
+      // Alert lines
+      var alertsHtml='';
+      var pends=p.pendientes||[];
+      if(pends.length&&(pri==='urgent'||pri==='watch')){
+        alertsHtml='<div class="card-alerts">';
+        pends.slice(0,2).forEach(function(t){
+          var ih=/salud|cirugía|médic|endometriosis/i.test(t);
+          alertsHtml+='<div class="card-alert-item"><span class="cai-ico">'+(ih?'⚕':'📋')+'</span><span class="cai-text" style="'+(ih?'color:#C07070':'')+'">'+t.substring(0,55)+(t.length>55?'…':'')+'</span></div>';
+        });
+        if(pends.length>2) alertsHtml+='<div class="card-alert-item"><span class="cai-ico">·</span><span class="cai-text" style="font-size:10px;color:var(--ink3)">'+(pends.length-2)+' más</span></div>';
+        alertsHtml+='</div>';
+      }
+
+      // Secondary
+      var sec=[];
+      if(p.hijos&&p.hijos.length) sec.push('👶 '+p.hijos.length+' hijo'+(p.hijos.length>1?'s':''));
+      if(hasRP&&p.reporte_personal.fecha) sec.push('📅 '+p.reporte_personal.fecha);
+      if(p.tags&&p.tags.includes('nuevo')) sec.push('🌱 Nuevo');
+      var secHtml=sec.length?'<div class="card-secondary">'+sec.map(function(s){return '<div class="card-sec-item">'+s+'</div>';}).join('')+'</div>':'';
+
+      // Action buttons
+      var actionHtml='<div class="card-actions" onclick="event.stopPropagation()">';
+      actionHtml+='<button class="ca-btn" onclick="openPanel('+idx+')">Ver detalle</button>';
+      if(pri==='urgent')      actionHtml+='<button class="ca-btn ca-btn-urgent" onclick="openPanel('+idx+')">Contactar ↗</button>';
+      else if(pri==='watch')  actionHtml+='<button class="ca-btn ca-btn-primary" onclick="openPanel('+idx+')">Seguimiento ↗</button>';
+      else                    actionHtml+='<button class="ca-btn ca-btn-primary" onclick="openPanel('+idx+')">Agendar →</button>';
+      actionHtml+='</div>';
+
+      html+='<div class="pcard pri-'+pri+(editMode?' edit-mode':'')+'" style="animation-delay:'+(i*0.03)+'s" onclick="'+(editMode?'openEF('+idx+')':'openPanel('+idx+')')+'">';
+      html+='<div class="card-hero"><div class="card-hero-ph" style="'+imgStyle+'"></div>';
+      html+='<div class="card-hero-overlay"></div>';
+      html+='<div class="card-av-wrap">'+avHtml+'</div>';
+      html+='<div class="card-hero-status" style="background:'+priCfg.bg+';color:'+priCfg.color+'"><span class="chs-dot" style="background:'+priCfg.dot+'"></span>'+priCfg.label+'</div>';
+      html+='<div class="card-hero-label"><span class="card-iglesia-lbl">'+(p.iglesia||'')+'</span><span class="card-zone-lbl">'+zLabel+'</span></div></div>';
+      html+='<div class="card-body">';
+      html+='<div><div class="card-name">'+full+'</div><div class="card-city">'+(p.ciudad||'')+(p.esposa?' · ♡ '+p.esposa:'')+'</div></div>';
+      if(healthNum) html+='<div class="card-health-score"><div class="chs-label">Salud integral</div><div class="chs-value" style="color:'+healthColor+'">'+healthNum+'</div><span class="chs-sub">/10</span></div>';
+      html+=metricsHtml+alertsHtml+secHtml+actionHtml;
+      html+='</div></div>';
     });
-    html += `</div></div>`;
+
+    html+='</div></div>';
   });
 
-  if(!seen.size) html += `<div class="empty-state"><div class="empty-ico">◎</div><div class="empty-txt">Sin resultados</div><div class="empty-sub">Intenta otro término</div></div>`;
-  html += '</div>';
+  if(!filtered.length) html+='<div class="empty-state"><div class="empty-ico">◎</div><div class="empty-txt">Sin resultados</div><div class="empty-sub">Intenta otro término</div></div>';
+  html+='</div>';
   document.getElementById('view-pastores').innerHTML = html;
+  updatePriorityCounts();
 }
 
 /* ═══════════════════════════════════════════════════
