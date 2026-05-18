@@ -1487,9 +1487,6 @@ img { display: block; }
     <button class="nav-btn" data-view="asistencia" onclick="goTo('asistencia',this)">
       <span class="nav-ico">📊</span> Asistencia Q1
     </button>
-    <button class="nav-btn" data-view="reporte-q1" onclick="goTo('reporte-q1',this)">
-      <span class="nav-ico">📑</span> Reporte Q1
-    </button>
     <div style="margin-top:auto;padding:16px 14px;border-top:1px solid var(--border)">
       <div style="font-family: var(--sans);font-size:8px;color:var(--ink3);line-height:1.6;letter-spacing:0.04em">
         Información pastoral<br>confidencial — CEM
@@ -1535,7 +1532,6 @@ img { display: block; }
     <div class="view" id="view-bigpicture"></div>
     <div class="view" id="view-finanzas"></div>
     <div class="view" id="view-asistencia"></div>
-    <div class="view" id="view-reporte-q1" style="padding:0;overflow:hidden;"></div>
   </div>
 </div>
 
@@ -1547,7 +1543,6 @@ img { display: block; }
   <button class="bn-item" data-view="seguimiento" onclick="goTo('seguimiento',this)"><span class="bn-ico">✓</span>Tareas</button>
   <button class="bn-item" data-view="finanzas" onclick="goTo('finanzas',this)"><span class="bn-ico">$</span>Finanzas</button>
   <button class="bn-item" data-view="asistencia" onclick="goTo('asistencia',this)"><span class="bn-ico">📊</span>Q1</button>
-  <button class="bn-item" data-view="reporte-q1" onclick="goTo('reporte-q1',this)"><span class="bn-ico">📑</span>Reporte</button>
 </div>
 
 <!-- PANEL DETALLE -->
@@ -1567,11 +1562,11 @@ img { display: block; }
 
 <script>
 const pastores = [
-  {nombre:"Chava",apellido:"",iglesia:"Horizonte Querétaro",ciudad:"Querétaro",zona:"qro",esposa:"",cumple:"",avatar:"CH",hijos:[],notas:"Residente pastoral en Horizonte Querétaro. Tendencia al hiperfocus — cuando se concentra en algo, todo lo demás desaparece. Ha decidido enfocarse en familia y hogar.",reunion:"Kike compartió Salmo 16. Temporada de estar presente con hijos adolescentes.",pendientes:["Oportunidad pastoreo en Xalapa: amigos buscan acompañamiento mensual.","Hablar con Chava para verano grupo jóvenes."],tags:["residencia pastoral"]},
-  {nombre:"Gerry",apellido:"Berrones",iglesia:"Identidad San Luis",ciudad:"San Luis Potosí",zona:"norte",esposa:"Saraí",cumple:"26 oct 1985",avatar:"GB",hijos:[{nombre:"José Pablo",edad:"8",datos:"Nació 21 oct 2016. Robótica y legos. Primaria."},{nombre:"Juan Marcos",edad:"6",datos:"Nació 4 ene 2019. Música y rompecabezas. Preescolar."}],notas:"Palabra 2026: \\\'miembros\\\'. Transición de liderazgo con Arturo González. Pasatiempo: Hacer ejercicio, leer y ver series. Cumple esposa: 22 ago 1986. Aniversario bodas: 27 abr 2013. Amazon: zagueberrones@gmail.com. Zapatos: 30MX | Camisa: XL | Pantalón: 34 x 34 | Email regalo: zagueberrones@gmail.com | Dirección: // Circuito Villaverde 555, Fraccionamiento Villaverde, C.P. 78398, SLP, SLP",reunion:"Q1 2026. Transición liderazgo, salud Sally, finanzas iglesia.",pendientes:["Comunicar cambios con Arturo antes del viaje.","Orar por salud Sally: insulina, quiste, inflamación.","Transición finanzas a 2-3 personas.","Regalos pastorales con David."],tags:["transición","Sally"]},
-  {nombre:"Herminio",apellido:"Navidad",iglesia:"Horizonte Mérida",ciudad:"Mérida",zona:"sur",esposa:"Sarai",cumple:"15 may",avatar:"HN",hijos:[{nombre:"Melissa",edad:"23",datos:"Cumple 15 mar. Lic. Comercio Internacional, The Palace Company."},{nombre:"Alan",edad:"17",datos:"Cumple 18 mar. 2° prepa, baterista y aficionado al fútbol."},{nombre:"Emilio",edad:"14",datos:"2° secundaria, toca piano y guitarra."}],notas:"Pasatiempo: Escuchar música, tocar piano, gym. Cumple esposa: 13 nov 2025. Aniversario bodas: 22 dic 2025. Amazon: hnavidadlopez@gmail.com. Zapatos: 28.5 cm | Camisa: M | Pantalón: 32 x 32",reunion:"Dic 2025. Luis ya predica en su ausencia. 20-21 servidores. Hijo mayor entra EBC.",pendientes:["Objetivos 2026 más específicos.","Video institucional: de 6 min a 90 seg.","Fechas para predicadores visitantes."],iglesia_reporte:{nombre:"Horizonte Mérida",stats:[{label:"Bautizados 2025",valor:"7"},{label:"Conf. matrimonios",valor:"13 parejas"},{label:"Retiro varones",valor:"15 asist."},{label:"Grupos semanales",valor:"25"},{label:"Consejería",valor:"8 concluidas"},{label:"Nuevos serv.",valor:"+15"}],logros:"Reinauguración. Retiro varones: 4 comprometidos. 7 bautizos. Conf. hombres y matrimonios. 'Conociéndonos' con 6 grupos.",plan2026:"Conf. matrimonios. Varones 1x/mes. Avanzar La Ruta. Techo de lámina al terreno."},tags:["mérida"],discipulos:["Luis May","Jorge Martínez","Flavio Romero","Iann Angulo","Pablo Peraza"]},
+  {nombre:"Chava",apellido:"",iglesia:"Horizonte Querétaro",ciudad:"Querétaro",zona:"qro",esposa:"Pris",cumple:"",avatar:"CH",hijos:[],notas:"Residente pastoral en Horizonte Querétaro. Tendencia al hiperfocus — cuando se concentra en algo, todo lo demás desaparece. Ha decidido enfocarse en familia y hogar.",reunion:"Mayo 2026. Frustración circunstancial. Liderazgo 6, entusiasmo 7. Adopción en oración activa.",reporte_personal:{fecha:"Mayo 2026",metricas:{familia:8,intimidad:8,entusiasmo:7,liderazgo:6,economia:10,salud:6},oracion:["HABITA — frustración circunstancial que revela grieta en lo personal y llamado.","Claridad y coraje para hacer la voluntad de Dios con gozo.","Pris tiene hoy su primera junta con las chicas de Dife+.","La adopción — lo tienen presente desde antes de casarse."]},pendientes:["Presupuesto actualizado mayo 2026.","Certificación ACBC.","Job description full staff CEM (necesita $30k: Horizonte 15k + CEM 15k).","Oportunidad pastoreo en Xalapa: amigos buscan acompañamiento mensual."],tags:["residencia pastoral","adopción"]},
+  {nombre:"Gerry",apellido:"Berrones",iglesia:"Identidad San Luis",ciudad:"San Luis Potosí",zona:"norte",esposa:"Saraí",cumple:"26 oct 1985",avatar:"GB",hijos:[{nombre:"José Pablo",edad:"8",datos:"Nació 21 oct 2016. Robótica y legos. Primaria."},{nombre:"Juan Marcos",edad:"6",datos:"Nació 4 ene 2019. Música y rompecabezas. Preescolar."}],notas:"Palabra 2026: 'miembros'. Transición de liderazgo con Arturo González (familia González). Pasatiempo: Hacer ejercicio, leer y ver series. Cumple esposa: 22 ago 1986. Aniversario bodas: 27 abr 2013. Amazon: zagueberrones@gmail.com. Zapatos: 30MX | Camisa: XL | Pantalón: 34 x 34 | Email regalo: zagueberrones@gmail.com | Dirección: // Circuito Villaverde 555, Fraccionamiento Villaverde, C.P. 78398, SLP, SLP",reunion:"Q1 2026. Transición liderazgo, salud Sally, finanzas iglesia.",notas_data:{secciones:[{label:"Salud Sally",items:[{texto:"Resistencia a insulina — en tratamiento.",sub:"Oración activa por su salud."},{texto:"Quiste programado para cirugía.",sub:"Referencia original: feb 2026."},{texto:"Inflamación sistémica persistente."}]},{label:"Transición liderazgo",items:[{texto:"Comunicar cambios con Arturo González (familia González) antes de viaje a EE.UU."},{texto:"Regalos pastorales: coordinar 3-5 ideas con David para entrega."}]},{label:"Finanzas iglesia",items:[{texto:"Transición de finanzas a 2-3 personas identificadas."},{texto:"Salida de familia Valdés — impacto significativo en diezmos."}]}]},pendientes:["Comunicar cambios con Arturo González antes del viaje.","Orar por salud de Sary: insulina, quiste, inflamación sistémica.","Transición finanzas iglesia a 2-3 personas.","Regalos pastorales con David.","Objetivos 2026 claros y medibles conectados al calendario."],tags:["transición","Sally"]},
+  {nombre:"Herminio",apellido:"Navidad",iglesia:"Horizonte Mérida",ciudad:"Mérida",zona:"sur",esposa:"Sarai",cumple:"15 may",avatar:"HN",hijos:[{nombre:"Melissa",edad:"23",datos:"Cumple 15 mar. Lic. Comercio Internacional, The Palace Company."},{nombre:"Alan",edad:"17",datos:"Cumple 18 mar. 2° prepa, baterista y aficionado al fútbol."},{nombre:"Emilio",edad:"14",datos:"2° secundaria, toca piano y guitarra."}],notas:"Pasatiempo: Escuchar música, tocar piano, gym. Cumple esposa: 13 nov 2025. Aniversario bodas: 22 dic 2025. Amazon: hnavidadlopez@gmail.com. Zapatos: 28.5 cm | Camisa: M | Pantalón: 32 x 32",reunion:"Dic 2025. Luis ya predica en su ausencia. 20-21 servidores. Hijo mayor entra EBC.",reporte_personal:{fecha:"Mayo 2026",metricas:{familia:8.3,intimidad:8.5,entusiasmo:8.5,liderazgo:8,economia:9,salud:8.8},oracion:["Perspectiva"]},reunion_data:{fecha:"Mayo 2026",secciones:[{label:"Pendiente personal",tipo:"lista",items:[{texto:"Comentarios que no deben hacerse acerca de la relación con sus hermanos.",sub:"Límites verbales a trabajar."}]},{label:"Temas pastorales",tipo:"lista",items:[{texto:"Flavio y Naty: Gadiel les dio tranquilidad — son confiables.",sub:"Consejería Polo con Luis inicia el 16 de mayo."},{texto:"Familia Maya regresó — situación legal activa.",sub:"Van en el 2° amparo; el primero fue negado."},{texto:"Charla pendiente con Edgar (Tun)."}]}]},pendientes:["Trabajar comentarios inapropiados sobre relación con hermanos.","Seguimiento consejería: Polo con Luis (inicia 16 mayo).","Dar seguimiento a familia Maya — 2° amparo en curso.","Charla con Edgar Tun.","Objetivos 2026 más específicos y medibles.","Video institucional: de 6 min a 90 seg.","Fechas para predicadores visitantes."],iglesia_reporte:{nombre:"Horizonte Mérida",stats:[{label:"Bautizados 2025",valor:"7"},{label:"Conf. matrimonios",valor:"13 parejas"},{label:"Retiro varones",valor:"15 asist."},{label:"Grupos semanales",valor:"25"},{label:"Consejería",valor:"8 concluidas"},{label:"Nuevos serv.",valor:"+15"}],logros:"Reinauguración. Retiro varones: 4 comprometidos. 7 bautizos. Conf. hombres y matrimonios. 'Conociéndonos' con 6 grupos.",plan2026:"Conf. matrimonios. Varones 1x/mes. Avanzar La Ruta. Techo de lámina al terreno."},tags:["mérida"],discipulos:["Luis May","Jorge Martínez","Flavio Romero","Iann Angulo","Pablo Peraza"]},
   {nombre:"Manuel",apellido:"Jaquez",iglesia:"Baluarte",ciudad:"Chihuahua",zona:"norte",esposa:"Karina",cumple:"1 jul 1989",avatar:"MJ",hijos:[{nombre:"Máximo",edad:"9",datos:"Nació 2 feb 2016. Natación, legos, béisbol. 3° primaria."},{nombre:"Alanna",edad:"5",datos:"Nació 9 sep 2019. 3° kinder. Le gusta bailar."},{nombre:"Dante",edad:"2",datos:"Nació 28 feb 2023. Bloques, guardería."}],notas:"Mejor temporada matrimonial. ~$120K deuda en pago. ~$250K ahorros para terreno. Mujeres multigeneracionales (~50-60). ASIMILACIÓN como palabra clave. Pasatiempo: Ver series o películas; Leer.. Cumple esposa: 1 jul 1990. Aniversario bodas: 26 oct 2013. Amazon: manuelalbertojaquez@gmail.com. Zapatos: 29 cm mexicano | Camisa: L (large) | Pantalón: 32 x 32 / 32x30",reunion:"4F: Fe, Familia, Fitness, Finanzas. Temporada matrimonial excelente.",pendientes:["Corrida financiera Kari → junta diáconos.","Proponer paquete pastoral a diáconos.","Acceso CTC para consejería.","Reporte anual con objetivos 2026."],iglesia_reporte:{nombre:"Baluarte",stats:[{label:"Asistencia 2024",valor:"~150"},{label:"Asistencia 2025",valor:"~190"},{label:"2 servicios desde",valor:"mayo 2025"},{label:"Acción de gracias",valor:"120 pers."}],logros:"2 servicios dominicales desde mayo 2025. Incorporación CEM.",plan2026:"Junta diáconos finanzas. Saldar deuda $120K. Terreno $250K ahorrados."},tags:["ASIMILACIÓN","terreno","4F"],email:"manuelalbertojaquez@gmail.com",discipulos:["Jorge Molina","Adrián Miranda","Luis Borbón","Diego Jaquez","Omar Nevarez","Arnold Sáenz (Sr.)"]},
-  {nombre:"Oscar",apellido:"García",iglesia:"Vida Nueva en Cristo",ciudad:"San Pablo Oztotepec",zona:"centro",esposa:"Marlen Gomez Galicia",cumple:"28 ago 1976",avatar:"OG",hijos:[{nombre:"Adriel",edad:"17",datos:"Nació 17 abr 2007. Fútbol y squash. Bachillerato, curso para UNAM."},{nombre:"Elías",edad:"13",datos:"Nació 25 abr 2011. Nada y pinta. Secundaria. (Gemelo)"},{nombre:"Oscar Daniel",edad:"13",datos:"Nació 25 abr 2011. Canta y nada. Secundaria. (Gemelo)"}],notas:"Pasatiempo: Caminar y correr. Cumple esposa: 19 nov 1982. Aniversario bodas: 25 jun 2006. Amazon: gavo2876@hotmail.com. Zapatos: 6 1/2 | Camisa: L (42-44) | Pantalón: 34*30",reunion:"",pendientes:[],tags:[],discipulos:["Javier Molina","Adán García","Fredy Palman","Noe Miranda","José Medina"]},
+  {nombre:"Oscar",apellido:"García",iglesia:"Vida Nueva en Cristo",ciudad:"San Pablo Oztotepec",zona:"centro",esposa:"Marlen Gomez Galicia",cumple:"28 ago 1976",avatar:"OG",hijos:[{nombre:"Adriel",edad:"17",datos:"Nació 17 abr 2007. Fútbol y squash. Bachillerato, curso para UNAM."},{nombre:"Elías",edad:"13",datos:"Nació 25 abr 2011. Nada y pinta. Secundaria. (Gemelo)"},{nombre:"Oscar Daniel",edad:"13",datos:"Nació 25 abr 2011. Canta y nada. Secundaria. (Gemelo)"}],notas:"Pasatiempo: Caminar y correr. Cumple esposa: 19 nov 1982. Aniversario bodas: 25 jun 2006. Amazon: gavo2876@hotmail.com. Zapatos: 6 1/2 | Camisa: L (42-44) | Pantalón: 34*30",reunion:"Abr 2026. Promedio 9.4 — el más alto de la red. Crecimiento activo en 2 puntos de misión.",reporte_personal:{fecha:"Abril 2026",metricas:{familia:9,intimidad:9,entusiasmo:9.5,liderazgo:8,economia:9,salud:10},oracion:["Adán García — líder en formación.","Javier ya bien de salud — acción de gracias.","No perder el amor sincero y fraternal por los líderes y la iglesia (3 Juan).","Establecer la visión correctamente — retener a la gente que llega. Oscar pregunta: ¿qué no estamos haciendo bien?","Obra en San Juan (15 personas; Claudia, Chris y Sebastián en alabanza). Aparte San Pedro/Milpa Alta con Javier los jueves.","Exámenes de los gemelos para media superior y Adriel para superior."]},pendientes:["Atender el tema de alabanza — siervos que anden con el Señor antes de servir o cantar. Que se cante Biblia.","Coordinar visita de Chava el Día del Padre.","Buscar mujer del compañerismo que pueda dar el tema a las mujeres de la iglesia."],tags:["misión","crecimiento"],discipulos:["Javier Molina","Adán García","Fredy Palman","Noe Miranda","José Medina"]},
   {nombre:"Marcial",apellido:"Magadán",iglesia:"Iglesia Antioquía",ciudad:"Mérida",zona:"sur",esposa:"Soemy Sosa",cumple:"9 jun 1983",avatar:"MM",hijos:[{nombre:"Mariana",edad:"12",datos:"Nació 14 abr 2012."},{nombre:"Erick",edad:"6",datos:"Nació 15 abr 2018."}],notas:"Pasatiempo: Correr. Cumple esposa: 9 nov 1984. Aniversario bodas: 28 jun 2008. Amazon: marcialmagadan.lopez@gmail.com. Zapatos: 8.5 nacional | Camisa: Talla L | Pantalón: 32 | Email regalo: marcialmagadan.lopez@gmail.com | Dirección: calle 57b No.818 por 100 y 104 Fracc. Las Américas Mérida Yucatán",reunion:"",pendientes:[],tags:[],discipulos:["Jahdiel","Pablo","Beto","Jorge","Edgar","Isaí","Manuel","Magdiel","Edi"]},
   {nombre:"Gadiel",apellido:"Arriaga",iglesia:"Horizonte Querétaro",ciudad:"Querétaro",zona:"qro",esposa:"Abby",cumple:"16 ago 1987",avatar:"GA",hijos:[{nombre:"Layla",edad:"2",datos:""},{nombre:"Jonathan",edad:"0",datos:"Recién nacido"}],iglesia_reporte:{nombre:"Horizonte Querétaro",stats:[{label:"Asist. semanal",valor:"~1,400"},{label:"Sábado",valor:"249"},{label:"Dom 10:30am",valor:"635"},{label:"Dom 1:00pm",valor:"484"},{label:"Flechas (niños)",valor:"4,200+"},{label:"Jóvenes Q1",valor:"774"},{label:"Consejería",valor:"95 solicitudes"},{label:"Alcance",valor:"9 estados / 5 países"},{label:"La Ruta bienvenida",valor:"277"},{label:"Conociéndonos",valor:"150"},{label:"Conversión",valor:"60%"},{label:"Líderes graduados",valor:"68"},{label:"Matrimonios prog.",valor:"25"},{label:"Esc. para Padres",valor:"24 familias"},{label:"Nuevos servidores",valor:"14"}],logros:"~1,400/semana en 3 servicios. Flechas 4,200+ (pico 430/fin de semana). Jóvenes 774 asistencias Q1, pico 150. Consejería en 9 estados y 5 países — Gadiel ya tiene colaborador. 25 matrimonios 'De Una Misma Carne'. 24 familias graduaron Escuela para Padres. La Ruta: 277 en bienvenida, 150 en conociéndonos (60% conversión), 68 líderes graduados de Restaurados. Retiro Habitar ~200 personas próximamente.",plan2026:"3er servicio dominical ligado a término de construcción. Propuesta mejoras Luminares. Capacitación consejeros. Jorge avanzando a etapa 3 de certificación. Ductos y construcción casi listos."},reporte_personal:{fecha:"Abril 2026",metricas:{familia:8,intimidad:9,entusiasmo:9,liderazgo:8,economia:9,salud:8},oracion:["Retiro ABIDE","Unidad de equipos","Matrimonios en Abide","Proceso de adopción de Jorge y Onne","Recuperar 3er servicio dominical","Diácono para Rodas","Embarazo de Carol","Construcción y ductos"]},notas_data:{
   secciones:[
@@ -1601,18 +1596,18 @@ const pastores = [
     ]}
   ]
 },pendientes:["Supervisar transición tras salida de Ale Maya de Luminares.","Certificación adicciones Omar Estrada ($18,000 pesos) — aprobada.","Apoyo a Joan: $4,100 pesos mensuales, medio tiempo — aprobado.","Aumento salarial Rodas hasta $20,000 pesos — aprobado.","Licencias ChatGPT para Flechas, Ruta, Consejería y Eventos — aprobadas.","Opciones educativas Layla: Querétaro Christian School (beca posible) vs. Buckingham."],tags:["consejería","Luminares","salud"]},
-  {nombre:"Phil",apellido:"Jones",iglesia:"Horizonte El Marqués",ciudad:"El Marqués, Qro",zona:"qro",esposa:"Sandy Jones",cumple:"21 feb 1984",avatar:"PJ",hijos:[{nombre:"Joshua",edad:"",datos:"Nació 29 dic 2012. Videojuegos. 6° primaria."},{nombre:"Romi",edad:"",datos:"Nació 3 jul 2002. Le gusta dibujar. Trabaja en RenovArte Café."}],notas:"Residencia: Dani y Alix Soto. Líderes: Álvaro Fuente, José Luis Castillo, Alex Melchor. Pasatiempo: Tomar café y escuchar jazz. Cumple esposa: 15 abr 1980. Aniversario bodas: 7 feb 2010. Amazon: pwfjones@gmail.com. Zapatos: 30mx, 12US | Camisa: Mediana, solo G si es muy slim fit, pero no me gustan wangos jaja | Pantalón: 33 | Email regalo: pwfjones@gmail.com | Dirección: Paseo de las Pitahayas 40, Thandi 7C, Zibata, El Marques, QRO, 76269",reunion:"",iglesia_reporte:{nombre:"Horizonte El Marqués",stats:[{label:"Adultos dom.",valor:"105"},{label:"Servidores",valor:"60"},{label:"Personas nuevas",valor:"91"},{label:"Flechas",valor:"44"},{label:"Grupos de vida",valor:"42"},{label:"Bautizos",valor:"12"}],logros:"La Ruta 1ra generación completa. 12 bautizos. 2 Worship Nites. Enfoque Global 45 personas.",plan2026:"LED enero. SEBAM. Diáconos junio. Acondicionar sótano. 6 eventos alcance. Visión 2027: 300 adultos."},pendientes:["Beca SEBAM Dani Soto.","Capacitación multimedia.","Continuar apoyo consejería."],tags:["liderazgo"],discipulos:["Álvaro Fuente","Alberto Vicenteño","José Luis Castillo","Daniel Ávila","Daniel Viramontes","Jair Vicenteño","Alex Melchor","Daniel García"]},
-  {nombre:"Roger",apellido:"Arcila",iglesia:"Horizonte Querétaro",ciudad:"Querétaro",zona:"qro",esposa:"Fran",cumple:"",avatar:"RA",hijos:[{nombre:"Natán",edad:"",datos:""}],notas:"Pastor de comunidad HQ. Descansa viernes. Finanzas bien.",reunion:"Q1 2026. Fran: identidad como mamá. Roger: patrón rendir para llenar expectativas. Salmo 46.",pendientes:["Acompañar Fran en identidad.","Roger: seguimiento patrón de queja."],tags:["matrimonial"]},
+  {nombre:"Phil",apellido:"Jones",iglesia:"Horizonte El Marqués",ciudad:"El Marqués, Qro",zona:"qro",esposa:"Sandy Jones",cumple:"21 feb 1984",avatar:"PJ",hijos:[{nombre:"Joshua",edad:"",datos:"Nació 29 dic 2012. Videojuegos. 6° primaria."},{nombre:"Romi",edad:"",datos:"Nació 3 jul 2002. Le gusta dibujar. Trabaja en RenovArte Café."}],notas:"Residencia: Dani y Alix Soto. Líderes: Álvaro Fuente, José Luis Castillo, Alex Melchor. Pasatiempo: Tomar café y escuchar jazz. Cumple esposa: 15 abr 1980. Aniversario bodas: 7 feb 2010. Amazon: pwfjones@gmail.com. Zapatos: 30mx, 12US | Camisa: Mediana, solo G si es muy slim fit, pero no me gustan wangos jaja | Pantalón: 33 | Email regalo: pwfjones@gmail.com | Dirección: Paseo de las Pitahayas 40, Thandi 7C, Zibata, El Marques, QRO, 76269",reunion:"Abr 2026. Salud 6 por sueño afectado. Familia 6/7 — pendiente revisar si fue 6 o 7.",reporte_personal:{fecha:"Abril 2026",metricas:{familia:7,intimidad:7,entusiasmo:8,liderazgo:8,economia:8,salud:6},oracion:["Los León para líderes de niños.","Consistencia en ritmos saludables del alma, salud y obra.","Tema de mamá con su \"splenda\"."]},iglesia_reporte:{nombre:"Horizonte El Marqués",stats:[{label:"Adultos dom.",valor:"105"},{label:"Servidores",valor:"60"},{label:"Personas nuevas",valor:"91"},{label:"Flechas",valor:"44"},{label:"Grupos de vida",valor:"42"},{label:"Bautizos",valor:"12"}],logros:"La Ruta 1ra generación completa. 12 bautizos. 2 Worship Nites. Enfoque Global 45 personas.",plan2026:"LED enero. SEBAM. Diáconos junio. Acondicionar sótano. 6 eventos alcance. Visión 2027: 300 adultos."},pendientes:["Job description de Dany Soto.","Presupuesto para salones de niños.","Presupuesto personal — actualizar.","Beca SEBAM Dani Soto.","Capacitación multimedia.","Continuar apoyo consejería."],tags:["liderazgo"],discipulos:["Álvaro Fuente","Alberto Vicenteño","José Luis Castillo","Daniel Ávila","Daniel Viramontes","Jair Vicenteño","Alex Melchor","Daniel García"]},
+  {nombre:"Roger",apellido:"Arcila",iglesia:"Horizonte Querétaro",ciudad:"Querétaro",zona:"qro",esposa:"Fran",cumple:"",avatar:"RA",hijos:[{nombre:"Natán",edad:"",datos:""}],notas:"Pastor de comunidad HQ. Descansa viernes. Finanzas bien.",reunion:"Abr 2026. Entusiasmo 10. Carga sobre líderes y diáconos como tema clave.",reporte_personal:{fecha:"Abril 2026",metricas:{familia:8.5,intimidad:8.8,entusiasmo:10,liderazgo:8.8,economia:9,salud:8.5},oracion:["Unidad en el equipo.","Sabiduría y gracia para liderar el staff.","Vacaciones — 27 mayo es cumple de Fran.","Escuela para el gordo vía Alex Maravilla (finanzas)."]},pendientes:["Ayudar a resolver el peso que están cargando líderes y diáconos / Adulam.","Acompañar Fran en identidad (3 cosas: actitudes, tiempo y servicio para amarla).","Salud: retomar prácticas y cuidados descuidados."],tags:["matrimonial"]},
   {nombre:"Hugo",apellido:"Ventura",iglesia:"Horizonte Tequisquiapan",ciudad:"Tequisquiapan",zona:"centro",esposa:"",cumple:"",avatar:"HV",hijos:[],iglesia_reporte:{nombre:"Horizonte Tequisquiapan",stats:[{label:"Asistencia",valor:"55 adultos"},{label:"Servidores",valor:"17"},{label:"Nuevos miembros",valor:"10"},{label:"Niños",valor:"13"},{label:"Líderes formac.",valor:"6"},{label:"La Ruta",valor:"17"}],logros:"Primera generación La Ruta. Mujeres creciendo en piedad.",plan2026:"Meta 100 adultos. 2 diáconos SEBAM. Multimedia $25K, Alabanza $50K, Remodelación $30K."},notas:"",reunion:"",pendientes:[],tags:[],email:"venturahugo10@gmail.com"},
-  {nombre:"Juan Pablo",apellido:"Segismond",iglesia:"Horizonte Panamá",ciudad:"Panamá",zona:"otro",esposa:"Clarissa Segismond",cumple:"4 ago 1986",avatar:"JS",hijos:[{nombre:"Brielle Marie",edad:"9",datos:"Nació 5 dic 2015. Gimnasia rítmica, ballet, lectura. 4° primaria."},{nombre:"Libby",edad:"6",datos:"Nació 11 ago 2018. Muñecas, peinados. 1° primaria."}],notas:"1er aniversario enero 2026. Planning Center en proceso. Pasatiempo: juegos de mesa y padel.. Cumple esposa: 19 dic 1983. Aniversario bodas: 2 jun 2012. Amazon: clsegismond@gmail.com. Zapatos: 13 USA | Camisa: XL | Pantalón: 32 | Email regalo: clsegismond@gmail.com",reunion:"",pendientes:["Consolidar entrevista de membresía y definirla.","Programa Thelab: ejercicios y nutrición para dolor de espalda.","Ministerio niños: seguir con Lifeway (Proyecto Evangelio).","Evaluar e implementar Habitar con grupos pequeños.","Grupos por género para fortalecer liderazgo.","Preparar primera actividad de mujeres con Clari.","Orar por posible campus Mission (250 personas, menor renta).","Orar por esfuerzo en inglés para próxima generación bilingüe."],tags:["panamá"],discipulos:["Luis Ortiz","Ramiro Cruz","Tony Jones","Yaismel Perez","Aidor Batista","Ottoniel Morales","Alejandro Ramirez","Nacian Torrero","Noah Brown"],reporte_personal:{fecha:"Abr 2026",metricas:{familia:8,intimidad:7.5,entusiasmo:8.5,liderazgo:6,economia:8,salud:5},oracion:["BiLab Vitality para Juanpi","Sesión de mañana con Clari y mujeres","Cómo implementar Abide y atender a los que están y a los que vienen"]},reunion_data:{fecha:"24 abr 2026",badges:["Reunión pastoral","Con Kike Torres"],metricas:["Fam 8","Int 7","Ent 8","Lid 5","Eco 8","Sal 5"],secciones:[{tipo:"acuerdos",items:[{texto:"Programa Thelab",sub:"Ejercicios, nutrición y fortalecimiento — 3 meses con garantía"},{texto:"Finalizar 2° grupo ruta de membresía",sub:"Fortalecer compromiso y participación"},{texto:"Habitar: grupos pequeños por género",sub:"Luis, Clark y Ana como líderes base"},{texto:"Pedir formato de membresía a Yesa",sub:"Entrevistas estructuradas para nuevos miembros"},{texto:"Orar por campus Mission",sub:"250 personas, menor renta, ciudad 88% latina"},{texto:"Primera actividad de mujeres",sub:"Ser testigo del trabajo de Dios, compartir testimonio"}]},{tipo:"reflexion",label:"Reflexión pastoral",items:[{texto:"Santidad y vida privada con Dios",sub:"La batalla es por distraer del escuchar, no solo por el pecado"},{texto:"Liderazgo bajo presión",sub:"Diferencias eclesiológicas con pastor titular en McAllen"}]}]}},
-  {nombre:"Adrián",apellido:"Capitaine",iglesia:"Horizonte Villahermosa",ciudad:"Villahermosa",zona:"sur",esposa:"Llanura Gonzalez",cumple:"15 abr 1989",avatar:"AC",hijos:[{nombre:"Keira",edad:"7",datos:"Primaria. Le encantan los videojuegos."},{nombre:"Adrián Jr.",edad:"6",datos:"Primaria. Dice que es pro en videojuegos."},{nombre:"Ronaldo",edad:"4",datos:"Kinder. Ama los dinosaurios."}],notas:"Pasatiempo: Ir al cine, videojuegos, carpintería.. Cumple esposa: 5 nov 1994. Aniversario bodas: 5 may 2013. Amazon: kpo31_mppl@hotmail.com. Zapatos: 9.5mx | Camisa: L | Pantalón: 32 | Dirección: Prolongación de Av Méndez 111, Casa 3. 86153, Villahermosa, Tabasco.",reunion:"",iglesia_reporte:{nombre:"Horizonte Villahermosa",stats:[{label:"Adultos dom.",valor:"200"},{label:"Niños",valor:"38"},{label:"Nuevos",valor:"+40"},{label:"Bautizados",valor:"16"},{label:"Servidores",valor:"+100"},{label:"Ofrendas/mes",valor:"$133-185K"}],logros:"Conf. matrimonios 45 parejas, hombres 110, mujeres 130. 16 bautizados. 72 en grupos.",plan2026:"Membresía y gobierno. Fast Track líderes. Diáconos 2S. Alinearse con alcance."},pendientes:["Comer con líderes 1x/mes (Germán)."],tags:["líderes"],discipulos:["Alberto","Germán","Román","Juan","Luis","José","Manuel","Abraham","Rafa"]},
-  {nombre:"Toño",apellido:"García",iglesia:"Calvary Chapel Ecatepec",ciudad:"Ecatepec",zona:"centro",esposa:"Yabeth Larrea",cumple:"3 nov 1979",avatar:"TG",hijos:[{nombre:"Grace",edad:"6",datos:"Nació 29 ene 2019. Le encanta bailar y las muñecas."},{nombre:"Ezra",edad:"4",datos:"Nació 18 oct 2020. Le encanta la música."},{nombre:"Elyseo",edad:"1",datos:"Nació 27 mar 2024."}],notas:"Énfasis 2030: levantar hombres. Plataformas: Simón, Martín Durazo, Héctor Glez, Carlos Fierro. Pasatiempo: Conocer lugares. Cumple esposa: 21 mar 1988. Aniversario bodas: 12 abr 2017. Amazon: tonygarcia0311@gmail.com. Zapatos: Mex 6 | Camisa: Large | Pantalón: 34 | Email regalo: tonygarcia0311@gmail.com | Dirección: Fco. I Madero 11 Col. Ejidal Emiliano Zapata Ecatepec Edo Mex C.P. 55020",reunion:"Cuatrimestral abr 2026. Hechos 11 — oposición normal cuando Dios se mueve.",reporte_personal:{fecha:"Abril 2026",metricas:{familia:8,intimidad:8.5,entusiasmo:8,liderazgo:7},oracion:["Transición laboral","Unidad matrimonial","Líderes que se quedan","Finanzas iglesia"]},reporte_personal_yabeth:{metricas:{familia:7,intimidad:8,entusiasmo:9,liderazgo:8},oracion:["Matrimonio y familia","Carga escolar","Fe más grande","Tiempo hijos"]},pendientes:["Toño: reunión Gabriel/Carlos/Sol el sábado.","Toño: planificar transición laboral a fin de año.","Toño: consejo de finanzas (salen Eli y esposa Óscar).","Yabeth: enviar oración general a Kike.","Membresía → agosto.","Ruta financiera → julio.","Diáconos → noviembre."],tags:["transición","hombres"],discipulos:["Irving González","Cristian Sánchez","Fernando Rojo","Hugo Irala","Carlos López","Sedrick"]},
+  {nombre:"Juan Pablo",apellido:"Segismond",iglesia:"Horizonte Panamá",ciudad:"Panamá",zona:"otro",esposa:"Clarissa Segismond",cumple:"4 ago 1986",avatar:"JS",hijos:[{nombre:"Brielle Marie",edad:"9",datos:"Nació 5 dic 2015. Gimnasia rítmica, ballet, lectura. 4° primaria."},{nombre:"Libby",edad:"6",datos:"Nació 11 ago 2018. Muñecas, peinados. 1° primaria."}],notas:"1er aniversario enero 2026. Planning Center en proceso. Pasatiempo: juegos de mesa y padel.. Cumple esposa: 19 dic 1983. Aniversario bodas: 2 jun 2012. Amazon: clsegismond@gmail.com. Zapatos: 13 USA | Camisa: XL | Pantalón: 32 | Email regalo: clsegismond@gmail.com",reunion:"Abr 2026. Salud 5 y liderazgo 6 son las áreas de atención. Clari preparando sesión con mujeres.",reporte_personal:{fecha:"Abril 2026",metricas:{familia:8,intimidad:7.5,entusiasmo:8.5,liderazgo:6,economia:8,salud:5},oracion:["BiLab Vitality para Juanpi — salud física.","Sesión de Clari con mujeres mañana.","Cómo implementar Abide y atender a los que están y los que han de venir."]},pendientes:["Consolidar entrevista de membresía y definirla. (Abril)","BiLab Vitality — atender salud física urgente (nota: 5/10).","Dar seguimiento a sesión de mujeres con Clari.","Definir cómo implementar Abide en la iglesia.","Ministerio niños: seguir con Lifeway (Proyecto Evangelio).","Evaluar e implementar Habitar con grupos pequeños.","Grupos por género para fortalecer liderazgo.","Orar por posible campus Mission (250 personas, menor renta).","Orar por esfuerzo en inglés para próxima generación bilingüe."],tags:["panamá"],discipulos:["Luis Ortiz","Ramiro Cruz","Tony Jones","Yaismel Perez","Aidor Batista","Ottoniel Morales","Alejandro Ramirez","Nacian Torrero","Noah Brown"],reporte_personal:{fecha:"Abr 2026",metricas:{familia:8,intimidad:7.5,entusiasmo:8.5,liderazgo:6,economia:8,salud:5},oracion:["BiLab Vitality para Juanpi","Sesión de mañana con Clari y mujeres","Cómo implementar Abide y atender a los que están y a los que vienen"]},reunion_data:{fecha:"24 abr 2026",badges:["Reunión pastoral","Con Kike Torres"],metricas:["Fam 8","Int 7","Ent 8","Lid 5","Eco 8","Sal 5"],secciones:[{tipo:"acuerdos",items:[{texto:"Programa Thelab",sub:"Ejercicios, nutrición y fortalecimiento — 3 meses con garantía"},{texto:"Finalizar 2° grupo ruta de membresía",sub:"Fortalecer compromiso y participación"},{texto:"Habitar: grupos pequeños por género",sub:"Luis, Clark y Ana como líderes base"},{texto:"Pedir formato de membresía a Yesa",sub:"Entrevistas estructuradas para nuevos miembros"},{texto:"Orar por campus Mission",sub:"250 personas, menor renta, ciudad 88% latina"},{texto:"Primera actividad de mujeres",sub:"Ser testigo del trabajo de Dios, compartir testimonio"}]},{tipo:"reflexion",label:"Reflexión pastoral",items:[{texto:"Santidad y vida privada con Dios",sub:"La batalla es por distraer del escuchar, no solo por el pecado"},{texto:"Liderazgo bajo presión",sub:"Diferencias eclesiológicas con pastor titular en McAllen"}]}]}},
+  {nombre:"Adrián",apellido:"Capitaine",iglesia:"Horizonte Villahermosa",ciudad:"Villahermosa",zona:"sur",esposa:"Llanura Gonzalez",cumple:"15 abr 1989",avatar:"AC",hijos:[{nombre:"Keira",edad:"7",datos:"Primaria. Le encantan los videojuegos."},{nombre:"Adrián Jr.",edad:"6",datos:"Primaria. Dice que es pro en videojuegos."},{nombre:"Ronaldo",edad:"4",datos:"Kinder. Ama los dinosaurios."}],notas:"Pasatiempo: Ir al cine, videojuegos, carpintería.. Cumple esposa: 5 nov 1994. Aniversario bodas: 5 may 2013. Amazon: kpo31_mppl@hotmail.com. Zapatos: 9.5mx | Camisa: L | Pantalón: 32 | Dirección: Prolongación de Av Méndez 111, Casa 3. 86153, Villahermosa, Tabasco.",reunion:"Abr 2026. Cansancio acumulado. Salud familiar compleja. Economía 6 y SAT urgente.",reporte_personal:{fecha:"Abril 2026",metricas:{familia:9,intimidad:9,entusiasmo:8,liderazgo:8,economia:6,salud:7},oracion:["Cansancio acumulado — necesita recuperar ritmo.","Dinámica financiera familiar — cómo manejarlo con Llanura."],notas_salud:"Keira: colitis. Adrián Jr.: TDAH. Adrián: artritis troloiácea con resistencia a la insulina."},iglesia_reporte:{nombre:"Horizonte Villahermosa",stats:[{label:"Adultos dom.",valor:"200"},{label:"Niños",valor:"38"},{label:"Nuevos",valor:"+40"},{label:"Bautizados",valor:"16"},{label:"Servidores",valor:"+100"},{label:"Ofrendas/mes",valor:"$133-185K"}],logros:"Conf. matrimonios 45 parejas, hombres 110, mujeres 130. 16 bautizados. 72 en grupos.",plan2026:"Membresía y gobierno. Fast Track líderes. Diáconos 2S. Alinearse con alcance."},pendientes:["Deuda SAT ~$60,000 — resolver urgente.","Hacerse análisis médicos (artritis, insulina).","Transparencia financiera con Llanura.","Juntas quincenales con líderes clave.","Modelar lo que espera del ministerio de alabanza.","Aprender a ser pastor a tiempo completo (ir a aprender).","Comer con líderes 1x/mes (Germán)."],tags:["líderes","salud"],discipulos:["Alberto","Germán","Román","Juan","Luis","José","Manuel","Abraham","Rafa"]},
+  {nombre:"Toño",apellido:"García",iglesia:"Calvary Chapel Ecatepec",ciudad:"Ecatepec",zona:"centro",esposa:"Yabeth Larrea",cumple:"3 nov 1979",avatar:"TG",hijos:[{nombre:"Grace",edad:"6",datos:"Nació 29 ene 2019. Le encanta bailar y las muñecas."},{nombre:"Ezra",edad:"4",datos:"Nació 18 oct 2020. Le encanta la música."},{nombre:"Elyseo",edad:"1",datos:"Nació 27 mar 2024."}],notas:"Énfasis 2030: levantar hombres. Plataformas: Simón, Martín Durazo, Héctor Glez, Carlos Fierro. Pasatiempo: Conocer lugares. Cumple esposa: 21 mar 1988. Aniversario bodas: 12 abr 2017. Amazon: tonygarcia0311@gmail.com. Zapatos: Mex 6 | Camisa: Large | Pantalón: 34 | Email regalo: tonygarcia0311@gmail.com | Dirección: Fco. I Madero 11 Col. Ejidal Emiliano Zapata Ecatepec Edo Mex C.P. 55020",reunion:"Cuatrimestral abr 2026. Hechos 11 — oposición normal cuando Dios se mueve.",reporte_personal:{fecha:"Abril 2026",metricas:{familia:7.5,intimidad:8.2,entusiasmo:8.5,liderazgo:7.5,economia:7,salud:7},oracion:["Cobeth: Dios es digno de alabanza. Fruto deseado: fe más grande. Estar habitando en Él. Rom 10:17.","Este año Toño da gracias en el trabajo — fin de temporada laboral secular."]},reporte_personal_yabeth:{metricas:{familia:7,intimidad:8,entusiasmo:9,liderazgo:8},oracion:["Matrimonio y familia","Carga escolar","Fe más grande","Tiempo hijos"]},pendientes:["Yabeth: enviar oración donde conecta 'poner la mesa' con Dios siempre dispuesto a ayudar en tiempos difíciles. (Lunes 27 abr)","Corrida financiera con miras a que Toño deje el trabajo secular. (Finales julio 2026)","Consolidar membresía. (Finales agosto 2026)","Pro diáconos. (Noviembre 2026)","Orar y programar calendario 2° semestre 2026.","Toño: consejo de finanzas — salen Eli y esposa de Óscar."],tags:["transición","hombres"],discipulos:["Irving González","Cristian Sánchez","Fernando Rojo","Hugo Irala","Carlos López","Sedrick"]},
   {nombre:"Daniel",apellido:"Vargas",iglesia:"Comunidad El Camino",ciudad:"San José",zona:"otro",esposa:"Eugenia Zuñiga Hernandez",cumple:"9 ene 1989",avatar:"DV",hijos:[],notas:"Bebé esperado julio 2026. 22 años de historia en Costa Rica. Pasatiempo: Entrenar y los videojuegos. Cumple esposa: 8 jun 1994. Aniversario bodas: 4 mar 2023. Amazon: dvargasmonge@gmail.com. Zapatos: Soy talla 28.5 o 29 mx | Camisa: Soy L | Pantalón: Soy 38 | Email regalo: dvargasmonge@gmail.com | Dirección: Heredia, san rafael, Los Ángeles. Servidumbre mano derecha antes de la entrada del restaurante añoranzas. Segunda casa muro color beige portón café cerrado",reunion:"Dic 2025. Ansiedad, vida espiritual mecánica, finanzas ajustadas. Finanzas restructuradas, equipo oración/ayuno 9 personas.",iglesia_reporte:{nombre:"Comunidad El Camino",stats:[{label:"Miembros",valor:"110"},{label:"Servidores",valor:"48"},{label:"Nuevos miembros",valor:"13"},{label:"Bautizos",valor:"1"},{label:"Años historia",valor:"22"},{label:"Evangelizados",valor:"3,500+"}],logros:"Proyecto Calles: 3,500+ evangelizados, 500+ alimentados/mes. Primer discipulado personas en calle. VCP alianza.",plan2026:"Cultura de discipulado. Predicación centrada evangelio. Pastor cuida coordinadores 1 a 1."},pendientes:["Educación financiera personal.","Conectar matrimonialmente antes del bebé.","Liderar iglesia en oración y ayuno.","Definir objetivos 2026 con calendario."],tags:["Costa Rica","bebé"]},
   {nombre:"José",apellido:"Machado",iglesia:"Horizonte Hermosillo",ciudad:"Hermosillo",zona:"norte",esposa:"Adriana Garcia Hernandez",cumple:"16 mar 1968",avatar:"JM",hijos:[{nombre:"Eliana",edad:"27",datos:"Nació 1 jun 1997. Misionera en Osaka, Japón. Diseño gráfico, anime, manga y cine."},{nombre:"Raquel",edad:"25",datos:"Nació 28 mar 1999. Casada. Diseño gráfico."},{nombre:"Melisa",edad:"24",datos:"Nació 24 sep 2000. Diseño gráfico, anime, manga."}],notas:"Pasatiempo: Ejercicio. Cumple esposa: 5 feb 1967. Aniversario bodas: 20 abr 1996. Amazon: JOSEMACH22@GMAIL.COM. Zapatos: US 9.5 | Camisa: Medium | Pantalón: 30 | Email regalo: josemach22@gmail.com | Dirección: Mision Santa Isabel 94, Paseo de las Misiones, Hermosillo, Sonora, CP 83224",reunion:"",pendientes:[],tags:[],email:"josemach22@gmail.com",discipulos:["David","Saúl","Tony","Jorge","Roy","Memo","Misael","Martin","Simón"]},
   {nombre:"Moisés",apellido:"Hernández",iglesia:"Calvary Chapel Texcoco",ciudad:"Texcoco",zona:"centro",esposa:"Ana Silvia",cumple:"28 oct 2025",avatar:"MH",hijos:[{nombre:"Zoe",edad:"10",datos:"Nació 16 jul 2014. Le encanta leer y dibujar. 5° primaria."},{nombre:"Zara",edad:"7",datos:"Nació 22 dic 2017. Le gustan las piedras y jugar. 2° primaria."}],iglesia_reporte:{nombre:"Calvary Texcoco",stats:[{label:"Estudios bíblicos",valor:"3"},{label:"Municipios",valor:"2"},{label:"Familias",valor:"25"},{label:"Grupos discip.",valor:"3"}],logros:"Estudios bíblicos en Tocuila, Ojo de Agua y Coatlinchán.",plan2026:"Expandir estudios bíblicos. Consolidar grupo mujeres."},notas:"Pasatiempo: Estar y salir con la familia. Cumple esposa: 19 ago 2025. Aniversario bodas: 22 sep 2025. Zapatos: 5.5 | Camisa: Chica | Pantalón: 29x30",reunion:"",pendientes:[],tags:[],discipulos:["David","Teodoro","Moisés","Ernesto","Jorge"]},
   {nombre:"Mario",apellido:"Salazar",iglesia:"Gracia Irresistible Calvary",ciudad:"Ciudad Valles",zona:"norte",esposa:"Anette García Rivera",cumple:"20 jul 1972",avatar:"MS",hijos:[{nombre:"Mario Jr.",edad:"18",datos:"Nació 5 jul 2006. Odontología en SLP."},{nombre:"Ivanna",edad:"14",datos:"3° secundaria."}],notas:"Pasatiempo: Ir al gym. Cumple esposa: 28 sep 1979. Aniversario bodas: 28 jun 2003. Amazon: masalazar@hotmail.com. Zapatos: 8.5 | Camisa: M | Pantalón: 31-32 | Email regalo: masalazar@hotmail.com | Dirección: Morelos 49 zona centro cp 79000 Cd Valles  slp",reunion:"",pendientes:[],tags:[],discipulos:["Ossiel","Memo","Urías","Jorge","Néstor"]},
   {nombre:"Omar",apellido:"Linares",iglesia:"Horizonte Tijuana",ciudad:"Tijuana",zona:"norte",esposa:"",cumple:"",avatar:"OL",hijos:[],notas:"Zapatos: 9 americano | Camisa: M (USA) | Pantalón: 32/30 | Email regalo: omar_linares@hotmail.com",reunion:"",pendientes:[],tags:[],email:"omar_linares@hotmail.com"},
-  {nombre:"Erik",apellido:"Servín",iglesia:"Horizonte CDMX",ciudad:"Ciudad de México",zona:"centro",esposa:"Ale",cumple:"18 feb 1998",avatar:"ES",hijos:[{nombre:"Josué",edad:"7",datos:"Nació 14 jun 2017. Legos. 1° primaria homeschool."},{nombre:"Emanuel",edad:"5",datos:"Nació 26 oct 2019. Nerf y Spiderman. 3° preescolar homeschool."},{nombre:"Natalia",edad:"0",datos:"Nació 19 dic 2024. Bebé."}],notas:"Pasatiempo: Pasear con mi familia; escuchar música solo; videojuegos: Age of Empires PC, Call of Duty Mobile; ver anime: Dragon Ball, Naruto, KNY.. Cumple esposa: 18 nov 1990. Aniversario bodas: 21 may 2016. Amazon: erik.servin.lara@gmail.com. Zapatos: 9 - 9.5 US / 27 -27.5 cm | Camisa: Grande / Large | Pantalón: 33-34 US | Email regalo: erik.servin.lara@gmai.com | Dirección: / Calle Tlatelolco #28, Col. San Mateo Xoloc, CP 54602, Edo Mex, México",reunion:"",pendientes:[],tags:[]},
+  {nombre:"Erik",apellido:"Servín",iglesia:"Horizonte CDMX",ciudad:"Ciudad de México",zona:"centro",esposa:"Ale",cumple:"18 feb 1998",avatar:"ES",hijos:[{nombre:"Josué",edad:"7",datos:"Nació 14 jun 2017. Legos. 1° primaria homeschool."},{nombre:"Emanuel",edad:"5",datos:"Nació 26 oct 2019. Nerf y Spiderman. 3° preescolar homeschool."},{nombre:"Natalia",edad:"0",datos:"Nació 19 dic 2024. Bebé."}],notas:"Pasatiempo: Pasear con mi familia; escuchar música solo; videojuegos: Age of Empires PC, Call of Duty Mobile; ver anime: Dragon Ball, Naruto, KNY.. Cumple esposa: 18 nov 1990. Aniversario bodas: 21 may 2016. Amazon: erik.servin.lara@gmail.com. Zapatos: 9 - 9.5 US / 27 -27.5 cm | Camisa: Grande / Large | Pantalón: 33-34 US | Email regalo: erik.servin.lara@gmai.com | Dirección: / Calle Tlatelolco #28, Col. San Mateo Xoloc, CP 54602, Edo Mex, México",reunion:"",reporte_personal:{fecha:"Abril 2026",metricas:{familia:8,intimidad:8,entusiasmo:6,liderazgo:6.5,economia:9,salud:7.5},oracion:["Orden en el calendario","Rutinas con Ale — diligente en lo que tengo y cuando lo tengo que hacer (estudiar)"]},reunion_data:{fecha:"Ene–Abr 2026",secciones:[{label:"Objetivos Q1",tipo:"logros",items:[{texto:"Establecer membresía de la iglesia",check:true},{texto:"Iniciar formación de consejeros para certificación (SEBAM)",check:true},{texto:"Concluir 1ª etapa de plataforma Oikonomía (gestión interna)",check:true},{texto:"Habilitar reuniones de compañerismo mensual",check:true},{texto:"Establecer nuevo programa para ministerio Nuevas Generaciones",check:true}]},{label:"Impacto hacia afuera",tipo:"metricas",items:[{chip:"2",texto:"Decisiones de fe en Hacedores"},{chip:"18",texto:"Semanas buscando al Señor — orando los Salmos en congregación"},{chip:"4",texto:"Familias nuevas"},{chip:"19",texto:"Personas que concluyeron o continúan en consejería"}]},{label:"Impacto hacia adentro",tipo:"metricas",items:[{chip:"5",texto:"Acompañamientos matrimoniales a líderes"},{chip:"5",texto:"Personas estudiando consejería — SEBAM"},{chip:"22",texto:"Servidores de NG capacitándose en Pedagogía al estilo de Jesús (E625)"}]},{label:"Actividades clave",tipo:"lista",items:[{texto:"ABIDE — Erik y Ale iniciando. 5 matrimonios líderes en lista."},{texto:"Reuniones de liderazgo semanales"},{texto:"Consolidación de membresía"},{texto:"Plataforma Oikonomía — gestión interna"},{texto:"SEBAM — 6 estudiantes, 22 servidores de NG"}]},{label:"Retos y respuesta",tipo:"lista",items:[{texto:"Circunstancias en personas clave: enfermedades, paternidad, adicciones, familia.",sub:"Respuesta: acompañamiento mensual a cada matrimonio."},{texto:"Líderes de grupos pequeños necesitan apoyo para guiar a las mujeres.",sub:"Respuesta: becas al 50% para hermanas en SEBAM."}]},{label:"Planes Q2",tipo:"lista",items:[{texto:"Establecer diáconos — membresía consolidada como base."},{texto:"Caminar 1ª generación de ABIDE con 5 matrimonios; abrir 2° grupo al terminar."},{texto:"Iniciar La Ruta con familias que están llegando."}]},{label:"Peticiones",tipo:"lista",items:[{texto:"Oración por líderes que perseveran en fe y servicio en medio de sus circunstancias."},{texto:"Libro de Restaurados — que llegue para poder iniciar La Ruta."}]}]},pendientes:["Continuar espacios de acompañamiento con Kike.","Hablar sobre equipo de liderazgo y su acompañamiento pastoral.","Iniciar La Ruta con familias nuevas (plan Q2).","Recibir libro de Restaurados para arrancar La Ruta.","Consolidar 1ª generación de ABIDE con 5 matrimonios líderes.","Definir quiénes formarán el 2° grupo de ABIDE."],tags:[]},
   {nombre:"Alberto",apellido:"Pando",iglesia:"Fuentes de Agua Viva",ciudad:"Piedras Negras",zona:"norte",esposa:"",cumple:"",avatar:"AP",hijos:[],notas:"Zapatos: 11 | Camisa: Xxl | Pantalón: 38 | Email regalo: alberto@fav1.org | Dirección: Email Amazon  476 S Bibb A. Ste C 150. Eagle Pass TX 78852. MEX. Segunda 114 Col Dan Pedro Piedras Negras Coahuila 26017",reunion:"",pendientes:["Presupuesto y calendario semanal antes de fin de año."],tags:[],discipulos:["Oscar","Rogelio","Juan","Fernando","Gabriel","Martín","Santiago","Ricardo","Moisés"]},
   {nombre:"Marce",apellido:"Muñoz",iglesia:"másCristo Juriquilla",ciudad:"Juriquilla, Qro",zona:"qro",esposa:"Andi",cumple:"5 oct 1991",avatar:"MM",hijos:[],iglesia_reporte:{nombre:"másCristo Juriquilla",periodo:"Ene-Abr 2026",stats:[{label:"Asist. promedio",valor:"148"},{label:"Crecimiento",valor:"+19.4%"},{label:"Bautizos",valor:"17"},{label:"Servicio Resurrección",valor:"155"},{label:"Personas nuevas",valor:"18"},{label:"Nuevos creyentes",valor:"7"},{label:"En grupos",valor:"85"},{label:"En grupos %",valor:"60%"},{label:"Servidores",valor:"67"},{label:"Servidores %",valor:"45%"},{label:"En Esencia",valor:"25"},{label:"No congregantes",valor:"37%"}],logros:"148 asistentes promedio. +19.4% crecimiento vs año anterior. 17 bautizos ene-abr. 85 en grupos (60%). 67 servidores (45%). Servicio Resurrección: 155 personas.",plan2026:"La Ruta en domingos. 15 a CTC. 4 matrimonios Bernabé 2027. 10 voluntarios montaje.",proyectos:[{fecha:"23 may",nombre:"Worship Night",sub:"Evento familiar"},{fecha:"19-20 jun",nombre:"Conf. Matrimonios",sub:"Viernes y sábado"},{fecha:"18 jul",nombre:"Día del Amigo",sub:"Juegos de mesa"},{fecha:"15 ago",nombre:"Aventura en Familia",sub:"Actividad al aire libre"}],areas_mejora:["Espacios — espacio propio con montaje fijo","másNiños — relevo de liderazgo (David → Angie/Alex)","Grupos de mujeres — reorganización y descanso de Mariana"]},notas:"Mayor crecimiento porcentual de la red en 2025. Pasatiempo: Boxeo, Comer pan. Cumple esposa: 3 jun 1993. Aniversario bodas: 27 mar 2015. Amazon: andilinos2703@gmail.com. Zapatos: 7.5/8 | Camisa: M pero respiro mejor en la L | Pantalón: 34 | Email regalo: andilinos2703@gmail.com",reunion:"",pendientes:["másNiños: transición de liderazgo (David ya no puede solo).","Jahaziel y Carmelita para cuidar los grupos.","Dano para rol de portero/diácono.","Resolver tema Marisol.","Coordinar reapertura La Ruta domingos.","Buscar espacio propio — hablar con Don Pablo.","Organizar eventos: Worship Night (23 may), Conf. Matrimonios (19-20 jun), Día del Amigo (18 jul), Aventura en Familia (15 ago)."],tags:[],discipulos:["Dan","Dano","Joe","Diego","Alexis G.","Alexis R.","Jaaziel","Tom","Jorge A.","Adolfo","David G.","David F."],reporte_personal:{fecha:"Abr 2026",metricas:{familia:10,intimidad:10,entusiasmo:10,liderazgo:8,economia:8,salud:8},oracion:["Reunión consejo de adopciones (28 abr)","Salud de Andrea","Un lugar propio para la iglesia"]},reunion_data:{fecha:"Abr 2026",badges:["Eval. anual Q1"],metricas:["Int 10","Lid 8","Eco 8","Fam 8","Ent 9","Sal 8"],secciones:[{tipo:"acuerdos",items:[{texto:"Reapertura La Ruta domingos",sub:"Integración de nuevos a grupos"},{texto:"Buscar espacio propio",sub:"Hablar con Don Pablo sobre compra"},{texto:"Relevo liderazgo niños",sub:"David al límite — evaluar Angie y Alex"},{texto:"Dano como diácono",sub:"Evaluar tras graduación del viernes"},{texto:"Iván en discipulado de nuevos creyentes",sub:"Tom inicia el proceso"},{texto:"Descanso 2 meses para grupo Marisol",sub:"Reorganizar y reducir drama"}]},{tipo:"proyectos",label:"Próximos eventos",items:[{texto:"Worship Night",sub:"23 mayo · toda la familia"},{texto:"Conferencia de Matrimonios",sub:"19-20 junio"},{texto:"Día del Amigo",sub:"18 julio · juegos de mesa"},{texto:"Aventura en Familia",sub:"15 agosto"}]}]}},
   {nombre:"Dani",apellido:"Ávila",iglesia:"La Carpa de Reunión",ciudad:"Querétaro",zona:"qro",esposa:"Andi",cumple:"18 abr 1990",avatar:"DA",hijos:[],iglesia_reporte:{nombre:"La Carpa de Reunión",stats:[{label:"Auditorio 2025",valor:"200"},{label:"Flechas",valor:"87"},{label:"Servidores",valor:"59"},{label:"Total",valor:"346"},{label:"Bautizos",valor:"9"},{label:"La Ruta",valor:"11"}],logros:"Asistencia estable 200 adultos. Habitar 14H+16M. Nuevos min.: Axios, Hacedores, Mantenimiento. 9 bautizos.",plan2026:"Hospitalidad: salón nuevo, kit bienvenida. Adoración congregacional reestructuración."},reporte_personal:{fecha:"Abril 2026",metricas:{familia:9,intimidad:9,entusiasmo:10,liderazgo:8,economia:10,salud:8.5},oracion:["Alma con gozo","Matrimonio y paternidad","Casa","Andresito"]},notas:"Conf. Torreón (35 iglesias). Deuda Horizonte casi saldada ($5K). Libro colaborativo con Kike. Habitar: Héctor y Arturo. Pasatiempo: CoD con amigos, jaja hay varios que no he empezado o dado seguimiento, golf, Bonsai, modelismo mi hobbie es buscar un buen hobbie. Cumple esposa: 19 ene 1991. Aniversario bodas: 8 ago 2015. Amazon: daniel.avila@cristoesmejor.com. Zapatos: 27, 27.5 depende de la marca, normalmente es 27 | Camisa: G o XG | Pantalón: 34W 30L | Dirección: Ya he llenado antes la encuesta · Aniversario iglesia: 1 jun 2025. Aniversario bodas: 8 ago 2015.",reunion:"Abr 2026. Casos: Checo (sin confesión), Javi (hermético), Douglas (indiferente), Paco (crisis plantación), Chucho Solís (adulterio). Acuerdos: estaca Checo, 8 sesiones Chucho, historial médico Omar.",pendientes:["Estaca clara con Checo — confesión en tiempo definido.","Chucho Solís: límite 8 sesiones, redirigir terapia.","Historial clínico a Omar Chihuahua (triglicéridos).","Habitar: Héctor y Arturo lideran, cada dulō saca 1 persona.","Proyecto libro con Kike."],tags:["consejería","habitar","libro"]}  ,
@@ -1658,7 +1653,8 @@ const pastores = [
       "Orar por claridad sobre modelo ministerial en campus McAllen.",
       "Proceso de residencia — dar seguimiento a cita de julio."
     ],
-    tags:["norte","mcallen"]}];
+    tags:["norte","mcallen"]},
+  {nombre:"Plinio",apellido:"Orozco",iglesia:"Iglesia en Caracas",ciudad:"Caracas",zona:"otro",esposa:"Katy",cumple:"",avatar:"PO",hijos:[],notas:"Adjunto al compañerismo CEM. Ingresos: $2,450 USD/mes (Heart Cry + iglesia en Colorado). Gastos: ~$1,500 USD/mes. Deuda: $10,000 USD por compra de apartamento (pago en diciembre 2026). Vendieron camioneta para la compra.",reunion:"Mayo 2026. En su prime. Economía presionada por deuda de apartamento.",reporte_personal:{fecha:"Mayo 2026",metricas:{familia:8.5,intimidad:8.5,entusiasmo:8.3,liderazgo:8.5,economia:7,salud:8},oracion:["Tiempo con Dios y con su familia — crecer en el disfrute.","Katy: que la labor de madre sea un deleite y no una carga. Que pueda sostener sus roles de apoyo al llamado de Plinio. Antes era muy organizada en sus ritmos; hoy no puede lograrlo."]},pendientes:["Oración por Plinio y Katy.","Pau: una llamada con Katy.","Seguimiento con Bernabé.","Mantener estas conversaciones 1 vez al bimestre.","Katy: 30 minutos diarios como hija de Dios (ritmo personal)."],tags:["adjunto","caracas","venezuela"]}];
 const pastorPhotos = {
   'Willer':'data:image/jpeg;base64,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',
   'Chava':'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBAUEBAYFBQUGBgYHCQ4JCQgICRINDQoOFRIWFhUSFBQXGiEcFxgfGRQUHScdHyIjJSUlFhwpLCgkKyEkJST/2wBDAQYGBgkICREJCREkGBQYJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCT/wAARCADIAKADASIAAhEBAxEB/8QAHAABAAICAwEAAAAAAAAAAAAAAAYHBAUBAwgC/8QAQBAAAgEDAgMGAwUFBgYDAAAAAQIDAAQRBQYSITEHEyJBUWEUcYEIFTKRoSNCcrHBM0NSYoKSF1NjorLRJLPC/8QAGwEAAgMBAQEAAAAAAAAAAAAAAAQCAwUBBgf/xAAwEQACAgEEAQMBBgYDAAAAAAAAAQIDBBESITEFIkFREwYUMkJhgSMkcZGxwdHh8P/aAAwDAQACEQMRAD8AoqlKUwJilKUAKUpQApSlAClKUAKUpQApSlAClKUAKUpQApSlAClKUAKUpQApSlAClKUAKUpQApSlAClKUAKUpQApSlAClKUAKUpQApSlAClKUAKVwTgZPIVI9v8AZ5undAV9M0W5khb+/lHdRf7mwD9M0HG0uWR2lW9pn2b9bnUNqWtafZ56pCjTMPr4RW9h+zVpgX9vuO/dv+nboo/UmpbWVPIrXuUJSr8m+zVpRX9juLUFb/PbxsP0IrSal9m3VogW03XbG59EniaIn6jiFG1nFkVv3KepUo3B2Zbu20rSX+i3DQL1nt/20f1K5x9QKi3WolyknyjmlKUHRSlKAFKUoAUpSgBSlKAFSnZPZxru+p//AIEIhskbhlvZgREnsPNm9h9cVJuyjshk3aY9Z1pZIdGBzHGDwveEeh8k9T59B616Ls7O30+1itLSCK3t4VCRxRqFVB6ACpqOvYrdkbfTHshmz+x3bG01jma2Gp368zdXahuE/wCRPwr+p96nPp7dPalKnoISk5PVilKV0iKVyqs7BVBYnoAKyRpV6V4vh2+WRmuNpdk4wlL8K1MUcunKodu7sp2xvBXkuLIWd63S8tAEfP8AmHR/qPrUzkjeJikiMjDyIxXzR2cTcXxweUd99lmu7FczzIL3TScLewKeEegdeqH58veobXt2WKOeJ4pY0kjkUq6OoKsD1BB6iqA7WOxr7kSbXttws2nrl7mzXmbYebJ5lPUdV+XSDj8D1OTu9MuyoaUpUBsUpSgBSlKAFT7sj7ODvjV2ub5GGj2TAznp379RED+pPkPnUK0vTbnWdStdOso+8ubqVYY19WJx+Xn8hXsDam27TaOgWmjWQBjt08b45yyHmzn3J/TFSitRfIt2LRds2kUUcESRRIscaKFVEGFUDkAB5Cu2ON5W4Y0Zz6KM13WFk19OIwcKObN6Cq+3R2+6fpOrNom17GO87uQRS3jyYV2BwQmOvmOI/QV2U9OEL4+K7eXwidtG6DLIyg8skYr5qvto/aHttT1IaZuS1hggmbuzKjMe5JPLiDc8e46VZV/Z/CSgo3HC44kcc8iiM9XozuRiOpbk9UY1FUsQqjJJwBWRb6fdXQBiiJU/vHkKzLbSLu2u4XljBUNkkHOKk5pFMKJy04ehhaxq67Ytmgs4kuNTaMSNnpEpOAT+RwPPBNQ611XdOozmeTWZ7Vv3eGQcP+wDFR7tI1h9M3Frz3l0YozeIqYYBmUQpgD2GT+dR6y7QdL0uNZLlZ5UbkjLzOayrrLG/SevxMemMFqy4tr7qk1+/uds64ka6vbR99FPGMLcR/4gPIjzHSstlKMVYYKnBqvdM1eyXeG390rMy2iLLBcM4OY1KHmRjn1/SrN1aDubxmBBWX9opHvTmLZuWj7MTy2Nte+K4MOuCARggEe9c0psxTzd209mi7VvhrelQ8Ok3j4eNRytZTz4f4W8vQ5HpVYV7T1rR7PX9KutLv4+8tbqMxyDzAPQj3BwR7ivH25dAutr67e6Pec5rWQpxY5OvVWHsQQfrVUloaWNbuW19o1tKUqIyKUpQBb/ANnXbIvdavtwzplLBO4gJ/5rjmfov/lXoGoN2LaONI7O9MJXhkveO8f34z4f+0LU5q2K0RlXy3TZo+1Pcj7N7J9Z1KBzHd3YFnAy9VaQ8OR8hxGvOewbKytYYNTvBG80p4o+8PJB5YFXP9poN/whsMZ7r7yiMoB54w/9apay022m0OxlF46NFbKvCAPEfXPlSOQ/Tpr2z0fjYaKLS10RYO4dO0Le2lT2cZgTW44y9u0S4YMOgOBjB6c/Wp12H77j1rs0ubjcifDrttjFLPKTho1TIb5geHHqBUD05Ntpc2WtRxXgZY1TiIIjMgUfr51obr4jWNB31oekF4jcSW98YwSEZUdnkAA6+E5x7e1UYsvyD2fSmt70/wCTc7v+0PqWumVNKmawseYWOJishXyJYc8+3So/p3a9u3akkc0Op3PiIkEN0xlguFPP97OOXmCDVeaBtW+1DUorOCWH4hiD3eSQxznGenlVn6LsEa5t7ULPWLeWE2ystuJZSxiPUFR0XBq6y2EBenGnYnofO+9w6VvCV9cuZZJo76MXcAEn9kCArRkf5GVlz6AVp7DeekRaRHZx6QmbVuIzyKSHGeY5jrzJFaZ4hcdncVo3hvdBu5I5EVTme3n8RJ+To2D712aVqGhDS51mYTfsjwQsM4OOuT0rk4a/qW1W7eOEy89tS2O7LjStOABR3WV1X90Dn/L9Ks7Wpe8vmUcljAUD0qhuwp57Iya3PxJJO3BaoeeVHVv6D5Vfllrem61a95MYZOA8DyxMCFYdRn1Hn6UYzjCbiu0K+ShZfUn0jXUraS6KsqGSynEg68LdfzrWyRvE5SRCjDqCK0IyT6PNWUzr/Ej5qkPtHbZHBp25YU8QPwVyR5jm0ZP/AHD8qu+oz2laMNe2JrVkF4pPhmmj/jj8Y/8AHH1rrWqCmW2aZ5FpXAOQCOh51zVJrCuGyVOOuDiua5X8Q+YoA9o6FaLp+h6daKMLBaxRgfJAK3FjZC5LPK4igjBZ5DyAA96x7G3a6aGKP95Rz9BjrWi3vuD4+8v9uWl7EmlQWwt7pIT455mzxQFhzXCAZ4eZ48ZqcpP8K7M/GpU25z6RTf2jO02Ddi2229A75tJtY+/kmMbItw5OFK5HNAOh8yT6VWm1tbkvLeXT7hyk0WDFIoAwvpj2x+tWn2h2cGu6ABZoqNwqF4cNng5CPJ5gAdB+lU5tm2NtqsqyA950K4wcefL8qquq0hozZxrvWtP6Fi3msQ6Ht17u5mDyR47uESE8TevDnH1qWfZUWDXrvWxfmN5u+S8K55vkOhBH+EBj+dVFvC5AsRbhfxHmSK12x923uzdZtdW04yCeCQNnJCuoIJU48jzH1qiiv0t+7G8u5ymk+kWHLK2g61NHaxi2u7C7lgYIP7MhiMflUuju5oI01aZzHBcR/tA7ksz+vQdfaqI1Ldup6ruq+11mCT39w08sajCEk5xj28ql1vrpktVnu53k5fs0zyJ9hVF+PLXj3GsfMW1r4NPoW6p9N3nqE0yJcWt13lvJBKAVeMkkAj2rGh0aH7xkEUAZOLCq5OAM8gfWsC6tg85mBAJYEkfOt5peptbTJJPESVPDLgcmX1+dPqPGiMxvnVm21vdl/t9re1iunibuAR3Q4cZyPn0+VajT9yTw2qQ291cQ2ycQZe8JUk9eJc4IOT9TWx+H07Wt2XF5NwmysLdBkYw7HmOfQdT+VSiysdsXdi9zNpoktoyAzgDl9RypWyyFT2pDVdU7lubNts7tX1vToY445viVt5AMSEniTPQHPLl5eVegtv69p++NDtr2EkCdSUZhhlYHBH5j615n3XtbRLDb1luDb6lYzKIZ41cEZbJVsgnHTH1FXL2Z3b2+1tMbv+9ynHxYAC5OeHl6dPzqyl7+UUZNe30zJTNE8ErROMMpwa6niWdGiYZWQFCPUHl/WtvrMSzRQ3sfRwFb+latPxr/ABD+dOReq1PN3V/Tm4niO7g+Fu57c/3Urx/7WI/pXVWfuDH3/qeOnxk3/wBjVgVUaq6FcNnhOOuOVc0oOnuHZeoCfbEOtQxtO/3fHMkaDLOTGDgfUYqmdfZrC+utJmVreVna4jR2DsTIe8KswwOPLZ+mM8qmv2ete+8tl6ZFx5ks2exkGfJTlc/6WX8qrztTWeDf2tJcxEIbniimLEKMgEDiH4fLrUorWepVB6Vbfhmo0rUu8uL/AEq8dAkwEkcjj8L9OfpzA5+9aW5sZbDVGv49Oa8kchCYCOJcfiOPP15dRWPrdtLLdRydxJE0kZXAPFxMMeQ5eZP9K6p7W/0qNLzTrp8jwtGCcMBzznyzV8468M7XLa1JEe3fqAvdS+GHCEQktw+gpHpqyx26kAGVAR88VrtRmF5qt7cCAw95xYQvxEHqedb/AEyWO6tYELAOnIevSuY9SjHaW32uctxqZdAk4GDDgUZJC9W+tc2+nrJDEYuHhQZBHIhj1FSwqDGDlSPwtny96xUt7YMyxKihsHA6Z9avlWiqM2aSTwBYyEAXmV8818XtwLeFMHxMCeR+g/rW01CziZeJ8qfXHUVHpkD3UxH4Y8Ko645UtCDjJoYsmpRJ52Xa3bafaX8ktvBcPJhJYnweS5wSPQg/pVj6LrInsru0+D0wWDRmUoImGfD06Y61Qu0pZYNcVI2YPKpAQcy/t7nzx7Vbe2tWNuzXAtULuvCSeWDWPnU7ZuXybnj8lSrUPgncsWna3sj4BYLSyiaSJ1SQAIeFuLH5A1sdmXUNmosA3FChCLnzBHWozrOl6lNpGnyW8DzxGQhxGM8LHAU/zrjSnu9KvpLe9RreWJ1DiTlw8PrVvj4enfqUeQt3S2aaF46ajXFhPZSDOBlG8j6VpZZVto3mc8KxKXY+gAyf5Vh7e3xb3GqWFjbnjjkPBLL5cRHID69TWs7YtUG2tn69cK3C7wmCH+KXwj+ZP0pyuyMpSUWYOfjyShKS7PIlzObm5mnPWWRpP9xJ/rXXXAAAwOgrmulopSlAFu/Zx3UNJ3TNos78MWoBZIsnl3yc8fVc/kKlXbxp0lnv6O8ilkhW9tI2LI2Mlcqc+R6CqU2NpWp63vDR7DR3MV/LdJ3Uo/usHJc+wAJPyr0L23mLW9e06xs3R59OjaO4kbkq8eGAPuAM4967GSUlqdjRKUZyiv1/0VNr4e0sbS6dlmSKUAnhAIDDA6cjXXe67bPpxx5J08q3e5dFhj2teCWS4mIj41z4UyCDkKB5VVmqN3duvdyiZSM44uVM2T51RTXDjRmtuY3MbzgHxk5YetfVpetbKME1OtmWqz7c4xEoLcZPLPmaru+Pd380PQq5B9udK05O+co/A9fifTrjPXskvx0jIkojVkdQ2W8jWLLfzcbyNnLEYJP4iawYNQe3SNUGeHxDPPmPahme4uAW8sufnTm7US00NsJu9Qd4SeEcs+VduibW1XXZriSztS8RbHeMwVenqa063HDJIp/dUZq3+z+FrTRoc8i68R+vOlM3KdME49juBiLIscZPhFS67t3UdG1qC27xFnC94TCTmIA9c+tTvQ763iiije8HkSWDFj9MczXTfCG91i61FlaTvJWh9uFeQA/U/Wu6y04kGLKiRCCnlxDnk59Bg/nU44v3iEXZ2Rlk/d7JKvoncfaBJBp3wlgzRqRwtNICDjHPhXB8vM1hXF9puoWtumqGOeI/s4puJkkiHkvH54HqCBWrRYpF+JM8nC4CzBBhyMZbA8gOQqMa0BbTLbmYOS4lU5yqA4JU+rdBTlWLVRDbGPDFLcu26alJ8otfbOjzaNqcHd6i9xAZVeINHwtjiHJvf+fI1g/au3HnVdN25CxwsYvbj3JysY/LiP1FZ/ZvJHrW6dNzLMQ0hHE/SRUBcZGfCcqw+VVl296y2tdquuMVZVtHSyQN6RqAT9SSfrWbLHVN0tvT5Q3PI+vVDd2iv6UpUigUpSgC8/sv6RDBdbi3bcoGGmWoghyOjOCzEf6VA/1VrLvccyzXep3BeSW9ldnKqCxLMSBk9OSjr7c6lPZhD9yfZ71e+OFfVLyRVPqAVjHX+FqguoxgSwIB4YSzY9AoA+Y8+mRS1kvVwes8JixsxbN/5uCZ6PBBvPRp7WSVoLwghQHyPYE9SPXFVHvLRfu15YngWCeNiHAXh5g/Ot3tLXbnTpUuY5G4mkLDzBBJ5cvlUk7TtPTdO3zuTThma2jK3sQ68ODh8e3n7UnG6yN2lj1TGa8aqqEqdq6NV2YWouttywEjvSGKZ9yaqa/02VtXve+JSUTuhU/u4OKs7szvTAFTiOAcfnzqN9otoLDeF5jkLgLcD6jB/UVdhS/mJRfuZXlKtKIyj7cEdtLN7eRZVcMy+TKCD9PrXebS44mlxGC4x4iE/Q9K6hqDW0iycPFwrgjzxjqKxJBJdxSIyEPORhfxMSTyHqTWzqkeeSbPk/tHaNpu7d5PFhS2Kv6cptzaXxDgcawcQHnnHLlWl2TsK10GyS91SJJtRlUFgeYiAHJR7+p9a1XalveO0hTR4OFrm5wrf9OMnGfmfKsLIvWTaoQXCPRYuO8OmVlj5fsYmlu8tsgJKwz+FiPJuRIHuSBn51mLcrFFzw8sBAK9RIo8v4QAfzrV2XAqKry4R14uIfuHzJ9zw1lCVlLSKvdyohDnh4lVCoXBHqc16WD0SPLz5ZkSX4kf4mAzRF14ZGBwVc8yF9vL5VGNZ1CSWSLvkWK4gLxSFR4S2euPqTUoXheNpoHgW2kLDu1kDCDOF4sHn69agOtu8OuSqoWWDARmDZAyMqD79a5bLRahXHV8F59jWpW53XYzJkLcTcBjPWMgcm+uSKg3b1am17W9wgrwiSWOYe4aJDn+dcbJ11NL1izuUIjljkQRtnAODgk/PlU1+1Loytq2g7nhTEeo2hglI/xp4l/7XI/00tk8uMiypaJooylKUuTFOlKydM06XV9StNOgGZruZLdB7uwUfzoA9H38Q0XsQ2Vpg8LXKLcOBnzBkPT+Oq21UFrCRl6mDCjHmx6gf6uqn6VZXblqEGmT6XoUGO60uxXC45eSj5eFRz96reV0vLfCnwykYU4ycDHQ8j1HoaTk/UfRfD0OGHHX35/9+xGHTuDbQsRkKDzxnqB54PmalW3N0tpGoIvJ1kHjiYDhkU9RjJ8q0OrIRfLwghRwqOTDlkH39a0t/etDJ3yOVMaZBB6cvlUJ1KxbWdyUtvPsWSmwZ7XV21XbMLXOkXeG+HTnJaP5rjzT0I6dDUR7Z9Pkt7zSr90ZDJE8D8QwQykHB/M1KOybejvCss0gBU8E4HJQfX2yOdb3tF0S+37Le6DNZSyzWzC7069gAVXBTwxuW5c89fQUnVOVWQnZ7cGJclfjNQ515PPoureJCZhxAYJOT4ce1WN2d7MeR03LqcZSIc7GFxgt5d6QfL0+efSu7bvY/wDc96l9ut7SbunDJZW8hkDfxnHPBx4R1reb73vBokXcwcM946gxxA8kB6FsdB7U5k5Urn9GjnXtmfiYcaF9fI406R9bp3NBotoWY8c75EcQPNj/AEHvVDarPNe618TduXlklVmJ+fl7CtvBqV1qGpzTahM00soYMx8iMEADyGCa12rIq6hC/wC6XH86dxcONMNfcRzM2V9n6E3s5lkiECxkmUgIfR+QP05nlWbBdzzyRyxlfiFYcjyMpyW4vfGK1Vo+VHGQkbsFLf8AL5gk+xOK3DWaTIFeQwzpHxKeqhAmQPmc1pQ5MuZ2RSRvH3gdGDAcaMgBL4Y58+QqMttW+1/XLQQYjS5m7mF36MeZA5denX1qQtNLbw8cbKHRCjxry5Yxgn3AOaleyktta3bt55tQ8U1wksc0oEUaqo4ikUQ9cBcn1pfNnKKioobwq4S3OT6K90W3vby4WK2thO0mERF5YJIORz5c6vztK0htO7BPgd3m1h1O0eM6cqyh37ziGFz5nhLg4yMVWewrNfvaJlX+8wPzre/aukB3po0XFkx6ZkjPTMrf+qRrypWtwfsM5GLGiKmn2UlSlKuEhU27FLL4/tV21EV4gl33xHsis2f0FQmrb+zBYC77TxcsPDZ2E8ufQnhT/wDRrj6JR7Rn9sl0L3fGucT+BZooAf4QoP8AM+laeAvFaRwHiQN0ySAozxMehHPpXbuSb743VLI2T31/JM+T1AJI/p6iuAge8Xu15Kjc0HvjPgPv6Ul7n13GhsphB+yRHtXCLJbFWEfGoLYZeuRUP3DIEcQxsSGbB8WfCKnGrhmkt38Z8K9S/wDiHqPaoDqTfEajO+cqrFV+Wf8A3TFEdZHn/tFcqqWl2+DL2Vr/ANwa4hmINtOOB1f8PF+6T7Z5H2NXJpW6J1j+75JHe38Xwlypy8ade6b1weRHXoa893Klm+VSfZG4pU1GHT7t3ljJzCGbw8QHIMP3vbNV5uNvTmjy/jc36f8ACf7Fk7z3BLtfQp9UdWnuWYJChGVVm6M3t/M4FVHYXEuoMZruR5p53MkjtzLMatbVw25Np3+jQsrXF1Ez27SDPFKhBKfUdPp6VVGiRvwAnPLkQfI0eKjFJ8ckfLuWq54M42ojuVlRDnByfpWi1tyY1YDDKakknJHflgL5Goxqv9mSDWtPoxodks0KRby08RLBo+IqOZ4uE4/KtzZJFPYBJJG7yMtwuDyc+HA+nOopt7WGtJIZFjQSIcqB+FsgggipjJZoi/GWqM+l3GTw5y1uAylj/Kp1ckLDp1RVMFzBJlJgr8UqqMSZz+nQCuuS1W/F7Bb8Kz2kUcseeTJ4ACAeuQy5+tdlzHwWrRI3fo7YVujKinr9Qay9HSG41k3EnCiEvaTANlpVYnDD3U4q1x3cENdOSadkOlm/1PTlKk8ciE/IHJP6VH/tIaqNT7Vr+JG4lsYILXl5ELxMPzera7ENGS01I8eCtpG2WIx58OfyzXmvdmrPr26NX1V24jd3s02fYucfpivPYcWtzfybvkJ67Yr4NVSlKdMwVe32X4Bawby1ojnbWSRKfME8bn/xFKVGfRdjpO2KfyRa0YyaiJgSeCGSUY5+IkAHl8+o/KsiMCSa4dQH4AFBwrevrg+QpSlD6++GR3c9x8Lbo3DhlTK5Xzy2Mcz7dKgxORjzPXnSlPYy9LZ4D7VWSeRGL6S1/u/+jGlj4udYh7yKZXQlGU5DA4IPlSlXSPMLgltjuy5th8FdyCOUqs0F0OXdTDmCw9D0Psa6zew6hqdzfRQmBblhKY+Xhcjx4x5cWTSlU4tUU96Gsq6Uo7JH1dhkgkYHKEcjUZvgWjI9aUpuzoSh2d9heWJtTDM5gmGCrYyreRz6VJ9K1iWxjZHQy28oI4kPEoGOS5HnypSoVyafBOcUbxLmO6njms4JreRTxusmODgwvIZ9eda/TtZtZ9USLiuZYixkULy4ZD55PIjOPpSlTybZQr3R7I4tcbLFCXR6d7MLdprLUo3JE13aHikHI5IIyPTrXj5kMbFCclSVJ+XKlKyMObnByl22zT8jBQsUY9JL/BxSlKbM8//Z',
@@ -1834,7 +1830,6 @@ function goTo(view, btn){
   if(view==='seguimiento')renderSeguimiento();
   if(view==='finanzas')   renderFinanzas();
   if(view==='asistencia') renderAsistencia();
-  if(view==='reporte-q1')  renderReporteQ1();
 }
 
 function updateBadges(){
@@ -3184,86 +3179,244 @@ function renderFinanzas(){
 ═══════════════════════════════════════════════════ */
 function renderDashboard(){
   const MONTHS={enero:1,febrero:2,marzo:3,abril:4,mayo:5,junio:6,julio:7,agosto:8,septiembre:9,octubre:10,noviembre:11,diciembre:12,ene:1,feb:2,mar:3,abr:4,may:5,jun:6,jul:7,ago:8,sep:9,oct:10,nov:11,dic:12};
-  const now = new Date();
-  function parseBday(s){
-    if(!s) return null;
-    const pts = s.toLowerCase().split(/[\s,\/]+/).filter(Boolean);
-    let d=null,m=null;
-    pts.forEach(pt=>{const n=parseInt(pt);if(!isNaN(n)&&n<=31)d=n;const ml=MONTHS[pt];if(ml)m=ml;});
-    return(d&&m)?{d,m}:null;
-  }
-  function daysUntil(m,d){
-    const y=now.getFullYear(); let next=new Date(y,m-1,d);
-    if(next<=now) next=new Date(y+1,m-1,d);
-    return Math.round((next-now)/(1000*60*60*24));
-  }
+  const now=new Date();
+  function parseBday(s){if(!s)return null;const pts=s.toLowerCase().split(/[\s,\/]+/).filter(Boolean);let d=null,m=null;pts.forEach(pt=>{const n=parseInt(pt);if(!isNaN(n)&&n<=31)d=n;const ml=MONTHS[pt];if(ml)m=ml;});return(d&&m)?{d,m}:null;}
+  function daysUntil(m,d){const y=now.getFullYear();let next=new Date(y,m-1,d);if(next<=now)next=new Date(y+1,m-1,d);return Math.round((next-now)/(1000*60*60*24));}
+  function avg(p){if(!p.reporte_personal||!p.reporte_personal.metricas)return null;const vals=Object.values(p.reporte_personal.metricas).filter(v=>typeof v==="number");return vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:null;}
+  function scoreColor(v){if(v===null)return"#888780";if(v>=8.5)return"#2D7A52";if(v>=7.5)return"#A06E1A";if(v>=6.5)return"#954F18";return"#A02828";}
+  function scoreBg(v){if(v===null)return"rgba(136,135,128,0.1)";if(v>=8.5)return"rgba(45,122,82,0.1)";if(v>=7.5)return"rgba(160,110,26,0.1)";if(v>=6.5)return"rgba(149,79,24,0.1)";return"rgba(160,40,40,0.1)";}
+  function scoreLabel(v){if(v===null)return"sin datos";if(v>=8.5)return"saludable";if(v>=7.5)return"estable";if(v>=6.5)return"en observación";return"crítico";}
+
+  const AREAS_DB=[
+    {key:"familia",   label:"Familia",   ico:"🏠", color:"#1A9D94"},
+    {key:"intimidad", label:"Intimidad", ico:"🙏", color:"#6A4AB8"},
+    {key:"entusiasmo",label:"Entusiasmo",ico:"🔥", color:"#C84840"},
+    {key:"liderazgo", label:"Liderazgo", ico:"👥", color:"#2A5A96"},
+    {key:"economia",  label:"Economía",  ico:"💰", color:"#2D7A52"},
+    {key:"salud",     label:"Salud",     ico:"❤️", color:"#A06E1A"},
+  ];
+  const ZC={qro:"#C8933A",norte:"#2A5A96",sur:"#2D7A52",centro:"#7A2A52",otro:"#5A3A96"};
+  const ZBG={qro:"rgba(200,147,58,0.12)",norte:"rgba(42,90,150,0.12)",sur:"rgba(45,122,82,0.12)",centro:"rgba(122,42,82,0.12)",otro:"rgba(90,58,150,0.12)"};
+  const ZL={qro:"QRO",norte:"Norte",sur:"Sur",centro:"Centro",otro:"Intl."};
+
+  const withRP=pastores.filter(p=>p.reporte_personal&&p.reporte_personal.metricas);
+  const totalPend=pastores.reduce((s,p)=>s+(p.pendientes||[]).length,0);
+  const sinRP=pastores.filter(p=>!p.reporte_personal);
+
+  const areaAvgs={};
+  AREAS_DB.forEach(a=>{
+    const vals=withRP.map(p=>p.reporte_personal.metricas[a.key]).filter(v=>typeof v==="number");
+    areaAvgs[a.key]=vals.length?(vals.reduce((s,v)=>s+v,0)/vals.length):null;
+  });
+  const networkAvg=withRP.length?withRP.map(p=>avg(p)).filter(v=>v!==null).reduce((s,v,_,a)=>s+v/a.length,0):null;
+  const minArea=AREAS_DB.reduce((a,b)=>(areaAvgs[a.key]??10)<(areaAvgs[b.key]??10)?a:b);
+  const maxArea=AREAS_DB.reduce((a,b)=>(areaAvgs[a.key]??0)>(areaAvgs[b.key]??0)?a:b);
+
+  const rpSorted=withRP.slice().sort((a,b)=>(avg(a)??0)-(avg(b)??0));
+  const critical=rpSorted.filter(p=>(avg(p)??10)<6.5);
+  const watch=rpSorted.filter(p=>{const v=avg(p);return v>=6.5&&v<7.5;});
+  const stable=rpSorted.filter(p=>{const v=avg(p);return v>=7.5&&v<8.5;});
+  const thriving=rpSorted.slice().reverse().filter(p=>(avg(p)??0)>=8.5);
 
   const upcoming=[];
-  pastores.forEach(p=>{const bd=parseBday(p.cumple);if(bd){const days=daysUntil(bd.m,bd.d);if(days<=45)upcoming.push({p,days});}});
+  pastores.forEach(p=>{const bd=parseBday(p.cumple);if(bd){const days=daysUntil(bd.m,bd.d);if(days<=30)upcoming.push({p,days});}});
   upcoming.sort((a,b)=>a.days-b.days);
 
-  const alerts=[];
-  pastores.filter(p=>(p.pendientes||[]).some(x=>/salud|cirugía/i.test(x))).forEach(p=>{
-    const t=p.pendientes.find(x=>/salud|cirugía/i.test(x));
-    alerts.push({cls:'ar',ico:'⚕',title:`${p.nombre} ${p.apellido||''} — Salud`,desc:t});
-  });
-  pastores.filter(p=>(p.pendientes||[]).length>=5).forEach(p=>
-    alerts.push({cls:'',ico:'⏳',title:`${p.nombre} — ${p.pendientes.length} pendientes activos`,desc:p.pendientes[0]}));
-  pastores.filter(p=>p.tags&&p.tags.includes('nuevo')).forEach(p=>
-    alerts.push({cls:'ag',ico:'🌱',title:`${p.nombre} ${p.apellido||''} — Recién integrado`,desc:`${p.iglesia} · ${p.ciudad}`}));
+  const healthAlerts=pastores.filter(p=>(p.pendientes||[]).some(x=>/salud|cáncer|cirugía|médic|foniatra|artritis|insulina/i.test(x)));
+  const financeAlerts=pastores.filter(p=>(p.pendientes||[]).some(x=>/SAT|corrida financiera/i.test(x)));
+  const transAlerts=pastores.filter(p=>p.tags&&(p.tags.includes("transición")||p.tags.includes("transicion")));
 
-  const totalPend = pastores.reduce((s,p)=>s+(p.pendientes||[]).length,0);
-  const withRP    = pastores.filter(p=>p.reporte_personal);
+  const ac=[
+    ...critical.map(p=>({pri:0,ico:"🚨",color:"var(--critical)",bg:"rgba(160,40,40,0.08)",label:"Urgente",text:"Llamar a "+p.nombre+" "+(p.apellido||""),sub:"Promedio "+avg(p).toFixed(1)+" — "+(AREAS_DB.filter(a=>typeof p.reporte_personal.metricas[a.key]==="number"&&p.reporte_personal.metricas[a.key]<6.5).map(a=>a.label).join(", ")||"bajo promedio"),idx:pastores.indexOf(p)})),
+    ...healthAlerts.map(p=>({pri:1,ico:"❤️",color:"#A32D2D",bg:"rgba(163,45,45,0.08)",label:"Salud",text:p.nombre+" "+(p.apellido||"")+" — salud",sub:(p.pendientes||[]).find(x=>/salud|cáncer|cirugía|médic|artritis/i.test(x))||"",idx:pastores.indexOf(p)})),
+    ...financeAlerts.map(p=>({pri:2,ico:"💰",color:"var(--qro)",bg:"rgba(200,147,58,0.08)",label:"Finanzas",text:p.nombre+" "+(p.apellido||"")+" — finanzas",sub:(p.pendientes||[]).find(x=>/SAT|corrida financiera/i.test(x))||"",idx:pastores.indexOf(p)})),
+    ...transAlerts.map(p=>({pri:3,ico:"🚗",color:"var(--norte)",bg:"rgba(42,90,150,0.08)",label:"Transición",text:p.nombre+" "+(p.apellido||"")+" — en transición",sub:p.iglesia+" · "+p.ciudad,idx:pastores.indexOf(p)})),
+  ].filter((v,i,a)=>a.findIndex(x=>x.idx===v.idx&&x.ico===v.ico)===i).sort((a,b)=>a.pri-b.pri).slice(0,6);
 
-  let h = `<div class="view-wrap">
-    <div class="view-title">Dashboard</div>
-    <div class="view-sub">${now.toLocaleDateString('es-MX',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}</div>
-    <div class="kpi-grid">
-      <div class="kpi-card kpi-a"><div class="kpi-num">${pastores.length}</div><div class="kpi-lbl">Pastores</div></div>
-      <div class="kpi-card kpi-b"><div class="kpi-num">${ZONES.length}</div><div class="kpi-lbl">Zonas</div></div>
-      <div class="kpi-card kpi-r"><div class="kpi-num">${totalPend}</div><div class="kpi-lbl">Pendientes</div></div>
-      <div class="kpi-card kpi-g"><div class="kpi-num">${withRP.length}</div><div class="kpi-lbl">Con reporte</div></div>
-    </div>`;
+  function avEl(p,sz){const col=pcol(p),photo=pastorPhotos[p.nombre],ini=(p.nombre[0]+(p.apellido||"")[0]||"").toUpperCase();return photo?`<div style="width:${sz}px;height:${sz}px;border-radius:50%;overflow:hidden;flex-shrink:0"><img src="${photo}" style="width:100%;height:100%;object-fit:cover"></div>`:`<div style="width:${sz}px;height:${sz}px;border-radius:50%;background:${col};display:flex;align-items:center;justify-content:center;font-size:${Math.round(sz*0.36)}px;font-weight:700;color:#000;flex-shrink:0">${ini}</div>`;}
 
-  if(upcoming.length){
-    h += `<div class="dash-sec">Próximos cumpleaños</div><div class="bday-list">`;
-    upcoming.slice(0,5).forEach(({p,days})=>{
-      const photo=pastorPhotos[p.nombre], col=pcol(p);
-      const av=photo?`<div class="bday-av"><img src="${photo}" loading="lazy"></div>`:`<div class="bday-av" style="background:${col}">${(p.nombre[0]+(p.apellido||'')[0]||'').toUpperCase()}</div>`;
-      const badge=days===0?'Hoy 🎉':days===1?'Mañana':`${days} días`;
-      h+=`<div class="bday-row">${av}<div class="bday-name">${p.nombre} ${p.apellido||''}</div><div class="bday-date">${p.cumple}</div><div class="bday-badge">${badge}</div></div>`;
-    });
-    h += `</div>`;
-  }
+  let h=`<style>
+  .dw{padding:18px 16px 80px;max-width:980px}
+  .d-date{font-size:11px;color:var(--ink3);margin-bottom:16px;text-transform:capitalize;letter-spacing:.02em}
+  .d4{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px}
+  @media(min-width:520px){.d4{grid-template-columns:repeat(4,1fr)}}
+  .dkpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:13px 15px;position:relative;overflow:hidden}
+  .dkpi::before{content:"";position:absolute;top:0;left:0;right:0;height:2.5px}
+  .dkpi.ka::before{background:var(--qro)}.dkpi.kb::before{background:var(--norte)}.dkpi.kc::before{background:var(--critical)}.dkpi.kd::before{background:var(--healthy)}
+  .dkn{font-size:28px;font-weight:700;letter-spacing:-0.02em;line-height:1;color:var(--ink)}
+  .dkl{font-size:9px;color:var(--ink3);margin-top:4px;text-transform:uppercase;letter-spacing:.07em}
+  .dksub{font-size:10px;color:var(--ink2);margin-top:2px}
+  .dsec{font-size:10px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;margin:18px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+  .dc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+  .dc-body{padding:8px 14px}
+  .dac-row{display:flex;align-items:flex-start;gap:10px;padding:9px 14px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .12s}
+  .dac-row:hover{background:var(--surface2)}
+  .dac-row:last-child{border-bottom:none}
+  .dac-ico{font-size:16px;flex-shrink:0;margin-top:1px}
+  .dac-body{flex:1;min-width:0}
+  .dac-title{font-size:12.5px;font-weight:500;color:var(--ink);line-height:1.3}
+  .dac-sub{font-size:11px;color:var(--ink2);margin-top:2px;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .dac-tag{font-size:9px;font-weight:600;padding:1px 8px;border-radius:99px;flex-shrink:0;margin-top:2px}
+  .dnet{display:flex;align-items:stretch;gap:0;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:16px}
+  .dnet-big{padding:18px 20px;flex:0 0 auto;border-right:1px solid var(--border);display:flex;flex-direction:column;justify-content:center;align-items:center;min-width:110px}
+  .dnet-num{font-size:54px;font-weight:700;letter-spacing:-0.04em;line-height:1}
+  .dnet-den{font-size:12px;color:var(--ink3);margin-top:2px}
+  .dnet-areas{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+  .dnet-area{padding:10px 12px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:3px}
+  .dnet-area:nth-child(3),.dnet-area:nth-child(6){border-right:none}
+  .dnet-area:nth-child(4),.dnet-area:nth-child(5),.dnet-area:nth-child(6){border-bottom:none}
+  .dnet-area-top{display:flex;align-items:center;justify-content:space-between}
+  .dnet-area-lbl{font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.04em}
+  .dnet-area-val{font-size:15px;font-weight:700;line-height:1}
+  .dnet-area-bar{height:3px;background:var(--surface3);border-radius:2px;overflow:hidden}
+  .dnet-area-fill{height:3px;border-radius:2px}
+  .dstatus-strip{display:flex;gap:0;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:16px}
+  .dstatus-seg{flex:1;padding:10px 8px;text-align:center;border-right:1px solid var(--border)}
+  .dstatus-seg:last-child{border-right:none}
+  .dstatus-n{font-size:22px;font-weight:700;line-height:1}
+  .dstatus-l{font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.05em;margin-top:3px}
+  .drank{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:16px}
+  .drank-row{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .12s}
+  .drank-row:hover{background:var(--surface2)}
+  .drank-row:last-child{border-bottom:none}
+  .drank-pos{font-size:11px;font-weight:700;color:var(--ink3);width:18px;flex-shrink:0;text-align:center}
+  .drank-name{flex:1;min-width:0}
+  .drank-nm{font-size:12.5px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .drank-ig{font-size:10px;color:var(--ink3)}
+  .drank-bars{display:flex;gap:2px;flex-shrink:0;align-items:flex-end}
+  .drank-bar{width:4px;border-radius:2px;flex-shrink:0}
+  .drank-score{font-size:13px;font-weight:700;padding:2px 8px;border-radius:99px;flex-shrink:0;margin-left:4px}
+  .dstat-row{display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid var(--border)}
+  .dstat-row:last-child{border-bottom:none}
+  .dstat-lbl{font-size:11px;color:var(--ink2);width:74px;flex-shrink:0}
+  .dstat-bar{flex:1;height:5px;background:var(--surface3);border-radius:3px;overflow:hidden}
+  .dstat-fill{height:5px;border-radius:3px}
+  .dstat-val{font-size:12px;font-weight:600;min-width:28px;text-align:right;flex-shrink:0}
+  </style>
+  <div class="dw">
+  <div class="d-date">${now.toLocaleDateString("es-MX",{weekday:"long",year:"numeric",month:"long",day:"numeric"})}</div>`;
 
-  if(alerts.length){
-    h += `<div class="dash-sec">Alertas pastorales</div><div class="alert-list">`;
-    alerts.slice(0,6).forEach(a=>{
-      h+=`<div class="alert-row ${a.cls}"><div class="alert-ico">${a.ico}</div><div><div class="alert-ttl">${a.title}</div>${a.desc?`<div class="alert-desc">${String(a.desc).substring(0,120)}</div>`:''}</div></div>`;
-    });
-    h += `</div>`;
-  }
+  h+=`<div class="d4">
+    <div class="dkpi ka"><div class="dkn">${pastores.length}</div><div class="dkl">Pastores</div><div class="dksub">en el compañerismo</div></div>
+    <div class="dkpi kd"><div class="dkn">${withRP.length}</div><div class="dkl">Con reporte</div><div class="dksub">${sinRP.length} sin datos</div></div>
+    <div class="dkpi kc"><div class="dkn">${totalPend}</div><div class="dkl">Pendientes</div><div class="dksub">${healthAlerts.length+financeAlerts.length} urgentes</div></div>
+    <div class="dkpi kb"><div class="dkn">${networkAvg!==null?networkAvg.toFixed(1):"—"}</div><div class="dkl">Promedio red</div><div class="dksub">6 áreas de vida</div></div>
+  </div>`;
 
-  if(withRP.length){
-    h += `<div class="dash-sec">Reportes recientes</div><div class="bday-list">`;
-    withRP.slice(0,5).forEach(p=>{
-      const m=p.reporte_personal.metricas, vals=Object.values(m);
-      const avg=(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1);
-      const photo=pastorPhotos[p.nombre], col=pcol(p);
-      const av=photo?`<div class="bday-av"><img src="${photo}" loading="lazy"></div>`:`<div class="bday-av" style="background:${col}">${(p.nombre[0]+(p.apellido||'')[0]||'').toUpperCase()}</div>`;
-      const ac=getEstado(parseFloat(avg)).color;
-      h+=`<div class="bday-row" style="cursor:pointer" onclick="goTo('pastores',document.querySelector('[data-view=pastores]'));setTimeout(()=>openPanel(${pastores.indexOf(p)}),200)">
-        ${av}
-        <div class="bday-name">${p.nombre} ${p.apellido||''}</div>
-        <div class="bday-date">${p.reporte_personal.fecha||''}</div>
-        <div class="bday-badge" style="color:${ac};background:${ac}22">${avg}</div>
+  if(networkAvg!==null){
+    const nc=scoreColor(networkAvg);
+    h+=`<div class="dnet">
+      <div class="dnet-big">
+        <div class="dnet-num" style="color:${nc}">${networkAvg.toFixed(1)}</div>
+        <div class="dnet-den">/ 10</div>
+        <div style="font-size:9px;font-weight:600;margin-top:5px;padding:2px 8px;border-radius:99px;background:${scoreBg(networkAvg)};color:${nc}">${scoreLabel(networkAvg)}</div>
+      </div>
+      <div class="dnet-areas">`;
+    AREAS_DB.forEach(a=>{
+      const v=areaAvgs[a.key];
+      const vc=scoreColor(v);
+      const pct=v!==null?Math.round(v/10*100):0;
+      const isMin=a.key===minArea.key, isMax=a.key===maxArea.key;
+      h+=`<div class="dnet-area" style="${isMin?"background:rgba(160,40,40,0.04)":isMax?"background:rgba(45,122,82,0.04)":""}">
+        <div class="dnet-area-top">
+          <span class="dnet-area-lbl">${a.label}${isMin?" ↓":isMax?" ↑":""}</span>
+          <span class="dnet-area-val" style="color:${vc}">${v!==null?v.toFixed(1):"—"}</span>
+        </div>
+        <div class="dnet-area-bar"><div class="dnet-area-fill" style="width:${pct}%;background:${a.color}"></div></div>
       </div>`;
     });
-    h += `</div>`;
+    h+=`</div></div>`;
   }
-  h += `</div>`;
-  document.getElementById('view-dashboard').innerHTML = h;
+
+  h+=`<div class="dstatus-strip">
+    <div class="dstatus-seg"><div class="dstatus-n" style="color:var(--critical)">${critical.length}</div><div class="dstatus-l">Crítico</div></div>
+    <div class="dstatus-seg"><div class="dstatus-n" style="color:var(--watch)">${watch.length}</div><div class="dstatus-l">Observación</div></div>
+    <div class="dstatus-seg"><div class="dstatus-n" style="color:var(--stable)">${stable.length}</div><div class="dstatus-l">Estable</div></div>
+    <div class="dstatus-seg"><div class="dstatus-n" style="color:var(--healthy)">${thriving.length}</div><div class="dstatus-l">Saludable</div></div>
+    <div class="dstatus-seg"><div class="dstatus-n" style="color:var(--ink3)">${sinRP.length}</div><div class="dstatus-l">Sin datos</div></div>
+  </div>`;
+
+  if(ac.length){
+    h+=`<div class="dsec">Acciones para esta semana</div><div class="dc" style="margin-bottom:16px">`;
+    ac.forEach((a,ai)=>{
+      const openAc = a.idx>=0 ? 'goTo(\'pastores\',document.querySelector(\'[data-view=pastores]\'));setTimeout(()=>openPanel('+a.idx+'),200)' : '';
+      h+='<div class="dac-row"'+(openAc?' onclick="'+openAc+'"':'')+'>'+
+        '<div class="dac-ico">'+a.ico+'</div>'+
+        '<div class="dac-body">'+
+          '<div class="dac-title">'+a.text+'</div>'+
+          (a.sub?'<div class="dac-sub">'+String(a.sub).substring(0,100)+'</div>':'')+
+        '</div>'+
+        '<div class="dac-tag" style="background:'+a.bg+';color:'+a.color+'">'+a.label+'</div>'+
+      '</div>';
+    });
+    h+=`</div>`;
+  }
+
+  h+=`<div class="dsec">Ranking de salud personal</div><div class="drank">`;
+  const allRanked=[...withRP].sort((a,b)=>(avg(b)??0)-(avg(a)??0));
+  allRanked.forEach((p,i)=>{
+    const v=avg(p),vc=scoreColor(v),vbg=scoreBg(v);
+    const bars=AREAS_DB.map(a=>{
+      const mv=p.reporte_personal.metricas[a.key];
+      return typeof mv==="number"?`<div class="drank-bar" style="height:${Math.round(mv/10*22)}px;background:${a.color}"></div>`:"";
+    }).join("");
+    h+=`<div class="drank-row" onclick="goTo('pastores',document.querySelector('[data-view=pastores]'));setTimeout(()=>openPanel(${pastores.indexOf(p)}),200)">
+      <div class="drank-pos">${i+1}</div>
+      ${avEl(p,28)}
+      <div class="drank-name">
+        <div class="drank-nm">${p.nombre} ${p.apellido||""}</div>
+        <div class="drank-ig">${p.iglesia||""} · <span style="color:${ZC[p.zona]||"#888"}">${ZL[p.zona]||p.zona}</span></div>
+      </div>
+      <div class="drank-bars" style="height:24px">${bars}</div>
+      <div class="drank-score" style="color:${vc};background:${vbg}">${v!==null?v.toFixed(1):"—"}</div>
+    </div>`;
+  });
+  sinRP.forEach(p=>{
+    h+=`<div class="drank-row" style="opacity:.4" onclick="goTo('pastores',document.querySelector('[data-view=pastores]'));setTimeout(()=>openPanel(${pastores.indexOf(p)}),200)">
+      <div class="drank-pos" style="color:var(--ink4)">—</div>
+      ${avEl(p,28)}
+      <div class="drank-name">
+        <div class="drank-nm">${p.nombre} ${p.apellido||""}</div>
+        <div class="drank-ig">${p.iglesia||""} · <span style="color:${ZC[p.zona]||"#888"}">${ZL[p.zona]||p.zona}</span></div>
+      </div>
+      <div style="flex:1"></div>
+      <div class="drank-score" style="color:var(--ink3);background:var(--surface3)">sin rep.</div>
+    </div>`;
+  });
+  h+=`</div>`;
+
+  h+=`<div class="dsec">Áreas a fortalecer en la red</div><div class="dc" style="margin-bottom:16px">`;
+  const sortedAreas=[...AREAS_DB].sort((a,b)=>(areaAvgs[a.key]??10)-(areaAvgs[b.key]??10));
+  sortedAreas.forEach(a=>{
+    const v=areaAvgs[a.key];
+    const vc=scoreColor(v);
+    const pct=v!==null?Math.round(v/10*100):0;
+    const below7=withRP.filter(p=>{const mv=p.reporte_personal.metricas[a.key];return typeof mv==="number"&&mv<7;});
+    h+=`<div class="dstat-row">
+      <div class="dstat-lbl">${a.ico} ${a.label}</div>
+      <div class="dstat-bar"><div class="dstat-fill" style="width:${pct}%;background:${a.color}"></div></div>
+      <div class="dstat-val" style="color:${vc}">${v!==null?v.toFixed(1):"—"}</div>
+      ${below7.length?`<div style="font-size:9px;color:var(--critical);margin-left:6px;min-width:46px;flex-shrink:0">${below7.length} bajo 7</div>`:`<div style="min-width:46px"></div>`}
+    </div>`;
+  });
+  h+=`</div>`;
+
+  if(upcoming.length){
+    h+=`<div class="dsec">Cumpleaños próximos</div>`;
+    upcoming.slice(0,4).forEach(({p,days})=>{
+      const badge=days===0?"Hoy 🎉":days===1?"Mañana":`${days} días`;
+      h+=`<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);margin-bottom:5px">
+        ${avEl(p,30)}
+        <div style="flex:1"><div style="font-size:13px;font-weight:500;color:var(--ink)">${p.nombre} ${p.apellido||""}</div><div style="font-size:10px;color:var(--ink3)">${p.esposa?"Con "+p.esposa+" · ":""}${p.cumple}</div></div>
+        <div style="font-size:9.5px;font-weight:700;padding:2px 9px;border-radius:99px;background:rgba(200,147,58,0.1);color:var(--qro)">${badge}</div>
+      </div>`;
+    });
+  }
+
+  h+=`</div>`;
+  document.getElementById("view-dashboard").innerHTML=h;
 }
+
 
 /* ═══════════════════════════════════════════════════
    REPORTES
@@ -3352,56 +3505,147 @@ function renderSeguimiento(){
   pastores.forEach(p=>{
     (p.pendientes||[]).forEach((t,i)=>{
       const id = p.nombre+'_'+i;
+      const text = t.toLowerCase();
+      let tema = 'general';
+      if(/salud|cirugía|médic|foniatra|cáncer|tratamiento|endometriosis|insulina|quiste/i.test(t)) tema = 'salud';
+      else if(/financ|deuda|dinero|econom|pesos|aportac|presupuesto|sueldo|honorario|corrida|diacon.*finanz/i.test(t)) tema = 'finanzas';
+      else if(/transici|reynosa|tijuana|mudanza|enviad|plant/i.test(t)) tema = 'transicion';
+      else if(/lideraz|pastor|diac|ancian|equip|sierv|servidor|líder|director|cargo|residen/i.test(t)) tema = 'liderazgo';
+      else if(/esposa|hij|matrimoni|familia|beb|embaraz|adopci|parto/i.test(t)) tema = 'familia';
+      else if(/obra|construccion|construcción|terreno|local|espacio|edifici/i.test(t)) tema = 'espacio';
       allTasks.push({
         id, text:t,
         pastor:(p.nombre+' '+(p.apellido||'')).trim(),
+        pastorNombre:p.nombre,
         zona:p.zona,
-        isHealth:/salud|cirugía|médic|foniatra/i.test(t),
-        isApproved:/aprobad/i.test(t),
+        tema,
         state:taskStates[id]||'pend'
       });
     });
   });
-  const filtered = sFilter==='todos'?allTasks:sFilter==='salud'?allTasks.filter(t=>t.isHealth):allTasks.filter(t=>t.zona===sFilter);
-  const cnt = {pend:0,prog:0,done:0};
-  allTasks.forEach(t=>cnt[t.state]=(cnt[t.state]||0)+1);
 
-  let h = `<div class="view-wrap">
-    <div class="view-title">Seguimiento</div>
-    <div class="view-sub">Tareas y pendientes activos por pastor</div>
-    <div class="seg-kpis">
-      <div class="sk"><div class="sk-n" style="color:var(--qro)">${cnt.pend||0}</div><div class="sk-l">Pendiente</div></div>
-      <div class="sk"><div class="sk-n" style="color:var(--norte)">${cnt.prog||0}</div><div class="sk-l">En proceso</div></div>
-      <div class="sk"><div class="sk-n" style="color:var(--healthy)">${cnt.done||0}</div><div class="sk-l">Completado</div></div>
+  const TEMAS = [
+    {id:'salud',     label:'Salud',       color:'#A32D2D', bg:'rgba(163,45,45,0.08)',   border:'rgba(163,45,45,0.2)',   ico:'❤️'},
+    {id:'finanzas',  label:'Finanzas',    color:'#2D7A52', bg:'rgba(45,122,82,0.08)',   border:'rgba(45,122,82,0.2)',   ico:'💰'},
+    {id:'transicion',label:'Transición',  color:'#2A5A96', bg:'rgba(42,90,150,0.08)',   border:'rgba(42,90,150,0.2)',   ico:'🚗'},
+    {id:'liderazgo', label:'Liderazgo',   color:'#7A2A52', bg:'rgba(122,42,82,0.08)',   border:'rgba(122,42,82,0.2)',   ico:'👥'},
+    {id:'familia',   label:'Familia',     color:'#5A3A96', bg:'rgba(90,58,150,0.08)',   border:'rgba(90,58,150,0.2)',   ico:'🏠'},
+    {id:'espacio',   label:'Espacio',     color:'#8A6010', bg:'rgba(138,96,16,0.08)',   border:'rgba(138,96,16,0.2)',   ico:'🏗'},
+    {id:'general',   label:'General',     color:'#4A4A52', bg:'rgba(74,74,82,0.06)',    border:'rgba(74,74,82,0.15)',   ico:'📋'},
+  ];
+
+  const ZC = {qro:'#C8933A',norte:'#2A5A96',sur:'#2D7A52',centro:'#7A2A52',otro:'#5A3A96'};
+  const ZBG = {qro:'rgba(200,147,58,0.12)',norte:'rgba(42,90,150,0.12)',sur:'rgba(45,122,82,0.12)',centro:'rgba(122,42,82,0.12)',otro:'rgba(90,58,150,0.12)'};
+
+  const cnt = {pend:0,prog:0,done:0};
+  allTasks.forEach(t=>{cnt[t.state]=(cnt[t.state]||0)+1;});
+
+  const filtered = sFilter==='todos' ? allTasks : allTasks.filter(t=>t.tema===sFilter);
+
+  let h = `<style>
+  .swrap{padding:20px 16px 80px;max-width:900px}
+  .skpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px}
+  .skpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:14px;text-align:center}
+  .skpi-n{font-size:32px;font-weight:700;line-height:1;letter-spacing:-0.02em}
+  .skpi-l{font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-top:4px}
+  .stema-pills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:20px}
+  .stema-pill{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:99px;border:1px solid var(--border2);background:transparent;font-size:11px;font-weight:600;color:var(--ink3);cursor:pointer;transition:all .14s;font-family:var(--sans)}
+  .stema-pill.active{color:#fff}
+  .stema-pill:hover{border-color:var(--ink3)}
+  .stema-group{margin-bottom:20px}
+  .stema-hdr{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+  .stema-ico{font-size:15px;flex-shrink:0}
+  .stema-label{font-size:13px;font-weight:600;color:var(--ink);flex:1}
+  .stema-count{font-size:10px;font-weight:600;padding:2px 8px;border-radius:99px}
+  .stask{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;transition:border-color .14s,opacity .2s;margin-bottom:6px}
+  .stask:hover{border-color:var(--border2)}
+  .stask.done{opacity:.38}
+  .stask.prog{border-left:2.5px solid var(--qro)}
+  .stask-check{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--border2);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:9px;transition:all .14s}
+  .stask.done .stask-check{background:var(--healthy);border-color:var(--healthy);color:#fff}
+  .stask.prog .stask-check{border-color:var(--qro);background:rgba(200,147,58,0.15)}
+  .stask-body{flex:1;min-width:0}
+  .stask-text{font-size:13px;font-weight:500;color:var(--ink);line-height:1.5}
+  .stask.done .stask-text{text-decoration:line-through;color:var(--ink3)}
+  .stask-meta{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap;align-items:center}
+  .stask-pastor{font-size:10px;color:var(--ink2);font-weight:500}
+  .stask-zone{font-size:9px;font-weight:600;padding:1px 6px;border-radius:99px}
+  .stask-status{font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px;align-self:flex-start;margin-top:1px;flex-shrink:0}
+  .ss-pend{background:rgba(200,147,58,0.1);color:var(--qro)}
+  .ss-prog{background:rgba(42,90,150,0.1);color:var(--norte)}
+  .ss-done{background:rgba(45,122,82,0.1);color:var(--healthy)}
+  </style>
+  <div class="swrap">
+    <div style="font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-0.02em;margin-bottom:3px">Seguimiento</div>
+    <div style="font-size:11px;color:var(--ink3);margin-bottom:18px">${allTasks.length} pendientes en ${pastores.filter(p=>p.pendientes&&p.pendientes.length).length} pastores · organizado por tema</div>
+
+    <div class="skpis">
+      <div class="skpi"><div class="skpi-n" style="color:var(--qro)">${cnt.pend||0}</div><div class="skpi-l">Pendiente</div></div>
+      <div class="skpi"><div class="skpi-n" style="color:var(--norte)">${cnt.prog||0}</div><div class="skpi-l">En proceso</div></div>
+      <div class="skpi"><div class="skpi-n" style="color:var(--healthy)">${cnt.done||0}</div><div class="skpi-l">Completado</div></div>
     </div>
-    <div class="filters">
-      ${['todos','salud','qro','norte','sur','centro','otro'].map(f=>`<button class="f-btn${sFilter===f?' active':''}" onclick="sFilter='${f}';renderSeguimiento()">${f==='salud'?'⚕ Salud':f==='todos'?'Todos':f.toUpperCase()}</button>`).join('')}
-    </div>
-    <div class="task-list">`;
+
+    <div class="stema-pills">
+      <button class="stema-pill${sFilter==='todos'?' active':''}" style="${sFilter==='todos'?'background:#4A4A52;border-color:#4A4A52':''}" onclick="sFilter='todos';renderSeguimiento()">Todos · ${allTasks.length}</button>
+      ${TEMAS.filter(t=>allTasks.some(a=>a.tema===t.id)).map(t=>{
+        const count = allTasks.filter(a=>a.tema===t.id).length;
+        const isActive = sFilter===t.id;
+        return `<button class="stema-pill${isActive?' active':''}" style="${isActive?'background:'+t.color+';border-color:'+t.color:''}" onclick="sFilter='${t.id}';renderSeguimiento()">${t.ico} ${t.label} · ${count}</button>`;
+      }).join('')}
+    </div>`;
 
   if(!filtered.length){
     h += `<div class="empty-state"><div class="empty-ico">✓</div><div class="empty-txt">Todo al día</div><div class="empty-sub">Sin pendientes en esta categoría</div></div>`;
+  } else if(sFilter==='todos'){
+    TEMAS.forEach(tema=>{
+      const tasks = filtered.filter(t=>t.tema===tema.id);
+      if(!tasks.length) return;
+      const pendCount = tasks.filter(t=>t.state==='pend').length;
+      h += `<div class="stema-group">
+        <div class="stema-hdr">
+          <span class="stema-ico">${tema.ico}</span>
+          <span class="stema-label">${tema.label}</span>
+          <span class="stema-count" style="background:${tema.bg};color:${tema.color};border:1px solid ${tema.border}">${tasks.length} items · ${pendCount} pendientes</span>
+        </div>`;
+      tasks.forEach(t=>{
+        const cls = t.state==='done'?'done':t.state==='prog'?'prog':'';
+        const slbl = t.state==='done'?'Listo':t.state==='prog'?'En proceso':'Pendiente';
+        const scls = t.state==='done'?'ss-done':t.state==='prog'?'ss-prog':'ss-pend';
+        h += `<div class="stask ${cls}" onclick="cycleTask('${t.id}')">
+          <div class="stask-check">${t.state==='done'?'✓':''}</div>
+          <div class="stask-body">
+            <div class="stask-text">${t.text}</div>
+            <div class="stask-meta">
+              <span class="stask-pastor">${t.pastor}</span>
+              <span class="stask-zone" style="background:${ZBG[t.zona]||'rgba(0,0,0,0.08)'};color:${ZC[t.zona]||'#888'}">${t.zona.toUpperCase()}</span>
+            </div>
+          </div>
+          <div class="stask-status ${scls}">${slbl}</div>
+        </div>`;
+      });
+      h += `</div>`;
+    });
   } else {
+    const tema = TEMAS.find(t=>t.id===sFilter)||TEMAS[TEMAS.length-1];
     filtered.forEach(t=>{
-      const cls = t.state==='done'?'tdone':t.state==='prog'?'tprog':'';
+      const cls = t.state==='done'?'done':t.state==='prog'?'prog':'';
       const slbl = t.state==='done'?'Listo':t.state==='prog'?'En proceso':'Pendiente';
-      const scls = t.state==='done'?'sd':t.state==='prog'?'si':'sp';
-      h+=`<div class="task ${cls}" onclick="cycleTask('${t.id}')">
-        <div class="tcheck">${t.state==='done'?'✓':''}</div>
-        <div style="flex:1;min-width:0">
-          <div class="ttitle">${t.text}</div>
-          <div class="tmeta">
-            <span class="tpastor">${t.pastor}</span>
-            <span class="tzone" style="background:${ZTEXTBG[t.zona]||'#222'};color:${ZCOLORS[t.zona]||'#888'}">${t.zona.toUpperCase()}</span>
-            ${t.isHealth?'<span style="font-family: var(--sans);font-size:8.5px;color:var(--critical)">⚕ Salud</span>':''}
-            ${t.isApproved?'<span style="font-family: var(--sans);font-size:8.5px;color:var(--healthy)">✓ Aprobado</span>':''}
+      const scls = t.state==='done'?'ss-done':t.state==='prog'?'ss-prog':'ss-pend';
+      h += `<div class="stask ${cls}" onclick="cycleTask('${t.id}')">
+        <div class="stask-check">${t.state==='done'?'✓':''}</div>
+        <div class="stask-body">
+          <div class="stask-text">${t.text}</div>
+          <div class="stask-meta">
+            <span class="stask-pastor">${t.pastor}</span>
+            <span class="stask-zone" style="background:${ZBG[t.zona]||'rgba(0,0,0,0.08)'};color:${ZC[t.zona]||'#888'}">${t.zona.toUpperCase()}</span>
           </div>
         </div>
-        <div class="tstatus ${scls}">${slbl}</div>
+        <div class="stask-status ${scls}">${slbl}</div>
       </div>`;
     });
   }
-  h += `</div></div>`;
+
+  h += `</div>`;
   document.getElementById('view-seguimiento').innerHTML = h;
   document.getElementById('nb-seg').textContent = cnt.pend||0;
 }
@@ -3517,193 +3761,238 @@ window.saveCloud = saveCloud;
    ASISTENCIA Q1 2026
 ═══════════════════════════════════════════════════ */
 function renderAsistencia(){
+
   const DATA = [
-    {iglesia:'Horizonte Querétaro', pastor:'Gadiel Arriaga', zona:'qro', fuente:'reunion', adultos:1500, ninos:null, nuevas:null, discipulado:null, bautismos:37, ruta:true, rutaN:277, noReporto:false, nota:'Datos de reunión pastoral. La Ruta activa con 277 en bienvenida.', impacto:'~1,400/sem en 3 servicios. Primer colaborador en consejería.', sin:false},
-    {iglesia:'másCristo Juriquilla', pastor:'Marce Muñoz', zona:'qro', fuente:'reunion', adultos:130, ninos:null, nuevas:null, discipulado:85, bautismos:17, ruta:true, rutaN:null, noReporto:false, nota:'Datos de reunión pastoral.', impacto:'17 bautismos Q1. Grupos al 60%.', sin:false},
-    {iglesia:'Horizonte Villahermosa', pastor:'Adrián Capitaine', zona:'sur', fuente:'formulario', adultos:220, ninos:65, nuevas:60, discipulado:120, bautismos:0, ruta:true, rutaN:100, noReporto:false, nota:'Primer Conociéndonos +100 inscritos. 40 miembros oficiales.', impacto:'60 nuevas personas. Primeros 40 miembros formalizados.', sin:false},
-    {iglesia:'Horizonte El Marqués', pastor:'Phil Jones', zona:'qro', fuente:'formulario', adultos:119, ninos:54, nuevas:35, discipulado:39, bautismos:1, ruta:true, rutaN:39, noReporto:false, nota:'Día del niño: gran asistencia con invitados.', impacto:'35 personas nuevas. Evento Día del niño exitoso.', sin:false},
-    {iglesia:'Horizonte Panamá', pastor:'Juan Pablo Segismond', zona:'otro', fuente:'formulario', adultos:76, ninos:10, nuevas:75, discipulado:52, bautismos:0, ruta:true, rutaN:52, noReporto:false, nota:'Primer grupo completó Membresía en La Ruta. Taller Ministry Imprint.', impacto:'75 personas nuevas — ratio 1:1 con adultos regulares.', sin:false},
-    {iglesia:'Horizonte CDMX', pastor:'Erik Servín', zona:'centro', fuente:'formulario', adultos:70, ninos:19, nuevas:2, discipulado:15, bautismos:0, ruta:false, rutaN:null, noReporto:false, nota:'Sin La Ruta. Único servicio sin La Ruta fuera de El Camino.', impacto:'Solo 2 personas nuevas.', sin:false},
-    {iglesia:'Horizonte Mérida', pastor:'Herminio Navidad', zona:'sur', fuente:'formulario', adultos:66, ninos:6, nuevas:41, discipulado:40, bautismos:0, ruta:true, rutaN:40, noReporto:false, nota:'Aniversario: 102 personas. Nuevas familias llegando.', impacto:'41 personas nuevas. Crecimiento sostenido.', sin:false},
-    {iglesia:'Calvary Chapel Ecatepec', pastor:'Toño García', zona:'centro', fuente:'formulario', adultos:40, ninos:null, nuevas:null, discipulado:70, bautismos:null, ruta:true, rutaN:null, noReporto:false, nota:'Toño Robles enviado a Texcoco. Moi Hernández en tto. cáncer de colon.', impacto:'La Ruta y oración como momentos clave.', sin:false},
-    {iglesia:'Horizonte Tequisquiapan', pastor:'—', zona:'norte', fuente:'formulario', adultos:30, ninos:30, nuevas:null, discipulado:50, bautismos:null, ruta:true, rutaN:null, noReporto:false, nota:'Donación de filtros de agua en comunidades.', impacto:'Alcance comunitario activo.', sin:false},
-    {iglesia:'Vida Nueva en Cristo', pastor:'Oscar García', zona:'centro', fuente:'formulario', adultos:null, ninos:65, nuevas:null, discipulado:90, bautismos:null, ruta:true, rutaN:null, noReporto:false, nota:'Campaña niños, matrimonios, Día del niño. Pastor Javier sanado.', impacto:'Múltiples eventos de alcance. Testimonio de sanidad.', sin:false},
-    {iglesia:'Comunidad El Camino', pastor:'Daniel Vargas', zona:'otro', fuente:'formulario', adultos:20, ninos:20, nuevas:null, discipulado:40, bautismos:null, ruta:false, rutaN:null, noReporto:false, nota:'Serie Nehemías. Clases de inglés y nivelación educativa.', impacto:'Proyecto social en desarrollo.', sin:false},
-    {iglesia:'La Carpa de Reunión', pastor:'Dani Ávila', zona:'qro', fuente:'sin', adultos:null, ninos:null, nuevas:null, discipulado:null, bautismos:null, ruta:null, rutaN:null, noReporto:true, nota:'No envió formulario.', impacto:'', sin:true},
-    {iglesia:'Identidad San Luis', pastor:'Gerry Berrones', zona:'norte', fuente:'sin', adultos:null, ninos:null, nuevas:null, discipulado:null, bautismos:null, ruta:null, rutaN:null, noReporto:true, nota:'No envió formulario.', impacto:'', sin:true},
-    {iglesia:'La Carpa del Valle McAllen', pastor:'Willer Montesinos', zona:'norte', fuente:'sin', adultos:null, ninos:null, nuevas:null, discipulado:null, bautismos:null, ruta:null, rutaN:null, noReporto:true, nota:'No envió formulario.', impacto:'', sin:true},
-    {iglesia:'Horizonte Tijuana', pastor:'Chuy Anaya', zona:'norte', fuente:'sin', adultos:null, ninos:null, nuevas:null, discipulado:null, bautismos:null, ruta:null, rutaN:null, noReporto:true, nota:'No envió formulario. En transición a Reynosa TX.', impacto:'', sin:true},
-    {iglesia:'Comunidad Baluarte', pastor:'Manuel Jaquez', zona:'norte', fuente:'sin', adultos:null, ninos:null, nuevas:null, discipulado:null, bautismos:null, ruta:null, rutaN:null, noReporto:true, nota:'No envió formulario.', impacto:'', sin:true},
+    {iglesia:'Horizonte Querétaro', pastor:'Gadiel Arriaga', zona:'qro', fuente:'reunion', adultos:1500, ninos:null, nuevas:null, discipulado:null, bautismos:37, ruta:true, rutaN:277, nota:'La Ruta activa: 277 en bienvenida. Primer colaborador en consejería.', alert:null, sin:false},
+    {iglesia:'másCristo Juriquilla', pastor:'Marce Muñoz', zona:'qro', fuente:'reunion', adultos:130, ninos:null, nuevas:null, discipulado:85, bautismos:17, ruta:true, rutaN:null, nota:'17 bautismos en Q1. 85 personas en proceso de discipulado.', alert:null, sin:false},
+    {iglesia:'Horizonte Villahermosa', pastor:'Adrián Capitaine', zona:'sur', fuente:'formulario', adultos:220, ninos:65, nuevas:60, discipulado:120, bautismos:0, ruta:true, rutaN:100, nota:'Primeros 40 miembros oficiales. Conociéndonos con +100 inscritos.', alert:'grow', sin:false},
+    {iglesia:'Horizonte El Marqués', pastor:'Phil Jones', zona:'qro', fuente:'formulario', adultos:119, ninos:54, nuevas:35, discipulado:39, bautismos:1, ruta:true, rutaN:39, nota:'35 personas nuevas. Día del niño con gran asistencia e invitados.', alert:null, sin:false},
+    {iglesia:'Horizonte Panamá', pastor:'JP Segismond', zona:'otro', fuente:'formulario', adultos:76, ninos:10, nuevas:75, discipulado:52, bautismos:0, ruta:true, rutaN:52, nota:'75 nuevas con 76 adultos: ratio 1:1. Primer grupo completó Membresía.', alert:'grow', sin:false},
+    {iglesia:'Horizonte CDMX', pastor:'Erik Servín', zona:'centro', fuente:'formulario', adultos:70, ninos:19, nuevas:2, discipulado:15, bautismos:0, ruta:false, rutaN:null, nota:'Solo 2 personas nuevas. Sin La Ruta activa.', alert:'watch', sin:false},
+    {iglesia:'Horizonte Mérida', pastor:'Herminio Navidad', zona:'sur', fuente:'formulario', adultos:66, ninos:6, nuevas:41, discipulado:40, bautismos:0, ruta:true, rutaN:40, nota:'41 personas nuevas. Aniversario con 102 asistentes.', alert:'grow', sin:false},
+    {iglesia:'Calvary Ecatepec', pastor:'Toño García', zona:'centro', fuente:'formulario', adultos:40, ninos:null, nuevas:null, discipulado:70, bautismos:null, ruta:true, rutaN:null, nota:'Moi Hernández en tratamiento por cáncer de colon. Toño Robles a Texcoco.', alert:'urgent', sin:false},
+    {iglesia:'Horizonte Tequisquiapan', pastor:'—', zona:'norte', fuente:'formulario', adultos:30, ninos:30, nuevas:null, discipulado:50, bautismos:null, ruta:true, rutaN:null, nota:'Donación de filtros de agua en comunidades. Alcance activo.', alert:null, sin:false},
+    {iglesia:'Vida Nueva en Cristo', pastor:'Oscar García', zona:'centro', fuente:'formulario', adultos:null, ninos:65, nuevas:null, discipulado:90, bautismos:null, ruta:true, rutaN:null, nota:'Campaña niños, matrimonios, Día del niño. Pastor Javier sanado.', alert:null, sin:false},
+    {iglesia:'Comunidad El Camino', pastor:'Daniel Vargas', zona:'otro', fuente:'formulario', adultos:20, ninos:20, nuevas:null, discipulado:40, bautismos:null, ruta:false, rutaN:null, nota:'Serie Nehemías. Clases de inglés y nivelación educativa.', alert:null, sin:false},
+    {iglesia:'Identidad San Luis', pastor:'Gerry Berrones', zona:'norte', fuente:'formulario', adultos:120, ninos:37, nuevas:28, discipulado:8, bautismos:8, ruta:true, rutaN:null, nota:'La Ruta arranca el 24 de mayo. 8 personas terminando el programa anterior. Alcance: entrega de zapatos a inicio de año. Mayor impacto: etapa de construcción terminada + día de promesas en enero. Oración corporativa mensual. Aportaciones ene–feb: $16,481.66 (faltan mar–abr).', alert:null, sin:false},
+    {iglesia:'La Carpa de Reunión', pastor:'Dani Ávila', zona:'qro', fuente:'sin', adultos:null, ninos:null, nuevas:null, discipulado:null, bautismos:null, ruta:null, rutaN:null, nota:'No envió formulario Q1.', alert:null, sin:true},
+    {iglesia:'La Carpa del Valle', pastor:'Willer Montesinos', zona:'norte', fuente:'sin', adultos:null, ninos:null, nuevas:null, discipulado:null, bautismos:null, ruta:null, rutaN:null, nota:'No envió formulario Q1.', alert:null, sin:true},
+    {iglesia:'Horizonte Tijuana', pastor:'Chuy Anaya', zona:'norte', fuente:'sin', adultos:null, ninos:null, nuevas:null, discipulado:null, bautismos:null, ruta:null, rutaN:null, nota:'En transición a Reynosa TX. No envió formulario.', alert:null, sin:true},
+    {iglesia:'Comunidad Baluarte', pastor:'Manuel Jaquez', zona:'norte', fuente:'sin', adultos:null, ninos:null, nuevas:null, discipulado:null, bautismos:null, ruta:null, rutaN:null, nota:'No envió formulario Q1.', alert:null, sin:true},
   ];
 
   const reportados = DATA.filter(d=>!d.sin);
   const sinReportar = DATA.filter(d=>d.sin);
-  const formulario = DATA.filter(d=>d.fuente==='formulario');
   const totalAdultos = reportados.reduce((s,d)=>s+(d.adultos||0),0);
-  const totalNuevas  = formulario.reduce((s,d)=>s+(d.nuevas||0),0);
+  const totalNuevas  = reportados.reduce((s,d)=>s+(d.nuevas||0),0);
   const totalBautismos = reportados.reduce((s,d)=>s+(d.bautismos||0),0);
   const totalDisc = reportados.reduce((s,d)=>s+(d.discipulado||0),0);
-  const conRuta = reportados.filter(d=>d.ruta).length;
+  const conRuta = reportados.filter(d=>d.ruta===true).length;
+  const sinRuta = reportados.filter(d=>d.ruta===false).length;
 
-  const ZONA_COLOR = {qro:'#C8933A',norte:'#2A5A96',sur:'#2D7A52',centro:'#7A2A52',otro:'#5A3A96'};
+  const ZC = {qro:'#C8933A',norte:'#2A5A96',sur:'#2D7A52',centro:'#7A2A52',otro:'#5A3A96'};
+  const ZBG = {qro:'rgba(200,147,58,0.1)',norte:'rgba(42,90,150,0.1)',sur:'rgba(45,122,82,0.1)',centro:'rgba(122,42,82,0.1)',otro:'rgba(90,58,150,0.1)'};
 
-  const fuenteBadge = f => f==='formulario'
-    ? '<span style="font-size:10px;font-weight:600;padding:1px 7px;border-radius:99px;background:rgba(74,155,111,0.12);color:var(--healthy)">Formulario</span>'
-    : f==='reunion'
-    ? '<span style="font-size:10px;font-weight:600;padding:1px 7px;border-radius:99px;background:rgba(74,122,184,0.12);color:var(--norte)">Reunión pastoral</span>'
-    : '<span style="font-size:10px;font-weight:600;padding:1px 7px;border-radius:99px;background:rgba(184,64,64,0.1);color:var(--critical)">Sin reporte</span>';
+  const alertCfg = {
+    grow:   {bg:'rgba(45,122,82,0.1)',  border:'rgba(45,122,82,0.25)',  color:'var(--healthy)',   label:'↗ crecimiento'},
+    watch:  {bg:'rgba(200,147,58,0.1)', border:'rgba(200,147,58,0.25)', color:'var(--qro)',       label:'⚠ atención'},
+    urgent: {bg:'rgba(184,64,64,0.1)',  border:'rgba(184,64,64,0.25)',  color:'var(--critical)',  label:'⚕ urgente'},
+  };
 
-  const rutaBadge = (r, n) => r===null ? '<span style="font-size:10px;color:var(--ink4)">—</span>'
-    : r ? `<span style="font-size:10px;font-weight:600;padding:1px 7px;border-radius:99px;background:rgba(74,155,111,0.12);color:var(--healthy)">✓${n?' '+n:''}</span>`
-    : '<span style="font-size:10px;font-weight:600;padding:1px 7px;border-radius:99px;background:rgba(184,64,64,0.1);color:var(--critical)">Sin La Ruta</span>';
+  const maxAdultos = Math.max(...reportados.map(d=>d.adultos||0));
+  const maxNuevas  = Math.max(...reportados.map(d=>d.nuevas||0));
 
-  const val = v => v!==null&&v!==undefined ? v.toLocaleString('es-MX') : '<span style="color:var(--ink4)">—</span>';
+  function bar(val, max, color){
+    if(!val||!max) return '<span style="font-size:10px;color:var(--ink4)">—</span>';
+    const pct = Math.round(val/max*100);
+    return `<div style="display:flex;align-items:center;gap:7px">
+      <div style="flex:1;background:var(--surface3);border-radius:3px;height:5px;overflow:hidden;min-width:40px">
+        <div style="width:${pct}%;height:5px;border-radius:3px;background:${color}"></div>
+      </div>
+      <span style="font-size:11px;font-weight:600;color:var(--ink);min-width:28px;text-align:right">${val.toLocaleString('es-MX')}</span>
+    </div>`;
+  }
+
+  function rutaPill(r, n){
+    if(r===null||r===undefined) return '<span style="font-size:10px;color:var(--ink4)">—</span>';
+    if(!r) return '<span style="font-size:10px;font-weight:600;padding:1px 8px;border-radius:99px;background:rgba(184,64,64,0.1);color:var(--critical)">Sin La Ruta</span>';
+    return `<span style="font-size:10px;font-weight:600;padding:1px 8px;border-radius:99px;background:rgba(45,122,82,0.1);color:var(--healthy)">La Ruta${n?' · '+n:''}</span>`;
+  }
+
+  function fuentePill(f){
+    if(f==='formulario') return '<span style="font-size:9px;font-weight:600;padding:1px 7px;border-radius:99px;background:rgba(45,122,82,0.1);color:var(--healthy)">formulario</span>';
+    if(f==='reunion') return '<span style="font-size:9px;font-weight:600;padding:1px 7px;border-radius:99px;background:rgba(42,90,150,0.1);color:var(--norte)">reunión pastoral</span>';
+    return '';
+  }
+
+  const iglesiasConBautismos = reportados.filter(d=>d.bautismos!=null&&d.bautismos>0);
+  const iglesiasConNuevas    = reportados.filter(d=>d.nuevas!=null).sort((a,b)=>(b.nuevas||0)-(a.nuevas||0));
 
   let h = `<style>
-  .aw{padding:20px 16px 80px;max-width:1000px}
-  .akpis{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:20px}
-  @media(min-width:500px){.akpis{grid-template-columns:repeat(4,1fr)}}
-  .akpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:14px 16px;position:relative;overflow:hidden}
-  .akpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
-  .akpi.aq::before{background:var(--qro)}.akpi.ag::before{background:var(--healthy)}.akpi.ab::before{background:var(--norte)}.akpi.ar::before{background:var(--critical)}
-  .akn{font-size:28px;font-weight:700;letter-spacing:-0.02em;line-height:1;color:var(--ink)}
-  .akl{font-size:9px;color:var(--ink3);margin-top:4px;text-transform:uppercase;letter-spacing:.07em}
-  .aksub{font-size:10px;color:var(--ink2);margin-top:2px}
-  .asec{font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin:18px 0 10px;padding-bottom:7px;border-bottom:1px solid var(--border)}
-  .atbl{width:100%;border-collapse:collapse;font-size:12.5px}
-  .atbl th{font-size:10px;color:var(--ink3);text-align:left;padding:7px 10px;border-bottom:1px solid var(--border);font-weight:600;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
-  .atbl th.r{text-align:right}
-  .atbl td{padding:8px 10px;color:var(--ink);border-bottom:1px solid var(--border);vertical-align:middle}
-  .atbl td.r{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink2)}
-  .atbl tr:last-child td{border-bottom:none}
-  .atbl tr:hover td{background:var(--surface2)}
-  .atbl tr.sin-row td{opacity:.45}
-  .ac{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:12px;overflow-x:auto}
-  .anota{background:var(--surface2);border-left:2px solid var(--qro);padding:10px 14px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-top:2px;font-size:11.5px;color:var(--ink2);line-height:1.6}
-  .anota.urgente{border-left-color:var(--critical)}
-  .ahigh{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
-  .arow{display:flex;align-items:flex-start;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:11px 14px}
-  .arow-ico{font-size:18px;flex-shrink:0;margin-top:1px}
-  .arow-body{flex:1}
-  .arow-title{font-size:13px;font-weight:600;color:var(--ink)}
-  .arow-sub{font-size:11.5px;color:var(--ink2);margin-top:3px;line-height:1.5}
-  .arow-badge{font-size:9.5px;font-weight:700;padding:2px 9px;border-radius:99px;flex-shrink:0;align-self:flex-start;margin-top:2px}
+  .aw2{padding:20px 16px 80px;max-width:1020px}
+  .akpis2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:20px}
+  @media(min-width:520px){.akpis2{grid-template-columns:repeat(4,1fr)}}
+  .akpi2{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:14px 16px;position:relative;overflow:hidden}
+  .akpi2::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px}
+  .akpi2.aq::before{background:var(--qro)}.akpi2.ag::before{background:var(--healthy)}.akpi2.ab::before{background:var(--norte)}.akpi2.ar::before{background:var(--critical)}
+  .akn2{font-size:30px;font-weight:700;letter-spacing:-0.02em;line-height:1;color:var(--ink)}
+  .akl2{font-size:9px;color:var(--ink3);margin-top:4px;text-transform:uppercase;letter-spacing:.07em}
+  .aksub2{font-size:10px;color:var(--ink2);margin-top:3px}
+  .asec2{font-size:10px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;margin:22px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+  .acharts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+  @media(max-width:640px){.acharts{grid-template-columns:1fr}}
+  .achart-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:14px}
+  .achart-title{font-size:10px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+  .aigrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-bottom:20px}
+  .aicard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:transform 0.18s,border-color 0.15s}
+  .aicard:hover{transform:translateY(-2px);border-color:var(--border2)}
+  .aicard-top{padding:12px 14px 10px;border-bottom:1px solid var(--border)}
+  .aicard-name{font-size:13.5px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .aicard-meta{display:flex;align-items:center;gap:6px;margin-top:4px;flex-wrap:wrap}
+  .aicard-stats{padding:10px 14px;display:flex;flex-direction:column;gap:7px}
+  .aicard-row{display:flex;align-items:center;gap:8px}
+  .aicard-key{font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.04em;min-width:74px;flex-shrink:0}
+  .aicard-val{flex:1}
+  .aicard-note{padding:8px 14px;border-top:1px solid var(--border);font-size:11px;color:var(--ink2);line-height:1.55}
+  .asin-list{display:flex;flex-direction:column;gap:6px}
+  .asin-row{display:flex;align-items:center;gap:10px;padding:9px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);opacity:.65}
   </style>
-  <div class="aw">
-    <div style="font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-0.02em;margin-bottom:4px">Asistencia Q1 2026</div>
-    <div style="font-size:11px;color:var(--ink3);margin-bottom:16px">Enero – Abril 2026 · ${formulario.length} iglesias por formulario · ${reportados.filter(d=>d.fuente==='reunion').length} por reunión pastoral</div>
+  <div class="aw2">
+    <div style="font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-0.02em;margin-bottom:3px">Asistencia Q1 2026</div>
+    <div style="font-size:11px;color:var(--ink3);margin-bottom:18px">Enero – Abril 2026 · ${reportados.filter(d=>d.fuente==='formulario').length} formularios · ${reportados.filter(d=>d.fuente==='reunion').length} reuniones pastorales · ${sinReportar.length} sin datos</div>
 
-    <div class="akpis">
-      <div class="akpi aq"><div class="akn">${totalAdultos.toLocaleString('es-MX')}</div><div class="akl">Adultos / semana</div><div class="aksub">todos los datos reportados</div></div>
-      <div class="akpi ab"><div class="akn">${totalNuevas.toLocaleString('es-MX')}+</div><div class="akl">Personas nuevas</div><div class="aksub">solo formulario, parcial</div></div>
-      <div class="akpi ag"><div class="akn">${totalBautismos}</div><div class="akl">Bautismos</div><div class="aksub">datos parciales</div></div>
-      <div class="akpi ar"><div class="akn">${sinReportar.length}</div><div class="akl">Sin reporte</div><div class="aksub">de ${DATA.length} iglesias</div></div>
+    <div class="akpis2">
+      <div class="akpi2 aq"><div class="akn2">${totalAdultos.toLocaleString('es-MX')}</div><div class="akl2">Adultos / semana</div><div class="aksub2">datos parciales</div></div>
+      <div class="akpi2 ag"><div class="akn2">${totalNuevas}</div><div class="akl2">Personas nuevas</div><div class="aksub2">datos parciales</div></div>
+      <div class="akpi2 ab"><div class="akn2">${totalBautismos}</div><div class="akl2">Bautismos</div><div class="aksub2">confirmados</div></div>
+      <div class="akpi2 ar"><div class="akn2">${sinReportar.length}</div><div class="akl2">Sin reporte</div><div class="aksub2">de ${DATA.length} iglesias</div></div>
     </div>
 
-    <div class="asec">Señales destacadas</div>
-    <div class="ahigh">
-      <div class="arow">
-        <div class="arow-ico">🚀</div>
-        <div class="arow-body">
-          <div class="arow-title">Panamá — ratio de alcance excepcional</div>
-          <div class="arow-sub">75 personas nuevas con 76 adultos regulares. Casi 1:1. Mayor taller de Ministry Imprint en la red: 62 tests, 44 asistentes. Primer grupo completando Membresía en La Ruta.</div>
+    <div class="acharts">
+      <div class="achart-card">
+        <div class="achart-title">Adultos por servicio</div>
+        <div style="position:relative;width:100%;height:${reportados.filter(d=>d.adultos).length*36+40}px">
+          <canvas id="chart-adultos" role="img" aria-label="Adultos por iglesia Q1 2026">${reportados.filter(d=>d.adultos).map(d=>d.iglesia+': '+d.adultos).join(', ')}</canvas>
         </div>
-        <div class="arow-badge" style="background:rgba(74,155,111,0.1);color:var(--healthy)">destacado</div>
       </div>
-      <div class="arow">
-        <div class="arow-ico">📈</div>
-        <div class="arow-body">
-          <div class="arow-title">Villahermosa — arranque institucional</div>
-          <div class="arow-sub">60 personas nuevas + primeros 40 miembros oficiales. La Ruta con +100 inscritos en Conociéndonos. Pide lugar más grande.</div>
+      <div class="achart-card">
+        <div class="achart-title">Personas nuevas Q1</div>
+        <div style="position:relative;width:100%;height:${iglesiasConNuevas.length*36+40}px">
+          <canvas id="chart-nuevas" role="img" aria-label="Personas nuevas por iglesia Q1 2026">${iglesiasConNuevas.map(d=>d.iglesia+': '+d.nuevas).join(', ')}</canvas>
         </div>
-        <div class="arow-badge" style="background:rgba(74,155,111,0.1);color:var(--healthy)">crecimiento</div>
-      </div>
-      <div class="arow">
-        <div class="arow-ico">⚠️</div>
-        <div class="arow-body">
-          <div class="arow-title">CDMX — solo 2 personas nuevas y sin La Ruta</div>
-          <div class="arow-sub">Erik Servín es el perfil más evangelístico de la red (I/Inclusive, Evangelista) pero el resultado más bajo en alcance. Requiere conversación directa.</div>
-        </div>
-        <div class="arow-badge" style="background:rgba(184,64,64,0.1);color:var(--critical)">atención</div>
-      </div>
-      <div class="arow">
-        <div class="arow-ico">❤️</div>
-        <div class="arow-body">
-          <div class="arow-title">Ecatepec — situación pastoral urgente</div>
-          <div class="arow-sub">Toño Robles enviado a Texcoco como pastor interino. Moi Hernández en tratamiento por cáncer de colon. Requiere acompañamiento pastoral activo.</div>
-        </div>
-        <div class="arow-badge" style="background:rgba(184,64,64,0.1);color:var(--critical)">urgente</div>
       </div>
     </div>
 
-    <div class="asec">Tabla completa</div>
-    <div class="ac">
-      <table class="atbl">
-        <thead>
-          <tr>
-            <th>Iglesia</th>
-            <th>Fuente</th>
-            <th class="r">Adultos/sem</th>
-            <th class="r">Nuevas</th>
-            <th class="r">Discipulado</th>
-            <th class="r">Bautismos</th>
-            <th>La Ruta</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${DATA.map(d=>{
-            const zc = ZONA_COLOR[d.zona]||'#888';
-            const sinCls = d.sin ? ' sin-row' : '';
-            return `<tr class="${sinCls}">
-              <td>
-                <div style="font-weight:600;font-size:13px">${d.iglesia}</div>
-                <div style="font-size:10px;color:var(--ink3);margin-top:1px">${d.pastor} · <span style="color:${zc}">${d.zona.toUpperCase()}</span></div>
-              </td>
-              <td>${fuenteBadge(d.fuente)}</td>
-              <td class="r">${val(d.adultos)}</td>
-              <td class="r">${val(d.nuevas)}</td>
-              <td class="r">${val(d.discipulado)}</td>
-              <td class="r">${val(d.bautismos)}</td>
-              <td>${rutaBadge(d.ruta, d.rutaN)}</td>
-            </tr>
-            ${!d.sin&&d.nota?`<tr><td colspan="7" style="padding:0 10px 10px;border-bottom:1px solid var(--border)"><div class="anota${d.iglesia.includes('CDMX')||d.iglesia.includes('Ecatepec')?' urgente':''}">${d.nota}</div></td></tr>`:''}`;
-          }).join('')}
-        </tbody>
-      </table>
-    </div>
-
-    <div class="asec">Adopción de La Ruta</div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px">
-      <div style="background:rgba(74,155,111,0.08);border:1px solid rgba(74,155,111,0.2);border-radius:var(--r);padding:12px 16px;flex:1;min-width:140px">
-        <div style="font-size:24px;font-weight:700;color:var(--healthy)">${conRuta}</div>
-        <div style="font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-top:3px">Con La Ruta</div>
-      </div>
-      <div style="background:rgba(184,64,64,0.06);border:1px solid rgba(184,64,64,0.15);border-radius:var(--r);padding:12px 16px;flex:1;min-width:140px">
-        <div style="font-size:24px;font-weight:700;color:var(--critical)">${reportados.filter(d=>d.ruta===false).length}</div>
-        <div style="font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-top:3px">Sin La Ruta</div>
-        <div style="font-size:11px;color:var(--ink2);margin-top:4px">CDMX · El Camino</div>
-      </div>
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;flex:1;min-width:140px">
-        <div style="font-size:24px;font-weight:700;color:var(--ink3)">${sinReportar.length}</div>
-        <div style="font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-top:3px">Sin datos</div>
-        <div style="font-size:11px;color:var(--ink2);margin-top:4px">No enviaron formulario</div>
-      </div>
-    </div>
-
-    <div class="asec">Iglesias sin reporte Q1</div>
-    <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px">
-      ${sinReportar.map(d=>`<div style="display:flex;align-items:center;gap:10px;padding:9px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r)">
-        <span style="font-size:13px">📭</span>
-        <div style="flex:1">
-          <div style="font-size:13px;font-weight:600;color:var(--ink)">${d.iglesia}</div>
-          <div style="font-size:10.5px;color:var(--ink3)">${d.pastor} · ${d.nota}</div>
+    <div class="asec2">Adopción de La Ruta</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+      <div style="flex:1;min-width:130px;background:rgba(45,122,82,0.08);border:1px solid rgba(45,122,82,0.2);border-radius:var(--r-lg);padding:14px 16px">
+        <div style="font-size:28px;font-weight:700;color:var(--healthy);line-height:1">${conRuta}</div>
+        <div style="font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-top:4px">Con La Ruta</div>
+        <div style="margin-top:10px">
+          <div style="background:var(--surface3);border-radius:3px;height:6px;overflow:hidden">
+            <div style="width:${Math.round(conRuta/(conRuta+sinRuta)*100)}%;height:6px;border-radius:3px;background:var(--healthy)"></div>
+          </div>
+          <div style="font-size:10px;color:var(--ink2);margin-top:4px">${Math.round(conRuta/(conRuta+sinRuta)*100)}% de iglesias con datos</div>
         </div>
-        <span style="font-size:10px;color:var(--critical);font-weight:600;padding:2px 8px;border-radius:99px;background:rgba(184,64,64,0.08)">Sin reporte</span>
-      </div>`).join('')}
+      </div>
+      <div style="flex:1;min-width:130px;background:rgba(184,64,64,0.06);border:1px solid rgba(184,64,64,0.15);border-radius:var(--r-lg);padding:14px 16px">
+        <div style="font-size:28px;font-weight:700;color:var(--critical);line-height:1">${sinRuta}</div>
+        <div style="font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-top:4px">Sin La Ruta</div>
+        <div style="font-size:11px;color:var(--ink2);margin-top:8px">CDMX · El Camino</div>
+      </div>
+      <div style="flex:1;min-width:130px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-lg);padding:14px 16px">
+        <div style="font-size:28px;font-weight:700;color:var(--ink3);line-height:1">${sinReportar.length}</div>
+        <div style="font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-top:4px">Sin datos</div>
+        <div style="font-size:11px;color:var(--ink2);margin-top:8px">No enviaron formulario</div>
+      </div>
+      ${iglesiasConBautismos.length ? `<div style="flex:1;min-width:130px;background:rgba(42,90,150,0.06);border:1px solid rgba(42,90,150,0.15);border-radius:var(--r-lg);padding:14px 16px">
+        <div style="font-size:28px;font-weight:700;color:var(--norte);line-height:1">${totalBautismos}</div>
+        <div style="font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-top:4px">Bautismos confirmados</div>
+        <div style="font-size:11px;color:var(--ink2);margin-top:8px">${iglesiasConBautismos.map(d=>d.iglesia.split(' ').slice(-1)[0]+' '+d.bautismos).join(' · ')}</div>
+      </div>` : ''}
+    </div>
+
+    <div class="asec2">Iglesias que reportaron</div>
+    <div class="aigrid">
+      ${reportados.map(d=>{
+        const zc = ZC[d.zona]||'#888';
+        const zbg = ZBG[d.zona]||'rgba(0,0,0,0.05)';
+        const ac = d.alert ? alertCfg[d.alert] : null;
+        return `<div class="aicard" style="${ac?'border-color:'+ac.border:''}">
+          <div class="aicard-top" style="${ac?'background:'+ac.bg:''}">
+            <div class="aicard-name">${d.iglesia}</div>
+            <div class="aicard-meta">
+              <span style="font-size:10px;color:var(--ink3)">${d.pastor}</span>
+              <span style="font-size:9px;font-weight:600;padding:1px 7px;border-radius:99px;background:${zbg};color:${zc}">${d.zona.toUpperCase()}</span>
+              ${fuentePill(d.fuente)}
+              ${ac?`<span style="font-size:9.5px;font-weight:700;color:${ac.color};margin-left:auto">${ac.label}</span>`:''}
+            </div>
+          </div>
+          <div class="aicard-stats">
+            <div class="aicard-row">
+              <span class="aicard-key">Adultos/sem</span>
+              <div class="aicard-val">${bar(d.adultos, maxAdultos, zc)}</div>
+            </div>
+            ${d.nuevas!=null?`<div class="aicard-row">
+              <span class="aicard-key">Nuevas</span>
+              <div class="aicard-val">${bar(d.nuevas, maxNuevas, '#2D7A52')}</div>
+            </div>`:''}
+            ${d.discipulado!=null?`<div class="aicard-row">
+              <span class="aicard-key">Discipulado</span>
+              <div class="aicard-val"><span style="font-size:11px;font-weight:600;color:var(--ink)">${d.discipulado}</span></div>
+            </div>`:''}
+            ${d.bautismos!=null?`<div class="aicard-row">
+              <span class="aicard-key">Bautismos</span>
+              <div class="aicard-val"><span style="font-size:11px;font-weight:600;color:${d.bautismos>0?'var(--norte)':'var(--ink3)'}">${d.bautismos}</span></div>
+            </div>`:''}
+            <div class="aicard-row">
+              <span class="aicard-key">La Ruta</span>
+              <div class="aicard-val">${rutaPill(d.ruta, d.rutaN)}</div>
+            </div>
+          </div>
+          <div class="aicard-note">${d.nota}</div>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <div class="asec2">Sin reporte Q1</div>
+    <div class="asin-list">
+      ${sinReportar.map(d=>{
+        const zc = ZC[d.zona]||'#888';
+        return `<div class="asin-row">
+          <span style="font-size:10px;font-weight:600;padding:1px 7px;border-radius:99px;background:rgba(184,64,64,0.1);color:var(--critical)">sin datos</span>
+          <div style="flex:1">
+            <span style="font-size:13px;font-weight:500;color:var(--ink)">${d.iglesia}</span>
+            <span style="font-size:10px;color:var(--ink3);margin-left:7px">${d.pastor}</span>
+          </div>
+          <span style="font-size:9px;font-weight:600;padding:1px 7px;border-radius:99px;background:${ZBG[d.zona]||'rgba(0,0,0,0.05)'};color:${zc}">${d.zona.toUpperCase()}</span>
+          ${d.nota.includes('transición')?'<span style="font-size:9px;color:var(--ink3);margin-left:4px">en transición</span>':''}
+        </div>`;
+      }).join('')}
     </div>
   </div>`;
 
   document.getElementById('view-asistencia').innerHTML = h;
+
+  setTimeout(()=>{
+    if(!window.Chart) return;
+    const adultosDat = reportados.filter(d=>d.adultos!=null).sort((a,b)=>(b.adultos||0)-(a.adultos||0));
+    const nuevasDat  = reportados.filter(d=>d.nuevas!=null).sort((a,b)=>(b.nuevas||0)-(a.nuevas||0));
+    const zoneCols = adultosDat.map(d=>ZC[d.zona]||'#888');
+    const zonaColsN = nuevasDat.map(d=>ZC[d.zona]||'#888');
+    const tickStyle = {font:{size:10},color:'#888780'};
+    const gridStyle = {color:'rgba(0,0,0,0.04)'};
+    new window.Chart(document.getElementById('chart-adultos'),{
+      type:'bar',
+      data:{labels:adultosDat.map(d=>d.iglesia.replace('Horizonte ','').replace('Comunidad ','')),datasets:[{data:adultosDat.map(d=>d.adultos),backgroundColor:zoneCols,borderRadius:4,borderSkipped:false}]},
+      options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw.toLocaleString('es-MX')+' adultos'}}},scales:{x:{grid:gridStyle,ticks:tickStyle,border:{display:false}},y:{grid:{display:false},ticks:{...tickStyle,autoSkip:false}}}}
+    });
+    new window.Chart(document.getElementById('chart-nuevas'),{
+      type:'bar',
+      data:{labels:nuevasDat.map(d=>d.iglesia.replace('Horizonte ','').replace('Comunidad ','')),datasets:[{data:nuevasDat.map(d=>d.nuevas),backgroundColor:zonaColsN,borderRadius:4,borderSkipped:false}]},
+      options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw+' nuevas'}}},scales:{x:{grid:gridStyle,ticks:tickStyle,border:{display:false}},y:{grid:{display:false},ticks:{...tickStyle,autoSkip:false}}}}
+    });
+  },150);
 }
 
 /* ═══════════════════════════════════════════════════
@@ -3711,13 +4000,6 @@ function renderAsistencia(){
 ═══════════════════════════════════════════════════ */
 renderPastores();
 updateBadges();
-
-function renderReporteQ1(){
-  const el = document.getElementById('view-reporte-q1');
-  if(el.querySelector('iframe')) return;
-  el.style.cssText = 'padding:0;height:calc(100vh - 52px);overflow:hidden;';
-  el.innerHTML = '<iframe src="reporte_cem_q1_2026.html" style="width:100%;height:100%;border:none;display:block;" allowfullscreen></iframe>';
-}
 </script>
 </body>
 </html>
