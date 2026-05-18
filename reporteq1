@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CEM · Reporte Q1 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+:root {
+  --bg:#F7F5F2; --ink:#18171A; --ink2:#4A4850; --ink3:#9A98A2;
+  --border:#E2DED8; --surface:#FFFFFF;
+  --blue:#1D4E8F; --teal:#1A9D94; --gold:#C8873A;
+  --green:#2D7A52; --red:#C84840; --purple:#6B4FA0;
+  --display:'Bebas Neue',sans-serif;
+  --body:'DM Sans',sans-serif;
+  --mono:'DM Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--body);background:var(--bg);color:var(--ink);}
+
+/* ── HEADER ── */
+.hdr{background:var(--blue);padding:44px 60px 36px;position:relative;overflow:hidden;}
+.hdr::before{content:'Q1';font-family:var(--display);font-size:360px;color:rgba(255,255,255,.04);position:absolute;right:-20px;top:-60px;line-height:1;pointer-events:none;}
+.hdr-eye{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:10px;}
+.hdr-title{font-family:var(--display);font-size:68px;color:#fff;line-height:.92;letter-spacing:1px;}
+.hdr-sub{font-family:var(--display);font-size:34px;color:rgba(255,255,255,.42);letter-spacing:1px;}
+.hdr-meta{display:flex;gap:36px;margin-top:28px;padding-top:22px;border-top:1px solid rgba(255,255,255,.1);}
+.hm{display:flex;flex-direction:column;gap:2px;}
+.hml{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.32);font-family:var(--mono);}
+.hmv{font-size:13px;font-weight:500;color:rgba(255,255,255,.78);}
+
+/* ── LAYOUT ── */
+.main{max-width:1080px;margin:0 auto;padding:48px 44px 80px;display:flex;flex-direction:column;gap:56px;}
+.sec-hdr{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.sec-num{font-family:var(--display);font-size:12px;color:var(--ink3);letter-spacing:.1em;min-width:26px;}
+.sec-title{font-family:var(--display);font-size:22px;letter-spacing:.05em;}
+.sec-line{flex:1;height:1px;background:var(--border);}
+.sec-badge{font-size:9px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:99px;background:var(--surface);border:1px solid var(--border);color:var(--ink3);}
+
+/* ── KPI DASHBOARD ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px;}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 16px;position:relative;overflow:hidden;}
+.kpi::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;}
+.kpi.k1::after{background:var(--blue);}
+.kpi.k2::after{background:var(--teal);}
+.kpi.k3::after{background:var(--green);}
+.kpi.k4::after{background:var(--gold);}
+.kpi.k5::after{background:var(--purple);}
+.kpi-label{font-size:9px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px;}
+.kpi-val{font-family:var(--display);font-size:38px;line-height:1;color:var(--ink);}
+.kpi-sub{font-size:10px;color:var(--ink3);margin-top:4px;}
+.kpi-delta{font-size:10px;font-weight:600;margin-top:6px;}
+.kpi-delta.up{color:var(--green);}
+
+/* ── ASISTENCIA TABLE ── */
+.atbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+table{width:100%;border-collapse:collapse;}
+.atbl thead{background:var(--ink);}
+.atbl th{padding:10px 14px;font-size:9px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.42);text-align:right;font-weight:400;}
+.atbl th:first-child{text-align:left;}
+.atbl td{padding:11px 14px;font-size:12px;color:var(--ink2);border-bottom:1px solid var(--border);text-align:right;vertical-align:middle;}
+.atbl td:first-child{text-align:left;}
+.atbl tr:last-child td{border-bottom:none;}
+.atbl tr:hover td{background:#FAFAF8;}
+.ch-name{font-weight:600;font-size:12px;color:var(--ink);}
+.ch-zone{font-size:9px;font-family:var(--mono);color:var(--ink3);margin-top:1px;}
+.pill{display:inline-block;font-size:9px;font-family:var(--mono);padding:2px 7px;border-radius:99px;font-weight:500;}
+.pill.g{background:#E8F5EE;color:var(--green);}
+.pill.b{background:#E8EEF7;color:var(--blue);}
+.pill.gd{background:#FDF3E7;color:var(--gold);}
+.pill.r{background:#FCEAEA;color:var(--red);}
+.pill.nd{background:var(--bg);color:var(--ink3);}
+.bar-cell{width:80px;}
+.mini-bar-wrap{height:5px;background:var(--bg);border-radius:99px;overflow:hidden;margin-top:3px;}
+.mini-bar{height:100%;border-radius:99px;}
+
+/* ── CHARTS ROW ── */
+.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 20px 16px;}
+.chart-title{font-family:var(--display);font-size:15px;letter-spacing:.04em;color:var(--ink);margin-bottom:4px;}
+.chart-sub{font-size:10px;color:var(--ink3);font-family:var(--mono);margin-bottom:16px;}
+.chart-wrap{position:relative;}
+
+/* ── RANKING ── */
+.ranking{display:flex;flex-direction:column;gap:6px;}
+.rank-row{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;}
+.rank-row.rank-1{border-color:var(--gold);background:linear-gradient(90deg,#FFFBF4,#fff);}
+.rank-row.rank-2{border-color:#D0D8E8;background:linear-gradient(90deg,#F4F6FB,#fff);}
+.rank-row.rank-3{border-color:#D8D0C8;background:linear-gradient(90deg,#FAF8F4,#fff);}
+.rank-pos{font-family:var(--display);font-size:22px;min-width:28px;line-height:1;}
+.rank-row.rank-1 .rank-pos{color:var(--gold);}
+.rank-row.rank-2 .rank-pos{color:#8090A8;}
+.rank-row.rank-3 .rank-pos{color:#A89878;}
+.rank-info{flex:1;}
+.rank-church{font-weight:600;font-size:13px;color:var(--ink);}
+.rank-pastor{font-size:10px;color:var(--ink3);font-family:var(--mono);}
+.rank-bar-wrap{width:120px;height:6px;background:var(--bg);border-radius:99px;overflow:hidden;}
+.rank-bar{height:100%;border-radius:99px;background:var(--blue);}
+.rank-amount{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--green);min-width:80px;text-align:right;}
+.rank-pct{font-size:9px;color:var(--ink3);font-family:var(--mono);text-align:right;min-width:36px;}
+
+/* ── APORT TABLE ── */
+.ptbl thead{background:var(--ink);}
+.ptbl th{padding:10px 13px;font-size:9px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.42);text-align:right;font-weight:400;}
+.ptbl th:first-child{text-align:left;}
+.ptbl td{padding:10px 13px;font-size:12px;color:var(--ink2);border-bottom:1px solid var(--border);text-align:right;}
+.ptbl td:first-child{text-align:left;}
+.ptbl tr:last-child td{border-bottom:none;}
+.ptbl tr:hover td{background:#FAFAF8;}
+.n{font-family:var(--mono);font-size:11px;}
+.n.g{color:var(--green);}
+.n.p{color:var(--gold);font-style:italic;}
+.n.u{color:var(--blue);}
+.zona-sep td{background:var(--bg);padding:5px 13px;}
+.zona-lbl{font-size:8px;font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);}
+.tr-total td{background:#F0F8F5!important;font-weight:700;border-top:2px solid #C8E8DC;}
+
+/* ── TALLERES ── */
+.t2grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;}
+.t-tbl{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.t-th{background:var(--ink);padding:11px 18px;display:flex;justify-content:space-between;}
+.t-th span{font-size:9px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);}
+.t-row{display:flex;align-items:center;padding:14px 18px;border-bottom:1px solid var(--border);gap:12px;}
+.t-row:last-child{border-bottom:none;}
+.t-mes{font-family:var(--display);font-size:18px;letter-spacing:.04em;min-width:90px;}
+.t-bw{flex:1;height:5px;background:var(--bg);border-radius:99px;overflow:hidden;}
+.t-b{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--teal),var(--blue));}
+.t-ct{font-size:10px;color:var(--ink3);min-width:50px;text-align:right;font-family:var(--mono);}
+.t-am{font-family:var(--mono);font-size:12px;font-weight:500;min-width:75px;text-align:right;}
+.t-tot{background:#F0F8F5;padding:13px 18px;display:flex;justify-content:space-between;align-items:center;border-top:2px solid #C8E8DC;}
+
+/* CALLOUT */
+.callout{background:#FFF8EE;border:1px solid #F0D8B0;border-left:3px solid var(--gold);border-radius:8px;padding:11px 15px;font-size:11px;color:var(--ink2);line-height:1.6;}
+.callout strong{color:var(--gold);}
+.callout.info{background:#EEF4FF;border-color:#C0D4F0;border-left-color:var(--blue);}
+.callout.info strong{color:var(--blue);}
+
+/* FOOTER */
+.footer{background:var(--ink);padding:20px 60px;display:flex;justify-content:space-between;align-items:center;}
+.footer-m{font-family:var(--display);font-size:17px;color:rgba(255,255,255,.22);letter-spacing:2px;}
+.footer-n{font-size:9px;font-family:var(--mono);color:rgba(255,255,255,.2);letter-spacing:.08em;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-eye">Cristo es Mejor · Uso interno · Confidencial</div>
+  <div class="hdr-title">REPORTE Q1</div>
+  <div class="hdr-sub">PRIMER CUATRIMESTRE 2026</div>
+  <div class="hdr-meta">
+    <div class="hm"><div class="hml">Período</div><div class="hmv">Enero – Abril 2026</div></div>
+    <div class="hm"><div class="hml">Preparado por</div><div class="hmv">Kike Torres</div></div>
+    <div class="hm"><div class="hml">Iglesias</div><div class="hmv">14 reportando</div></div>
+    <div class="hm"><div class="hml">Total aportaciones</div><div class="hmv">$647,471 MXN</div></div>
+    <div class="hm"><div class="hml">Fecha</div><div class="hmv">Mayo 2026</div></div>
+  </div>
+</div>
+
+<!-- ══ HIGHLIGHTS STRIP ══ -->
+<div style="background:#FFFDF9;border-top:3px solid var(--gold);border-bottom:1px solid var(--border);padding:28px 60px;">
+  <div style="max-width:1080px;margin:0 auto;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+      <span style="font-family:var(--display);font-size:13px;letter-spacing:.14em;color:var(--gold)">HIGHLIGHTS Q1</span>
+      <div style="flex:1;height:1px;background:var(--border);"></div>
+      <span style="font-size:9px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)">Enero – Abril 2026</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+
+      <div style="border-left:3px solid var(--blue);padding:10px 14px;background:var(--surface);border-radius:0 8px 8px 0;">
+        <div style="font-size:9px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:5px;">Finanzas</div>
+        <div style="font-size:13px;color:var(--ink);line-height:1.55;">La red aportó <strong>$647K MXN</strong> en el cuatrimestre. Marzo fue el mes más fuerte con $208K, jalado por La Carpa que triplicó su aportación ese mes.</div>
+      </div>
+
+      <div style="border-left:3px solid var(--teal);padding:10px 14px;background:var(--surface);border-radius:0 8px 8px 0;">
+        <div style="font-size:9px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:5px;">Crecimiento</div>
+        <div style="font-size:13px;color:var(--ink);line-height:1.55;"><strong>244+ personas nuevas</strong> llegaron a iglesias CEM. Panamá recibió 75 nuevas personas — casi 1:1 con su congregación regular.</div>
+      </div>
+
+      <div style="border-left:3px solid var(--green);padding:10px 14px;background:var(--surface);border-radius:0 8px 8px 0;">
+        <div style="font-size:9px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:5px;">Bautismos</div>
+        <div style="font-size:13px;color:var(--ink);line-height:1.55;"><strong>55 bautismos confirmados</strong> en solo 3 iglesias. másCristo lidera en ratio: 1 bautismo por cada 8.5 adultos — el mejor índice de la red.</div>
+      </div>
+
+      <div style="border-left:3px solid var(--gold);padding:10px 14px;background:var(--surface);border-radius:0 8px 8px 0;">
+        <div style="font-size:9px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:5px;">Generosidad per cápita</div>
+        <div style="font-size:13px;color:var(--ink);line-height:1.55;"><strong>La Carpa aporta $132/adulto/mes</strong> — el doble que el promedio de HQ. Villahermosa tiene la mayor brecha: 220 adultos aportando $18/persona/mes.</div>
+      </div>
+
+      <div style="border-left:3px solid var(--purple);padding:10px 14px;background:var(--surface);border-radius:0 8px 8px 0;">
+        <div style="font-size:9px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:5px;">Discipulado · La Ruta</div>
+        <div style="font-size:13px;color:var(--ink);line-height:1.55;"><strong>320+ personas activas en La Ruta</strong> y 415+ en grupos de discipulado. Villahermosa arrancó con 100+ inscritos en su primer Conociéndonos.</div>
+      </div>
+
+      <div style="border-left:3px solid var(--red);padding:10px 14px;background:var(--surface);border-radius:0 8px 8px 0;">
+        <div style="font-size:9px;font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:5px;">Oportunidad</div>
+        <div style="font-size:13px;color:var(--ink);line-height:1.55;">Si HQ sube <strong>$10/adulto/mes</strong> en generosidad, equivale a <strong>+$168K MXN al año</strong> para el compañerismo. Mayor palanca de la red.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ══════════════════════════════
+     00 · MÉTRICAS CLAVE
+══════════════════════════════ -->
+<div>
+  <div class="sec-hdr">
+    <span class="sec-num">00</span>
+    <span class="sec-title">MÉTRICAS CLAVE</span>
+    <div class="sec-line"></div>
+    <span class="sec-badge">Dashboard Q1 · Ene–Abr 2026</span>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi k1">
+      <div class="kpi-label">Aportaciones Q1</div>
+      <div class="kpi-val">$647K</div>
+      <div class="kpi-sub">MXN · 14 iglesias</div>
+      <div class="kpi-delta up">↑ Mejor mes: Marzo $208K</div>
+    </div>
+    <div class="kpi k2">
+      <div class="kpi-label">Asistencia total red</div>
+      <div class="kpi-val">2,368</div>
+      <div class="kpi-sub">personas / semana aprox.</div>
+      <div class="kpi-delta up">↑ HQ lidera con 1,400/sem</div>
+    </div>
+    <div class="kpi k3">
+      <div class="kpi-label">Personas nuevas</div>
+      <div class="kpi-val">244+</div>
+      <div class="kpi-sub">llegaron a iglesias CEM</div>
+      <div class="kpi-delta up">↑ Villahermosa: 60 nuevas</div>
+    </div>
+    <div class="kpi k4">
+      <div class="kpi-label">Nuevos creyentes</div>
+      <div class="kpi-val">32+</div>
+      <div class="kpi-sub">confirmados en Q1</div>
+      <div class="kpi-delta up">↑ Panamá: 10 · Marqués: 10</div>
+    </div>
+    <div class="kpi k5">
+      <div class="kpi-label">Ingresos talleres</div>
+      <div class="kpi-val">$2,957</div>
+      <div class="kpi-sub">MXN · pastor Kike Q1</div>
+      <div class="kpi-delta up">↑ Histórico: $22,556</div>
+    </div>
+  </div>
+
+  <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);">
+    <div class="kpi k1" style="--color:var(--blue)">
+      <div class="kpi-label">En proceso Ruta</div>
+      <div class="kpi-val">320+</div>
+      <div class="kpi-sub">personas activas en Siguiendo a Jesús</div>
+    </div>
+    <div class="kpi k2">
+      <div class="kpi-label">Líderes formados</div>
+      <div class="kpi-val">26+</div>
+      <div class="kpi-sub">identificados o graduados Q1</div>
+    </div>
+    <div class="kpi k3">
+      <div class="kpi-label">Bautismos Q1</div>
+      <div class="kpi-val">55</div>
+      <div class="kpi-sub">3 iglesias confirmadas</div>
+      <div class="kpi-delta up">↑ HQ 37 · másCristo 17 · Marqués 1</div>
+    </div>
+    <div class="kpi k4">
+      <div class="kpi-label">En discipulado</div>
+      <div class="kpi-val">415+</div>
+      <div class="kpi-sub">personas activas en grupos</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     01 · ASISTENCIA — TABLA
+══════════════════════════════ -->
+<div>
+  <div class="sec-hdr">
+    <span class="sec-num">01</span>
+    <span class="sec-title">ASISTENCIA DE IGLESIAS</span>
+    <div class="sec-line"></div>
+    <span class="sec-badge">Reporte cuatrimestral</span>
+  </div>
+
+  <div class="atbl-wrap">
+    <table class="atbl">
+      <thead>
+        <tr>
+          <th>Iglesia / Pastor</th>
+          <th>Adultos prom.</th>
+          <th>Niños / Jóv.</th>
+          <th>Personas nuevas</th>
+          <th>Nuevos creyentes</th>
+          <th>En Ruta</th>
+          <th>Discipulado</th>
+          <th>Líderes nuevos</th>
+          <th>Bautismos</th>
+          <th>Aportación Q1</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="ch-name">Horizonte Querétaro</div><div class="ch-zone">Gadiel Arriaga · Qro</div></td>
+          <td><span class="pill g">1,400/sem</span></td>
+          <td>4,974+</td>
+          <td><span class="pill g">277</span></td>
+          <td>—</td>
+          <td><div>277 activos</div><div class="mini-bar-wrap bar-cell"><div class="mini-bar" style="width:100%;background:var(--teal)"></div></div></td>
+          <td>774 jóv.</td>
+          <td>68</td>
+          <td><span class="pill g">37</span></td>
+          <td class="n g">$335,857</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">La Carpa de Reunión</div><div class="ch-zone">Dani Ávila · Qro</div></td>
+          <td><span class="pill g">212/mes</span></td>
+          <td>—</td>
+          <td><span class="pill b">32</span></td>
+          <td>—</td>
+          <td><div>—</div></td>
+          <td>124 (Habitar)</td>
+          <td>29 grad.</td>
+          <td class="pill nd">—</td>
+          <td class="n g">$112,122</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Horizonte El Marqués</div><div class="ch-zone">Phil Jones · Qro</div></td>
+          <td><span class="pill g">119</span></td>
+          <td>44 niños / 10 adol.</td>
+          <td><span class="pill b">35</span></td>
+          <td><span class="pill g">10</span></td>
+          <td><div>39 personas</div><div class="mini-bar-wrap bar-cell"><div class="mini-bar" style="width:14%;background:var(--blue)"></div></div></td>
+          <td>39</td>
+          <td>1</td>
+          <td><span class="pill g">1</span></td>
+          <td class="n g">$49,813</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">másCristo Juriquilla</div><div class="ch-zone">Marce Muñoz · Qro</div></td>
+          <td><span class="pill g">145</span></td>
+          <td>—</td>
+          <td><span class="pill b">63 (2025)</span></td>
+          <td>—</td>
+          <td>—</td>
+          <td>85</td>
+          <td>—</td>
+          <td><span class="pill g">17</span></td>
+          <td class="n g">$38,862</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Horizonte Villahermosa</div><div class="ch-zone">— · Sur</div></td>
+          <td><span class="pill g">220</span></td>
+          <td>40 niños / 25 jóv.</td>
+          <td><span class="pill g">60</span></td>
+          <td><span class="pill b">8</span></td>
+          <td><div>100+ inscritos</div><div class="mini-bar-wrap bar-cell"><div class="mini-bar" style="width:36%;background:var(--teal)"></div></div></td>
+          <td>120</td>
+          <td>4</td>
+          <td class="pill nd">0</td>
+          <td class="n g">$16,235</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Horizonte Mérida</div><div class="ch-zone">Herminio Navidad · Sur</div></td>
+          <td><span class="pill g">66</span></td>
+          <td>6 niños</td>
+          <td><span class="pill b">41</span></td>
+          <td><span class="pill b">4</span></td>
+          <td><div>40 personas</div><div class="mini-bar-wrap bar-cell"><div class="mini-bar" style="width:15%;background:var(--green)"></div></div></td>
+          <td>40</td>
+          <td>3</td>
+          <td class="pill nd">0</td>
+          <td class="n g">$26,158</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Horizonte Panamá</div><div class="ch-zone">— · Internacional</div></td>
+          <td><span class="pill g">76</span></td>
+          <td>10 niños</td>
+          <td><span class="pill g">75</span></td>
+          <td><span class="pill g">10</span></td>
+          <td><div>52 personas</div><div class="mini-bar-wrap bar-cell"><div class="mini-bar" style="width:19%;background:var(--blue)"></div></div></td>
+          <td>52</td>
+          <td>15</td>
+          <td class="pill nd">0</td>
+          <td class="n u">$15,391</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Identidad San Luis</div><div class="ch-zone">Gerry Berrones · Norte</div></td>
+          <td class="pill nd">—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td class="pill nd">—</td>
+          <td class="n g">$16,481</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Horizonte CDMX</div><div class="ch-zone">Erik Servín · Centro</div></td>
+          <td><span class="pill b">70</span></td>
+          <td>10 niños / 5 adol. / 4 jóv.</td>
+          <td><span class="pill nd">2</span></td>
+          <td>0</td>
+          <td>—</td>
+          <td>15</td>
+          <td>10</td>
+          <td class="pill nd">0</td>
+          <td class="n g">$6,200</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Calvary Ecatepec</div><div class="ch-zone">Toño García · Centro</div></td>
+          <td><span class="pill b">40</span></td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>70</td>
+          <td>2</td>
+          <td class="pill nd">—</td>
+          <td class="n g">$8,919</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Vida Nueva en Cristo</div><div class="ch-zone">Oscar García · Centro</div></td>
+          <td class="pill nd">—</td>
+          <td>23 niños / 42 jóv.</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>90</td>
+          <td>1 diác.</td>
+          <td class="pill nd">—</td>
+          <td class="n g">$6,458</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">El Camino · Costa Rica</div><div class="ch-zone">Daniel Vargas · Internacional</div></td>
+          <td class="pill nd">—</td>
+          <td>20</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>40</td>
+          <td>4</td>
+          <td class="pill nd">—</td>
+          <td class="pill nd">—</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Horizonte Tequisquiapan</div><div class="ch-zone">— · Regional</div></td>
+          <td class="pill nd">—</td>
+          <td>20 niños / 10 jóv.</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>50</td>
+          <td>2</td>
+          <td class="pill nd">—</td>
+          <td class="n g">$8,900</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Calvary Texcoco</div><div class="ch-zone">Moisés Hernández · Centro</div></td>
+          <td class="pill nd">—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+          <td class="pill nd">—</td>
+          <td class="n g">$3,575</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     02 · GRÁFICAS
+══════════════════════════════ -->
+<div>
+  <div class="sec-hdr">
+    <span class="sec-num">02</span>
+    <span class="sec-title">VISUALIZACIONES</span>
+    <div class="sec-line"></div>
+    <span class="sec-badge">Aportaciones Q1 2026</span>
+  </div>
+
+  <div class="charts-row">
+    <!-- Barras por iglesia -->
+    <div class="chart-card">
+      <div class="chart-title">APORTACIONES POR IGLESIA</div>
+      <div class="chart-sub">Total Q1 · MXN</div>
+      <div class="chart-wrap"><canvas id="chartIglesias" height="260"></canvas></div>
+    </div>
+    <!-- Comparativo mensual -->
+    <div class="chart-card">
+      <div class="chart-title">COMPARATIVO MENSUAL</div>
+      <div class="chart-sub">Aportaciones por mes · Top iglesias</div>
+      <div class="chart-wrap"><canvas id="chartMensual" height="260"></canvas></div>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;" class="chart-card">
+    <div class="chart-title">TENDENCIA TOTAL DE APORTACIONES</div>
+    <div class="chart-sub">Suma red completa por mes · Enero – Abril 2026</div>
+    <div class="chart-wrap"><canvas id="chartTendencia" height="110"></canvas></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     03 · RANKING
+══════════════════════════════ -->
+<div>
+  <div class="sec-hdr">
+    <span class="sec-num">03</span>
+    <span class="sec-title">RANKING — APORTACIONES Q1</span>
+    <div class="sec-line"></div>
+    <span class="sec-badge">Ordenado por total acumulado</span>
+  </div>
+
+  <div class="ranking">
+    <div class="rank-row rank-1">
+      <div class="rank-pos">1</div>
+      <div class="rank-info"><div class="rank-church">Horizonte Centro (HQ)</div><div class="rank-pastor">Gadiel Arriaga · Querétaro</div></div>
+      <div class="rank-bar-wrap"><div class="rank-bar" style="width:100%"></div></div>
+      <div class="rank-amount">$335,857</div>
+      <div class="rank-pct">51.9%</div>
+    </div>
+    <div class="rank-row rank-2">
+      <div class="rank-pos">2</div>
+      <div class="rank-info"><div class="rank-church">La Carpa de Reunión</div><div class="rank-pastor">Dani Ávila · Querétaro</div></div>
+      <div class="rank-bar-wrap"><div class="rank-bar" style="width:33%;background:#8090A8"></div></div>
+      <div class="rank-amount">$112,122</div>
+      <div class="rank-pct">17.3%</div>
+    </div>
+    <div class="rank-row rank-3">
+      <div class="rank-pos">3</div>
+      <div class="rank-info"><div class="rank-church">Horizonte El Marqués</div><div class="rank-pastor">Phil Jones · Querétaro</div></div>
+      <div class="rank-bar-wrap"><div class="rank-bar" style="width:15%;background:#A89878"></div></div>
+      <div class="rank-amount">$49,813</div>
+      <div class="rank-pct">7.7%</div>
+    </div>
+    <div class="rank-row">
+      <div class="rank-pos" style="color:var(--ink3)">4</div>
+      <div class="rank-info"><div class="rank-church">másCristo Juriquilla</div><div class="rank-pastor">Marce Muñoz · Querétaro</div></div>
+      <div class="rank-bar-wrap"><div class="rank-bar" style="width:12%;background:var(--teal)"></div></div>
+      <div class="rank-amount">$38,862</div>
+      <div class="rank-pct">6.0%</div>
+    </div>
+    <div class="rank-row">
+      <div class="rank-pos" style="color:var(--ink3)">5</div>
+      <div class="rank-info"><div class="rank-church">Horizonte Mérida</div><div class="rank-pastor">Herminio Navidad · Sur</div></div>
+      <div class="rank-bar-wrap"><div class="rank-bar" style="width:8%;background:var(--green)"></div></div>
+      <div class="rank-amount">$26,158</div>
+      <div class="rank-pct">4.0%</div>
+    </div>
+    <div class="rank-row">
+      <div class="rank-pos" style="color:var(--ink3)">6</div>
+      <div class="rank-info"><div class="rank-church">Horizonte Villahermosa</div><div class="rank-pastor">— · Sur</div></div>
+      <div class="rank-bar-wrap"><div class="rank-bar" style="width:5%"></div></div>
+      <div class="rank-amount">$16,235</div>
+      <div class="rank-pct">2.5%</div>
+    </div>
+    <div class="rank-row">
+      <div class="rank-pos" style="color:var(--ink3)">7</div>
+      <div class="rank-info"><div class="rank-church">Identidad San Luis</div><div class="rank-pastor">Gerry Berrones · Norte</div></div>
+      <div class="rank-bar-wrap"><div class="rank-bar" style="width:5%"></div></div>
+      <div class="rank-amount">$16,481</div>
+      <div class="rank-pct">2.5%</div>
+    </div>
+    <div class="rank-row">
+      <div class="rank-pos" style="color:var(--ink3)">8</div>
+      <div class="rank-info"><div class="rank-church">Horizonte Panamá</div><div class="rank-pastor">— · Internacional</div></div>
+      <div class="rank-bar-wrap"><div class="rank-bar" style="width:5%;background:var(--purple)"></div></div>
+      <div class="rank-amount" style="color:var(--blue)">$15,391 <span style="font-size:9px;color:var(--ink3)">(USD)</span></div>
+      <div class="rank-pct">2.4%</div>
+    </div>
+    <div class="rank-row">
+      <div class="rank-pos" style="color:var(--ink3)">9</div>
+      <div class="rank-info"><div class="rank-church">Horizonte Tequisquiapan</div><div class="rank-pastor">— · Regional</div></div>
+      <div class="rank-bar-wrap"><div class="rank-bar" style="width:3%"></div></div>
+      <div class="rank-amount">$8,900</div>
+      <div class="rank-pct">1.4%</div>
+    </div>
+    <div class="rank-row">
+      <div class="rank-pos" style="color:var(--ink3)">10</div>
+      <div class="rank-info"><div class="rank-church">Calvary Ecatepec</div><div class="rank-pastor">Toño García · Centro</div></div>
+      <div class="rank-bar-wrap"><div class="rank-bar" style="width:3%"></div></div>
+      <div class="rank-amount">$8,919</div>
+      <div class="rank-pct">1.4%</div>
+    </div>
+    <div class="rank-row">
+      <div class="rank-pos" style="color:var(--ink3)">11</div>
+      <div class="rank-info"><div class="rank-church">Vida Nueva en Cristo</div><div class="rank-pastor">Oscar García · Centro</div></div>
+      <div class="rank-bar-wrap"><div class="rank-bar" style="width:2%"></div></div>
+      <div class="rank-amount">$6,458</div>
+      <div class="rank-pct">1.0%</div>
+    </div>
+    <div class="rank-row">
+      <div class="rank-pos" style="color:var(--ink3)">12</div>
+      <div class="rank-info"><div class="rank-church">Horizonte CDMX</div><div class="rank-pastor">Erik Servín · Centro</div></div>
+      <div class="rank-bar-wrap"><div class="rank-bar" style="width:2%"></div></div>
+      <div class="rank-amount">$6,200</div>
+      <div class="rank-pct">1.0%</div>
+    </div>
+    <div class="rank-row">
+      <div class="rank-pos" style="color:var(--ink3)">13</div>
+      <div class="rank-info"><div class="rank-church">Calvary Texcoco</div><div class="rank-pastor">Moisés Hernández · Centro</div></div>
+      <div class="rank-bar-wrap"><div class="rank-bar" style="width:1%"></div></div>
+      <div class="rank-amount">$3,575</div>
+      <div class="rank-pct">0.6%</div>
+    </div>
+    <div class="rank-row">
+      <div class="rank-pos" style="color:var(--ink3)">14</div>
+      <div class="rank-info"><div class="rank-church">Gracia Irresistible</div><div class="rank-pastor">Mario Salazar · Norte</div></div>
+      <div class="rank-bar-wrap"><div class="rank-bar" style="width:1%"></div></div>
+      <div class="rank-amount">$2,500</div>
+      <div class="rank-pct">0.4%</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     04 · TABLA APORTACIONES
+══════════════════════════════ -->
+<div>
+  <div class="sec-hdr">
+    <span class="sec-num">04</span>
+    <span class="sec-title">APORTACIONES AL COMPAÑERISMO</span>
+    <div class="sec-line"></div>
+    <span class="sec-badge">Desglose mensual · Enero – Abril 2026</span>
+  </div>
+
+  <div class="atbl-wrap">
+    <table class="ptbl">
+      <thead>
+        <tr>
+          <th>Iglesia</th>
+          <th>Enero</th><th>Febrero</th><th>Marzo</th><th>Abril</th>
+          <th>Total Q1</th><th>% red</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="zona-sep"><td colspan="7"><span class="zona-lbl">Querétaro</span></td></tr>
+        <tr>
+          <td><div class="ch-name">Horizonte Centro (HQ)</div><div class="ch-zone">Gadiel Arriaga</div></td>
+          <td class="n g">$82,870</td><td class="n g">$80,524</td><td class="n g">$95,720</td><td class="n g">$76,743</td>
+          <td class="n g" style="font-size:13px;font-weight:700">$335,857</td><td class="n" style="color:var(--blue)">51.9%</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">La Carpa de Reunión</div><div class="ch-zone">Dani Ávila</div></td>
+          <td class="n g">$21,717</td><td class="n g">$18,798</td><td class="n g">$56,038</td><td class="n g">$15,569</td>
+          <td class="n g" style="font-weight:700">$112,122</td><td class="n">17.3%</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Horizonte El Marqués</div><div class="ch-zone">Phil Jones</div></td>
+          <td class="n g">$12,633</td><td class="n g">$11,517</td><td class="n g">$13,187</td><td class="n g">$12,476</td>
+          <td class="n g" style="font-weight:700">$49,813</td><td class="n">7.7%</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">másCristo Juriquilla</div><div class="ch-zone">Marce Muñoz</div></td>
+          <td class="n g">$9,758</td><td class="n g">$9,700</td><td class="n g">$14,046</td><td class="n g">$5,358</td>
+          <td class="n g" style="font-weight:700">$38,862</td><td class="n">6.0%</td>
+        </tr>
+        <tr class="zona-sep"><td colspan="7"><span class="zona-lbl">Sur</span></td></tr>
+        <tr>
+          <td><div class="ch-name">Horizonte Mérida</div><div class="ch-zone">Herminio Navidad</div></td>
+          <td class="n g">$4,017</td><td class="n g">$10,227</td><td class="n g">$11,914</td><td class="n p">Pend.</td>
+          <td class="n g" style="font-weight:700">$26,158</td><td class="n">4.0%</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Horizonte Villahermosa</div><div class="ch-zone">—</div></td>
+          <td class="n g">$4,539</td><td class="n g">$4,560</td><td class="n g">$4,448</td><td class="n g">$2,688</td>
+          <td class="n g" style="font-weight:700">$16,235</td><td class="n">2.5%</td>
+        </tr>
+        <tr class="zona-sep"><td colspan="7"><span class="zona-lbl">Norte</span></td></tr>
+        <tr>
+          <td><div class="ch-name">Identidad San Luis</div><div class="ch-zone">Gerry Berrones</div></td>
+          <td class="n g">$4,992</td><td class="n g">$11,489</td><td class="n p">Pend.</td><td class="n p">Pend.</td>
+          <td class="n g" style="font-weight:700">$16,481</td><td class="n">2.5%</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Gracia Irresistible</div><div class="ch-zone">Mario Salazar</div></td>
+          <td class="n g">$2,500</td><td class="n p">Pend.</td><td class="n p">Pend.</td><td class="n p">Pend.</td>
+          <td class="n g" style="font-weight:700">$2,500</td><td class="n">0.4%</td>
+        </tr>
+        <tr class="zona-sep"><td colspan="7"><span class="zona-lbl">Centro</span></td></tr>
+        <tr>
+          <td><div class="ch-name">Calvary Ecatepec</div><div class="ch-zone">Toño García</div></td>
+          <td class="n g">$2,037</td><td class="n g">$2,236</td><td class="n g">$1,849</td><td class="n g">$2,797</td>
+          <td class="n g" style="font-weight:700">$8,919</td><td class="n">1.4%</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Calvary Texcoco</div><div class="ch-zone">Moisés Hernández</div></td>
+          <td class="n g">$1,100</td><td class="n p">Pend.</td><td class="n g">$1,200</td><td class="n g">$1,275</td>
+          <td class="n g" style="font-weight:700">$3,575</td><td class="n">0.6%</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Horizonte CDMX</div><div class="ch-zone">Erik Servín</div></td>
+          <td class="n g">$1,500</td><td class="n g">$2,350</td><td class="n g">$2,350</td><td class="n p">Pend.</td>
+          <td class="n g" style="font-weight:700">$6,200</td><td class="n">1.0%</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Vida Nueva en Cristo</div><div class="ch-zone">Oscar García</div></td>
+          <td class="n g">$4,524</td><td class="n g">$1,934</td><td class="n p">Pend.</td><td class="n p">Pend.</td>
+          <td class="n g" style="font-weight:700">$6,458</td><td class="n">1.0%</td>
+        </tr>
+        <tr class="zona-sep"><td colspan="7"><span class="zona-lbl">Internacional</span></td></tr>
+        <tr>
+          <td><div class="ch-name">Horizonte Panamá</div><div class="ch-zone">—</div></td>
+          <td class="n u">$3,680</td><td class="n u">$4,422</td><td class="n u">$7,289</td><td class="n p">Pend.</td>
+          <td class="n u" style="font-weight:700">$15,391 <span style="font-size:9px;font-weight:400">(USD)</span></td><td class="n">2.4%</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Horizonte Tequisquiapan</div><div class="ch-zone">—</div></td>
+          <td class="n g">$2,700</td><td class="n g">$3,400</td><td class="n p">Pend.</td><td class="n g">$2,800</td>
+          <td class="n g" style="font-weight:700">$8,900</td><td class="n">1.4%</td>
+        </tr>
+        <tr class="tr-total">
+          <td><strong>TOTAL RED Q1 2026</strong></td>
+          <td class="n">$158,568</td><td class="n">$161,158</td><td class="n">$208,040</td><td class="n">$119,705</td>
+          <td class="n g" style="font-size:14px;font-weight:800">$647,471</td>
+          <td class="n">100%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout info" style="margin-top:12px">
+    <strong>Notas:</strong> Panamá en USD (~$19.50 MXN/USD). "Pend." = comprobante no registrado al corte. Dic-2025 de Identidad SLP ($9,506) excluido del Q1.
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     05 · TALLERES
+══════════════════════════════ -->
+<div>
+  <div class="sec-hdr">
+    <span class="sec-num">05</span>
+    <span class="sec-title">INGRESOS — TALLERES PASTOR KIKE</span>
+    <div class="sec-line"></div>
+    <span class="sec-badge">Pagos online · Q1 2026</span>
+  </div>
+
+  <div class="t2grid">
+    <div class="t-tbl">
+      <div class="t-th"><span>Mes</span><span>Pagos</span><span>Ingreso</span></div>
+      <div class="t-row">
+        <div class="t-mes" style="color:var(--ink3)">ENERO</div>
+        <div class="t-bw"><div class="t-b" style="width:0%"></div></div>
+        <div class="t-ct">0 pagos</div>
+        <div class="t-am" style="color:var(--ink3)">$0.00</div>
+      </div>
+      <div class="t-row">
+        <div class="t-mes">FEBRERO</div>
+        <div class="t-bw"><div class="t-b" style="width:17%"></div></div>
+        <div class="t-ct">1 pago</div>
+        <div class="t-am" style="color:var(--green)">$510.00</div>
+      </div>
+      <div class="t-row">
+        <div class="t-mes">MARZO</div>
+        <div class="t-bw"><div class="t-b" style="width:38%"></div></div>
+        <div class="t-ct">1 pago</div>
+        <div class="t-am" style="color:var(--green)">$1,127.00</div>
+      </div>
+      <div class="t-row">
+        <div class="t-mes">ABRIL</div>
+        <div class="t-bw"><div class="t-b" style="width:45%"></div></div>
+        <div class="t-ct">2 pagos</div>
+        <div class="t-am" style="color:var(--green)">$1,320.00</div>
+      </div>
+      <div class="t-tot">
+        <span style="font-family:var(--display);font-size:15px;letter-spacing:.04em">TOTAL Q1 2026</span>
+        <span style="font-family:var(--mono);font-size:15px;font-weight:600;color:var(--green)">$2,957.00 MXN</span>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:var(--teal);border-radius:12px;padding:18px 16px;color:#fff">
+        <div style="font-size:9px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:6px">Total Q1 talleres</div>
+        <div style="font-family:var(--display);font-size:38px;line-height:1">$2,957</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.5);margin-top:3px">MXN · 4 pagos concretados</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 16px;">
+        <div style="font-size:9px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:6px">Ticket promedio Q1</div>
+        <div style="font-family:var(--display);font-size:38px;line-height:1">$739</div>
+        <div style="font-size:10px;color:var(--ink3);margin-top:3px">por pago</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 16px;">
+        <div style="font-size:9px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:6px">Acumulado histórico</div>
+        <div style="font-family:var(--display);font-size:38px;line-height:1">$22,556</div>
+        <div style="font-size:10px;color:var(--ink3);margin-top:3px">MXN · sep 2025 – abr 2026</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════
+     06 · BAUTISMOS
+══════════════════════════════ -->
+<div>
+  <div class="sec-hdr">
+    <span class="sec-num">06</span>
+    <span class="sec-title">BAUTISMOS</span>
+    <div class="sec-line"></div>
+    <span class="sec-badge">Q1 2026 · 3 iglesias confirmadas</span>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;">
+
+    <!-- Barras -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+      <div style="background:var(--ink);padding:11px 18px;display:flex;justify-content:space-between;">
+        <span style="font-size:9px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4)">Iglesia · adultos</span>
+        <span style="font-size:9px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4)">Bautismos · ratio</span>
+      </div>
+
+      <div style="padding:18px 20px;display:flex;flex-direction:column;gap:16px;">
+
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;">
+            <div>
+              <span style="font-size:13px;font-weight:600;color:var(--ink)">Horizonte Querétaro (HQ)</span>
+              <span style="font-size:10px;color:var(--ink3);font-family:var(--mono);margin-left:6px">1,400 adultos</span>
+            </div>
+            <span style="font-family:var(--display);font-size:28px;line-height:1;color:var(--blue)">37</span>
+          </div>
+          <div style="height:8px;background:var(--bg);border-radius:4px;overflow:hidden;">
+            <div style="height:100%;width:100%;background:var(--blue);border-radius:4px;"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:4px;">
+            <span style="font-size:10px;color:var(--ink3)">67% del total Q1</span>
+            <span style="font-size:10px;color:var(--ink3);font-family:var(--mono)">ratio 1 : 38 adultos</span>
+          </div>
+        </div>
+
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;">
+            <div>
+              <span style="font-size:13px;font-weight:600;color:var(--ink)">másCristo Juriquilla</span>
+              <span style="font-size:10px;color:var(--ink3);font-family:var(--mono);margin-left:6px">145 adultos</span>
+            </div>
+            <span style="font-family:var(--display);font-size:28px;line-height:1;color:var(--teal)">17</span>
+          </div>
+          <div style="height:8px;background:var(--bg);border-radius:4px;overflow:hidden;">
+            <div style="height:100%;width:46%;background:var(--teal);border-radius:4px;"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:4px;">
+            <span style="font-size:10px;color:var(--ink3)">31% del total Q1</span>
+            <span style="font-size:10px;font-weight:600;color:var(--teal);font-family:var(--mono)">ratio 1 : 8.5 ✦ mejor red</span>
+          </div>
+        </div>
+
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;">
+            <div>
+              <span style="font-size:13px;font-weight:600;color:var(--ink)">Horizonte El Marqués</span>
+              <span style="font-size:10px;color:var(--ink3);font-family:var(--mono);margin-left:6px">119 adultos</span>
+            </div>
+            <span style="font-family:var(--display);font-size:28px;line-height:1;color:var(--gold)">1</span>
+          </div>
+          <div style="height:8px;background:var(--bg);border-radius:4px;overflow:hidden;">
+            <div style="height:100%;width:3%;background:var(--gold);border-radius:4px;"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:4px;">
+            <span style="font-size:10px;color:var(--ink3)">2% del total Q1</span>
+            <span style="font-size:10px;color:var(--ink3);font-family:var(--mono)">tuvo 12 en todo 2025</span>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid var(--border);padding-top:14px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-family:var(--display);font-size:16px;letter-spacing:.04em">TOTAL Q1 CONFIRMADO</span>
+            <span style="font-family:var(--display);font-size:28px;color:var(--green)">55</span>
+          </div>
+          <p style="font-size:10px;color:var(--ink3);margin-top:4px">Resto de la red sin dato Q1 — pendiente confirmar con cada pastor</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div style="display:flex;flex-direction:column;gap:10px;">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div style="background:var(--blue);border-radius:12px;padding:16px 14px;color:#fff">
+          <div style="font-size:9px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:6px">Total Q1</div>
+          <div style="font-family:var(--display);font-size:38px;line-height:1">55</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.5);margin-top:3px">bautismos confirmados</div>
+        </div>
+        <div style="background:var(--teal);border-radius:12px;padding:16px 14px;color:#fff">
+          <div style="font-size:9px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:6px">Mejor ratio</div>
+          <div style="font-family:var(--display);font-size:38px;line-height:1">1:8</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.5);margin-top:3px">másCristo · adultos</div>
+        </div>
+      </div>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 14px;">
+        <div style="font-size:9px;font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px">Referencia 2025 (año completo)</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px solid var(--border);">
+            <span style="color:var(--ink2)">Villahermosa</span><span style="font-family:var(--mono);font-weight:600;color:var(--ink)">16</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px solid var(--border);">
+            <span style="color:var(--ink2)">Vida Nueva en Cristo</span><span style="font-family:var(--mono);font-weight:600;color:var(--ink)">9</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px solid var(--border);">
+            <span style="color:var(--ink2)">Horizonte Mérida</span><span style="font-family:var(--mono);font-weight:600;color:var(--ink)">7</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px solid var(--border);">
+            <span style="color:var(--ink2)">El Marqués</span><span style="font-family:var(--mono);font-weight:600;color:var(--ink)">12</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;padding:5px 0;">
+            <span style="color:var(--ink2)">Gracia Irresistible</span><span style="font-family:var(--mono);font-weight:600;color:var(--ink)">2</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Nota:</strong> HQ (37) y másCristo (17) son datos de reunión pastoral Q1 2026. La Carpa, Panamá, Mérida, Villahermosa y CDMX no reportaron bautismos Q1 aún — confirmar con cada pastor.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     07 · APORTACIÓN PER CÁPITA
+══════════════════════════════ -->
+<div>
+  <div class="sec-hdr">
+    <span class="sec-num">07</span>
+    <span class="sec-title">ANÁLISIS — APORTACIÓN PER CÁPITA</span>
+    <div class="sec-line"></div>
+    <span class="sec-badge">Aportación / adulto · Q1 2026</span>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;">
+    <div class="kpi k2">
+      <div class="kpi-label">Promedio red</div>
+      <div class="kpi-val">$65</div>
+      <div class="kpi-sub">por adulto / mes</div>
+      <div class="kpi-delta up">($260 por adulto en Q1)</div>
+    </div>
+    <div class="kpi k3">
+      <div class="kpi-label">Más generosa</div>
+      <div class="kpi-val">La Carpa</div>
+      <div class="kpi-sub">$132 / adulto / mes</div>
+      <div class="kpi-delta up">↑ 2× el promedio de HQ</div>
+    </div>
+    <div class="kpi k4">
+      <div class="kpi-label">Mayor oportunidad</div>
+      <div class="kpi-val">Villahermosa</div>
+      <div class="kpi-sub">$74 / persona · 220 adultos</div>
+    </div>
+    <div class="kpi k5">
+      <div class="kpi-label">Brecha máx.</div>
+      <div class="kpi-val">7.3×</div>
+      <div class="kpi-sub">La Carpa vs Villahermosa</div>
+    </div>
+  </div>
+
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;">
+    <table class="ptbl">
+      <thead>
+        <tr>
+          <th>Iglesia</th>
+          <th>Adultos prom.</th>
+          <th>Aportación Q1</th>
+          <th>$ / adulto Q1</th>
+          <th>$ / adulto / mes</th>
+          <th>vs promedio red</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="ch-name">La Carpa de Reunión</div><div class="ch-zone">Dani Ávila · Qro</div></td>
+          <td class="n" style="text-align:right">212</td>
+          <td class="n g">$112,122</td>
+          <td class="n g" style="font-weight:700">$529</td>
+          <td class="n g" style="font-weight:700">$132</td>
+          <td><span class="pill g">+104%</span></td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Horizonte El Marqués</div><div class="ch-zone">Phil Jones · Qro</div></td>
+          <td class="n" style="text-align:right">119</td>
+          <td class="n g">$49,813</td>
+          <td class="n g" style="font-weight:700">$419</td>
+          <td class="n g">$105</td>
+          <td><span class="pill g">+62%</span></td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Horizonte Mérida</div><div class="ch-zone">Herminio Navidad · Sur</div></td>
+          <td class="n" style="text-align:right">66</td>
+          <td class="n g">$26,158</td>
+          <td class="n g" style="font-weight:700">$396</td>
+          <td class="n g">$99</td>
+          <td><span class="pill g">+52%</span></td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">másCristo Juriquilla</div><div class="ch-zone">Marce Muñoz · Qro</div></td>
+          <td class="n" style="text-align:right">145</td>
+          <td class="n g">$38,862</td>
+          <td class="n" style="font-weight:700">$268</td>
+          <td class="n">$67</td>
+          <td><span class="pill b">+3%</span></td>
+        </tr>
+        <tr style="background:#FAFAF8">
+          <td><div class="ch-name" style="color:var(--ink3)">— Promedio red —</div></td>
+          <td class="n" style="text-align:right;color:var(--ink3)">—</td>
+          <td class="n" style="color:var(--ink3)">—</td>
+          <td class="n" style="font-weight:700;color:var(--ink3)">$260</td>
+          <td class="n" style="color:var(--ink3)">$65</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Horizonte Centro (HQ)</div><div class="ch-zone">Gadiel Arriaga · Qro</div></td>
+          <td class="n" style="text-align:right">1,400</td>
+          <td class="n g">$335,857</td>
+          <td class="n" style="font-weight:700">$240</td>
+          <td class="n">$60</td>
+          <td><span class="pill nd">−8%</span></td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Calvary Ecatepec</div><div class="ch-zone">Toño García · Centro</div></td>
+          <td class="n" style="text-align:right">40</td>
+          <td class="n g">$8,919</td>
+          <td class="n">$223</td>
+          <td class="n">$56</td>
+          <td><span class="pill nd">−14%</span></td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Horizonte Panamá</div><div class="ch-zone">— · Internacional</div></td>
+          <td class="n" style="text-align:right">76</td>
+          <td class="n u">$15,391</td>
+          <td class="n">$203</td>
+          <td class="n">$51</td>
+          <td><span class="pill nd">−22%</span></td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Horizonte CDMX</div><div class="ch-zone">Erik Servín · Centro</div></td>
+          <td class="n" style="text-align:right">70</td>
+          <td class="n g">$6,200</td>
+          <td class="n" style="color:var(--red)">$89</td>
+          <td class="n" style="color:var(--red)">$22</td>
+          <td><span class="pill r">−66%</span></td>
+        </tr>
+        <tr>
+          <td><div class="ch-name">Horizonte Villahermosa</div><div class="ch-zone">— · Sur</div></td>
+          <td class="n" style="text-align:right">220</td>
+          <td class="n g">$16,235</td>
+          <td class="n" style="color:var(--red)">$74</td>
+          <td class="n" style="color:var(--red)">$18</td>
+          <td><span class="pill r">−72%</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout info" style="margin-top:12px">
+    <strong>Insight clave:</strong> HQ genera el 52% de todas las aportaciones por puro volumen, pero su ratio per cápita está 8% bajo el promedio. Subir $10/adulto/mes en HQ equivale a +$168,000 MXN al año. Villahermosa tiene la mayor brecha entre tamaño y generosidad — 220 adultos aportando como una congregación de 60.
+  </div>
+</div>
+
+</div><!-- /main -->
+
+<div class="footer">
+  <div class="footer-m">CRISTO ES MEJOR · 2026</div>
+  <div class="footer-n">Uso interno · Documento confidencial · Kike Torres</div>
+</div>
+
+<script>
+const FONT = "'DM Mono', monospace";
+const C = {blue:'#1D4E8F',teal:'#1A9D94',gold:'#C8873A',green:'#2D7A52',red:'#C84840',purple:'#6B4FA0',grey:'#D0CEC9'};
+Chart.defaults.font.family = FONT;
+Chart.defaults.color = '#9A98A2';
+
+// ── GRÁFICA 1: Barras horizontales por iglesia ──
+new Chart(document.getElementById('chartIglesias'), {
+  type: 'bar',
+  data: {
+    labels: ['HQ Centro','La Carpa','El Marqués','másCristo','Mérida','Identidad SLP','Villahermosa','Panamá','Tequis','Ecatepec','V.Nueva','CDMX','Texcoco','Gracia Irr.'],
+    datasets: [{
+      label: 'Aportación Q1 MXN',
+      data: [335857, 112122, 49813, 38862, 26158, 16481, 16235, 15391, 8900, 8919, 6458, 6200, 3575, 2500],
+      backgroundColor: [C.blue, C.teal, C.gold, C.gold, C.green, C.blue, C.green, C.purple, C.gold, C.red, C.red, C.red, C.red, C.red].map(c => c+'CC'),
+      borderColor: [C.blue, C.teal, C.gold, C.gold, C.green, C.blue, C.green, C.purple, C.gold, C.red, C.red, C.red, C.red, C.red],
+      borderWidth: 1, borderRadius: 4,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' $' + ctx.raw.toLocaleString('es-MX') + ' MXN' } } },
+    scales: {
+      x: { grid: { color: '#F0EEEB' }, ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'K', font: { size: 10 } } },
+      y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+    }
+  }
+});
+
+// ── GRÁFICA 2: Barras agrupadas mes a mes ──
+new Chart(document.getElementById('chartMensual'), {
+  type: 'bar',
+  data: {
+    labels: ['Enero', 'Febrero', 'Marzo', 'Abril'],
+    datasets: [
+      { label: 'HQ Centro', data: [82870, 80524, 95720, 76743], backgroundColor: C.blue+'CC', borderColor: C.blue, borderWidth: 1, borderRadius: 3 },
+      { label: 'La Carpa', data: [21717, 18798, 56038, 15569], backgroundColor: C.teal+'CC', borderColor: C.teal, borderWidth: 1, borderRadius: 3 },
+      { label: 'El Marqués', data: [12633, 11517, 13187, 12476], backgroundColor: C.gold+'CC', borderColor: C.gold, borderWidth: 1, borderRadius: 3 },
+      { label: 'másCristo', data: [9758, 9700, 14046, 5358], backgroundColor: C.green+'CC', borderColor: C.green, borderWidth: 1, borderRadius: 3 },
+      { label: 'Resto red', data: [31590, 40619, 29049, 9559], backgroundColor: C.grey+'99', borderColor: C.grey, borderWidth: 1, borderRadius: 3 },
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom', labels: { font: { size: 10 }, boxWidth: 10, padding: 12 } }, tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': $' + ctx.raw.toLocaleString('es-MX') } } },
+    scales: {
+      x: { stacked: true, grid: { display: false }, ticks: { font: { size: 10 } } },
+      y: { stacked: true, grid: { color: '#F0EEEB' }, ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'K', font: { size: 10 } } }
+    }
+  }
+});
+
+// ── GRÁFICA 3: Tendencia total ──
+new Chart(document.getElementById('chartTendencia'), {
+  type: 'line',
+  data: {
+    labels: ['Enero', 'Febrero', 'Marzo', 'Abril'],
+    datasets: [{
+      label: 'Total red',
+      data: [158568, 161158, 208040, 119705],
+      borderColor: C.blue,
+      backgroundColor: C.blue + '18',
+      tension: 0.4, fill: true,
+      pointBackgroundColor: C.blue,
+      pointRadius: 5, pointHoverRadius: 7,
+      borderWidth: 2.5,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ' Total: $' + ctx.raw.toLocaleString('es-MX') + ' MXN' } }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+      y: { grid: { color: '#F0EEEB' }, ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'K', font: { size: 10 } } }
+    }
+  }
+});
+</script>
+</body>
+</html>
