@@ -1484,6 +1484,9 @@ img { display: block; }
     <button class="nav-btn" data-view="finanzas" onclick="goTo('finanzas',this)">
       <span class="nav-ico">$</span> Finanzas
     </button>
+    <button class="nav-btn" data-view="asistencia" onclick="goTo('asistencia',this)">
+      <span class="nav-ico">📊</span> Asistencia Q1
+    </button>
     <div style="margin-top:auto;padding:16px 14px;border-top:1px solid var(--border)">
       <div style="font-family: var(--sans);font-size:8px;color:var(--ink3);line-height:1.6;letter-spacing:0.04em">
         Información pastoral<br>confidencial — CEM
@@ -1528,6 +1531,7 @@ img { display: block; }
     <div class="view" id="view-seguimiento"></div>
     <div class="view" id="view-bigpicture"></div>
     <div class="view" id="view-finanzas"></div>
+    <div class="view" id="view-asistencia"></div>
   </div>
 </div>
 
@@ -1538,6 +1542,7 @@ img { display: block; }
   <button class="bn-item" data-view="reportes" onclick="goTo('reportes',this)"><span class="bn-ico">📋</span>Reportes</button>
   <button class="bn-item" data-view="seguimiento" onclick="goTo('seguimiento',this)"><span class="bn-ico">✓</span>Tareas</button>
   <button class="bn-item" data-view="finanzas" onclick="goTo('finanzas',this)"><span class="bn-ico">$</span>Finanzas</button>
+  <button class="bn-item" data-view="asistencia" onclick="goTo('asistencia',this)"><span class="bn-ico">📊</span>Q1</button>
 </div>
 
 <!-- PANEL DETALLE -->
@@ -1823,6 +1828,7 @@ function goTo(view, btn){
   if(view==='reportes')   renderReportes();
   if(view==='seguimiento')renderSeguimiento();
   if(view==='finanzas')   renderFinanzas();
+  if(view==='asistencia') renderAsistencia();
 }
 
 function updateBadges(){
@@ -3500,6 +3506,199 @@ async function saveCloud(){
   }
 }
 window.saveCloud = saveCloud;
+
+/* ═══════════════════════════════════════════════════
+   ASISTENCIA Q1 2026
+═══════════════════════════════════════════════════ */
+function renderAsistencia(){
+  const DATA = [
+    {iglesia:'Horizonte Querétaro', pastor:'Gadiel Arriaga', zona:'qro', fuente:'reunion', adultos:1500, ninos:null, nuevas:null, discipulado:null, bautismos:37, ruta:true, rutaN:277, noReporto:false, nota:'Datos de reunión pastoral. La Ruta activa con 277 en bienvenida.', impacto:'~1,400/sem en 3 servicios. Primer colaborador en consejería.', sin:false},
+    {iglesia:'másCristo Juriquilla', pastor:'Marce Muñoz', zona:'qro', fuente:'reunion', adultos:130, ninos:null, nuevas:null, discipulado:85, bautismos:17, ruta:true, rutaN:null, noReporto:false, nota:'Datos de reunión pastoral.', impacto:'17 bautismos Q1. Grupos al 60%.', sin:false},
+    {iglesia:'Horizonte Villahermosa', pastor:'Adrián Capitaine', zona:'sur', fuente:'formulario', adultos:220, ninos:65, nuevas:60, discipulado:120, bautismos:0, ruta:true, rutaN:100, noReporto:false, nota:'Primer Conociéndonos +100 inscritos. 40 miembros oficiales.', impacto:'60 nuevas personas. Primeros 40 miembros formalizados.', sin:false},
+    {iglesia:'Horizonte El Marqués', pastor:'Phil Jones', zona:'qro', fuente:'formulario', adultos:119, ninos:54, nuevas:35, discipulado:39, bautismos:1, ruta:true, rutaN:39, noReporto:false, nota:'Día del niño: gran asistencia con invitados.', impacto:'35 personas nuevas. Evento Día del niño exitoso.', sin:false},
+    {iglesia:'Horizonte Panamá', pastor:'Juan Pablo Segismond', zona:'otro', fuente:'formulario', adultos:76, ninos:10, nuevas:75, discipulado:52, bautismos:0, ruta:true, rutaN:52, noReporto:false, nota:'Primer grupo completó Membresía en La Ruta. Taller Ministry Imprint.', impacto:'75 personas nuevas — ratio 1:1 con adultos regulares.', sin:false},
+    {iglesia:'Horizonte CDMX', pastor:'Erik Servín', zona:'centro', fuente:'formulario', adultos:70, ninos:19, nuevas:2, discipulado:15, bautismos:0, ruta:false, rutaN:null, noReporto:false, nota:'Sin La Ruta. Único servicio sin La Ruta fuera de El Camino.', impacto:'Solo 2 personas nuevas.', sin:false},
+    {iglesia:'Horizonte Mérida', pastor:'Herminio Navidad', zona:'sur', fuente:'formulario', adultos:66, ninos:6, nuevas:41, discipulado:40, bautismos:0, ruta:true, rutaN:40, noReporto:false, nota:'Aniversario: 102 personas. Nuevas familias llegando.', impacto:'41 personas nuevas. Crecimiento sostenido.', sin:false},
+    {iglesia:'Calvary Chapel Ecatepec', pastor:'Toño García', zona:'centro', fuente:'formulario', adultos:40, ninos:null, nuevas:null, discipulado:70, bautismos:null, ruta:true, rutaN:null, noReporto:false, nota:'Toño Robles enviado a Texcoco. Moi Hernández en tto. cáncer de colon.', impacto:'La Ruta y oración como momentos clave.', sin:false},
+    {iglesia:'Horizonte Tequisquiapan', pastor:'—', zona:'norte', fuente:'formulario', adultos:30, ninos:30, nuevas:null, discipulado:50, bautismos:null, ruta:true, rutaN:null, noReporto:false, nota:'Donación de filtros de agua en comunidades.', impacto:'Alcance comunitario activo.', sin:false},
+    {iglesia:'Vida Nueva en Cristo', pastor:'Oscar García', zona:'centro', fuente:'formulario', adultos:null, ninos:65, nuevas:null, discipulado:90, bautismos:null, ruta:true, rutaN:null, noReporto:false, nota:'Campaña niños, matrimonios, Día del niño. Pastor Javier sanado.', impacto:'Múltiples eventos de alcance. Testimonio de sanidad.', sin:false},
+    {iglesia:'Comunidad El Camino', pastor:'Daniel Vargas', zona:'otro', fuente:'formulario', adultos:20, ninos:20, nuevas:null, discipulado:40, bautismos:null, ruta:false, rutaN:null, noReporto:false, nota:'Serie Nehemías. Clases de inglés y nivelación educativa.', impacto:'Proyecto social en desarrollo.', sin:false},
+    {iglesia:'La Carpa de Reunión', pastor:'Dani Ávila', zona:'qro', fuente:'sin', adultos:null, ninos:null, nuevas:null, discipulado:null, bautismos:null, ruta:null, rutaN:null, noReporto:true, nota:'No envió formulario.', impacto:'', sin:true},
+    {iglesia:'Identidad San Luis', pastor:'Gerry Berrones', zona:'norte', fuente:'sin', adultos:null, ninos:null, nuevas:null, discipulado:null, bautismos:null, ruta:null, rutaN:null, noReporto:true, nota:'No envió formulario.', impacto:'', sin:true},
+    {iglesia:'La Carpa del Valle McAllen', pastor:'Willer Montesinos', zona:'norte', fuente:'sin', adultos:null, ninos:null, nuevas:null, discipulado:null, bautismos:null, ruta:null, rutaN:null, noReporto:true, nota:'No envió formulario.', impacto:'', sin:true},
+    {iglesia:'Horizonte Tijuana', pastor:'Chuy Anaya', zona:'norte', fuente:'sin', adultos:null, ninos:null, nuevas:null, discipulado:null, bautismos:null, ruta:null, rutaN:null, noReporto:true, nota:'No envió formulario. En transición a Reynosa TX.', impacto:'', sin:true},
+    {iglesia:'Comunidad Baluarte', pastor:'Manuel Jaquez', zona:'norte', fuente:'sin', adultos:null, ninos:null, nuevas:null, discipulado:null, bautismos:null, ruta:null, rutaN:null, noReporto:true, nota:'No envió formulario.', impacto:'', sin:true},
+  ];
+
+  const reportados = DATA.filter(d=>!d.sin);
+  const sinReportar = DATA.filter(d=>d.sin);
+  const formulario = DATA.filter(d=>d.fuente==='formulario');
+  const totalAdultos = reportados.reduce((s,d)=>s+(d.adultos||0),0);
+  const totalNuevas  = formulario.reduce((s,d)=>s+(d.nuevas||0),0);
+  const totalBautismos = reportados.reduce((s,d)=>s+(d.bautismos||0),0);
+  const totalDisc = reportados.reduce((s,d)=>s+(d.discipulado||0),0);
+  const conRuta = reportados.filter(d=>d.ruta).length;
+
+  const ZONA_COLOR = {qro:'#C8933A',norte:'#2A5A96',sur:'#2D7A52',centro:'#7A2A52',otro:'#5A3A96'};
+
+  const fuenteBadge = f => f==='formulario'
+    ? '<span style="font-size:10px;font-weight:600;padding:1px 7px;border-radius:99px;background:rgba(74,155,111,0.12);color:var(--healthy)">Formulario</span>'
+    : f==='reunion'
+    ? '<span style="font-size:10px;font-weight:600;padding:1px 7px;border-radius:99px;background:rgba(74,122,184,0.12);color:var(--norte)">Reunión pastoral</span>'
+    : '<span style="font-size:10px;font-weight:600;padding:1px 7px;border-radius:99px;background:rgba(184,64,64,0.1);color:var(--critical)">Sin reporte</span>';
+
+  const rutaBadge = (r, n) => r===null ? '<span style="font-size:10px;color:var(--ink4)">—</span>'
+    : r ? `<span style="font-size:10px;font-weight:600;padding:1px 7px;border-radius:99px;background:rgba(74,155,111,0.12);color:var(--healthy)">✓${n?' '+n:''}</span>`
+    : '<span style="font-size:10px;font-weight:600;padding:1px 7px;border-radius:99px;background:rgba(184,64,64,0.1);color:var(--critical)">Sin La Ruta</span>';
+
+  const val = v => v!==null&&v!==undefined ? v.toLocaleString('es-MX') : '<span style="color:var(--ink4)">—</span>';
+
+  let h = `<style>
+  .aw{padding:20px 16px 80px;max-width:1000px}
+  .akpis{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:20px}
+  @media(min-width:500px){.akpis{grid-template-columns:repeat(4,1fr)}}
+  .akpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:14px 16px;position:relative;overflow:hidden}
+  .akpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+  .akpi.aq::before{background:var(--qro)}.akpi.ag::before{background:var(--healthy)}.akpi.ab::before{background:var(--norte)}.akpi.ar::before{background:var(--critical)}
+  .akn{font-size:28px;font-weight:700;letter-spacing:-0.02em;line-height:1;color:var(--ink)}
+  .akl{font-size:9px;color:var(--ink3);margin-top:4px;text-transform:uppercase;letter-spacing:.07em}
+  .aksub{font-size:10px;color:var(--ink2);margin-top:2px}
+  .asec{font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin:18px 0 10px;padding-bottom:7px;border-bottom:1px solid var(--border)}
+  .atbl{width:100%;border-collapse:collapse;font-size:12.5px}
+  .atbl th{font-size:10px;color:var(--ink3);text-align:left;padding:7px 10px;border-bottom:1px solid var(--border);font-weight:600;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+  .atbl th.r{text-align:right}
+  .atbl td{padding:8px 10px;color:var(--ink);border-bottom:1px solid var(--border);vertical-align:middle}
+  .atbl td.r{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink2)}
+  .atbl tr:last-child td{border-bottom:none}
+  .atbl tr:hover td{background:var(--surface2)}
+  .atbl tr.sin-row td{opacity:.45}
+  .ac{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:12px;overflow-x:auto}
+  .anota{background:var(--surface2);border-left:2px solid var(--qro);padding:10px 14px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin-top:2px;font-size:11.5px;color:var(--ink2);line-height:1.6}
+  .anota.urgente{border-left-color:var(--critical)}
+  .ahigh{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+  .arow{display:flex;align-items:flex-start;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:11px 14px}
+  .arow-ico{font-size:18px;flex-shrink:0;margin-top:1px}
+  .arow-body{flex:1}
+  .arow-title{font-size:13px;font-weight:600;color:var(--ink)}
+  .arow-sub{font-size:11.5px;color:var(--ink2);margin-top:3px;line-height:1.5}
+  .arow-badge{font-size:9.5px;font-weight:700;padding:2px 9px;border-radius:99px;flex-shrink:0;align-self:flex-start;margin-top:2px}
+  </style>
+  <div class="aw">
+    <div style="font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-0.02em;margin-bottom:4px">Asistencia Q1 2026</div>
+    <div style="font-size:11px;color:var(--ink3);margin-bottom:16px">Enero – Abril 2026 · ${formulario.length} iglesias por formulario · ${reportados.filter(d=>d.fuente==='reunion').length} por reunión pastoral</div>
+
+    <div class="akpis">
+      <div class="akpi aq"><div class="akn">${totalAdultos.toLocaleString('es-MX')}</div><div class="akl">Adultos / semana</div><div class="aksub">todos los datos reportados</div></div>
+      <div class="akpi ab"><div class="akn">${totalNuevas.toLocaleString('es-MX')}+</div><div class="akl">Personas nuevas</div><div class="aksub">solo formulario, parcial</div></div>
+      <div class="akpi ag"><div class="akn">${totalBautismos}</div><div class="akl">Bautismos</div><div class="aksub">datos parciales</div></div>
+      <div class="akpi ar"><div class="akn">${sinReportar.length}</div><div class="akl">Sin reporte</div><div class="aksub">de ${DATA.length} iglesias</div></div>
+    </div>
+
+    <div class="asec">Señales destacadas</div>
+    <div class="ahigh">
+      <div class="arow">
+        <div class="arow-ico">🚀</div>
+        <div class="arow-body">
+          <div class="arow-title">Panamá — ratio de alcance excepcional</div>
+          <div class="arow-sub">75 personas nuevas con 76 adultos regulares. Casi 1:1. Mayor taller de Ministry Imprint en la red: 62 tests, 44 asistentes. Primer grupo completando Membresía en La Ruta.</div>
+        </div>
+        <div class="arow-badge" style="background:rgba(74,155,111,0.1);color:var(--healthy)">destacado</div>
+      </div>
+      <div class="arow">
+        <div class="arow-ico">📈</div>
+        <div class="arow-body">
+          <div class="arow-title">Villahermosa — arranque institucional</div>
+          <div class="arow-sub">60 personas nuevas + primeros 40 miembros oficiales. La Ruta con +100 inscritos en Conociéndonos. Pide lugar más grande.</div>
+        </div>
+        <div class="arow-badge" style="background:rgba(74,155,111,0.1);color:var(--healthy)">crecimiento</div>
+      </div>
+      <div class="arow">
+        <div class="arow-ico">⚠️</div>
+        <div class="arow-body">
+          <div class="arow-title">CDMX — solo 2 personas nuevas y sin La Ruta</div>
+          <div class="arow-sub">Erik Servín es el perfil más evangelístico de la red (I/Inclusive, Evangelista) pero el resultado más bajo en alcance. Requiere conversación directa.</div>
+        </div>
+        <div class="arow-badge" style="background:rgba(184,64,64,0.1);color:var(--critical)">atención</div>
+      </div>
+      <div class="arow">
+        <div class="arow-ico">❤️</div>
+        <div class="arow-body">
+          <div class="arow-title">Ecatepec — situación pastoral urgente</div>
+          <div class="arow-sub">Toño Robles enviado a Texcoco como pastor interino. Moi Hernández en tratamiento por cáncer de colon. Requiere acompañamiento pastoral activo.</div>
+        </div>
+        <div class="arow-badge" style="background:rgba(184,64,64,0.1);color:var(--critical)">urgente</div>
+      </div>
+    </div>
+
+    <div class="asec">Tabla completa</div>
+    <div class="ac">
+      <table class="atbl">
+        <thead>
+          <tr>
+            <th>Iglesia</th>
+            <th>Fuente</th>
+            <th class="r">Adultos/sem</th>
+            <th class="r">Nuevas</th>
+            <th class="r">Discipulado</th>
+            <th class="r">Bautismos</th>
+            <th>La Ruta</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${DATA.map(d=>{
+            const zc = ZONA_COLOR[d.zona]||'#888';
+            const sinCls = d.sin ? ' sin-row' : '';
+            return `<tr class="${sinCls}">
+              <td>
+                <div style="font-weight:600;font-size:13px">${d.iglesia}</div>
+                <div style="font-size:10px;color:var(--ink3);margin-top:1px">${d.pastor} · <span style="color:${zc}">${d.zona.toUpperCase()}</span></div>
+              </td>
+              <td>${fuenteBadge(d.fuente)}</td>
+              <td class="r">${val(d.adultos)}</td>
+              <td class="r">${val(d.nuevas)}</td>
+              <td class="r">${val(d.discipulado)}</td>
+              <td class="r">${val(d.bautismos)}</td>
+              <td>${rutaBadge(d.ruta, d.rutaN)}</td>
+            </tr>
+            ${!d.sin&&d.nota?`<tr><td colspan="7" style="padding:0 10px 10px;border-bottom:1px solid var(--border)"><div class="anota${d.iglesia.includes('CDMX')||d.iglesia.includes('Ecatepec')?' urgente':''}">${d.nota}</div></td></tr>`:''}`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="asec">Adopción de La Ruta</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px">
+      <div style="background:rgba(74,155,111,0.08);border:1px solid rgba(74,155,111,0.2);border-radius:var(--r);padding:12px 16px;flex:1;min-width:140px">
+        <div style="font-size:24px;font-weight:700;color:var(--healthy)">${conRuta}</div>
+        <div style="font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-top:3px">Con La Ruta</div>
+      </div>
+      <div style="background:rgba(184,64,64,0.06);border:1px solid rgba(184,64,64,0.15);border-radius:var(--r);padding:12px 16px;flex:1;min-width:140px">
+        <div style="font-size:24px;font-weight:700;color:var(--critical)">${reportados.filter(d=>d.ruta===false).length}</div>
+        <div style="font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-top:3px">Sin La Ruta</div>
+        <div style="font-size:11px;color:var(--ink2);margin-top:4px">CDMX · El Camino</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;flex:1;min-width:140px">
+        <div style="font-size:24px;font-weight:700;color:var(--ink3)">${sinReportar.length}</div>
+        <div style="font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em;margin-top:3px">Sin datos</div>
+        <div style="font-size:11px;color:var(--ink2);margin-top:4px">No enviaron formulario</div>
+      </div>
+    </div>
+
+    <div class="asec">Iglesias sin reporte Q1</div>
+    <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px">
+      ${sinReportar.map(d=>`<div style="display:flex;align-items:center;gap:10px;padding:9px 14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r)">
+        <span style="font-size:13px">📭</span>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600;color:var(--ink)">${d.iglesia}</div>
+          <div style="font-size:10.5px;color:var(--ink3)">${d.pastor} · ${d.nota}</div>
+        </div>
+        <span style="font-size:10px;color:var(--critical);font-weight:600;padding:2px 8px;border-radius:99px;background:rgba(184,64,64,0.08)">Sin reporte</span>
+      </div>`).join('')}
+    </div>
+  </div>`;
+
+  document.getElementById('view-asistencia').innerHTML = h;
+}
 
 /* ═══════════════════════════════════════════════════
    INIT
