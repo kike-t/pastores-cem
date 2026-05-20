@@ -1548,12 +1548,15 @@ img { display: block; }
 /* Priorities */
 .pw-priorities { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-bottom: 28px; }
 .pw-priority-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; cursor: pointer; transition: box-shadow 0.15s, border-color 0.15s; }
-.pw-priority-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+.pw-priority-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); border-color: var(--border2); }
 .pw-border-critical { border-left: 3px solid var(--critical); }
 .pw-border-watch    { border-left: 3px solid var(--watch); }
 .pw-border-stable   { border-left: 3px solid var(--healthy); }
+.pw-card-critical { background: rgba(176,48,48,0.025); }
+.pw-card-watch    { background: rgba(138,96,16,0.018); }
 .pw-pc-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.pw-pc-av { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+.pw-pc-av { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 13px; font-weight: 700; flex-shrink: 0; overflow: hidden; }
+.pw-pc-av img { width: 100%; height: 100%; object-fit: cover; }
 .pw-pc-info { flex: 1; min-width: 0; }
 .pw-pc-name { font-size: 13.5px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pw-pc-sub { font-size: 11px; color: var(--ink3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -1562,12 +1565,27 @@ img { display: block; }
 .pw-nivel-yellow { background: var(--watch-bg);    color: var(--watch); }
 .pw-nivel-green  { background: var(--healthy-bg);  color: var(--healthy); }
 .pw-pc-situacion { font-size: 12px; color: var(--ink2); margin-bottom: 8px; line-height: 1.4; }
-.pw-pc-signals { display: flex; flex-direction: column; gap: 3px; margin-bottom: 10px; }
-.pw-pc-signal { font-size: 11px; color: var(--ink3); padding-left: 10px; position: relative; line-height: 1.4; }
-.pw-pc-signal::before { content: '·'; position: absolute; left: 2px; color: var(--ink4); }
+.pw-pc-signals { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+.pw-pc-signal {
+  font-size: 11.5px; color: var(--ink2); line-height: 1.4;
+  padding: 4px 8px; background: var(--surface2);
+  border-radius: var(--r-sm); border-left: 2px solid var(--border2);
+}
 .pw-pc-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); }
 .pw-pc-fecha { font-size: 10.5px; color: var(--ink4); }
-.pw-pc-cta { font-size: 11px; color: var(--ink3); font-weight: 500; }
+.pw-pc-cta {
+  font-size: 10.5px; font-weight: 600; color: var(--ink3);
+  padding: 3px 10px; border-radius: var(--r-sm);
+  background: var(--surface2); border: 1px solid var(--border2);
+  transition: all 0.12s;
+}
+.pw-priority-card:hover .pw-pc-cta { color: var(--ink); border-color: var(--ink4); }
+
+/* Salud KPI números grandes */
+.pw-salud-kpis { display: flex; gap: 0; margin-bottom: 14px; }
+.pw-salud-kpi { flex: 1; text-align: center; padding: 10px 6px; border-radius: var(--r); }
+.pw-salud-kpi-n { font-size: 28px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+.pw-salud-kpi-l { font-size: 9px; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 3px; }
 
 /* Two-col layout */
 .pw-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -3905,9 +3923,14 @@ function renderDashboard(){
       var initials = (p.nombre[0]+(p.apellido||'')[0]||'').toUpperCase();
       var nivelLabel = {critical:'Urgente', watch:'Observar', stable:'Estable'};
       var nivelCls = {critical:'pw-nivel-red', watch:'pw-nivel-yellow', stable:'pw-nivel-green'};
-      h += '<div class="pw-priority-card pw-border-'+item.nivel+'" data-nombre="'+p.nombre+'" onclick="var el=this;openPastor(el.dataset.nombre)">';
+      var photo = pastorPhotos[p.nombre];
+      var avHtml = photo
+        ? '<div class="pw-pc-av"><img src="'+photo+'"></div>'
+        : '<div class="pw-pc-av" style="background:'+col+'">'+initials+'</div>';
+      var cardTint = item.nivel==='critical' ? ' pw-card-critical' : item.nivel==='watch' ? ' pw-card-watch' : '';
+      h += '<div class="pw-priority-card pw-border-'+item.nivel+cardTint+'" data-nombre="'+p.nombre+'" onclick="var el=this;openPastor(el.dataset.nombre)">';
       h += '<div class="pw-pc-top">';
-      h += '<div class="pw-pc-av" style="background:'+col+'">'+initials+'</div>';
+      h += avHtml;
       h += '<div class="pw-pc-info">';
       h += '<div class="pw-pc-name">'+p.nombre+' '+(p.apellido||'')+'</div>';
       h += '<div class="pw-pc-sub">'+p.iglesia+'</div>';
@@ -3964,20 +3987,20 @@ function renderDashboard(){
   h += '<div class="pw-col">';
   h += '<div class="pw-section-label">Salud del compañerismo</div>';
   h += '<div class="pw-card">';
+  h += '<div class="pw-salud-kpis">';
+  if(nCritical) h += '<div class="pw-salud-kpi"><div class="pw-salud-kpi-n" style="color:var(--critical)">'+nCritical+'</div><div class="pw-salud-kpi-l">Urgente</div></div>';
+  if(nWatch)    h += '<div class="pw-salud-kpi"><div class="pw-salud-kpi-n" style="color:var(--watch)">'+nWatch+'</div><div class="pw-salud-kpi-l">Observar</div></div>';
+  h += '<div class="pw-salud-kpi"><div class="pw-salud-kpi-n" style="color:var(--healthy)">'+nStable+'</div><div class="pw-salud-kpi-l">Estable</div></div>';
+  h += '</div>';
   var pctStable = Math.round(nStable/pastores.length*100);
   var pctWatch  = Math.round(nWatch/pastores.length*100);
   var pctCrit   = Math.round(nCritical/pastores.length*100);
   h += '<div class="pw-salud-bar">';
-  if(pctCrit>0)   h += '<div class="pw-sb-seg pw-sb-red" style="width:'+pctCrit+'%" title="Urgente: '+nCritical+'"></div>';
-  if(pctWatch>0)  h += '<div class="pw-sb-seg pw-sb-yellow" style="width:'+pctWatch+'%" title="Observar: '+nWatch+'"></div>';
-  if(pctStable>0) h += '<div class="pw-sb-seg pw-sb-green" style="width:'+pctStable+'%" title="Estable: '+nStable+'"></div>';
+  if(pctCrit>0)   h += '<div class="pw-sb-seg pw-sb-red" style="width:'+pctCrit+'%"></div>';
+  if(pctWatch>0)  h += '<div class="pw-sb-seg pw-sb-yellow" style="width:'+pctWatch+'%"></div>';
+  if(pctStable>0) h += '<div class="pw-sb-seg pw-sb-green" style="width:'+pctStable+'%"></div>';
   h += '</div>';
-  h += '<div class="pw-salud-leyenda">';
-  if(nCritical) h += '<span class="pw-sal-item"><span class="pw-dot pw-dot-red"></span>Urgente: '+nCritical+'</span>';
-  if(nWatch)    h += '<span class="pw-sal-item"><span class="pw-dot pw-dot-yellow"></span>Observar: '+nWatch+'</span>';
-  h += '<span class="pw-sal-item"><span class="pw-dot pw-dot-green"></span>Estable: '+nStable+'</span>';
-  h += '</div>';
-  h += '<div class="pw-salud-meta"><span>'+withRP+' de '+pastores.length+' con reporte personal</span><span>'+totalPend+' pendientes activos</span></div>';
+  h += '<div class="pw-salud-meta"><span>'+withRP+' de '+pastores.length+' con reporte</span><span>'+totalPend+' pendientes</span></div>';
   h += '</div>';
 
   // Próximos cumpleaños
