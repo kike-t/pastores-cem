@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Pastores CEM — Repositorio Pastoral</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 
 <script type="module">
@@ -23,52 +23,56 @@
    Concepto: Archivo pastoral premium
 ═══════════════════════════════════════════════════════ */
 :root {
-  /* Fondos */
-  --bg:         #F5F4F2;
-  --surface:    #FFFFFF;
-  --surface2:   #F0EEEB;
-  --surface3:   #E8E6E2;
+  /* ── Fondos ── */
+  --bg:         #F7F5F2;
+  --surface:    #FDFCFB;
+  --surface2:   #F2EFEB;
+  --surface3:   #EAE7E2;
 
-  /* Bordes */
-  --border:     #E2E0DB;
-  --border2:    #D0CEC9;
-  --border3:    #B8B6B0;
+  /* ── Bordes ── */
+  --border:     #E5E1DA;
+  --border2:    #D4CFC7;
+  --border3:    #C0BAB0;
 
-  /* Texto */
-  --ink:        #1A1916;
-  --ink2:       #6B6860;
-  --ink3:       #A8A49C;
-  --ink4:       #C8C5BE;
+  /* ── Texto ── */
+  --ink:        #1C1A17;
+  --ink2:       #5C5751;
+  --ink3:       #9C9790;
+  --ink4:       #C8C3BA;
 
-  /* Estados */
-  --healthy:    #2D7A52;
-  --healthy-bg: rgba(74,155,111,0.1);
-  --stable:     #A06E1A;
-  --stable-bg:  rgba(200,147,58,0.1);
-  --watch:      #954F18;
-  --watch-bg:   rgba(196,112,48,0.1);
-  --critical:   #A02828;
-  --critical-bg:rgba(184,64,64,0.1);
+  /* ── Semánticos ── */
+  --critical:      #B03030;
+  --critical-bg:   #FDF0F0;
+  --critical-bd:   #F0CECE;
+  --watch:         #8A6010;
+  --watch-bg:      #FDF8EE;
+  --watch-bd:      #EEE0BC;
+  --healthy:       #2A6E48;
+  --healthy-bg:    #EFF8F4;
+  --healthy-bd:    #B8E0CC;
+  --info:          #2A4E7A;
+  --info-bg:       #EFF4FB;
+  --info-bd:       #B8CEEC;
 
-  /* Colores zona */
-  --qro:        #A06E1A;
-  --norte:      #2A5A96;
-  --sur:        #2D7A52;
-  --centro:     #7A2A52;
-  --intl:       #5A3A96;
+  /* ── Zonas (tonos suaves) ── */
+  --qro:        #8A6010;
+  --norte:      #2A4E7A;
+  --sur:        #2A6E48;
+  --centro:     #6A2A5A;
+  --intl:       #4A3A8A;
 
-  /* Colores áreas reportes */
-  --area-familia:   #1A9D94;
-  --area-intimidad: #6A4AB8;
-  --area-entusiasmo:#C84840;
-  --area-liderazgo: #2A5A96;
-  --area-economia:  #2D7A52;
-  --area-salud:     #A06E1A;
+  /* ── Áreas personales ── */
+  --area-familia:   #1A8A82;
+  --area-intimidad: #5A3AA8;
+  --area-entusiasmo:#B03838;
+  --area-liderazgo: #2A4E7A;
+  --area-economia:  #2A6E48;
+  --area-salud:     #8A6010;
 
-  /* Tipografía */
-  --display:'Bebas Neue', var(--sans);
-  --sans:   'Inter', system-ui, sans-serif;
-  --mono:   'Inter', system-ui, sans-serif;
+  /* ── Tipografía ── */
+  --display: 'DM Serif Display', Georgia, serif;
+  --sans:    'DM Sans', system-ui, sans-serif;
+  --mono:    'DM Sans', system-ui, sans-serif;
 
   /* Radio */
   --r-sm:   6px;
@@ -108,9 +112,9 @@ img { display: block; }
 @media(max-width: 768px) { .sidenav { display: none; } }
 
 .sn-brand {
-  padding: 0 14px 16px;
+  padding: 0 16px 18px;
   border-bottom: 1px solid var(--border);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 .sn-logo {
   display: flex; align-items: center; gap: 8px;
@@ -1450,6 +1454,100 @@ img { display: block; }
 .b6-action-title { font-size: 12.5px; font-weight: 600; color: var(--ink); }
 .b6-action-sub { font-size: 10.5px; color: var(--ink3); margin-top: 1px; }
 .b6-action-pri { font-size: 9.5px; font-weight: 700; padding: 2px 8px; border-radius: 99px; flex-shrink: 0; }
+
+/* ═══════════════════════════════════════════════════
+   DASHBOARD PASTORAL — pw-* styles
+═══════════════════════════════════════════════════ */
+.pw-wrap { padding: 32px 28px 80px; max-width: 980px; margin: 0 auto; }
+.pw-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 36px; gap: 20px; }
+.pw-header-left { flex: 1; }
+.pw-saludo { font-family: var(--display); font-size: 28px; color: var(--ink); letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 4px; }
+.pw-fecha { font-size: 12px; color: var(--ink3); margin-bottom: 12px; text-transform: capitalize; letter-spacing: 0.02em; }
+.pw-status { font-size: 13.5px; color: var(--ink2); display: flex; align-items: center; gap: 8px; line-height: 1.5; }
+.pw-header-right { max-width: 280px; text-align: right; }
+.pw-frase { font-family: var(--display); font-style: italic; font-size: 13px; color: var(--ink3); line-height: 1.6; }
+
+.pw-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.pw-dot-red    { background: var(--critical); }
+.pw-dot-yellow { background: var(--watch); }
+.pw-dot-green  { background: var(--healthy); }
+
+.pw-section-label { font-size: 10px; font-weight: 700; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+
+/* Priorities */
+.pw-priorities { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-bottom: 28px; }
+.pw-priority-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; cursor: pointer; transition: box-shadow 0.15s, border-color 0.15s; }
+.pw-priority-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+.pw-border-critical { border-left: 3px solid var(--critical); }
+.pw-border-watch    { border-left: 3px solid var(--watch); }
+.pw-border-stable   { border-left: 3px solid var(--healthy); }
+.pw-pc-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.pw-pc-av { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+.pw-pc-info { flex: 1; min-width: 0; }
+.pw-pc-name { font-size: 13.5px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pw-pc-sub { font-size: 11px; color: var(--ink3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pw-nivel { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 99px; white-space: nowrap; }
+.pw-nivel-red    { background: var(--critical-bg); color: var(--critical); }
+.pw-nivel-yellow { background: var(--watch-bg);    color: var(--watch); }
+.pw-nivel-green  { background: var(--healthy-bg);  color: var(--healthy); }
+.pw-pc-situacion { font-size: 12px; color: var(--ink2); margin-bottom: 8px; line-height: 1.4; }
+.pw-pc-signals { display: flex; flex-direction: column; gap: 3px; margin-bottom: 10px; }
+.pw-pc-signal { font-size: 11px; color: var(--ink3); padding-left: 10px; position: relative; line-height: 1.4; }
+.pw-pc-signal::before { content: '·'; position: absolute; left: 2px; color: var(--ink4); }
+.pw-pc-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); }
+.pw-pc-fecha { font-size: 10.5px; color: var(--ink4); }
+.pw-pc-cta { font-size: 11px; color: var(--ink3); font-weight: 500; }
+
+/* Two-col layout */
+.pw-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media(max-width: 680px){ .pw-two-col { grid-template-columns: 1fr; } }
+.pw-col {}
+.pw-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 0; }
+.pw-empty { font-size: 13px; color: var(--ink3); padding: 20px 0; text-align: center; }
+.pw-empty-sm { font-size: 12px; color: var(--ink3); padding: 8px 0; }
+
+/* Tendencias */
+.pw-tendencia { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.pw-tendencia:last-child { border-bottom: none; padding-bottom: 0; }
+.pw-tend-ico { font-size: 14px; font-weight: 700; min-width: 18px; line-height: 1.5; }
+.pw-tend-txt { font-size: 12.5px; color: var(--ink2); line-height: 1.5; }
+
+/* Insight */
+.pw-insight { border-left: 3px solid var(--border2); }
+.pw-insight-txt { font-family: var(--display); font-style: italic; font-size: 14px; color: var(--ink2); line-height: 1.7; }
+
+/* Salud bar */
+.pw-salud-bar { height: 6px; border-radius: 99px; overflow: hidden; display: flex; margin-bottom: 10px; background: var(--surface3); }
+.pw-sb-seg { height: 6px; transition: width 0.3s; }
+.pw-sb-red    { background: var(--critical); }
+.pw-sb-yellow { background: var(--watch); }
+.pw-sb-green  { background: var(--healthy); }
+.pw-salud-leyenda { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 10px; }
+.pw-sal-item { font-size: 11px; color: var(--ink2); display: flex; align-items: center; gap: 5px; }
+.pw-salud-meta { display: flex; justify-content: space-between; font-size: 11px; color: var(--ink3); padding-top: 8px; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 4px; }
+
+/* Cumpleaños */
+.pw-bday-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--border); }
+.pw-bday-row:last-child { border-bottom: none; padding-bottom: 0; }
+.pw-bday-name { font-size: 12.5px; color: var(--ink); font-weight: 500; }
+.pw-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 99px; }
+.pw-badge-red    { background: var(--critical-bg); color: var(--critical); }
+.pw-badge-yellow { background: var(--watch-bg); color: var(--watch); }
+.pw-badge-gray   { background: var(--surface3); color: var(--ink3); }
+
+/* Acciones */
+.pw-accion-row { padding: 7px 0; border-bottom: 1px solid var(--border); }
+.pw-accion-row:last-child { border-bottom: none; padding-bottom: 0; }
+.pw-accion-pastor { font-size: 10.5px; font-weight: 700; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+.pw-accion-txt { font-size: 12px; color: var(--ink2); line-height: 1.4; }
+
+@media(max-width: 600px){
+  .pw-wrap { padding: 20px 16px 80px; }
+  .pw-saludo { font-size: 22px; }
+  .pw-header { flex-direction: column; }
+  .pw-header-right { text-align: left; max-width: none; }
+  .pw-priorities { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
@@ -1483,6 +1581,9 @@ img { display: block; }
     </button>
     <button class="nav-btn" data-view="finanzas" onclick="goTo('finanzas',this)">
       <span class="nav-ico">$</span> Finanzas
+    </button>
+    <button class="nav-btn" data-view="q1" onclick="goTo('q1',this)">
+      <span class="nav-ico">◎</span> Q1 2026
     </button>
     <div style="margin-top:auto;padding:16px 14px;border-top:1px solid var(--border)">
       <div style="font-family: var(--sans);font-size:8px;color:var(--ink3);line-height:1.6;letter-spacing:0.04em">
@@ -1528,6 +1629,7 @@ img { display: block; }
     <div class="view" id="view-seguimiento"></div>
     <div class="view" id="view-bigpicture"></div>
     <div class="view" id="view-finanzas"></div>
+    <div class="view" id="view-q1"></div>
   </div>
 </div>
 
@@ -1538,6 +1640,7 @@ img { display: block; }
   <button class="bn-item" data-view="reportes" onclick="goTo('reportes',this)"><span class="bn-ico">📋</span>Reportes</button>
   <button class="bn-item" data-view="seguimiento" onclick="goTo('seguimiento',this)"><span class="bn-ico">✓</span>Tareas</button>
   <button class="bn-item" data-view="finanzas" onclick="goTo('finanzas',this)"><span class="bn-ico">$</span>Finanzas</button>
+  <button class="bn-item" data-view="q1" onclick="goTo('q1',this)"><span class="bn-ico">◎</span>Q1</button>
 </div>
 
 <!-- PANEL DETALLE -->
@@ -1825,6 +1928,7 @@ function goTo(view, btn){
   if(view==='reportes')   renderReportes();
   if(view==='seguimiento')renderSeguimiento();
   if(view==='finanzas')   renderFinanzas();
+  if(view==='q1')         renderQ1();
 }
 
 function updateBadges(){
@@ -3048,6 +3152,136 @@ function renderReportesQ1(){
   document.getElementById('view-finanzas').innerHTML=h;
 }
 
+
+/* ═══════════════════════════════════════════════════
+   Q1 2026 — REPORTE DE RED
+═══════════════════════════════════════════════════ */
+const Q1_IGLESIAS = [
+  {iglesia:"Horizonte Centro (HQ)", pastor:"Gadiel Arriaga", zona:"qro", adultos:1400, ninyos:4974, nuevas:277, creyentes:null, enRuta:277, discipulado:774, lideres:68, bautismos:37, aportacionQ:335857},
+  {iglesia:"La Carpa de Reunión",   pastor:"Dani Ávila",     zona:"qro", adultos:212,  ninyos:null, nuevas:32,  creyentes:null, enRuta:null, discipulado:124, lideres:29, bautismos:null, aportacionQ:112122},
+  {iglesia:"Horizonte El Marqués",  pastor:"Phil Jones",     zona:"qro", adultos:119,  ninyos:54,   nuevas:35,  creyentes:10,   enRuta:39,  discipulado:39,  lideres:1,  bautismos:1,    aportacionQ:49813},
+  {iglesia:"másCristo Juriquilla",  pastor:"Marce Muñoz",    zona:"qro", adultos:145,  ninyos:null, nuevas:63,  creyentes:null, enRuta:null, discipulado:85,  lideres:null, bautismos:17, aportacionQ:38862},
+  {iglesia:"Horizonte Villahermosa",pastor:"Adrián Capitaine",zona:"sur",adultos:220,  ninyos:65,   nuevas:60,  creyentes:8,    enRuta:100, discipulado:120, lideres:4,  bautismos:0,    aportacionQ:16235},
+  {iglesia:"Horizonte Mérida",      pastor:"Herminio Navidad",zona:"sur",adultos:66,   ninyos:6,    nuevas:41,  creyentes:4,    enRuta:40,  discipulado:40,  lideres:3,  bautismos:0,    aportacionQ:26158},
+  {iglesia:"Horizonte Panamá",      pastor:"Juan Pablo Segismond",zona:"otro",adultos:76,ninyos:10, nuevas:75,  creyentes:10,   enRuta:52,  discipulado:52,  lideres:15, bautismos:0,    aportacionQ:15391, moneda:"USD"},
+  {iglesia:"Identidad San Luis",    pastor:"Gerry Berrones", zona:"norte",adultos:null, ninyos:null, nuevas:null,creyentes:null, enRuta:null, discipulado:null,lideres:null,bautismos:null, aportacionQ:16481},
+  {iglesia:"Horizonte CDMX",        pastor:"Erik Servín",    zona:"centro",adultos:70,  ninyos:19,   nuevas:2,   creyentes:0,    enRuta:null, discipulado:15, lideres:10, bautismos:0,    aportacionQ:6200},
+  {iglesia:"Calvary Ecatepec",      pastor:"Toño García",    zona:"centro",adultos:40,  ninyos:null, nuevas:null,creyentes:null, enRuta:null, discipulado:70,  lideres:2,  bautismos:null, aportacionQ:8919},
+  {iglesia:"Vida Nueva en Cristo",  pastor:"Oscar García",   zona:"centro",adultos:null, ninyos:65,  nuevas:null,creyentes:null, enRuta:null, discipulado:90,  lideres:1,  bautismos:null, aportacionQ:6458},
+  {iglesia:"Comunidad El Camino",   pastor:"Daniel Vargas",  zona:"otro", adultos:80,   ninyos:20,   nuevas:25,  creyentes:null, enRuta:null, discipulado:40,  lideres:4,  bautismos:null, aportacionQ:null},
+  {iglesia:"Horizonte Tequisquiapan",pastor:"Hugo Ventura",  zona:"norte",adultos:85,   ninyos:30,   nuevas:null,creyentes:null, enRuta:25,  discipulado:45,  lideres:2,  bautismos:7,    aportacionQ:8900},
+  {iglesia:"Calvary Texcoco",       pastor:"Moisés Hernández",zona:"centro",adultos:null,ninyos:null,nuevas:null,creyentes:null, enRuta:null, discipulado:null,lideres:null,bautismos:null, aportacionQ:3575},
+  {iglesia:"Gracia Irresistible",   pastor:"Mario Salazar",  zona:"norte",adultos:null, ninyos:null, nuevas:null,creyentes:null, enRuta:null, discipulado:null,lideres:null,bautismos:null, aportacionQ:2500},
+];
+
+const Q1_ZONA_COLOR = {qro:'var(--qro)', sur:'var(--sur)', norte:'var(--norte)', centro:'var(--centro)', otro:'var(--intl)'};
+const Q1_ZONA_LABEL = {qro:'Querétaro', sur:'Sur', norte:'Norte', centro:'Centro MX', otro:'Internacional'};
+
+function renderQ1(){
+  var n = function(v){ return v!=null ? v.toLocaleString('es-MX') : '—'; };
+  var fmt = function(v){ return v!=null ? '$'+Math.round(v).toLocaleString('es-MX') : '—'; };
+
+  var totalAdultos = Q1_IGLESIAS.reduce(function(s,r){return s+(r.adultos||0);},0);
+  var totalNuevas = Q1_IGLESIAS.reduce(function(s,r){return s+(r.nuevas||0);},0);
+  var totalBautismos = Q1_IGLESIAS.reduce(function(s,r){return s+(r.bautismos||0);},0);
+  var totalAport = Q1_IGLESIAS.reduce(function(s,r){return s+(r.aportacionQ&&r.moneda!=='USD'?r.aportacionQ:0);},0);
+  var totalDisc = Q1_IGLESIAS.reduce(function(s,r){return s+(r.discipulado||0);},0);
+
+  var h = '<div class="fw">';
+  // Tabs con Finanzas
+  h += '<div style="display:flex;gap:0;margin-bottom:16px;border-bottom:1px solid var(--border)">';
+  h += '<button onclick="renderFinanzas()" style="font-family:var(--sans);font-size:12px;font-weight:600;padding:8px 16px;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--ink3);cursor:pointer">Aportaciones</button>';
+  h += '<button onclick="renderQ1()" style="font-family:var(--sans);font-size:12px;font-weight:600;padding:8px 16px;background:transparent;border:none;border-bottom:2px solid var(--qro);color:var(--qro);cursor:pointer">Reporte Q1</button>';
+  h += '</div>';
+  h += '<div style="font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-0.02em;margin-bottom:4px">Reporte Q1 · Ene–Abr 2026</div>';
+  h += '<div style="font-size:11px;color:var(--ink3);margin-bottom:16px">'+Q1_IGLESIAS.length+' iglesias · Cristo es Mejor</div>';
+
+  // KPIs
+  h += '<div class="fkpis">';
+  h += '<div class="fkpi kq"><div class="fkn">'+Math.round(totalAdultos/100)/10+'K</div><div class="fkl">Adultos/semana red</div></div>';
+  h += '<div class="fkpi kg"><div class="fkn">'+totalNuevas+'+</div><div class="fkl">Personas nuevas Q1</div></div>';
+  h += '<div class="fkpi kb"><div class="fkn">'+totalBautismos+'</div><div class="fkl">Bautismos confirmados</div></div>';
+  h += '<div class="fkpi kr"><div class="fkn">'+totalDisc+'+</div><div class="fkl">En discipulado activo</div></div>';
+  h += '</div>';
+
+  // Tabla completa
+  h += '<div class="fsec">Métricas por iglesia</div>';
+  h += '<div class="fc" style="overflow-x:auto"><table class="ftbl" style="min-width:700px">';
+  h += '<thead><tr>';
+  h += '<th>Iglesia</th><th class="r">Adultos</th><th class="r">Nuevas</th><th class="r">Creyentes</th><th class="r">La Ruta</th><th class="r">Discip.</th><th class="r">Bautismos</th><th class="r">Aport. Q1</th>';
+  h += '</tr></thead><tbody>';
+
+  var zonas = ['qro','sur','norte','centro','otro'];
+  zonas.forEach(function(zona){
+    var rows = Q1_IGLESIAS.filter(function(r){ return r.zona===zona; });
+    if(!rows.length) return;
+    h += '<tr><td colspan="8" style="font-size:10px;font-weight:700;color:'+Q1_ZONA_COLOR[zona]+';text-transform:uppercase;letter-spacing:.06em;padding:10px 14px 4px;background:var(--surface2)">'+Q1_ZONA_LABEL[zona]+'</td></tr>';
+    rows.forEach(function(r){
+      var aportStr = r.aportacionQ ? fmt(r.aportacionQ)+(r.moneda==='USD'?' USD':'') : '—';
+      var bautStr = r.bautismos!=null ? '<span style="font-weight:'+(r.bautismos>0?'600':'400')+';color:'+(r.bautismos>0?'var(--healthy)':'var(--ink2)')+'">'+n(r.bautismos)+'</span>' : '—';
+      h += '<tr>';
+      h += '<td><div style="font-weight:500;color:var(--ink)">'+r.iglesia+'</div><div style="font-size:10.5px;color:var(--ink3)">'+r.pastor+'</div></td>';
+      h += '<td class="r">'+n(r.adultos)+'</td>';
+      h += '<td class="r">'+n(r.nuevas)+'</td>';
+      h += '<td class="r">'+n(r.creyentes)+'</td>';
+      h += '<td class="r">'+n(r.enRuta)+'</td>';
+      h += '<td class="r">'+n(r.discipulado)+'</td>';
+      h += '<td class="r">'+bautStr+'</td>';
+      h += '<td class="r" style="font-weight:500">'+aportStr+'</td>';
+      h += '</tr>';
+    });
+  });
+
+  // Totales
+  h += '<tr style="border-top:1.5px solid var(--border2);font-weight:700;background:var(--surface2)">';
+  h += '<td>TOTAL RED</td>';
+  h += '<td class="r">'+n(totalAdultos)+'</td>';
+  h += '<td class="r">'+n(totalNuevas)+'+</td>';
+  h += '<td class="r">32+</td>';
+  h += '<td class="r">320+</td>';
+  h += '<td class="r">'+n(totalDisc)+'+</td>';
+  h += '<td class="r" style="color:var(--healthy);font-weight:700">'+n(totalBautismos)+'</td>';
+  h += '<td class="r">$'+Math.round(totalAport/1000)+'K</td>';
+  h += '</tr>';
+  h += '</tbody></table></div>';
+
+  // Highlights
+  h += '<div class="fsec">Highlights Q1</div>';
+  var highlights = [
+    {t:"$647K MXN en aportaciones",b:"14 iglesias · Marzo fue el mes más fuerte con $208K. La Carpa triplicó su aportación ese mes.",ico:"💰"},
+    {t:"másCristo: mejor ratio de bautismos",b:"1 bautismo por cada 8.5 adultos — el mejor índice de toda la red.",ico:"🏆"},
+    {t:"Panamá: crecimiento explosivo",b:"75 personas nuevas — casi 1:1 con su congregación regular (76 adultos).",ico:"🌍"},
+    {t:"La Carpa: mayor generosidad per cápita",b:"$132/adulto/mes — el doble que el promedio de HQ. La más generosa en ratio.",ico:"🙌"},
+    {t:"Villahermosa: mayor brecha",b:"220 adultos aportando como una congregación de 60. $18/adulto/mes vs $65 promedio red.",ico:"⚠️"},
+    {t:"Oportunidad HQ",b:"Si HQ sube $10/adulto/mes = +$168K MXN al año para el compañerismo.",ico:"📈"},
+  ];
+  h += '<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:4px">';
+  highlights.forEach(function(hl){
+    h += '<div class="fins"><div class="finst">'+hl.ico+' '+hl.t+'</div><div class="finsb">'+hl.b+'</div></div>';
+  });
+  h += '</div>';
+
+  // Bautismos
+  h += '<div class="fsec">Bautismos Q1 — 3 iglesias confirmadas</div>';
+  h += '<div class="fc"><div style="padding:12px 14px">';
+  var baut = [{n:"Horizonte Querétaro (HQ)",a:1400,b:37,pct:67},{n:"másCristo Juriquilla",a:145,b:17,pct:31},{n:"Horizonte El Marqués",a:119,b:1,pct:2},{n:"Horizonte Tequisquiapan",a:85,b:7,pct:null}];
+  baut.forEach(function(r){
+    h += '<div style="margin-bottom:10px">';
+    h += '<div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px">';
+    h += '<span style="color:var(--ink2)">'+r.n+'</span>';
+    h += '<span style="font-weight:700;color:var(--healthy)">'+r.b+' bautismos <span style="font-size:10px;color:var(--ink3)">1:'+Math.round(r.a/r.b)+'</span></span>';
+    h += '</div>';
+    var barW = Math.round(r.b/37*100);
+    h += '<div style="background:var(--surface3);border-radius:3px;height:4px"><div style="width:'+barW+'%;height:4px;border-radius:3px;background:var(--healthy)"></div></div>';
+    h += '</div>';
+  });
+  h += '<div style="font-size:11px;color:var(--ink3);margin-top:8px">Total confirmado: 55 bautismos Q1. Resto de la red sin dato — pendiente confirmar.</div>';
+  h += '</div></div>';
+
+  h += '</div>';
+  document.getElementById('view-q1').innerHTML = h;
+}
+
 function renderFinanzas(){
   const meses2026 = ["Enero 2026","Febrero 2026","Marzo 2026","Abril 2026","Mayo 2026"];
   const porIglesia = {};
@@ -3209,6 +3443,10 @@ function renderFinanzas(){
 function renderDashboard(){
   const MONTHS={enero:1,febrero:2,marzo:3,abril:4,mayo:5,junio:6,julio:7,agosto:8,septiembre:9,octubre:10,noviembre:11,diciembre:12,ene:1,feb:2,mar:3,abr:4,may:5,jun:6,jul:7,ago:8,sep:9,oct:10,nov:11,dic:12};
   const now = new Date();
+  const dias = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const fechaHoy = dias[now.getDay()]+', '+now.getDate()+' de '+meses[now.getMonth()]+' '+now.getFullYear();
+
   function parseBday(s){
     if(!s) return null;
     const pts = s.toLowerCase().split(/[\s,\/]+/).filter(Boolean);
@@ -3219,80 +3457,258 @@ function renderDashboard(){
   function daysUntil(m,d){
     const y=now.getFullYear(); let next=new Date(y,m-1,d);
     if(next<=now) next=new Date(y+1,m-1,d);
-    return Math.round((next-now)/(1000*60*60*24));
+    return Math.round((next-now)/(1000*60*60*60*24/60/60));
   }
 
-  const upcoming=[];
-  pastores.forEach(p=>{const bd=parseBday(p.cumple);if(bd){const days=daysUntil(bd.m,bd.d);if(days<=45)upcoming.push({p,days});}});
-  upcoming.sort((a,b)=>a.days-b.days);
+  // ── Calcular prioridades pastorales ──
+  var prioridades = [];
+  pastores.forEach(function(p){
+    var signals = [];
+    var nivel = 'stable'; // stable | watch | critical
+    var situacion = '';
 
-  const alerts=[];
-  pastores.filter(p=>(p.pendientes||[]).some(x=>/salud|cirugía/i.test(x))).forEach(p=>{
-    const t=p.pendientes.find(x=>/salud|cirugía/i.test(x));
-    alerts.push({cls:'ar',ico:'⚕',title:`${p.nombre} ${p.apellido||''} — Salud`,desc:t});
+    var rp = p.reporte_personal;
+    if(rp && rp.metricas){
+      var m = rp.metricas;
+      var vals = [m.familia,m.intimidad,m.entusiasmo,m.liderazgo,m.economia,m.salud].filter(function(v){return v!=null;});
+      var prom = vals.length ? vals.reduce(function(a,b){return a+b;},0)/vals.length : null;
+      if(prom && prom < 7.5){
+        nivel = prom < 6.5 ? 'critical' : 'watch';
+        situacion = 'Promedio personal: '+Math.round(prom*10)/10;
+      }
+      // Check low individual scores
+      if(m.economia && m.economia <= 6) { signals.push('Economía en '+ m.economia); if(nivel==='stable') nivel='watch'; }
+      if(m.familia && m.familia <= 6.5) { signals.push('Familia en '+ m.familia); if(nivel==='stable') nivel='watch'; }
+      if(m.salud && m.salud <= 6) { signals.push('Salud en '+ m.salud); if(nivel==='stable') nivel='watch'; }
+      if(m.entusiasmo && m.entusiasmo <= 6) { signals.push('Entusiasmo en '+m.entusiasmo); }
+    }
+
+    var pends = p.pendientes || [];
+    var urgentes = pends.filter(function(x){ return /deuda|SAT|urgente|60,000|legal|amparo/i.test(x); });
+    if(urgentes.length){ urgentes.slice(0,1).forEach(function(u){ signals.push(u.substring(0,60)); }); nivel='critical'; }
+
+    var salud = pends.filter(function(x){ return /salud|colitis|TDAH|cáncer|análisis|artritis/i.test(x); });
+    if(salud.length){ signals.push('Salud familiar activa'); if(nivel==='stable') nivel='watch'; }
+
+    if(p.tags && p.tags.includes('transición')){ signals.push('En transición ministerial'); nivel='watch'; situacion=situacion||'Transición activa'; }
+
+    if(!situacion && pends.length >= 8) situacion = pends.length+' pendientes activos';
+    if(!situacion && rp) situacion = 'Última eval: '+rp.fecha;
+    if(!situacion) situacion = 'Sin reporte reciente';
+
+    if(signals.length === 0 && rp){
+      var m2 = rp.metricas;
+      var vals2 = [m2.familia,m2.intimidad,m2.entusiasmo,m2.liderazgo,m2.economia,m2.salud].filter(function(v){return v!=null;});
+      var prom2 = vals2.reduce(function(a,b){return a+b;},0)/vals2.length;
+      if(prom2 >= 8.5) signals.push('Promedio '+(Math.round(prom2*10)/10)+' — buen momento');
+    }
+
+    if(nivel !== 'stable' || (rp && signals.length > 0)){
+      prioridades.push({p:p, nivel:nivel, situacion:situacion, signals:signals.slice(0,3), fecha:rp?rp.fecha:'—'});
+    }
   });
-  pastores.filter(p=>(p.pendientes||[]).length>=5).forEach(p=>
-    alerts.push({cls:'',ico:'⏳',title:`${p.nombre} — ${p.pendientes.length} pendientes activos`,desc:p.pendientes[0]}));
-  pastores.filter(p=>p.tags&&p.tags.includes('nuevo')).forEach(p=>
-    alerts.push({cls:'ag',ico:'🌱',title:`${p.nombre} ${p.apellido||''} — Recién integrado`,desc:`${p.iglesia} · ${p.ciudad}`}));
 
-  const totalPend = pastores.reduce((s,p)=>s+(p.pendientes||[]).length,0);
-  const withRP    = pastores.filter(p=>p.reporte_personal);
+  // Ordenar: critical primero, luego watch
+  prioridades.sort(function(a,b){
+    var ord = {critical:0, watch:1, stable:2};
+    return ord[a.nivel] - ord[b.nivel];
+  });
+  var topPrioridades = prioridades.slice(0,5);
 
-  let h = `<div class="view-wrap">
-    <div class="view-title">Dashboard</div>
-    <div class="view-sub">${now.toLocaleDateString('es-MX',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}</div>
-    <div class="kpi-grid">
-      <div class="kpi-card kpi-a"><div class="kpi-num">${pastores.length}</div><div class="kpi-lbl">Pastores</div></div>
-      <div class="kpi-card kpi-b"><div class="kpi-num">${ZONES.length}</div><div class="kpi-lbl">Zonas</div></div>
-      <div class="kpi-card kpi-r"><div class="kpi-num">${totalPend}</div><div class="kpi-lbl">Pendientes</div></div>
-      <div class="kpi-card kpi-g"><div class="kpi-num">${withRP.length}</div><div class="kpi-lbl">Con reporte</div></div>
-    </div>`;
+  // ── Cumpleaños próximos ──
+  var upcoming = [];
+  pastores.forEach(function(p){
+    var bd = parseBday(p.cumple);
+    if(bd){ var days=daysUntil(bd.m,bd.d); if(days<=30) upcoming.push({p,days}); }
+  });
+  upcoming.sort(function(a,b){return a.days-b.days;});
 
+  // ── Conteos de salud ──
+  var nCritical = prioridades.filter(function(x){return x.nivel==='critical';}).length;
+  var nWatch    = prioridades.filter(function(x){return x.nivel==='watch';}).length;
+  var nStable   = pastores.length - nCritical - nWatch;
+  var totalPend = pastores.reduce(function(s,p){return s+(p.pendientes||[]).length;},0);
+  var withRP    = pastores.filter(function(p){return p.reporte_personal;}).length;
+
+  // ── Mensajes del header ──
+  var hora = now.getHours();
+  var saludo = hora < 12 ? 'Buenos días' : hora < 19 ? 'Buenas tardes' : 'Buenas noches';
+  var statusMsg = '';
+  if(nCritical > 0) statusMsg = 'Hay '+nCritical+' pastor'+(nCritical>1?'es':'')+(nCritical>1?' con situaciones':' con una situación')+' que requieren atención urgente.';
+  else if(nWatch > 0) statusMsg = 'La comunidad está estable, pero '+nWatch+' pastor'+(nWatch>1?'es':'')+(nWatch>1?' merecen':'merece')+' observación esta semana.';
+  else statusMsg = 'La comunidad luce estable. Buen momento para enfocarse en formación y crecimiento.';
+
+  var frases = [
+    '"El buen pastor da su vida por las ovejas." — Juan 10:11',
+    '"Apacienta mis ovejas." — Juan 21:17',
+    '"Sed pastores, no lobos." — Agustín de Hipona',
+    '"El que cuida a su pastor, cuida a su pueblo." — Proverbio pastoral',
+  ];
+  var frase = frases[now.getDate() % frases.length];
+
+  // ── Tendencias ──
+  var tendencias = [];
+  var conBautismos = pastores.filter(function(p){return p.iglesia_reporte && p.iglesia_reporte.stats && p.iglesia_reporte.stats.some(function(s){return /bautismo/i.test(s.label) && parseInt(s.valor)>3;});}).length;
+  if(conBautismos >= 3) tendencias.push({ico:'↑', txt:'Bautismos activos en '+conBautismos+' iglesias', color:'var(--healthy)', tipo:'positiva'});
+
+  var conCarga = pastores.filter(function(p){ return p.reporte_personal && p.reporte_personal.metricas && p.reporte_personal.metricas.entusiasmo <= 7;}).length;
+  if(conCarga >= 3) tendencias.push({ico:'↓', txt:'Entusiasmo bajo en '+conCarga+' pastores — posible fatiga', color:'var(--watch)', tipo:'alerta'});
+
+  var conMatrimonial = pastores.filter(function(p){return (p.pendientes||[]).some(function(x){return /matrimon|pareja|esposa|Eu/i.test(x);});}).length;
+  if(conMatrimonial >= 2) tendencias.push({ico:'⚠', txt:'Necesidades matrimoniales activas en '+conMatrimonial+' familias pastorales', color:'var(--watch)', tipo:'alerta'});
+
+  var enTransicion = pastores.filter(function(p){return p.tags && (p.tags.includes('transición')||p.tags.includes('transicion'));}).length;
+  if(enTransicion > 0) tendencias.push({ico:'→', txt:enTransicion+' pastor'+(enTransicion>1?'es':'')+' en proceso de transición ministerial', color:'var(--info)', tipo:'info'});
+
+  var conFinanzas = pastores.filter(function(p){ return p.reporte_personal && p.reporte_personal.metricas && p.reporte_personal.metricas.economia <= 7;}).length;
+  if(conFinanzas >= 2) tendencias.push({ico:'↓', txt:'Presión económica en '+conFinanzas+' pastores', color:'var(--watch)', tipo:'alerta'});
+
+  // ── Próximas acciones (pendientes de esta semana) ──
+  var acciones = [];
+  pastores.forEach(function(p){
+    (p.pendientes||[]).forEach(function(pend){
+      if(/julio|jun|junio|bautizo|Phil|visita/i.test(pend)) acciones.push({pastor:p.nombre+' '+(p.apellido||''), accion:pend});
+    });
+  });
+
+  // ── HTML ──
+  var h = '<div class="pw-wrap">';
+
+  // HEADER
+  h += '<div class="pw-header">';
+  h += '<div class="pw-header-left">';
+  h += '<div class="pw-saludo">'+saludo+', Kike.</div>';
+  h += '<div class="pw-fecha">'+fechaHoy+'</div>';
+  h += '<div class="pw-status">'+(nCritical>0?'<span class="pw-dot pw-dot-red"></span>':nWatch>0?'<span class="pw-dot pw-dot-yellow"></span>':'<span class="pw-dot pw-dot-green"></span>')+statusMsg+'</div>';
+  h += '</div>';
+  h += '<div class="pw-header-right">';
+  h += '<div class="pw-frase">'+frase+'</div>';
+  h += '</div>';
+  h += '</div>';
+
+  // PRIORIDADES
+  h += '<div class="pw-section-label">Requieren atención</div>';
+  if(topPrioridades.length === 0){
+    h += '<div class="pw-empty">No hay situaciones urgentes identificadas. La comunidad está estable.</div>';
+  } else {
+    h += '<div class="pw-priorities">';
+    topPrioridades.forEach(function(item){
+      var p = item.p;
+      var col = p.zona ? 'var(--'+p.zona+')' : 'var(--ink3)';
+      var initials = (p.nombre[0]+(p.apellido||'')[0]||'').toUpperCase();
+      var nivelLabel = {critical:'Urgente', watch:'Observar', stable:'Estable'};
+      var nivelCls = {critical:'pw-nivel-red', watch:'pw-nivel-yellow', stable:'pw-nivel-green'};
+      h += '<div class="pw-priority-card pw-border-'+item.nivel+'" data-nombre="'+p.nombre+'" onclick="var el=this;openPastor(el.dataset.nombre)">';
+      h += '<div class="pw-pc-top">';
+      h += '<div class="pw-pc-av" style="background:'+col+'">'+initials+'</div>';
+      h += '<div class="pw-pc-info">';
+      h += '<div class="pw-pc-name">'+p.nombre+' '+(p.apellido||'')+'</div>';
+      h += '<div class="pw-pc-sub">'+p.iglesia+'</div>';
+      h += '</div>';
+      h += '<span class="pw-nivel '+nivelCls[item.nivel]+'">'+nivelLabel[item.nivel]+'</span>';
+      h += '</div>';
+      h += '<div class="pw-pc-situacion">'+item.situacion+'</div>';
+      if(item.signals.length){
+        h += '<div class="pw-pc-signals">';
+        item.signals.forEach(function(s){ h += '<div class="pw-pc-signal">'+s+'</div>'; });
+        h += '</div>';
+      }
+      h += '<div class="pw-pc-footer">';
+      h += '<span class="pw-pc-fecha">'+(item.fecha && item.fecha!=='—' ? 'Última eval: '+item.fecha : 'Sin eval reciente')+'</span>';
+      h += '<span class="pw-pc-cta">Ver contexto →</span>';
+      h += '</div>';
+      h += '</div>';
+    });
+    h += '</div>';
+  }
+
+  // TENDENCIAS + SALUD en dos columnas
+  h += '<div class="pw-two-col">';
+
+  // Tendencias
+  h += '<div class="pw-col">';
+  h += '<div class="pw-section-label">Tendencias</div>';
+  h += '<div class="pw-card">';
+  if(tendencias.length === 0){
+    h += '<div class="pw-empty-sm">No se detectan tendencias significativas con los datos actuales.</div>';
+  } else {
+    tendencias.slice(0,5).forEach(function(t){
+      h += '<div class="pw-tendencia">';
+      h += '<span class="pw-tend-ico" style="color:'+t.color+'">'+t.ico+'</span>';
+      h += '<span class="pw-tend-txt">'+t.txt+'</span>';
+      h += '</div>';
+    });
+  }
+  h += '</div>';
+
+  // Insight pastoral
+  h += '<div class="pw-section-label" style="margin-top:20px">Discernimiento</div>';
+  h += '<div class="pw-card pw-insight">';
+  var insightTxt = '';
+  if(nCritical >= 2) insightTxt = 'Hay múltiples pastores con presiones simultáneas. Considera si el ritmo de la red está siendo sostenible para quienes lideran comunidades más pequeñas o en crecimiento.';
+  else if(conCarga >= 3) insightTxt = 'El entusiasmo bajo en varios pastores puede ser una señal de fatiga acumulada, no de falta de fe. El acompañamiento esta temporada debería incluir más escucha que dirección.';
+  else if(conBautismos >= 3) insightTxt = 'Las iglesias están viendo fruto real. Buen momento para capitalizar el momentum con estructura de discipulado que sostenga a las personas nuevas.';
+  else insightTxt = 'La comunidad está en un período de consolidación. Las semillas sembradas en formación y La Ruta están comenzando a dar fruto en varias iglesias.';
+  h += '<div class="pw-insight-txt">'+insightTxt+'</div>';
+  h += '</div>';
+  h += '</div>'; // end col 1
+
+  // Columna 2: Salud + Próximos cumpleaños
+  h += '<div class="pw-col">';
+  h += '<div class="pw-section-label">Salud del compañerismo</div>';
+  h += '<div class="pw-card">';
+  var pctStable = Math.round(nStable/pastores.length*100);
+  var pctWatch  = Math.round(nWatch/pastores.length*100);
+  var pctCrit   = Math.round(nCritical/pastores.length*100);
+  h += '<div class="pw-salud-bar">';
+  if(pctCrit>0)   h += '<div class="pw-sb-seg pw-sb-red" style="width:'+pctCrit+'%" title="Urgente: '+nCritical+'"></div>';
+  if(pctWatch>0)  h += '<div class="pw-sb-seg pw-sb-yellow" style="width:'+pctWatch+'%" title="Observar: '+nWatch+'"></div>';
+  if(pctStable>0) h += '<div class="pw-sb-seg pw-sb-green" style="width:'+pctStable+'%" title="Estable: '+nStable+'"></div>';
+  h += '</div>';
+  h += '<div class="pw-salud-leyenda">';
+  if(nCritical) h += '<span class="pw-sal-item"><span class="pw-dot pw-dot-red"></span>Urgente: '+nCritical+'</span>';
+  if(nWatch)    h += '<span class="pw-sal-item"><span class="pw-dot pw-dot-yellow"></span>Observar: '+nWatch+'</span>';
+  h += '<span class="pw-sal-item"><span class="pw-dot pw-dot-green"></span>Estable: '+nStable+'</span>';
+  h += '</div>';
+  h += '<div class="pw-salud-meta"><span>'+withRP+' de '+pastores.length+' con reporte personal</span><span>'+totalPend+' pendientes activos</span></div>';
+  h += '</div>';
+
+  // Próximos cumpleaños
   if(upcoming.length){
-    h += `<div class="dash-sec">Próximos cumpleaños</div><div class="bday-list">`;
-    upcoming.slice(0,5).forEach(({p,days})=>{
-      const photo=pastorPhotos[p.nombre], col=pcol(p);
-      const av=photo?`<div class="bday-av"><img src="${photo}" loading="lazy"></div>`:`<div class="bday-av" style="background:${col}">${(p.nombre[0]+(p.apellido||'')[0]||'').toUpperCase()}</div>`;
-      const badge=days===0?'Hoy 🎉':days===1?'Mañana':`${days} días`;
-      h+=`<div class="bday-row">${av}<div class="bday-name">${p.nombre} ${p.apellido||''}</div><div class="bday-date">${p.cumple}</div><div class="bday-badge">${badge}</div></div>`;
+    h += '<div class="pw-section-label" style="margin-top:20px">Próximos cumpleaños</div>';
+    h += '<div class="pw-card">';
+    upcoming.slice(0,4).forEach(function(item){
+      var days = item.days;
+      var badge = days===0?'Hoy 🎉':days===1?'Mañana':'En '+days+' días';
+      var badgeCls = days<=1 ? 'pw-badge-red' : days<=7 ? 'pw-badge-yellow' : 'pw-badge-gray';
+      h += '<div class="pw-bday-row">';
+      h += '<div class="pw-bday-name">'+item.p.nombre+' '+(item.p.apellido||'')+'</div>';
+      h += '<span class="pw-badge '+badgeCls+'">'+badge+'</span>';
+      h += '</div>';
     });
-    h += `</div>`;
+    h += '</div>';
   }
 
-  if(alerts.length){
-    h += `<div class="dash-sec">Alertas pastorales</div><div class="alert-list">`;
-    alerts.slice(0,6).forEach(a=>{
-      h+=`<div class="alert-row ${a.cls}"><div class="alert-ico">${a.ico}</div><div><div class="alert-ttl">${a.title}</div>${a.desc?`<div class="alert-desc">${String(a.desc).substring(0,120)}</div>`:''}</div></div>`;
+  // Próximas acciones
+  if(acciones.length){
+    h += '<div class="pw-section-label" style="margin-top:20px">En el radar</div>';
+    h += '<div class="pw-card">';
+    acciones.slice(0,4).forEach(function(a){
+      h += '<div class="pw-accion-row">';
+      h += '<div class="pw-accion-pastor">'+a.pastor+'</div>';
+      h += '<div class="pw-accion-txt">'+a.accion.substring(0,70)+'</div>';
+      h += '</div>';
     });
-    h += `</div>`;
+    h += '</div>';
   }
 
-  if(withRP.length){
-    h += `<div class="dash-sec">Reportes recientes</div><div class="bday-list">`;
-    withRP.slice(0,5).forEach(p=>{
-      const m=p.reporte_personal.metricas, vals=Object.values(m);
-      const avg=(vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1);
-      const photo=pastorPhotos[p.nombre], col=pcol(p);
-      const av=photo?`<div class="bday-av"><img src="${photo}" loading="lazy"></div>`:`<div class="bday-av" style="background:${col}">${(p.nombre[0]+(p.apellido||'')[0]||'').toUpperCase()}</div>`;
-      const ac=getEstado(parseFloat(avg)).color;
-      h+=`<div class="bday-row" style="cursor:pointer" onclick="goTo('pastores',document.querySelector('[data-view=pastores]'));setTimeout(()=>openPanel(${pastores.indexOf(p)}),200)">
-        ${av}
-        <div class="bday-name">${p.nombre} ${p.apellido||''}</div>
-        <div class="bday-date">${p.reporte_personal.fecha||''}</div>
-        <div class="bday-badge" style="color:${ac};background:${ac}22">${avg}</div>
-      </div>`;
-    });
-    h += `</div>`;
-  }
-  h += `</div>`;
+  h += '</div>'; // end col 2
+  h += '</div>'; // end two-col
+
+  h += '</div>'; // end pw-wrap
   document.getElementById('view-dashboard').innerHTML = h;
 }
 
-/* ═══════════════════════════════════════════════════
-   REPORTES
-═══════════════════════════════════════════════════ */
-let rFilter = 'todos';
 function renderReportes(){
   const withRP = pastores.filter(p=>p.reporte_personal||(p.reunion&&p.reunion.length>10));
   const filtered = rFilter==='todos'?withRP:withRP.filter(p=>p.zona===rFilter);
