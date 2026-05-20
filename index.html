@@ -2569,6 +2569,27 @@ function renderBigPicture(){
     if(calcPriority(p)==='urgent') pendUrgent += (p.pendientes||[]).length;
     if(calcPriority(p)==='watch')  pendWeek   += (p.pendientes||[]).length;
   });
+  var noReportCount = filtered.filter(function(p){ return !p.reporte_personal; }).length;
+
+  // Computed systemic insights (replaces hardcoded trends)
+  var _insights = [];
+  var _areaNm = {familia:'Familia',intimidad:'Intimidad',entusiasmo:'Entusiasmo',liderazgo:'Liderazgo',economia:'Economía',salud:'Salud'};
+  var urgentRatio = filtered.length > 0 ? counts.urgent / filtered.length : 0;
+  if(urgentRatio >= 0.25){
+    _insights.push({arrow:'↑', color:'var(--urgent)', text: Math.round(urgentRatio*100)+'% de pastores en estado crítico — semana de intervención directa'});
+  } else if(counts.urgent > 0){
+    _insights.push({arrow:'→', color:'var(--urgent)', text: counts.urgent+' pastor'+(counts.urgent>1?'es requier':'  requiere')+'en atención esta semana'});
+  }
+  if(weaknesses.length > 0 && weaknesses[0].v < 7.5){
+    _insights.push({arrow:'↓', color:'var(--qro)', text: _areaNm[weaknesses[0].k]+' es el área más débil de la red ('+weaknesses[0].v.toFixed(1)+'/10)'});
+  }
+  if(noReportCount > 0){
+    _insights.push({arrow:'→', color:'var(--ink3)', text: noReportCount+' pastor'+(noReportCount>1?'es sin reporte — información desactualizada':' sin reporte — información desactualizada')});
+  }
+  if(pendTotal > 8){
+    _insights.push({arrow:'↑', color:'var(--qro)', text: pendTotal+' asuntos pendientes — carga pastoral elevada'});
+  }
+  _insights = _insights.slice(0, 2);
 
   // Zone health
   var zoneHealth={};
@@ -2593,9 +2614,12 @@ function renderBigPicture(){
   h += '</div></div>';
 
   // ── BLOQUE 1: Decisión hoy ────────────────────────────────────────────
-  h += '<div class="bp2-block">';
+  var b1Border = counts.urgent > 0 ? ' style="border-top:2px solid var(--urgent)"' : (counts.watch > 0 ? ' style="border-top:2px solid var(--watch)"' : '');
+  h += '<div class="bp2-block"'+b1Border+'>';
   h += '<div class="bp2-block-hdr"><span class="bp2-block-hdr-ico">🚨</span><span class="bp2-block-hdr-title">Decisión hoy</span>';
-  h += '<span class="bp2-block-hdr-badge" style="background:rgba(184,64,64,.1);color:var(--urgent)">Hoy no puedes ignorar esto</span></div>';
+  var b1Badge = counts.urgent > 0 ? 'Hoy no puedes ignorar esto' : counts.watch > 0 ? 'Requiere atención esta semana' : 'Red en buen estado';
+  var b1BadgeStyle = counts.urgent > 0 ? 'background:rgba(184,64,64,.1);color:var(--urgent)' : counts.watch > 0 ? 'background:rgba(200,147,58,.1);color:var(--qro)' : 'background:rgba(74,155,111,.1);color:var(--stable)';
+  h += '<span class="bp2-block-hdr-badge" style="'+b1BadgeStyle+'">'+b1Badge+'</span></div>';
   h += '<div class="bp2-body">';
 
   // Count cards
@@ -2700,11 +2724,16 @@ function renderBigPicture(){
   });
   h += '</div>';
 
-  // Trends
-  h += '<div class="b3-trends" style="margin-top:8px">';
-  h += '<div class="b3-trend"><span class="b3-trend-arrow" style="color:var(--urgent)">↑</span><span>Pendientes acumulándose — revisar carga pastoral</span></div>';
-  h += '<div class="b3-trend"><span class="b3-trend-arrow" style="color:var(--stable)">↑</span><span>Consejería en aumento — considerar más capacitación</span></div>';
-  h += '</div>';
+  // Computed insights
+  if(_insights.length > 0){
+    h += '<div class="b3-trends" style="margin-top:'+(Object.values(patterns).some(function(v){return v>0;})?'8':'0')+'px">';
+    _insights.forEach(function(ins){
+      h += '<div class="b3-trend"><span class="b3-trend-arrow" style="color:'+ins.color+'">'+ins.arrow+'</span><span>'+ins.text+'</span></div>';
+    });
+    h += '</div>';
+  } else if(!Object.values(patterns).some(function(v){return v>0;})){
+    h += '<div style="padding:10px 0;text-align:center;color:var(--ink3);font-size:12px">✓ Sin alertas sistémicas — red en buen estado</div>';
+  }
   h += '</div></div>';
 
   // ── BLOQUE 4: Enfoque por zona ────────────────────────────────────────
@@ -2768,10 +2797,14 @@ function renderBigPicture(){
     var p1=topPastors[1], idx1=pastores.indexOf(p1);
     actions6.push({ico:'🤝',title:'Acompañar a '+(p1.nombre+' '+(p1.apellido||'')).trim(),sub:'En riesgo — necesita seguimiento',pri:'alta',priStyle:'background:rgba(200,147,58,.1);color:var(--qro)',onclick:'openPanel('+idx1+')'});
   }
-  if(counts.none>0){
-    actions6.push({ico:'📋',title:'Actualizar '+counts.none+' pastores sin datos',sub:'Sin reporte reciente — información desactualizada',pri:'media',priStyle:'background:var(--surface3);color:var(--ink3)',onclick:''});
-  } else if(patterns.liderazgo>=3){
-    actions6.push({ico:'📋',title:'Revisar liderazgo en '+patterns.liderazgo+' pastores',sub:'Patrón sistémico — considerar capacitación o apoyo',pri:'media',priStyle:'background:var(--surface3);color:var(--ink3)',onclick:''});
+  if(noReportCount>0){
+    actions6.push({ico:'📋',title:'Actualizar '+noReportCount+' pastor'+(noReportCount>1?'es':'')+ ' sin reporte',sub:'Información desactualizada — agenda reunión de evaluación',pri:'media',priStyle:'background:var(--surface3);color:var(--ink3)',onclick:''});
+  }
+  if(actions6.length < 2 && weaknesses.length > 0 && weaknesses[0].v < 7){
+    actions6.push({ico:'💡',title:'Atender '+_areaNm[weaknesses[0].k]+' ('+weaknesses[0].v.toFixed(1)+'/10)',sub:'Área más débil de la red — considera recursos o capacitación grupal',pri:'media',priStyle:'background:var(--surface3);color:var(--ink3)',onclick:''});
+  }
+  if(actions6.length < 1){
+    actions6.push({ico:'✓',title:'Red en buen estado esta semana',sub:'Sin pastores críticos ni patrones sistémicos detectados',pri:'verde',priStyle:'background:rgba(74,155,111,.1);color:var(--stable)',onclick:''});
   }
 
   actions6.slice(0,3).forEach(function(a){
