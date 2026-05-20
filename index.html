@@ -606,6 +606,42 @@ img { display: block; }
 .prayer-chip:hover { border-color: var(--border2); }
 .prayer-chip-ico { font-size: 13px; flex-shrink: 0; }
 
+/* Panel alert strip */
+.panel-alert {
+  margin: 0 16px var(--space-md);
+  padding: 11px 14px;
+  border-radius: var(--r);
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.panel-alert.urgent {
+  background: rgba(176,48,48,0.07);
+  border: 1px solid rgba(176,48,48,0.18);
+  border-left: 3px solid var(--critical);
+}
+.panel-alert.watch {
+  background: rgba(138,96,16,0.07);
+  border: 1px solid rgba(138,96,16,0.18);
+  border-left: 3px solid var(--watch);
+}
+.panel-alert-pri {
+  font-family: var(--sans); font-size: 7.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px;
+}
+.panel-alert.urgent .panel-alert-pri { color: var(--critical); }
+.panel-alert.watch  .panel-alert-pri { color: var(--watch); }
+.panel-alert-text { font-size: 12.5px; color: var(--ink); line-height: 1.5; font-weight: 500; }
+
+/* Section category divider */
+.panel-cat {
+  display: flex; align-items: center; gap: 10px;
+  padding: 20px 20px 10px;
+}
+.panel-cat-line { flex: 1; height: 1px; background: var(--border); }
+.panel-cat-label {
+  font-family: var(--sans); font-size: 8px; font-weight: 600;
+  color: var(--ink4); letter-spacing: 0.15em; text-transform: uppercase;
+}
+
 /* ═══════════════════════════════════════════════════
    REPORTE PASTORAL — CARDS VISUALES
 ═══════════════════════════════════════════════════ */
@@ -2978,6 +3014,10 @@ function openPanel(idx){
   const nd = extractNotas(p.notas||'');
   const totalPend = (p.pendientes||[]).length;
   const hasRP = !!p.reporte_personal;
+  const pri = calcPriority(p);
+  const _PRI_LABEL = {urgent:'Crítico', watch:'En observación', stable:'Saludable', none:''};
+  const _PRI_BG    = {urgent:'rgba(176,48,48,0.1)', watch:'rgba(138,96,16,0.1)', stable:'rgba(74,155,111,0.1)', none:''};
+  const _PRI_CLR   = {urgent:'var(--critical)', watch:'var(--watch)', stable:'var(--healthy)', none:''};
 
   const avHtml = photo
     ? `<div class="panel-av"><img src="${photo}"></div>`
@@ -3000,7 +3040,7 @@ function openPanel(idx){
       <div class="panel-name">${full}</div>
       <div class="panel-location">${p.ciudad||''} · ${p.zona?.toUpperCase()||''}</div>
       <div class="panel-badges">
-        ${hasRP?`<span class="pbadge" style="background:rgba(74,155,111,0.1);color:#4A9B6F">◎ Con reporte</span>`:''}
+        ${pri!=='none'?`<span class="pbadge" style="background:${_PRI_BG[pri]};color:${_PRI_CLR[pri]}">${_PRI_LABEL[pri]}</span>`:''}
         ${totalPend?`<span class="pbadge" style="background:rgba(200,147,58,0.1);color:var(--qro)">${totalPend} pendientes</span>`:''}
         ${p.tags&&p.tags.includes('nuevo')?`<span class="pbadge" style="background:rgba(74,155,111,0.1);color:#4A9B6F">Nuevo</span>`:''}
         ${p.tags&&p.tags.includes('residencia pastoral')?`<span class="pbadge" style="background:rgba(122,90,184,0.1);color:#7A5AB8">Residencia pastoral</span>`:''}
@@ -3017,79 +3057,40 @@ function openPanel(idx){
   if(d.facebook)acts.push(`<div class="pact" onclick="window.open('${d.facebook}','_blank')"><div class="pact-ico" style="background:rgba(74,100,200,0.12);color:#5A70CC">📘</div><div class="pact-lbl">Facebook</div></div>`);
   if(acts.length) h += `<div class="panel-actions">${acts.join('')}</div>`;
 
-  // Horarios
-  if(d.horarios) h += `<div class="ps"><div class="ps-lbl">Servicios</div><div class="info-block"><div class="info-row"><div class="info-ico">🕐</div><div class="info-key">Horarios</div><div class="info-val">${d.horarios}</div></div></div></div>`;
-
-  // Esposa / cumple
-  if(p.esposa || p.cumple){
-    h += `<div class="ps"><div class="ps-lbl">Personal</div><div class="info-block">`;
-    if(p.esposa) h += `<div class="info-row"><div class="info-ico">💝</div><div class="info-key">Esposa</div><div class="info-val">${p.esposa}</div></div>`;
-    if(p.cumple) h += `<div class="info-row"><div class="info-ico">🎂</div><div class="info-key">Cumpleaños</div><div class="info-val">${p.cumple}</div></div>`;
-    h += `</div></div>`;
-  }
-
-  // Hijos
-  if(p.hijos&&p.hijos.length){
-    h += `<div class="ps"><div class="ps-lbl">Hijos</div><div class="hijos-wrap">`;
-    p.hijos.forEach(c=>{
-      h += `<div class="hijo-chip"><div class="hijo-av">${(c.nombre||'?')[0]}</div><div>
-        <div class="hijo-name">${c.nombre}</div>
-        <div class="hijo-age">${c.edad?c.edad+' años · ':''}${c.datos||''}</div>
-      </div></div>`;
-    });
-    h += `</div></div>`;
-  }
-
-  if(p.discipulos && p.discipulos.length){
-    var discHtml = '<div class="ps"><div class="ps-lbl">Invirtiendo en</div><div class="disc-wrap">';
-    p.discipulos.forEach(function(name){
-      var ini = name.split(' ').map(function(w){return w[0];}).join('').substring(0,2).toUpperCase();
-      discHtml += '<div class="disc-chip"><div class="disc-av">' + ini + '</div>' + name + '</div>';
-    });
-    discHtml += '</div></div>';
-    h += discHtml;
-  }
-
-  // Fechas importantes
-  if(nd.cumpleEsposa || nd.aniversario || p.cumple){
-    h += `<div class="ps"><div class="ps-lbl">Fechas importantes</div><div class="fechas-wrap">`;
-    if(p.cumple)        h += `<div class="fecha-chip"><div class="fecha-ico">🎂</div><div><div class="fecha-val">${p.cumple}</div><div class="fecha-lbl">Cumple pastor</div></div></div>`;
-    if(nd.cumpleEsposa) h += `<div class="fecha-chip"><div class="fecha-ico">💝</div><div><div class="fecha-val">${nd.cumpleEsposa}</div><div class="fecha-lbl">Cumple esposa</div></div></div>`;
-    if(nd.aniversario)  h += `<div class="fecha-chip"><div class="fecha-ico">💒</div><div><div class="fecha-val">${nd.aniversario}</div><div class="fecha-lbl">Aniversario</div></div></div>`;
-    h += `</div></div>`;
-  }
-
-  // Hobbies
-  if(nd.pasatiempo){
-    const partes = nd.pasatiempo.split(/[,;]+/).map(x=>x.trim()).filter(Boolean);
-    h += `<div class="ps"><div class="ps-lbl">Pasatiempos</div><div class="hobby-wrap">`;
-    partes.forEach(pt=>{
-      h += `<div class="hobby-chip"><span class="hobby-ico">${hobbyIco(pt)}</span>${pt}</div>`;
-    });
-    h += `</div></div>`;
-  }
-
-  // Tallas
-  if(nd.zapatos || nd.camisa || nd.pantalon){
-    h += `<div class="ps"><div class="ps-lbl">Tallas para regalo</div><div class="tallas-grid">`;
-    if(nd.zapatos) h += `<div class="talla-tile"><div class="talla-ico">👟</div><div class="talla-val">${nd.zapatos}</div><div class="talla-lbl">Zapatos</div></div>`;
-    if(nd.camisa)  h += `<div class="talla-tile"><div class="talla-ico">👕</div><div class="talla-val">${nd.camisa}</div><div class="talla-lbl">Camisa</div></div>`;
-    if(nd.pantalon)h += `<div class="talla-tile"><div class="talla-ico">👖</div><div class="talla-val">${nd.pantalon}</div><div class="talla-lbl">Pantalón</div></div>`;
-    h += `</div></div>`;
-  }
-
-  // Dirección
-  if(nd.direccion || nd.amazon){
-    h += `<div class="ps"><div class="ps-lbl">Envío / Regalo</div><div class="dir-block">
-      <div class="dir-ico">📦</div>
-      <div class="dir-body">
-        ${nd.direccion?`<div class="dir-text">${nd.direccion}</div>`:''}
-        ${nd.amazon?`<div class="dir-email">✉ ${nd.amazon}</div>`:''}
+  // ── Priority alert strip ────────────────────────────────────────
+  if(pri === 'urgent' || pri === 'watch'){
+    const topAlert = getTopAlert(p);
+    const alertLabel = pri === 'urgent' ? 'Atención inmediata' : 'En observación';
+    const alertText = topAlert ? topAlert.text : (pri === 'urgent' ? 'Múltiples señales de riesgo' : 'Requiere seguimiento esta semana');
+    h += `<div class="panel-alert ${pri}">
+      <div>
+        <div class="panel-alert-pri">${alertLabel}</div>
+        <div class="panel-alert-text">${alertText}</div>
       </div>
-    </div></div>`;
+    </div>`;
   }
 
-  // Reporte personal
+  // ── Pendientes (operationally critical — shown first) ────────────
+  if(p.pendientes && p.pendientes.length){
+    h += `<div class="ps"><div class="ps-lbl">Pendientes y acuerdos</div><div class="pend-list">`;
+    p.pendientes.forEach((x,i)=>{
+      const isH = /salud|cirugía|médic|foniatra/i.test(x);
+      const isA = /aprobad/i.test(x);
+      h += `<div class="pend-card${isH?' pend-health':''}${isA?' pend-done':''}">
+        <div class="pend-num">${String(i+1).padStart(2,'0')}</div>
+        <div class="pend-body">
+          <div class="pend-title">${x}</div>
+          <div class="pend-meta">
+            ${isH?`<span class="pend-tag" style="background:rgba(184,64,64,0.1);color:#B84040">⚕ Salud</span>`:''}
+            ${isA?`<span class="pend-tag" style="background:rgba(74,155,111,0.1);color:#4A9B6F">✓ Aprobado</span>`:''}
+          </div>
+        </div>
+      </div>`;
+    });
+    h += `</div></div>`;
+  }
+
+  // ── Reporte personal ─────────────────────────────────────────────
   function renderRP(rp, titulo){
     if(!rp||!rp.metricas) return '';
     const vals = AREAS.filter(a=>rp.metricas[a.key]!==undefined);
@@ -3156,11 +3157,10 @@ function openPanel(idx){
   if(p.reporte_personal)        h += renderRP(p.reporte_personal, 'Reporte personal — '+(p.reporte_personal.fecha||''));
   if(p.reporte_personal_yabeth) h += renderRP(p.reporte_personal_yabeth, 'Reporte Yabeth — Abril 2026');
 
-  // Reunión y notas
+  // ── Reunión y notas ──────────────────────────────────────────────
   if(p.reunion_data){
     h += renderReunionData(p.reunion_data);
   } else if(p.reunion){
-    var _rDate = p.reporte_personal ? p.reporte_personal.fecha : '';
     h += '<div class="ps"><div class="ps-lbl">Última reunión</div><div class="text-block">' + p.reunion + '</div></div>';
   }
   if(p.notas_data){
@@ -3169,29 +3169,81 @@ function openPanel(idx){
     h += '<div class="ps"><div class="ps-lbl">Notas</div><div class="text-block">' + nd.notasClean + '</div></div>';
   }
 
-  // Iglesia reporte
+  // ── Iglesia ──────────────────────────────────────────────────────
   if(p.iglesia_reporte){
     h += renderIglesiaReport(p);
   }
 
-  // Pendientes
-  if(p.pendientes&&p.pendientes.length){
-    h += `<div class="ps"><div class="ps-lbl">Pendientes y acuerdos</div><div class="pend-list">`;
-    p.pendientes.forEach((x,i)=>{
-      const isH = /salud|cirugía|médic|foniatra/i.test(x);
-      const isA = /aprobad/i.test(x);
-      h += `<div class="pend-card${isH?' pend-health':''}${isA?' pend-done':''}">
-        <div class="pend-num">${String(i+1).padStart(2,'0')}</div>
-        <div class="pend-body">
-          <div class="pend-title">${x}</div>
-          <div class="pend-meta">
-            ${isH?`<span class="pend-tag" style="background:rgba(184,64,64,0.1);color:#B84040">⚕ Salud</span>`:''}
-            ${isA?`<span class="pend-tag" style="background:rgba(74,155,111,0.1);color:#4A9B6F">✓ Aprobado</span>`:''}
-          </div>
+  // ── Datos personales (logística y contexto familiar) ─────────────
+  const _hasPersonal = d.horarios || p.esposa || p.cumple || (p.hijos&&p.hijos.length) ||
+    (p.discipulos&&p.discipulos.length) || nd.cumpleEsposa || nd.aniversario ||
+    nd.pasatiempo || nd.zapatos || nd.camisa || nd.pantalon || nd.direccion || nd.amazon;
+  if(_hasPersonal){
+    h += `<div class="panel-cat"><div class="panel-cat-line"></div><div class="panel-cat-label">Datos personales</div><div class="panel-cat-line"></div></div>`;
+
+    if(d.horarios) h += `<div class="ps"><div class="ps-lbl">Servicios</div><div class="info-block"><div class="info-row"><div class="info-ico">🕐</div><div class="info-key">Horarios</div><div class="info-val">${d.horarios}</div></div></div></div>`;
+
+    if(p.esposa || p.cumple){
+      h += `<div class="ps"><div class="ps-lbl">Familia</div><div class="info-block">`;
+      if(p.esposa) h += `<div class="info-row"><div class="info-ico">💝</div><div class="info-key">Esposa</div><div class="info-val">${p.esposa}</div></div>`;
+      if(p.cumple) h += `<div class="info-row"><div class="info-ico">🎂</div><div class="info-key">Cumpleaños</div><div class="info-val">${p.cumple}</div></div>`;
+      h += `</div></div>`;
+    }
+
+    if(p.hijos&&p.hijos.length){
+      h += `<div class="ps"><div class="ps-lbl">Hijos</div><div class="hijos-wrap">`;
+      p.hijos.forEach(c=>{
+        h += `<div class="hijo-chip"><div class="hijo-av">${(c.nombre||'?')[0]}</div><div>
+          <div class="hijo-name">${c.nombre}</div>
+          <div class="hijo-age">${c.edad?c.edad+' años · ':''}${c.datos||''}</div>
+        </div></div>`;
+      });
+      h += `</div></div>`;
+    }
+
+    if(p.discipulos && p.discipulos.length){
+      h += '<div class="ps"><div class="ps-lbl">Invirtiendo en</div><div class="disc-wrap">';
+      p.discipulos.forEach(function(name){
+        var ini = name.split(' ').map(function(w){return w[0];}).join('').substring(0,2).toUpperCase();
+        h += '<div class="disc-chip"><div class="disc-av">' + ini + '</div>' + name + '</div>';
+      });
+      h += '</div></div>';
+    }
+
+    if(nd.cumpleEsposa || nd.aniversario || p.cumple){
+      h += `<div class="ps"><div class="ps-lbl">Fechas importantes</div><div class="fechas-wrap">`;
+      if(p.cumple)        h += `<div class="fecha-chip"><div class="fecha-ico">🎂</div><div><div class="fecha-val">${p.cumple}</div><div class="fecha-lbl">Cumple pastor</div></div></div>`;
+      if(nd.cumpleEsposa) h += `<div class="fecha-chip"><div class="fecha-ico">💝</div><div><div class="fecha-val">${nd.cumpleEsposa}</div><div class="fecha-lbl">Cumple esposa</div></div></div>`;
+      if(nd.aniversario)  h += `<div class="fecha-chip"><div class="fecha-ico">💒</div><div><div class="fecha-val">${nd.aniversario}</div><div class="fecha-lbl">Aniversario</div></div></div>`;
+      h += `</div></div>`;
+    }
+
+    if(nd.pasatiempo){
+      const partes = nd.pasatiempo.split(/[,;]+/).map(x=>x.trim()).filter(Boolean);
+      h += `<div class="ps"><div class="ps-lbl">Pasatiempos</div><div class="hobby-wrap">`;
+      partes.forEach(pt=>{
+        h += `<div class="hobby-chip"><span class="hobby-ico">${hobbyIco(pt)}</span>${pt}</div>`;
+      });
+      h += `</div></div>`;
+    }
+
+    if(nd.zapatos || nd.camisa || nd.pantalon){
+      h += `<div class="ps"><div class="ps-lbl">Tallas para regalo</div><div class="tallas-grid">`;
+      if(nd.zapatos) h += `<div class="talla-tile"><div class="talla-ico">👟</div><div class="talla-val">${nd.zapatos}</div><div class="talla-lbl">Zapatos</div></div>`;
+      if(nd.camisa)  h += `<div class="talla-tile"><div class="talla-ico">👕</div><div class="talla-val">${nd.camisa}</div><div class="talla-lbl">Camisa</div></div>`;
+      if(nd.pantalon)h += `<div class="talla-tile"><div class="talla-ico">👖</div><div class="talla-val">${nd.pantalon}</div><div class="talla-lbl">Pantalón</div></div>`;
+      h += `</div></div>`;
+    }
+
+    if(nd.direccion || nd.amazon){
+      h += `<div class="ps"><div class="ps-lbl">Envío / Regalo</div><div class="dir-block">
+        <div class="dir-ico">📦</div>
+        <div class="dir-body">
+          ${nd.direccion?`<div class="dir-text">${nd.direccion}</div>`:''}
+          ${nd.amazon?`<div class="dir-email">✉ ${nd.amazon}</div>`:''}
         </div>
-      </div>`;
-    });
-    h += `</div></div>`;
+      </div></div>`;
+    }
   }
 
   h += `<div style="height:28px"></div>`;
