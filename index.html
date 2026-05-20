@@ -1548,6 +1548,143 @@ img { display: block; }
   .pw-header-right { text-align: left; max-width: none; }
   .pw-priorities { grid-template-columns: 1fr; }
 }
+
+/* ═══════════════════════════════════════════════════
+   IGLESIA REPORT — ir-* styles
+═══════════════════════════════════════════════════ */
+.ir-card{background:var(--surface);border:1px solid var(--border2);border-radius:18px;padding:18px;margin-bottom:18px;box-shadow:0 4px 20px rgba(0,0,0,.04);}
+.ir-eyebrow{font-size:9px;letter-spacing:.18em;color:var(--ink3);text-transform:uppercase;margin-bottom:8px;}
+.ir-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;}
+.ir-head h2{font-family:var(--display);font-size:22px;line-height:1.1;color:var(--ink);margin:0;}
+.ir-head span{font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--qro);background:rgba(160,110,26,.08);border:1px solid rgba(160,110,26,.22);padding:5px 11px;border-radius:99px;white-space:nowrap;}
+.ir-metrics{border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:14px;}
+.ir-metric-row{display:grid;grid-template-columns:32px 1fr auto;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border);}
+.ir-metric-row:last-child{border-bottom:none;}
+.ir-icon{width:28px;height:28px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+.ir-label{font-size:12.5px;color:var(--ink2);}
+.ir-value{font-size:16px;font-weight:800;color:var(--ink);text-align:right;white-space:nowrap;}
+.ir-insight{display:flex;gap:12px;align-items:flex-start;background:rgba(160,110,26,.06);border:1px solid rgba(160,110,26,.16);border-radius:14px;padding:14px;margin-bottom:14px;}
+.ir-bulb{width:36px;height:36px;border-radius:50%;background:rgba(160,110,26,.14);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;}
+.ir-insight p{font-size:12.5px;line-height:1.65;color:var(--ink2);margin:0;}
+.ir-section{margin-top:14px;}
+.ir-section-title{font-size:9px;font-weight:800;letter-spacing:.14em;color:var(--ink3);text-transform:uppercase;margin-bottom:9px;}
+.ir-logros{border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.ir-logro-row{display:flex;gap:10px;align-items:flex-start;padding:10px 13px;border-bottom:1px solid var(--border);}
+.ir-logro-row:last-child{border-bottom:none;}
+.ir-logro-icon{width:24px;height:24px;border-radius:50%;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;margin-top:1px;}
+.ir-logro-text{font-size:12px;line-height:1.6;color:var(--ink2);}
+.ir-logro-text strong{color:var(--ink);font-weight:700;}
+.ir-projects,.ir-risks{display:flex;flex-direction:column;gap:7px;}
+.ir-project{display:flex;gap:10px;padding:10px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:11px;align-items:flex-start;}
+.ir-project-date{font-size:10px;font-weight:800;color:var(--qro);min-width:52px;padding-top:1px;}
+.ir-project-name{font-size:12.5px;font-weight:600;color:var(--ink);}
+.ir-project-sub{font-size:11px;color:var(--ink3);margin-top:2px;line-height:1.4;}
+.ir-risk{font-size:12px;line-height:1.5;color:var(--ink2);background:var(--watch-bg);border:1px solid var(--watch-bd);border-radius:11px;padding:9px 12px;}
+
+/* ═══════════════════════════════════════════════════
+   REPORTES PASTORALES — rr-* styles
+═══════════════════════════════════════════════════ */
+.rr-wrap{padding:32px 28px 80px;max-width:980px;margin:0 auto;}
+.rr-header{margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.rr-title{font-family:var(--display);font-size:30px;line-height:1.1;color:var(--ink);letter-spacing:-0.02em;}
+.rr-sub{font-size:12.5px;color:var(--ink3);margin-top:6px;line-height:1.5;}
+.rr-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;}
+.rr-stat{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px;}
+.rr-stat-num{font-size:26px;font-weight:800;line-height:1;color:var(--ink);}
+.rr-stat-lbl{font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;margin-top:5px;}
+.rr-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;align-items:center;}
+.rr-filter-group{display:flex;gap:6px;flex-wrap:wrap;}
+.rr-filter-sep{width:1px;height:20px;background:var(--border2);margin:0 2px;}
+.rr-filter{padding:5px 12px;border-radius:99px;border:1px solid var(--border2);background:transparent;font-size:11px;font-weight:600;color:var(--ink2);cursor:pointer;font-family:var(--sans);transition:all .12s;}
+.rr-filter:hover{border-color:var(--border3);color:var(--ink);}
+.rr-filter.active{background:var(--ink);border-color:var(--ink);color:#fff;}
+.rr-filter.active-green{background:var(--healthy);border-color:var(--healthy);color:#fff;}
+.rr-filter.active-yellow{background:var(--watch);border-color:var(--watch);color:#000;}
+.rr-filter.active-red{background:var(--critical);border-color:var(--critical);color:#fff;}
+.rr-list{display:flex;flex-direction:column;gap:7px;}
+.rr-row{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:13px 16px;display:grid;grid-template-columns:80px 36px 1fr auto 18px;align-items:center;gap:12px;cursor:pointer;transition:border-color .14s,box-shadow .14s,transform .14s;}
+.rr-row:hover{border-color:var(--border2);box-shadow:0 4px 18px rgba(0,0,0,.05);transform:translateY(-1px);}
+.rr-row.rr-green{border-left:3px solid var(--healthy);}
+.rr-row.rr-yellow{border-left:3px solid var(--watch);}
+.rr-row.rr-red{border-left:3px solid var(--critical);}
+.rr-row.rr-gray{border-left:3px solid var(--border2);}
+.rr-date{font-size:10px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.04em;line-height:1.4;}
+.rr-avatar{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:white;flex-shrink:0;}
+.rr-name{font-size:13.5px;font-weight:700;color:var(--ink);}
+.rr-church{font-size:10.5px;color:var(--ink3);margin-top:2px;}
+.rr-mini{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px;}
+.rr-pill{font-size:9.5px;padding:2px 7px;border-radius:99px;background:var(--surface2);color:var(--ink2);border:1px solid var(--border);}
+.rr-pill-red{background:var(--critical-bg);color:var(--critical);border-color:var(--critical-bd);}
+.rr-pill-yellow{background:var(--watch-bg);color:var(--watch);border-color:var(--watch-bd);}
+.rr-score{text-align:right;min-width:84px;}
+.rr-score-num{font-size:22px;font-weight:800;line-height:1;}
+.rr-score-state{font-size:9.5px;font-weight:700;margin-top:3px;text-transform:uppercase;letter-spacing:.06em;}
+.rr-score-reason{font-size:9.5px;color:var(--ink3);margin-top:2px;}
+.rr-row.rr-green .rr-score-num,.rr-row.rr-green .rr-score-state{color:var(--healthy);}
+.rr-row.rr-yellow .rr-score-num,.rr-row.rr-yellow .rr-score-state{color:var(--watch);}
+.rr-row.rr-red .rr-score-num,.rr-row.rr-red .rr-score-state{color:var(--critical);}
+.rr-row.rr-gray .rr-score-num,.rr-row.rr-gray .rr-score-state{color:var(--ink3);}
+.rr-chevron{color:var(--ink3);font-size:14px;transition:transform .15s;}
+.rr-row:hover .rr-chevron{transform:translateX(2px);}
+/* expanded detail */
+.rr-detail{background:var(--surface2);border:1px solid var(--border);border-radius:12px;margin-top:6px;padding:14px 16px;display:none;}
+.rr-detail.open{display:block;}
+.rr-detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;}
+.rr-detail-area{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:9px 11px;}
+.rr-detail-area-lbl{font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;}
+.rr-detail-area-val{font-size:18px;font-weight:800;color:var(--ink);line-height:1.2;}
+.rr-detail-section{margin-bottom:10px;}
+.rr-detail-section-lbl{font-size:9px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;}
+.rr-detail-text{font-size:12px;color:var(--ink2);line-height:1.6;}
+.rr-detail-items{display:flex;flex-direction:column;gap:4px;}
+.rr-detail-item{font-size:12px;color:var(--ink2);padding:4px 0;border-bottom:1px solid var(--border);line-height:1.4;}
+.rr-detail-item:last-child{border-bottom:none;}
+@media(max-width:700px){
+  .rr-wrap{padding:20px 16px 80px;}
+  .rr-summary{grid-template-columns:repeat(2,1fr);}
+  .rr-row{grid-template-columns:36px 1fr auto 18px;}
+  .rr-date{display:none;}
+  .rr-detail-grid{grid-template-columns:repeat(2,1fr);}
+}
+
+/* ═══════════════════════════════════════════════════
+   EXPANDED REPORT — rx-* styles
+═══════════════════════════════════════════════════ */
+.rx-body{padding:14px 16px 16px;background:var(--surface2);border-top:1px solid var(--border);}
+.rx-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:13px 16px;margin-bottom:12px;}
+.rx-summary-title{font-size:14px;font-weight:700;color:var(--ink);}
+.rx-summary-sub{font-size:11px;color:var(--ink3);margin-top:3px;}
+.rx-score{text-align:right;}
+.rx-score-num{font-size:26px;font-weight:800;line-height:1;}
+.rx-score-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-top:3px;}
+.rx-score.rx-green .rx-score-num,.rx-score.rx-green .rx-score-label{color:var(--healthy);}
+.rx-score.rx-yellow .rx-score-num,.rx-score.rx-yellow .rx-score-label{color:var(--watch);}
+.rx-score.rx-red .rx-score-num,.rx-score.rx-red .rx-score-label{color:var(--critical);}
+.rx-score.rx-gray .rx-score-num,.rx-score.rx-gray .rx-score-label{color:var(--ink3);}
+.rx-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:12px;}
+.rx-metric{background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:10px 11px;}
+.rx-metric-label{font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px;}
+.rx-metric-value{font-size:20px;font-weight:800;line-height:1;}
+.rx-bar{height:4px;background:var(--surface3);border-radius:99px;overflow:hidden;margin-top:7px;}
+.rx-bar-fill{height:100%;border-radius:99px;}
+.rx-green{color:var(--healthy);} .rx-yellow{color:var(--watch);} .rx-red{color:var(--critical);}
+.rx-bg-green{background:var(--healthy);} .rx-bg-yellow{background:var(--watch);} .rx-bg-red{background:var(--critical);}
+.rx-insight{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--qro);border-radius:12px;padding:11px 14px;margin-bottom:12px;}
+.rx-insight-title{font-size:9px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.09em;margin-bottom:5px;}
+.rx-insight-text{font-size:12.5px;line-height:1.6;color:var(--ink2);}
+.rx-section{margin-top:12px;}
+.rx-section-title{font-size:9px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;}
+.rx-prayer-grid{display:flex;flex-direction:column;gap:6px;}
+.rx-prayer{display:flex;gap:9px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:11px;padding:10px 12px;font-size:12px;line-height:1.55;color:var(--ink2);}
+.rx-prayer.answered{background:var(--healthy-bg);border-color:var(--healthy-bd);color:var(--healthy);}
+.rx-prayer-ico{flex-shrink:0;margin-top:1px;}
+.rx-agreements{border:1px solid var(--border);border-radius:13px;overflow:hidden;background:var(--surface);}
+.rx-agreement{display:flex;gap:10px;padding:11px 13px;border-bottom:1px solid var(--border);}
+.rx-agreement:last-child{border-bottom:none;}
+.rx-check{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--border3);flex-shrink:0;margin-top:2px;}
+.rx-agreement-title{font-size:12.5px;font-weight:700;color:var(--ink);line-height:1.35;}
+.rx-agreement-sub{font-size:11px;color:var(--ink3);margin-top:3px;line-height:1.45;}
+@media(max-width:600px){.rx-metrics{grid-template-columns:repeat(2,1fr);}}
 </style>
 </head>
 <body>
@@ -1580,7 +1717,7 @@ img { display: block; }
       <span class="nav-badge" id="nb-seg">—</span>
     </button>
     <button class="nav-btn" data-view="finanzas" onclick="goTo('finanzas',this)">
-      <span class="nav-ico">$</span> Finanzas
+      <span class="nav-ico">$</span> Compañerismo
     </button>
     <button class="nav-btn" data-view="q1" onclick="goTo('q1',this)">
       <span class="nav-ico">◎</span> Q1 2026
@@ -1639,7 +1776,7 @@ img { display: block; }
   <button class="bn-item" data-view="dashboard" onclick="goTo('dashboard',this)"><span class="bn-ico">◈</span>Dashboard</button>
   <button class="bn-item" data-view="reportes" onclick="goTo('reportes',this)"><span class="bn-ico">📋</span>Reportes</button>
   <button class="bn-item" data-view="seguimiento" onclick="goTo('seguimiento',this)"><span class="bn-ico">✓</span>Tareas</button>
-  <button class="bn-item" data-view="finanzas" onclick="goTo('finanzas',this)"><span class="bn-ico">$</span>Finanzas</button>
+  <button class="bn-item" data-view="finanzas" onclick="goTo('finanzas',this)"><span class="bn-ico">$</span>CEM</button>
   <button class="bn-item" data-view="q1" onclick="goTo('q1',this)"><span class="bn-ico">◎</span>Q1</button>
 </div>
 
@@ -1953,6 +2090,7 @@ function setZ(btn){
 
 
 var _imPlanOpen = {};
+var rFilter = "todos";
 var IM_GROUPS = [
   {label:'Alcance',    ico:'🌐', color:'#4ECDC4', bg:'rgba(78,205,196,.08)',  border:'rgba(78,205,196,.2)',  keys:['Asist. semanal','Jóvenes Q1','Flechas (niños)']},
   {label:'Consejería', ico:'💬', color:'#9B72E8', bg:'rgba(155,114,232,.08)', border:'rgba(155,114,232,.2)', keys:['Consejería','Alcance']},
@@ -1972,6 +2110,55 @@ var IM_PLAN = [
     {text:'Jorge — certificación etapa 3', sub:'Avanzando', done:false}
   ]}
 ];
+
+/* ═══════════════════════════════════════════════════
+   IGLESIA REPORT — renderIglesiaReport
+═══════════════════════════════════════════════════ */
+function splitLogros(text){
+  if(!text) return [];
+  return text.split(/\. (?=[A-ZÁÉÍÓÚÑ0-9])/).map(function(x){return x.trim();}).filter(Boolean).map(function(x){return x.endsWith('.')?x:x+'.';});
+}
+function highlightNumbers(text){
+  return text.replace(/(\+?\d+[,\d]*%?|~\d+[,\d]*|\$\d+[,\d]*)/g,'<strong>$1</strong>');
+}
+function renderIglesiaReport(p){
+  var r = p.iglesia_reporte;
+  if(!r) return '';
+  var icons = ['👥','🧒','🧭','🙏','🌱','🧔','💧','👑','📈','🏠','🎓','🤝','⚡','🔥','🌍','✨'];
+  var metricRows = (r.stats||[]).map(function(s,i){
+    return '<div class="ir-metric-row"><div class="ir-icon">'+icons[i%icons.length]+'</div><div class="ir-label">'+s.label+'</div><div class="ir-value">'+s.valor+'</div></div>';
+  }).join('');
+  var logroItems = splitLogros(r.logros).map(function(x,i){
+    return '<div class="ir-logro-row"><div class="ir-logro-icon">'+icons[i%icons.length]+'</div><div class="ir-logro-text">'+highlightNumbers(x)+'</div></div>';
+  }).join('');
+  var proyectos = (r.proyectos||[]).map(function(x){
+    return '<div class="ir-project"><div class="ir-project-date">'+(x.fecha||'')+'</div><div><div class="ir-project-name">'+(x.nombre||'')+'</div><div class="ir-project-sub">'+(x.sub||'')+'</div></div></div>';
+  }).join('');
+  var mejoras = (r.areas_mejora||[]).map(function(x){
+    return '<div class="ir-risk">⚠ '+x+'</div>';
+  }).join('');
+  var periodo = r.periodo || 'ENE–ABR 2026';
+  var nombre = r.nombre || p.iglesia || '';
+  var out = '<section class="ir-card">';
+  out += '<div class="ir-eyebrow">Iglesia — Métricas</div>';
+  out += '<div class="ir-head"><h2>'+nombre+'</h2><span>'+periodo+'</span></div>';
+  if(metricRows) out += '<div class="ir-metrics">'+metricRows+'</div>';
+  if(r.plan2026){
+    out += '<div class="ir-insight"><div class="ir-bulb">💡</div><p>'+r.plan2026+'</p></div>';
+  }
+  if(r.logros){
+    out += '<div class="ir-section"><div class="ir-section-title">Logros</div><div class="ir-logros">'+logroItems+'</div></div>';
+  }
+  if(proyectos){
+    out += '<div class="ir-section"><div class="ir-section-title">Próximos movimientos</div><div class="ir-projects">'+proyectos+'</div></div>';
+  }
+  if(mejoras){
+    out += '<div class="ir-section"><div class="ir-section-title">Áreas a cuidar</div><div class="ir-risks">'+mejoras+'</div></div>';
+  }
+  out += '</section>';
+  return out;
+}
+
 function renderIglesiaMetrics(ir, pid) {
   if (!ir || !ir.stats) return '';
   var h = '<div class="im-wrap">';
@@ -2984,7 +3171,7 @@ function openPanel(idx){
 
   // Iglesia reporte
   if(p.iglesia_reporte){
-    h += '<div class="ps"><div class="ps-lbl">Iglesia — Métricas 2025</div>' + renderIglesiaMetrics(p.iglesia_reporte, idx) + '</div>';
+    h += renderIglesiaReport(p);
   }
 
   // Pendientes
@@ -3190,7 +3377,7 @@ function renderQ1(){
   var h = '<div class="fw">';
   // Tabs con Finanzas
   h += '<div style="display:flex;gap:0;margin-bottom:16px;border-bottom:1px solid var(--border)">';
-  h += '<button onclick="renderFinanzas()" style="font-family:var(--sans);font-size:12px;font-weight:600;padding:8px 16px;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--ink3);cursor:pointer">Aportaciones</button>';
+  h += '<button onclick="renderFinanzas()" style="font-family:var(--sans);font-size:12px;font-weight:600;padding:8px 16px;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--ink3);cursor:pointer">Al compañerismo</button>';
   h += '<button onclick="renderQ1()" style="font-family:var(--sans);font-size:12px;font-weight:600;padding:8px 16px;background:transparent;border:none;border-bottom:2px solid var(--qro);color:var(--qro);cursor:pointer">Reporte Q1</button>';
   h += '</div>';
   h += '<div style="font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-0.02em;margin-bottom:4px">Reporte Q1 · Ene–Abr 2026</div>';
@@ -3208,7 +3395,7 @@ function renderQ1(){
   h += '<div class="fsec">Métricas por iglesia</div>';
   h += '<div class="fc" style="overflow-x:auto"><table class="ftbl" style="min-width:700px">';
   h += '<thead><tr>';
-  h += '<th>Iglesia</th><th class="r">Adultos</th><th class="r">Nuevas</th><th class="r">Creyentes</th><th class="r">La Ruta</th><th class="r">Discip.</th><th class="r">Bautismos</th><th class="r">Aport. Q1</th>';
+  h += '<th>Iglesia</th><th class="r">Adultos</th><th class="r">Nuevas</th><th class="r">Creyentes</th><th class="r">La Ruta</th><th class="r">Discip.</th><th class="r">Bautismos</th><th class="r">Al CEM Q1</th>';
   h += '</tr></thead><tbody>';
 
   var zonas = ['qro','sur','norte','centro','otro'];
@@ -3348,11 +3535,11 @@ function renderFinanzas(){
   </style>
   <div class="fw">
     ${_finTabs('fin')}
-    <div style="font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-0.02em;margin-bottom:4px">Finanzas 2026</div>
-    <div style="font-size:11px;color:var(--ink3);margin-bottom:16px">Aportaciones de la red · Ene–Abr 2026 · MXN</div>
+    <div style="font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-0.02em;margin-bottom:4px">Aportaciones al Compañerismo 2026</div>
+    <div style="font-size:11px;color:var(--ink3);margin-bottom:16px">Contribución de iglesias a la red CEM · Ene–Abr 2026 · MXN</div>
     <div class="fkpis">
-      <div class="fkpi kq"><div class="fkn">${fmt(totalRed)}</div><div class="fkl">Total acumulado</div></div>
-      <div class="fkpi kb"><div class="fkn">${qroPct}%</div><div class="fkl">Querétaro del total</div></div>
+      <div class="fkpi kq"><div class="fkn">${fmt(totalRed)}</div><div class="fkl">Total al compañerismo</div></div>
+      <div class="fkpi kb"><div class="fkn">${qroPct}%</div><div class="fkl">Querétaro del total al CEM</div></div>
       <div class="fkpi kg"><div class="fkn">${iglesias.length}</div><div class="fkl">Iglesias activas</div></div>
       <div class="fkpi kr"><div class="fkn">${fmt(totalRed/4)}</div><div class="fkl">Promedio mensual</div></div>
     </div>
@@ -3403,7 +3590,7 @@ function renderFinanzas(){
       </div>
     </div>
     <div class="fsec">Alertas</div>
-    <div class="frisk"><div class="friskt">Concentración extrema en Querétaro</div><div class="friskb">${qroPct}% del ingreso de 4 iglesias en una ciudad. Una caída del 20% en Horizonte Centro = ~$67K anuales menos.</div></div>
+    <div class="frisk"><div class="friskt">Alta concentración en Querétaro</div><div class="friskb">${qroPct}% del ingreso de 4 iglesias en una ciudad. Una caída del 20% en Horizonte Centro = ~$67K anuales menos.</div></div>
     <div class="frisk"><div class="friskt">Identidad SLP — sin reporte desde febrero</div><div class="friskb">Segundo mayor donante externo. Situación conocida: salida de familia Valdés + deuda de construcción activa.</div></div>
     <div class="frisk"><div class="friskt">~9 iglesias sin ningún registro en 2026</div><div class="friskb">De ~22 en la red. Sin datos no hay visibilidad financiera completa.</div></div>
     <div class="fsec">Señales positivas</div>
@@ -3709,74 +3896,196 @@ function renderDashboard(){
   document.getElementById('view-dashboard').innerHTML = h;
 }
 
-function renderReportes(){
-  const withRP = pastores.filter(p=>p.reporte_personal||(p.reunion&&p.reunion.length>10));
-  const filtered = rFilter==='todos'?withRP:withRP.filter(p=>p.zona===rFilter);
 
-  let h = `<div class="view-wrap">
-    <div class="view-title">Reportes</div>
-    <div class="view-sub">Historial de encuentros pastorales</div>
-    <div class="filters">
-      ${['todos','qro','norte','sur','centro','otro'].map(f=>`<button class="f-btn${rFilter===f?' active':''}" onclick="rFilter='${f}';renderReportes()">${f==='todos'?'Todos':f.toUpperCase()}</button>`).join('')}
-    </div>`;
-
-  if(!filtered.length){
-    h += `<div class="empty-state"><div class="empty-ico">📋</div><div class="empty-txt">Sin reportes</div><div class="empty-sub">No hay registros en esta zona</div></div>`;
-  } else {
-    filtered.forEach(p=>{
-      const rp = p.reporte_personal;
-      let avgStr='—', areasHtml='';
-      if(rp&&rp.metricas){
-        const vals = AREAS.filter(a=>rp.metricas[a.key]!==undefined);
-        const avg = (vals.reduce((s,a)=>s+rp.metricas[a.key],0)/vals.length).toFixed(1);
-        avgStr = avg;
-        areasHtml = `<div class="rc-areas">`;
-        vals.forEach(a=>{
-          const v=rp.metricas[a.key], ae=getEstado(v);
-          areasHtml+=`<div class="rc-area" style="border-color:${a.color}25">
-            <div class="rc-area-ico">${a.ico}</div>
-            <div class="rc-area-val" style="color:${ae.color}">${v}</div>
-            <div class="rc-area-key">${a.label.split(' ')[0]}</div>
-          </div>`;
-        });
-        areasHtml += `</div>`;
-      }
-      const rid = 'rc_'+p.nombre.replace(/\s/g,'_');
-      const ac = getEstado(parseFloat(avgStr)).color;
-
-      h += `<div class="rcard">
-        <div class="rcard-hdr" id="h_${rid}" onclick="toggleRC('${rid}')">
-          <div class="rcard-date">${rp?rp.fecha||'2026':'—'}</div>
-          <div class="rcard-info">
-            <div class="rcard-name">${p.nombre} ${p.apellido||''}</div>
-            <div class="rcard-sub">${p.iglesia||''}</div>
-          </div>
-          <div class="rcard-avg" style="color:${ac}">${avgStr}</div>
-          <div class="rcard-chev">▾</div>
-        </div>
-        <div class="rcard-body" id="b_${rid}">
-          ${areasHtml}
-          ${rp&&rp.oracion&&rp.oracion.length?`
-            <div class="slbl" style="margin-bottom:8px">Oración</div>
-            <div class="prayer-grid" style="margin-bottom:12px">
-              ${rp.oracion.map(x=>`<div class="prayer-chip"><span class="prayer-chip-ico">🙏</span>${x}</div>`).join('')}
-            </div>`:''}
-          ${p.reunion?`<div class="slbl" style="margin-bottom:6px">Reunión</div><div class="text-block" style="margin-bottom:12px">${p.reunion}</div>`:''}
-          ${p.pendientes&&p.pendientes.length?`
-            <div class="slbl" style="margin-bottom:8px">Pendientes / Acuerdos</div>
-            <div class="pend-list">
-              ${p.pendientes.map((x,i)=>`<div class="pend-card${/salud|cirugía/i.test(x)?' pend-health':''}${/aprobad/i.test(x)?' pend-done':''}">
-                <div class="pend-num">${String(i+1).padStart(2,'0')}</div>
-                <div class="pend-title">${x}</div>
-              </div>`).join('')}
-            </div>`:''}
-        </div>
-      </div>`;
-    });
+function renderExpandedReport(p){
+  var rp = p.reporte_personal;
+  if(!rp) return '<div style="padding:14px 16px;font-size:12px;color:var(--ink3)">Sin reporte personal registrado.</div>';
+  var m = rp.metricas || {};
+  var entries = Object.entries(m).filter(function(e){return typeof e[1]==='number';});
+  var avg = entries.length ? entries.reduce(function(a,e){return a+e[1];},0)/entries.length : null;
+  var st = getReportStatus(avg);
+  var strong = entries.filter(function(e){return e[1]>=8.5;}).map(function(e){return e[0];});
+  var weak   = entries.filter(function(e){return e[1]<7.5;}).map(function(e){return e[0];});
+  var prayers  = rp.oracion || [];
+  var rd = p.reunion_data;
+  var acuerdos = [];
+  if(rd&&rd.secciones){
+    var sec = rd.secciones.find(function(s){return s.tipo==='acuerdos';});
+    if(sec) acuerdos = sec.items || [];
   }
-  h += `</div>`;
-  document.getElementById('view-reportes').innerHTML = h;
+  var areaLabels = {familia:'Familia',intimidad:'Intimidad',entusiasmo:'Entusiasmo',liderazgo:'Liderazgo',economia:'Econom\u00eda',salud:'Salud'};
+  var metricsHtml = entries.map(function(e){
+    var k=e[0], v=e[1];
+    var lbl = areaLabels[k]||k;
+    var color = v>=8.5?'green':v>=7?'yellow':'red';
+    var w = Math.min(v*10,100);
+    return '<div class="rx-metric"><div class="rx-metric-label">'+lbl+'</div><div class="rx-metric-value rx-'+color+'">'+v+'</div><div class="rx-bar"><div class="rx-bar-fill rx-bg-'+color+'" style="width:'+w+'%"></div></div></div>';
+  }).join('');
+  var insightTxt = '';
+  if(strong.length) insightTxt += '<strong>\u00c1reas fuertes:</strong> '+strong.map(function(k){return areaLabels[k]||k;}).join(', ')+'. ';
+  if(weak.length)   insightTxt += '<strong>\u00c1reas a cuidar:</strong> '+weak.map(function(k){return areaLabels[k]||k;}).join(', ')+'.';
+  if(!insightTxt)   insightTxt = 'No hay \u00e1reas cr\u00edticas evidentes en este reporte.';
+  var prayerHtml = prayers.map(function(x){
+    var answered = /contestada|acci.n de gracias|respondida|\u2611|\u2714/i.test(x);
+    return '<div class="rx-prayer'+(answered?' answered':'')+'"><div class="rx-prayer-ico">'+(answered?'\u2713':'\uD83D\uDE4F')+'</div><div>'+x+'</div></div>';
+  }).join('');
+  var acuerdosHtml = acuerdos.map(function(a){
+    return '<div class="rx-agreement"><div class="rx-check"></div><div><div class="rx-agreement-title">'+(a.texto||'')+'</div>'+(a.sub?'<div class="rx-agreement-sub">'+a.sub+'</div>':'')+'</div></div>';
+  }).join('');
+  var out = '<div class="rx-body">';
+  out += '<div class="rx-summary"><div><div class="rx-summary-title">'+p.nombre+' '+(p.apellido||'')+'</div><div class="rx-summary-sub">'+(rp.fecha||p.reunion||'Reporte pastoral')+'</div></div><div class="rx-score rx-'+st.key+'"><div class="rx-score-num">'+(avg?avg.toFixed(1):'\u2014')+'</div><div class="rx-score-label">'+st.label+'</div></div></div>';
+  if(metricsHtml) out += '<div class="rx-metrics">'+metricsHtml+'</div>';
+  out += '<div class="rx-insight"><div class="rx-insight-title">Lectura pastoral</div><div class="rx-insight-text">'+insightTxt+'</div></div>';
+  if(prayerHtml) out += '<div class="rx-section"><div class="rx-section-title">Oraci\u00f3n</div><div class="rx-prayer-grid">'+prayerHtml+'</div></div>';
+  if(acuerdosHtml) out += '<div class="rx-section"><div class="rx-section-title">Acuerdos</div><div class="rx-agreements">'+acuerdosHtml+'</div></div>';
+  out += '</div>';
+  return out;
 }
+
+function getReportAvg(p){
+  var m = p.reporte_personal && p.reporte_personal.metricas;
+  if(!m) return null;
+  var vals = Object.values(m).filter(function(v){return typeof v==='number';});
+  if(!vals.length) return null;
+  return vals.reduce(function(a,b){return a+b;},0)/vals.length;
+}
+function getReportStatus(avg){
+  if(avg===null) return {key:'gray', label:'Sin reporte'};
+  if(avg>=8.5)   return {key:'green', label:'Saludable'};
+  if(avg>=7.0)   return {key:'yellow', label:'Observación'};
+  return {key:'red', label:'Atención'};
+}
+function getLowestAreas(p){
+  var m = p.reporte_personal && p.reporte_personal.metricas;
+  if(!m) return [];
+  return Object.entries(m)
+    .filter(function(e){return typeof e[1]==='number';})
+    .sort(function(a,b){return a[1]-b[1];})
+    .slice(0,3)
+    .map(function(e){ return {k:e[0], v:e[1]}; });
+}
+function getReportReason(p){
+  var areas = getLowestAreas(p);
+  if(!areas.length) return '';
+  var lowest = areas[0];
+  if(lowest.v <= 6) return lowest.k+' '+lowest.v;
+  if(lowest.v <= 7) return lowest.k+' '+lowest.v;
+  return 'estable';
+}
+
+var _rrFilter = 'todos';
+var _rrOpen = {};
+
+function renderReportes(){
+  var withRP    = pastores.filter(function(p){return p.reporte_personal&&p.reporte_personal.metricas;});
+  var withoutRP = pastores.filter(function(p){return !p.reporte_personal||!p.reporte_personal.metricas;});
+  var avgs      = withRP.map(getReportAvg).filter(function(v){return v!==null;});
+  var generalAvg = avgs.length?(avgs.reduce(function(a,b){return a+b;},0)/avgs.length).toFixed(1):'—';
+  var nAttencion = withRP.filter(function(p){var a=getReportAvg(p);return a!==null&&a<7;}).length;
+  var nObserv    = withRP.filter(function(p){var a=getReportAvg(p);return a!==null&&a>=7&&a<8.5;}).length;
+
+  // Apply filter
+  var filtered = pastores;
+  if(_rrFilter==='qro')    filtered=pastores.filter(function(p){return p.zona==='qro';});
+  else if(_rrFilter==='norte') filtered=pastores.filter(function(p){return p.zona==='norte';});
+  else if(_rrFilter==='sur')   filtered=pastores.filter(function(p){return p.zona==='sur';});
+  else if(_rrFilter==='centro')filtered=pastores.filter(function(p){return p.zona==='centro';});
+  else if(_rrFilter==='otro')  filtered=pastores.filter(function(p){return p.zona==='otro';});
+  else if(_rrFilter==='conreporte') filtered=pastores.filter(function(p){return p.reporte_personal&&p.reporte_personal.metricas;});
+  else if(_rrFilter==='sinreporte') filtered=pastores.filter(function(p){return !p.reporte_personal||!p.reporte_personal.metricas;});
+  else if(_rrFilter==='atencion')   filtered=pastores.filter(function(p){var a=getReportAvg(p);return a!==null&&a<7;});
+  else if(_rrFilter==='saludable')  filtered=pastores.filter(function(p){var a=getReportAvg(p);return a!==null&&a>=8.5;});
+
+  // Sort: red first, then yellow, then green, then gray
+  var sortOrder = {red:0, yellow:1, green:2, gray:3};
+  filtered = filtered.slice().sort(function(a,b){
+    var sa=getReportStatus(getReportAvg(a)).key;
+    var sb=getReportStatus(getReportAvg(b)).key;
+    return (sortOrder[sa]||0)-(sortOrder[sb]||0);
+  });
+
+  var filterBtns = [
+    {id:'todos',lbl:'Todos'},{id:'qro',lbl:'QRO'},{id:'norte',lbl:'Norte'},
+    {id:'sur',lbl:'Sur'},{id:'centro',lbl:'Centro'},{id:'otro',lbl:'Internacional'},
+    null,
+    {id:'conreporte',lbl:'Con reporte'},{id:'sinreporte',lbl:'Sin reporte'},
+    {id:'atencion',lbl:'Atención'},{id:'saludable',lbl:'Saludable'}
+  ];
+
+  var filtersHtml = filterBtns.map(function(f){
+    if(!f) return '<div class="rr-filter-sep"></div>';
+    var isActive = _rrFilter===f.id;
+    var cls = 'rr-filter'+(isActive?' active':'');
+    return '<button class="'+cls+'" onclick="_rrFilter=\''+f.id+'\';renderReportes()">'+f.lbl+'</button>';
+  }).join('');
+
+  var rowsHtml = filtered.map(function(p,i){
+    var pidx = pastores.indexOf(p);
+    var avg  = getReportAvg(p);
+    var st   = getReportStatus(avg);
+    var score = avg===null?'—':avg.toFixed(1);
+    var reason = avg===null?'':getReportReason(p);
+    var lowest = getLowestAreas(p);
+    var fecha = (p.reporte_personal&&p.reporte_personal.fecha)||p.reunion||'Pendiente';
+    var col = p.zona?'var(--'+p.zona+')':'var(--ink3)';
+    var init = ((p.nombre||'')[0]+((p.apellido||'')[0]||'')).toUpperCase();
+
+    var pillsHtml = lowest.map(function(a){
+      var cls = a.v<=6?'rr-pill rr-pill-red':a.v<=7.5?'rr-pill rr-pill-yellow':'rr-pill';
+      return '<span class="'+cls+'">'+a.k+' '+a.v+'</span>';
+    }).join('');
+
+    // Detail panel
+    var det = '';
+    if(p.reporte_personal){
+      det = '<div class="rr-detail" id="rrd_'+pidx+'">'+renderExpandedReport(p)+'</div>';
+    }
+
+        return '<div>'
+      +'<div class="rr-row rr-'+st.key+'" onclick="rrToggle('+pidx+')">'
+      +'<div class="rr-date">'+fecha+'</div>'
+      +'<div class="rr-avatar" style="background:'+col+'">'+init+'</div>'
+      +'<div>'
+        +'<div class="rr-name">'+p.nombre+' '+(p.apellido||'')+'</div>'
+        +'<div class="rr-church">'+p.iglesia+'</div>'
+        +(pillsHtml?'<div class="rr-mini">'+pillsHtml+'</div>':'')
+      +'</div>'
+      +'<div class="rr-score">'
+        +'<div class="rr-score-num">'+score+'</div>'
+        +'<div class="rr-score-state">'+st.label+'</div>'
+        +(reason?'<div class="rr-score-reason">'+reason+'</div>':'')
+      +'</div>'
+      +'<div class="rr-chevron">›</div>'
+      +'</div>'
+      +det
+      +'</div>';
+  }).join('');
+
+  document.getElementById('view-reportes').innerHTML =
+    '<div class="rr-wrap">'
+    +'<div class="rr-header">'
+      +'<div class="rr-title">Reportes pastorales</div>'
+      +'<div class="rr-sub">Seguimiento de salud, reuniones y evaluaciones recientes · '
+        +withRP.length+' reportes · '+withoutRP.length+' pendientes · promedio general '+generalAvg+'</div>'
+    +'</div>'
+    +'<div class="rr-summary">'
+      +'<div class="rr-stat"><div class="rr-stat-num">'+withRP.length+'</div><div class="rr-stat-lbl">Con reporte</div></div>'
+      +'<div class="rr-stat"><div class="rr-stat-num">'+generalAvg+'</div><div class="rr-stat-lbl">Promedio general</div></div>'
+      +'<div class="rr-stat"><div class="rr-stat-num" style="color:var(--watch)">'+nObserv+'</div><div class="rr-stat-lbl">Observación</div></div>'
+      +'<div class="rr-stat"><div class="rr-stat-num" style="color:var(--ink3)">'+withoutRP.length+'</div><div class="rr-stat-lbl">Sin reporte</div></div>'
+    +'</div>'
+    +'<div class="rr-filters">'+filtersHtml+'</div>'
+    +'<div class="rr-list">'+rowsHtml+'</div>'
+    +'</div>';
+}
+
+function rrToggle(pidx){
+  var el = document.getElementById('rrd_'+pidx);
+  if(!el) return;
+  el.classList.toggle('open');
+  _rrOpen[pidx] = el.classList.contains('open');
+}
+
 function toggleRC(rid){
   document.getElementById('h_'+rid).classList.toggle('open');
   document.getElementById('b_'+rid).classList.toggle('open');
