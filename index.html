@@ -873,10 +873,45 @@ img { display: block; }
 .sk {
   flex: 1; text-align: center;
   background: var(--surface); border: 1px solid var(--border);
+  border-top: 2px solid var(--border);
   border-radius: var(--r); padding: 10px;
 }
 .sk-n { font-family: var(--sans); font-size: 24px; line-height: 1; }
 .sk-l { font-family: var(--sans); font-size: 8.5px; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 3px; }
+
+/* Task groups */
+.seg-group-hdr {
+  display: flex; align-items: center; gap: 8px;
+  padding: 16px 0 7px;
+}
+.seg-group-label {
+  font-family: var(--sans); font-size: 9px; font-weight: 700;
+  color: var(--ink3); letter-spacing: 0.12em; text-transform: uppercase;
+}
+.seg-group-count {
+  font-family: var(--sans); font-size: 9px; font-weight: 600;
+  padding: 1px 7px; border-radius: 99px;
+  background: var(--surface3); color: var(--ink3);
+}
+.seg-group-line { flex: 1; height: 1px; background: var(--border); }
+.task.thealth { border-left: 2.5px solid var(--critical); }
+
+/* Ver button on tasks */
+.task-view-btn {
+  font-family: var(--sans); font-size: 9.5px; font-weight: 600;
+  color: var(--ink3); padding: 3px 9px; border-radius: var(--r-sm);
+  background: var(--surface2); border: 1px solid var(--border2);
+  cursor: pointer; flex-shrink: 0; transition: all 0.12s;
+  align-self: flex-start; margin-top: 2px;
+}
+.task-view-btn:hover { color: var(--ink); border-color: var(--ink4); }
+
+/* Filter label separator */
+.seg-filter-sep {
+  font-family: var(--sans); font-size: 8px; font-weight: 600;
+  color: var(--ink4); letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 5px 4px; align-self: center;
+}
 
 .task-list { display: flex; flex-direction: column; gap: 7px; }
 .task {
@@ -4150,58 +4185,96 @@ let sFilter = 'todos';
 const taskStates = {};
 function renderSeguimiento(){
   const allTasks = [];
-  pastores.forEach(p=>{
-    (p.pendientes||[]).forEach((t,i)=>{
-      const id = p.nombre+'_'+i;
+  pastores.forEach(function(p, pi){
+    var pri = calcPriority(p);
+    (p.pendientes||[]).forEach(function(t,i){
+      var id = p.nombre+'_'+i;
       allTasks.push({
         id, text:t,
         pastor:(p.nombre+' '+(p.apellido||'')).trim(),
-        zona:p.zona,
+        zona:p.zona, pidx:pi, pastorPri:pri,
         isHealth:/salud|cirugía|médic|foniatra/i.test(t),
         isApproved:/aprobad/i.test(t),
-        state:taskStates[id]||'pend'
+        state:taskStates[id]||'pend',
       });
     });
   });
-  const filtered = sFilter==='todos'?allTasks:sFilter==='salud'?allTasks.filter(t=>t.isHealth):allTasks.filter(t=>t.zona===sFilter);
-  const cnt = {pend:0,prog:0,done:0};
-  allTasks.forEach(t=>cnt[t.state]=(cnt[t.state]||0)+1);
 
-  let h = `<div class="view-wrap">
+  var filtered = sFilter==='todos' ? allTasks
+    : sFilter==='salud'  ? allTasks.filter(function(t){return t.isHealth;})
+    : allTasks.filter(function(t){return t.zona===sFilter;});
+
+  var cnt = {pend:0, prog:0, done:0, health:0};
+  allTasks.forEach(function(t){
+    cnt[t.state] = (cnt[t.state]||0) + 1;
+    if(t.isHealth) cnt.health++;
+  });
+
+  // Group: urgent (health or urgent pastor) / regular active / done
+  var gUrgent  = filtered.filter(function(t){ return t.state!=='done' && (t.isHealth || t.pastorPri==='urgent'); });
+  var gRegular = filtered.filter(function(t){ return t.state!=='done' && !t.isHealth && t.pastorPri!=='urgent'; });
+  var gDone    = filtered.filter(function(t){ return t.state==='done'; });
+
+  // Within regular: pending before in-progress
+  gRegular.sort(function(a,b){ return (a.state==='prog'?1:0)-(b.state==='prog'?1:0); });
+
+  function taskHtml(t){
+    var cls = (t.state==='done'?'tdone':t.state==='prog'?'tprog':'') + (t.isHealth?' thealth':'');
+    return `<div class="task ${cls}" onclick="cycleTask('${t.id}')">
+      <div class="tcheck">${t.state==='done'?'✓':''}</div>
+      <div style="flex:1;min-width:0">
+        <div class="ttitle">${t.text}</div>
+        <div class="tmeta">
+          <span class="tpastor">${t.pastor}</span>
+          <span class="tzone" style="background:${ZTEXTBG[t.zona]||'#222'};color:${ZCOLORS[t.zona]||'#888'}">${(t.zona||'').toUpperCase()}</span>
+          ${t.isHealth?'<span style="font-family:var(--sans);font-size:8.5px;color:var(--critical)">⚕ Salud</span>':''}
+          ${t.isApproved?'<span style="font-family:var(--sans);font-size:8.5px;color:var(--healthy)">✓ Aprobado</span>':''}
+          ${t.state==='prog'?'<span style="font-family:var(--sans);font-size:8.5px;color:var(--norte)">En proceso</span>':''}
+        </div>
+      </div>
+      <button class="task-view-btn" onclick="event.stopPropagation();openPanel(${t.pidx})">Ver →</button>
+    </div>`;
+  }
+
+  function groupHtml(label, tasks, accentColor){
+    if(!tasks.length) return '';
+    var labelStyle = accentColor ? `style="color:${accentColor}"` : '';
+    return `<div class="seg-group-hdr">
+      <div class="seg-group-label" ${labelStyle}>${label}</div>
+      <div class="seg-group-count">${tasks.length}</div>
+      <div class="seg-group-line"></div>
+    </div>${tasks.map(taskHtml).join('')}`;
+  }
+
+  var healthKpi = cnt.health
+    ? `<div class="sk" style="border-top-color:var(--critical)"><div class="sk-n" style="color:var(--critical)">${cnt.health}</div><div class="sk-l">De salud</div></div>`
+    : '';
+
+  var h = `<div class="view-wrap">
     <div class="view-title">Seguimiento</div>
-    <div class="view-sub">Tareas y pendientes activos por pastor</div>
+    <div class="view-sub">Pendientes activos por pastor</div>
     <div class="seg-kpis">
-      <div class="sk"><div class="sk-n" style="color:var(--qro)">${cnt.pend||0}</div><div class="sk-l">Pendiente</div></div>
-      <div class="sk"><div class="sk-n" style="color:var(--norte)">${cnt.prog||0}</div><div class="sk-l">En proceso</div></div>
-      <div class="sk"><div class="sk-n" style="color:var(--healthy)">${cnt.done||0}</div><div class="sk-l">Completado</div></div>
+      ${healthKpi}
+      <div class="sk" style="border-top-color:var(--watch)"><div class="sk-n" style="color:var(--watch)">${cnt.pend||0}</div><div class="sk-l">Pendiente</div></div>
+      <div class="sk" style="border-top-color:var(--norte)"><div class="sk-n" style="color:var(--norte)">${cnt.prog||0}</div><div class="sk-l">En proceso</div></div>
+      <div class="sk" style="border-top-color:var(--healthy)"><div class="sk-n" style="color:var(--healthy)">${cnt.done||0}</div><div class="sk-l">Resuelto</div></div>
     </div>
     <div class="filters">
-      ${['todos','salud','qro','norte','sur','centro','otro'].map(f=>`<button class="f-btn${sFilter===f?' active':''}" onclick="sFilter='${f}';renderSeguimiento()">${f==='salud'?'⚕ Salud':f==='todos'?'Todos':f.toUpperCase()}</button>`).join('')}
+      <span class="seg-filter-sep">Tipo</span>
+      ${['todos','salud'].map(function(f){ return `<button class="f-btn${sFilter===f?' active':''}" onclick="sFilter='${f}';renderSeguimiento()">${f==='salud'?'⚕ Salud':'Todos'}</button>`; }).join('')}
+      <span class="seg-filter-sep">Zona</span>
+      ${['qro','norte','sur','centro','otro'].map(function(f){ return `<button class="f-btn${sFilter===f?' active':''}" onclick="sFilter='${f}';renderSeguimiento()">${f.toUpperCase()}</button>`; }).join('')}
     </div>
     <div class="task-list">`;
 
   if(!filtered.length){
     h += `<div class="empty-state"><div class="empty-ico">✓</div><div class="empty-txt">Todo al día</div><div class="empty-sub">Sin pendientes en esta categoría</div></div>`;
   } else {
-    filtered.forEach(t=>{
-      const cls = t.state==='done'?'tdone':t.state==='prog'?'tprog':'';
-      const slbl = t.state==='done'?'Listo':t.state==='prog'?'En proceso':'Pendiente';
-      const scls = t.state==='done'?'sd':t.state==='prog'?'si':'sp';
-      h+=`<div class="task ${cls}" onclick="cycleTask('${t.id}')">
-        <div class="tcheck">${t.state==='done'?'✓':''}</div>
-        <div style="flex:1;min-width:0">
-          <div class="ttitle">${t.text}</div>
-          <div class="tmeta">
-            <span class="tpastor">${t.pastor}</span>
-            <span class="tzone" style="background:${ZTEXTBG[t.zona]||'#222'};color:${ZCOLORS[t.zona]||'#888'}">${t.zona.toUpperCase()}</span>
-            ${t.isHealth?'<span style="font-family: var(--sans);font-size:8.5px;color:var(--critical)">⚕ Salud</span>':''}
-            ${t.isApproved?'<span style="font-family: var(--sans);font-size:8.5px;color:var(--healthy)">✓ Aprobado</span>':''}
-          </div>
-        </div>
-        <div class="tstatus ${scls}">${slbl}</div>
-      </div>`;
-    });
+    h += groupHtml('Requieren atención', gUrgent, 'var(--critical)');
+    h += groupHtml('En seguimiento', gRegular, null);
+    h += groupHtml('Resueltos', gDone, null);
   }
+
   h += `</div></div>`;
   document.getElementById('view-seguimiento').innerHTML = h;
   document.getElementById('nb-seg').textContent = cnt.pend||0;
