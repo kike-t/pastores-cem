@@ -1715,8 +1715,21 @@ img { display: block; }
 .rr-row.rr-gray .rr-score-num,.rr-row.rr-gray .rr-score-state{color:var(--ink3);}
 .rr-chevron{color:var(--ink3);font-size:14px;transition:transform .15s;}
 .rr-row:hover .rr-chevron{transform:translateX(2px);}
+/* Photo support in avatar */
+.rr-avatar img{width:100%;height:100%;object-fit:cover;border-radius:9px;}
+/* Two-line date */
+.rr-date-d{font-size:14px;font-weight:800;line-height:1.1;}
+.rr-date-m{font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;margin-top:2px;color:var(--ink4);}
+/* Ver perfil button (inside expanded detail) */
+.rr-ver-btn{display:inline-flex;align-items:center;gap:5px;font-family:var(--sans);font-size:11px;font-weight:700;color:var(--ink);background:var(--surface);border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;cursor:pointer;transition:all .12s;}
+.rr-ver-btn:hover{border-color:var(--ink3);background:var(--surface2);}
+/* Stat card color top borders */
+.rr-stat-green{border-top:2px solid var(--healthy);}
+.rr-stat-gray{border-top:2px solid var(--border2);}
+.rr-stat-red{border-top:2px solid var(--critical);}
+.rr-stat-gold{border-top:2px solid var(--qro);}
 /* expanded detail */
-.rr-detail{background:var(--surface2);border:1px solid var(--border);border-radius:12px;margin-top:6px;padding:14px 16px;display:none;}
+.rr-detail{background:var(--surface2);border:1px solid var(--border);border-radius:12px;margin-top:6px;padding:0;display:none;}
 .rr-detail.open{display:block;}
 .rr-detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;}
 .rr-detail-area{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:9px 11px;}
@@ -4119,6 +4132,19 @@ function getReportReason(p){
 var _rrFilter = 'todos';
 var _rrOpen = {};
 
+function fmtRRDate(p){
+  var raw = (p.reporte_personal&&p.reporte_personal.fecha)||'';
+  if(!raw) raw = (p.reunion||'').toString().trim();
+  if(!raw) return {top:'—', bot:'pendiente'};
+  var MO=['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+  var iso = raw.match(/(\d{4})-(\d{2})-(\d{2})/);
+  if(iso) return {top: parseInt(iso[3])+' '+MO[parseInt(iso[2])-1], bot: iso[1]};
+  var ESP={enero:0,febrero:1,marzo:2,abril:3,mayo:4,junio:5,julio:6,agosto:7,septiembre:8,octubre:9,noviembre:10,diciembre:11};
+  var sm = raw.match(/(\d{1,2})[°\s]+(?:de\s+)?(\w+)[,\s]+(\d{4})/i);
+  if(sm&&ESP[sm[2].toLowerCase()]!==undefined) return {top: sm[1]+' '+MO[ESP[sm[2].toLowerCase()]], bot: sm[3]};
+  return {top: raw.length>10 ? raw.slice(0,9)+'…' : raw, bot: ''};
+}
+
 function renderReportes(){
   var withRP    = pastores.filter(function(p){return p.reporte_personal&&p.reporte_personal.metricas;});
   var withoutRP = pastores.filter(function(p){return !p.reporte_personal||!p.reporte_personal.metricas;});
@@ -4162,6 +4188,9 @@ function renderReportes(){
     return '<button class="'+cls+'" onclick="_rrFilter=\''+f.id+'\';renderReportes()">'+f.lbl+'</button>';
   }).join('');
 
+  var avgC = generalAvg==='—'?'gray':parseFloat(generalAvg)>=8.5?'green':parseFloat(generalAvg)>=7?'gold':'red';
+  var avgNumColor = generalAvg==='—'?'var(--ink3)':parseFloat(generalAvg)>=8.5?'var(--healthy)':parseFloat(generalAvg)>=7?'var(--watch)':'var(--critical)';
+
   var rowsHtml = filtered.map(function(p,i){
     var pidx = pastores.indexOf(p);
     var avg  = getReportAvg(p);
@@ -4169,25 +4198,37 @@ function renderReportes(){
     var score = avg===null?'—':avg.toFixed(1);
     var reason = avg===null?'':getReportReason(p);
     var lowest = getLowestAreas(p);
-    var fecha = (p.reporte_personal&&p.reporte_personal.fecha)||p.reunion||'Pendiente';
     var col = p.zona?'var(--'+p.zona+')':'var(--ink3)';
     var init = ((p.nombre||'')[0]+((p.apellido||'')[0]||'')).toUpperCase();
+    var fd = fmtRRDate(p);
+
+    var avatarContent = p.foto
+      ? '<img src="'+p.foto+'" alt="" onerror="this.style.display=\'none\';this.parentNode.textContent=\''+init+'\'">'
+      : init;
+    var avatarBg = p.foto ? 'var(--surface2)' : col;
 
     var pillsHtml = lowest.map(function(a){
       var cls = a.v<=6?'rr-pill rr-pill-red':a.v<=7.5?'rr-pill rr-pill-yellow':'rr-pill';
       return '<span class="'+cls+'">'+a.k+' '+a.v+'</span>';
     }).join('');
 
-    // Detail panel
-    var det = '';
-    if(p.reporte_personal){
-      det = '<div class="rr-detail" id="rrd_'+pidx+'">'+renderExpandedReport(p)+'</div>';
-    }
+    var verBtn = '<button class="rr-ver-btn" onclick="event.stopPropagation();openPanel('+pidx+')">Ver perfil →</button>';
 
-        return '<div>'
+    var det = '<div class="rr-detail" id="rrd_'+pidx+'">';
+    if(p.reporte_personal){
+      det += renderExpandedReport(p)
+           + '<div style="padding:0 16px 14px;text-align:right">'+verBtn+'</div>';
+    } else {
+      det += '<div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px">'
+           + '<span style="font-size:12px;color:var(--ink3)">Sin reporte registrado.</span>'
+           + verBtn+'</div>';
+    }
+    det += '</div>';
+
+    return '<div>'
       +'<div class="rr-row rr-'+st.key+'" onclick="rrToggle('+pidx+')">'
-      +'<div class="rr-date">'+fecha+'</div>'
-      +'<div class="rr-avatar" style="background:'+col+'">'+init+'</div>'
+      +'<div class="rr-date"><div class="rr-date-d">'+fd.top+'</div>'+(fd.bot?'<div class="rr-date-m">'+fd.bot+'</div>':'')+'</div>'
+      +'<div class="rr-avatar" style="background:'+avatarBg+'">'+avatarContent+'</div>'
       +'<div>'
         +'<div class="rr-name">'+p.nombre+' '+(p.apellido||'')+'</div>'
         +'<div class="rr-church">'+p.iglesia+'</div>'
@@ -4212,10 +4253,10 @@ function renderReportes(){
         +withRP.length+' reportes · '+withoutRP.length+' pendientes · promedio general '+generalAvg+'</div>'
     +'</div>'
     +'<div class="rr-summary">'
-      +'<div class="rr-stat"><div class="rr-stat-num">'+withRP.length+'</div><div class="rr-stat-lbl">Con reporte</div></div>'
-      +'<div class="rr-stat"><div class="rr-stat-num">'+generalAvg+'</div><div class="rr-stat-lbl">Promedio general</div></div>'
-      +'<div class="rr-stat"><div class="rr-stat-num" style="color:var(--watch)">'+nObserv+'</div><div class="rr-stat-lbl">Observación</div></div>'
-      +'<div class="rr-stat"><div class="rr-stat-num" style="color:var(--ink3)">'+withoutRP.length+'</div><div class="rr-stat-lbl">Sin reporte</div></div>'
+      +'<div class="rr-stat rr-stat-green"><div class="rr-stat-num" style="color:var(--healthy)">'+withRP.length+'</div><div class="rr-stat-lbl">Con reporte</div></div>'
+      +'<div class="rr-stat rr-stat-gray"><div class="rr-stat-num" style="color:var(--ink3)">'+withoutRP.length+'</div><div class="rr-stat-lbl">Sin reporte</div></div>'
+      +'<div class="rr-stat rr-stat-red"><div class="rr-stat-num" style="color:var(--critical)">'+nAttencion+'</div><div class="rr-stat-lbl">En atención</div></div>'
+      +'<div class="rr-stat rr-stat-'+avgC+'"><div class="rr-stat-num" style="color:'+avgNumColor+'">'+generalAvg+'</div><div class="rr-stat-lbl">Promedio general</div></div>'
     +'</div>'
     +'<div class="rr-filters">'+filtersHtml+'</div>'
     +'<div class="rr-list">'+rowsHtml+'</div>'
