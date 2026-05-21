@@ -606,6 +606,42 @@ img { display: block; }
 .prayer-chip:hover { border-color: var(--border2); }
 .prayer-chip-ico { font-size: 13px; flex-shrink: 0; }
 
+/* Panel alert strip */
+.panel-alert {
+  margin: 0 16px var(--space-md);
+  padding: 11px 14px;
+  border-radius: var(--r);
+  display: flex; align-items: flex-start; gap: 10px;
+}
+.panel-alert.urgent {
+  background: rgba(176,48,48,0.07);
+  border: 1px solid rgba(176,48,48,0.18);
+  border-left: 3px solid var(--critical);
+}
+.panel-alert.watch {
+  background: rgba(138,96,16,0.07);
+  border: 1px solid rgba(138,96,16,0.18);
+  border-left: 3px solid var(--watch);
+}
+.panel-alert-pri {
+  font-family: var(--sans); font-size: 7.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px;
+}
+.panel-alert.urgent .panel-alert-pri { color: var(--critical); }
+.panel-alert.watch  .panel-alert-pri { color: var(--watch); }
+.panel-alert-text { font-size: 12.5px; color: var(--ink); line-height: 1.5; font-weight: 500; }
+
+/* Section category divider */
+.panel-cat {
+  display: flex; align-items: center; gap: 10px;
+  padding: 20px 20px 10px;
+}
+.panel-cat-line { flex: 1; height: 1px; background: var(--border); }
+.panel-cat-label {
+  font-family: var(--sans); font-size: 8px; font-weight: 600;
+  color: var(--ink4); letter-spacing: 0.15em; text-transform: uppercase;
+}
+
 /* ═══════════════════════════════════════════════════
    REPORTE PASTORAL — CARDS VISUALES
 ═══════════════════════════════════════════════════ */
@@ -837,10 +873,45 @@ img { display: block; }
 .sk {
   flex: 1; text-align: center;
   background: var(--surface); border: 1px solid var(--border);
+  border-top: 2px solid var(--border);
   border-radius: var(--r); padding: 10px;
 }
 .sk-n { font-family: var(--sans); font-size: 24px; line-height: 1; }
 .sk-l { font-family: var(--sans); font-size: 8.5px; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 3px; }
+
+/* Task groups */
+.seg-group-hdr {
+  display: flex; align-items: center; gap: 8px;
+  padding: 16px 0 7px;
+}
+.seg-group-label {
+  font-family: var(--sans); font-size: 9px; font-weight: 700;
+  color: var(--ink3); letter-spacing: 0.12em; text-transform: uppercase;
+}
+.seg-group-count {
+  font-family: var(--sans); font-size: 9px; font-weight: 600;
+  padding: 1px 7px; border-radius: 99px;
+  background: var(--surface3); color: var(--ink3);
+}
+.seg-group-line { flex: 1; height: 1px; background: var(--border); }
+.task.thealth { border-left: 2.5px solid var(--critical); }
+
+/* Ver button on tasks */
+.task-view-btn {
+  font-family: var(--sans); font-size: 9.5px; font-weight: 600;
+  color: var(--ink3); padding: 3px 9px; border-radius: var(--r-sm);
+  background: var(--surface2); border: 1px solid var(--border2);
+  cursor: pointer; flex-shrink: 0; transition: all 0.12s;
+  align-self: flex-start; margin-top: 2px;
+}
+.task-view-btn:hover { color: var(--ink); border-color: var(--ink4); }
+
+/* Filter label separator */
+.seg-filter-sep {
+  font-family: var(--sans); font-size: 8px; font-weight: 600;
+  color: var(--ink4); letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 5px 4px; align-self: center;
+}
 
 .task-list { display: flex; flex-direction: column; gap: 7px; }
 .task {
@@ -1477,12 +1548,15 @@ img { display: block; }
 /* Priorities */
 .pw-priorities { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; margin-bottom: 28px; }
 .pw-priority-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; cursor: pointer; transition: box-shadow 0.15s, border-color 0.15s; }
-.pw-priority-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+.pw-priority-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); border-color: var(--border2); }
 .pw-border-critical { border-left: 3px solid var(--critical); }
 .pw-border-watch    { border-left: 3px solid var(--watch); }
 .pw-border-stable   { border-left: 3px solid var(--healthy); }
+.pw-card-critical { background: rgba(176,48,48,0.025); }
+.pw-card-watch    { background: rgba(138,96,16,0.018); }
 .pw-pc-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.pw-pc-av { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+.pw-pc-av { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 13px; font-weight: 700; flex-shrink: 0; overflow: hidden; }
+.pw-pc-av img { width: 100%; height: 100%; object-fit: cover; }
 .pw-pc-info { flex: 1; min-width: 0; }
 .pw-pc-name { font-size: 13.5px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .pw-pc-sub { font-size: 11px; color: var(--ink3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -1491,12 +1565,27 @@ img { display: block; }
 .pw-nivel-yellow { background: var(--watch-bg);    color: var(--watch); }
 .pw-nivel-green  { background: var(--healthy-bg);  color: var(--healthy); }
 .pw-pc-situacion { font-size: 12px; color: var(--ink2); margin-bottom: 8px; line-height: 1.4; }
-.pw-pc-signals { display: flex; flex-direction: column; gap: 3px; margin-bottom: 10px; }
-.pw-pc-signal { font-size: 11px; color: var(--ink3); padding-left: 10px; position: relative; line-height: 1.4; }
-.pw-pc-signal::before { content: '·'; position: absolute; left: 2px; color: var(--ink4); }
+.pw-pc-signals { display: flex; flex-direction: column; gap: 4px; margin-bottom: 10px; }
+.pw-pc-signal {
+  font-size: 11.5px; color: var(--ink2); line-height: 1.4;
+  padding: 4px 8px; background: var(--surface2);
+  border-radius: var(--r-sm); border-left: 2px solid var(--border2);
+}
 .pw-pc-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); }
 .pw-pc-fecha { font-size: 10.5px; color: var(--ink4); }
-.pw-pc-cta { font-size: 11px; color: var(--ink3); font-weight: 500; }
+.pw-pc-cta {
+  font-size: 10.5px; font-weight: 600; color: var(--ink3);
+  padding: 3px 10px; border-radius: var(--r-sm);
+  background: var(--surface2); border: 1px solid var(--border2);
+  transition: all 0.12s;
+}
+.pw-priority-card:hover .pw-pc-cta { color: var(--ink); border-color: var(--ink4); }
+
+/* Salud KPI números grandes */
+.pw-salud-kpis { display: flex; gap: 0; margin-bottom: 14px; }
+.pw-salud-kpi { flex: 1; text-align: center; padding: 10px 6px; border-radius: var(--r); }
+.pw-salud-kpi-n { font-size: 28px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+.pw-salud-kpi-l { font-size: 9px; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 3px; }
 
 /* Two-col layout */
 .pw-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -1626,8 +1715,21 @@ img { display: block; }
 .rr-row.rr-gray .rr-score-num,.rr-row.rr-gray .rr-score-state{color:var(--ink3);}
 .rr-chevron{color:var(--ink3);font-size:14px;transition:transform .15s;}
 .rr-row:hover .rr-chevron{transform:translateX(2px);}
+/* Photo support in avatar */
+.rr-avatar img{width:100%;height:100%;object-fit:cover;border-radius:9px;}
+/* Two-line date */
+.rr-date-d{font-size:14px;font-weight:800;line-height:1.1;}
+.rr-date-m{font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;margin-top:2px;color:var(--ink4);}
+/* Ver perfil button (inside expanded detail) */
+.rr-ver-btn{display:inline-flex;align-items:center;gap:5px;font-family:var(--sans);font-size:11px;font-weight:700;color:var(--ink);background:var(--surface);border:1px solid var(--border2);border-radius:var(--r-sm);padding:6px 14px;cursor:pointer;transition:all .12s;}
+.rr-ver-btn:hover{border-color:var(--ink3);background:var(--surface2);}
+/* Stat card color top borders */
+.rr-stat-green{border-top:2px solid var(--healthy);}
+.rr-stat-gray{border-top:2px solid var(--border2);}
+.rr-stat-red{border-top:2px solid var(--critical);}
+.rr-stat-gold{border-top:2px solid var(--qro);}
 /* expanded detail */
-.rr-detail{background:var(--surface2);border:1px solid var(--border);border-radius:12px;margin-top:6px;padding:14px 16px;display:none;}
+.rr-detail{background:var(--surface2);border:1px solid var(--border);border-radius:12px;margin-top:6px;padding:0;display:none;}
 .rr-detail.open{display:block;}
 .rr-detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;}
 .rr-detail-area{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:9px 11px;}
@@ -2498,6 +2600,27 @@ function renderBigPicture(){
     if(calcPriority(p)==='urgent') pendUrgent += (p.pendientes||[]).length;
     if(calcPriority(p)==='watch')  pendWeek   += (p.pendientes||[]).length;
   });
+  var noReportCount = filtered.filter(function(p){ return !p.reporte_personal; }).length;
+
+  // Computed systemic insights (replaces hardcoded trends)
+  var _insights = [];
+  var _areaNm = {familia:'Familia',intimidad:'Intimidad',entusiasmo:'Entusiasmo',liderazgo:'Liderazgo',economia:'Economía',salud:'Salud'};
+  var urgentRatio = filtered.length > 0 ? counts.urgent / filtered.length : 0;
+  if(urgentRatio >= 0.25){
+    _insights.push({arrow:'↑', color:'var(--urgent)', text: Math.round(urgentRatio*100)+'% de pastores en estado crítico — semana de intervención directa'});
+  } else if(counts.urgent > 0){
+    _insights.push({arrow:'→', color:'var(--urgent)', text: counts.urgent+' pastor'+(counts.urgent>1?'es requier':'  requiere')+'en atención esta semana'});
+  }
+  if(weaknesses.length > 0 && weaknesses[0].v < 7.5){
+    _insights.push({arrow:'↓', color:'var(--qro)', text: _areaNm[weaknesses[0].k]+' es el área más débil de la red ('+weaknesses[0].v.toFixed(1)+'/10)'});
+  }
+  if(noReportCount > 0){
+    _insights.push({arrow:'→', color:'var(--ink3)', text: noReportCount+' pastor'+(noReportCount>1?'es sin reporte — información desactualizada':' sin reporte — información desactualizada')});
+  }
+  if(pendTotal > 8){
+    _insights.push({arrow:'↑', color:'var(--qro)', text: pendTotal+' asuntos pendientes — carga pastoral elevada'});
+  }
+  _insights = _insights.slice(0, 2);
 
   // Zone health
   var zoneHealth={};
@@ -2522,9 +2645,12 @@ function renderBigPicture(){
   h += '</div></div>';
 
   // ── BLOQUE 1: Decisión hoy ────────────────────────────────────────────
-  h += '<div class="bp2-block">';
+  var b1Border = counts.urgent > 0 ? ' style="border-top:2px solid var(--urgent)"' : (counts.watch > 0 ? ' style="border-top:2px solid var(--watch)"' : '');
+  h += '<div class="bp2-block"'+b1Border+'>';
   h += '<div class="bp2-block-hdr"><span class="bp2-block-hdr-ico">🚨</span><span class="bp2-block-hdr-title">Decisión hoy</span>';
-  h += '<span class="bp2-block-hdr-badge" style="background:rgba(184,64,64,.1);color:var(--urgent)">Hoy no puedes ignorar esto</span></div>';
+  var b1Badge = counts.urgent > 0 ? 'Hoy no puedes ignorar esto' : counts.watch > 0 ? 'Requiere atención esta semana' : 'Red en buen estado';
+  var b1BadgeStyle = counts.urgent > 0 ? 'background:rgba(184,64,64,.1);color:var(--urgent)' : counts.watch > 0 ? 'background:rgba(200,147,58,.1);color:var(--qro)' : 'background:rgba(74,155,111,.1);color:var(--stable)';
+  h += '<span class="bp2-block-hdr-badge" style="'+b1BadgeStyle+'">'+b1Badge+'</span></div>';
   h += '<div class="bp2-body">';
 
   // Count cards
@@ -2629,11 +2755,16 @@ function renderBigPicture(){
   });
   h += '</div>';
 
-  // Trends
-  h += '<div class="b3-trends" style="margin-top:8px">';
-  h += '<div class="b3-trend"><span class="b3-trend-arrow" style="color:var(--urgent)">↑</span><span>Pendientes acumulándose — revisar carga pastoral</span></div>';
-  h += '<div class="b3-trend"><span class="b3-trend-arrow" style="color:var(--stable)">↑</span><span>Consejería en aumento — considerar más capacitación</span></div>';
-  h += '</div>';
+  // Computed insights
+  if(_insights.length > 0){
+    h += '<div class="b3-trends" style="margin-top:'+(Object.values(patterns).some(function(v){return v>0;})?'8':'0')+'px">';
+    _insights.forEach(function(ins){
+      h += '<div class="b3-trend"><span class="b3-trend-arrow" style="color:'+ins.color+'">'+ins.arrow+'</span><span>'+ins.text+'</span></div>';
+    });
+    h += '</div>';
+  } else if(!Object.values(patterns).some(function(v){return v>0;})){
+    h += '<div style="padding:10px 0;text-align:center;color:var(--ink3);font-size:12px">✓ Sin alertas sistémicas — red en buen estado</div>';
+  }
   h += '</div></div>';
 
   // ── BLOQUE 4: Enfoque por zona ────────────────────────────────────────
@@ -2697,10 +2828,14 @@ function renderBigPicture(){
     var p1=topPastors[1], idx1=pastores.indexOf(p1);
     actions6.push({ico:'🤝',title:'Acompañar a '+(p1.nombre+' '+(p1.apellido||'')).trim(),sub:'En riesgo — necesita seguimiento',pri:'alta',priStyle:'background:rgba(200,147,58,.1);color:var(--qro)',onclick:'openPanel('+idx1+')'});
   }
-  if(counts.none>0){
-    actions6.push({ico:'📋',title:'Actualizar '+counts.none+' pastores sin datos',sub:'Sin reporte reciente — información desactualizada',pri:'media',priStyle:'background:var(--surface3);color:var(--ink3)',onclick:''});
-  } else if(patterns.liderazgo>=3){
-    actions6.push({ico:'📋',title:'Revisar liderazgo en '+patterns.liderazgo+' pastores',sub:'Patrón sistémico — considerar capacitación o apoyo',pri:'media',priStyle:'background:var(--surface3);color:var(--ink3)',onclick:''});
+  if(noReportCount>0){
+    actions6.push({ico:'📋',title:'Actualizar '+noReportCount+' pastor'+(noReportCount>1?'es':'')+ ' sin reporte',sub:'Información desactualizada — agenda reunión de evaluación',pri:'media',priStyle:'background:var(--surface3);color:var(--ink3)',onclick:''});
+  }
+  if(actions6.length < 2 && weaknesses.length > 0 && weaknesses[0].v < 7){
+    actions6.push({ico:'💡',title:'Atender '+_areaNm[weaknesses[0].k]+' ('+weaknesses[0].v.toFixed(1)+'/10)',sub:'Área más débil de la red — considera recursos o capacitación grupal',pri:'media',priStyle:'background:var(--surface3);color:var(--ink3)',onclick:''});
+  }
+  if(actions6.length < 1){
+    actions6.push({ico:'✓',title:'Red en buen estado esta semana',sub:'Sin pastores críticos ni patrones sistémicos detectados',pri:'verde',priStyle:'background:rgba(74,155,111,.1);color:var(--stable)',onclick:''});
   }
 
   actions6.slice(0,3).forEach(function(a){
@@ -2978,6 +3113,10 @@ function openPanel(idx){
   const nd = extractNotas(p.notas||'');
   const totalPend = (p.pendientes||[]).length;
   const hasRP = !!p.reporte_personal;
+  const pri = calcPriority(p);
+  const _PRI_LABEL = {urgent:'Crítico', watch:'En observación', stable:'Saludable', none:''};
+  const _PRI_BG    = {urgent:'rgba(176,48,48,0.1)', watch:'rgba(138,96,16,0.1)', stable:'rgba(74,155,111,0.1)', none:''};
+  const _PRI_CLR   = {urgent:'var(--critical)', watch:'var(--watch)', stable:'var(--healthy)', none:''};
 
   const avHtml = photo
     ? `<div class="panel-av"><img src="${photo}"></div>`
@@ -3000,7 +3139,7 @@ function openPanel(idx){
       <div class="panel-name">${full}</div>
       <div class="panel-location">${p.ciudad||''} · ${p.zona?.toUpperCase()||''}</div>
       <div class="panel-badges">
-        ${hasRP?`<span class="pbadge" style="background:rgba(74,155,111,0.1);color:#4A9B6F">◎ Con reporte</span>`:''}
+        ${pri!=='none'?`<span class="pbadge" style="background:${_PRI_BG[pri]};color:${_PRI_CLR[pri]}">${_PRI_LABEL[pri]}</span>`:''}
         ${totalPend?`<span class="pbadge" style="background:rgba(200,147,58,0.1);color:var(--qro)">${totalPend} pendientes</span>`:''}
         ${p.tags&&p.tags.includes('nuevo')?`<span class="pbadge" style="background:rgba(74,155,111,0.1);color:#4A9B6F">Nuevo</span>`:''}
         ${p.tags&&p.tags.includes('residencia pastoral')?`<span class="pbadge" style="background:rgba(122,90,184,0.1);color:#7A5AB8">Residencia pastoral</span>`:''}
@@ -3017,79 +3156,40 @@ function openPanel(idx){
   if(d.facebook)acts.push(`<div class="pact" onclick="window.open('${d.facebook}','_blank')"><div class="pact-ico" style="background:rgba(74,100,200,0.12);color:#5A70CC">📘</div><div class="pact-lbl">Facebook</div></div>`);
   if(acts.length) h += `<div class="panel-actions">${acts.join('')}</div>`;
 
-  // Horarios
-  if(d.horarios) h += `<div class="ps"><div class="ps-lbl">Servicios</div><div class="info-block"><div class="info-row"><div class="info-ico">🕐</div><div class="info-key">Horarios</div><div class="info-val">${d.horarios}</div></div></div></div>`;
-
-  // Esposa / cumple
-  if(p.esposa || p.cumple){
-    h += `<div class="ps"><div class="ps-lbl">Personal</div><div class="info-block">`;
-    if(p.esposa) h += `<div class="info-row"><div class="info-ico">💝</div><div class="info-key">Esposa</div><div class="info-val">${p.esposa}</div></div>`;
-    if(p.cumple) h += `<div class="info-row"><div class="info-ico">🎂</div><div class="info-key">Cumpleaños</div><div class="info-val">${p.cumple}</div></div>`;
-    h += `</div></div>`;
-  }
-
-  // Hijos
-  if(p.hijos&&p.hijos.length){
-    h += `<div class="ps"><div class="ps-lbl">Hijos</div><div class="hijos-wrap">`;
-    p.hijos.forEach(c=>{
-      h += `<div class="hijo-chip"><div class="hijo-av">${(c.nombre||'?')[0]}</div><div>
-        <div class="hijo-name">${c.nombre}</div>
-        <div class="hijo-age">${c.edad?c.edad+' años · ':''}${c.datos||''}</div>
-      </div></div>`;
-    });
-    h += `</div></div>`;
-  }
-
-  if(p.discipulos && p.discipulos.length){
-    var discHtml = '<div class="ps"><div class="ps-lbl">Invirtiendo en</div><div class="disc-wrap">';
-    p.discipulos.forEach(function(name){
-      var ini = name.split(' ').map(function(w){return w[0];}).join('').substring(0,2).toUpperCase();
-      discHtml += '<div class="disc-chip"><div class="disc-av">' + ini + '</div>' + name + '</div>';
-    });
-    discHtml += '</div></div>';
-    h += discHtml;
-  }
-
-  // Fechas importantes
-  if(nd.cumpleEsposa || nd.aniversario || p.cumple){
-    h += `<div class="ps"><div class="ps-lbl">Fechas importantes</div><div class="fechas-wrap">`;
-    if(p.cumple)        h += `<div class="fecha-chip"><div class="fecha-ico">🎂</div><div><div class="fecha-val">${p.cumple}</div><div class="fecha-lbl">Cumple pastor</div></div></div>`;
-    if(nd.cumpleEsposa) h += `<div class="fecha-chip"><div class="fecha-ico">💝</div><div><div class="fecha-val">${nd.cumpleEsposa}</div><div class="fecha-lbl">Cumple esposa</div></div></div>`;
-    if(nd.aniversario)  h += `<div class="fecha-chip"><div class="fecha-ico">💒</div><div><div class="fecha-val">${nd.aniversario}</div><div class="fecha-lbl">Aniversario</div></div></div>`;
-    h += `</div></div>`;
-  }
-
-  // Hobbies
-  if(nd.pasatiempo){
-    const partes = nd.pasatiempo.split(/[,;]+/).map(x=>x.trim()).filter(Boolean);
-    h += `<div class="ps"><div class="ps-lbl">Pasatiempos</div><div class="hobby-wrap">`;
-    partes.forEach(pt=>{
-      h += `<div class="hobby-chip"><span class="hobby-ico">${hobbyIco(pt)}</span>${pt}</div>`;
-    });
-    h += `</div></div>`;
-  }
-
-  // Tallas
-  if(nd.zapatos || nd.camisa || nd.pantalon){
-    h += `<div class="ps"><div class="ps-lbl">Tallas para regalo</div><div class="tallas-grid">`;
-    if(nd.zapatos) h += `<div class="talla-tile"><div class="talla-ico">👟</div><div class="talla-val">${nd.zapatos}</div><div class="talla-lbl">Zapatos</div></div>`;
-    if(nd.camisa)  h += `<div class="talla-tile"><div class="talla-ico">👕</div><div class="talla-val">${nd.camisa}</div><div class="talla-lbl">Camisa</div></div>`;
-    if(nd.pantalon)h += `<div class="talla-tile"><div class="talla-ico">👖</div><div class="talla-val">${nd.pantalon}</div><div class="talla-lbl">Pantalón</div></div>`;
-    h += `</div></div>`;
-  }
-
-  // Dirección
-  if(nd.direccion || nd.amazon){
-    h += `<div class="ps"><div class="ps-lbl">Envío / Regalo</div><div class="dir-block">
-      <div class="dir-ico">📦</div>
-      <div class="dir-body">
-        ${nd.direccion?`<div class="dir-text">${nd.direccion}</div>`:''}
-        ${nd.amazon?`<div class="dir-email">✉ ${nd.amazon}</div>`:''}
+  // ── Priority alert strip ────────────────────────────────────────
+  if(pri === 'urgent' || pri === 'watch'){
+    const topAlert = getTopAlert(p);
+    const alertLabel = pri === 'urgent' ? 'Atención inmediata' : 'En observación';
+    const alertText = topAlert ? topAlert.text : (pri === 'urgent' ? 'Múltiples señales de riesgo' : 'Requiere seguimiento esta semana');
+    h += `<div class="panel-alert ${pri}">
+      <div>
+        <div class="panel-alert-pri">${alertLabel}</div>
+        <div class="panel-alert-text">${alertText}</div>
       </div>
-    </div></div>`;
+    </div>`;
   }
 
-  // Reporte personal
+  // ── Pendientes (operationally critical — shown first) ────────────
+  if(p.pendientes && p.pendientes.length){
+    h += `<div class="ps"><div class="ps-lbl">Pendientes y acuerdos</div><div class="pend-list">`;
+    p.pendientes.forEach((x,i)=>{
+      const isH = /salud|cirugía|médic|foniatra/i.test(x);
+      const isA = /aprobad/i.test(x);
+      h += `<div class="pend-card${isH?' pend-health':''}${isA?' pend-done':''}">
+        <div class="pend-num">${String(i+1).padStart(2,'0')}</div>
+        <div class="pend-body">
+          <div class="pend-title">${x}</div>
+          <div class="pend-meta">
+            ${isH?`<span class="pend-tag" style="background:rgba(184,64,64,0.1);color:#B84040">⚕ Salud</span>`:''}
+            ${isA?`<span class="pend-tag" style="background:rgba(74,155,111,0.1);color:#4A9B6F">✓ Aprobado</span>`:''}
+          </div>
+        </div>
+      </div>`;
+    });
+    h += `</div></div>`;
+  }
+
+  // ── Reporte personal ─────────────────────────────────────────────
   function renderRP(rp, titulo){
     if(!rp||!rp.metricas) return '';
     const vals = AREAS.filter(a=>rp.metricas[a.key]!==undefined);
@@ -3156,11 +3256,10 @@ function openPanel(idx){
   if(p.reporte_personal)        h += renderRP(p.reporte_personal, 'Reporte personal — '+(p.reporte_personal.fecha||''));
   if(p.reporte_personal_yabeth) h += renderRP(p.reporte_personal_yabeth, 'Reporte Yabeth — Abril 2026');
 
-  // Reunión y notas
+  // ── Reunión y notas ──────────────────────────────────────────────
   if(p.reunion_data){
     h += renderReunionData(p.reunion_data);
   } else if(p.reunion){
-    var _rDate = p.reporte_personal ? p.reporte_personal.fecha : '';
     h += '<div class="ps"><div class="ps-lbl">Última reunión</div><div class="text-block">' + p.reunion + '</div></div>';
   }
   if(p.notas_data){
@@ -3169,29 +3268,81 @@ function openPanel(idx){
     h += '<div class="ps"><div class="ps-lbl">Notas</div><div class="text-block">' + nd.notasClean + '</div></div>';
   }
 
-  // Iglesia reporte
+  // ── Iglesia ──────────────────────────────────────────────────────
   if(p.iglesia_reporte){
     h += renderIglesiaReport(p);
   }
 
-  // Pendientes
-  if(p.pendientes&&p.pendientes.length){
-    h += `<div class="ps"><div class="ps-lbl">Pendientes y acuerdos</div><div class="pend-list">`;
-    p.pendientes.forEach((x,i)=>{
-      const isH = /salud|cirugía|médic|foniatra/i.test(x);
-      const isA = /aprobad/i.test(x);
-      h += `<div class="pend-card${isH?' pend-health':''}${isA?' pend-done':''}">
-        <div class="pend-num">${String(i+1).padStart(2,'0')}</div>
-        <div class="pend-body">
-          <div class="pend-title">${x}</div>
-          <div class="pend-meta">
-            ${isH?`<span class="pend-tag" style="background:rgba(184,64,64,0.1);color:#B84040">⚕ Salud</span>`:''}
-            ${isA?`<span class="pend-tag" style="background:rgba(74,155,111,0.1);color:#4A9B6F">✓ Aprobado</span>`:''}
-          </div>
+  // ── Datos personales (logística y contexto familiar) ─────────────
+  const _hasPersonal = d.horarios || p.esposa || p.cumple || (p.hijos&&p.hijos.length) ||
+    (p.discipulos&&p.discipulos.length) || nd.cumpleEsposa || nd.aniversario ||
+    nd.pasatiempo || nd.zapatos || nd.camisa || nd.pantalon || nd.direccion || nd.amazon;
+  if(_hasPersonal){
+    h += `<div class="panel-cat"><div class="panel-cat-line"></div><div class="panel-cat-label">Datos personales</div><div class="panel-cat-line"></div></div>`;
+
+    if(d.horarios) h += `<div class="ps"><div class="ps-lbl">Servicios</div><div class="info-block"><div class="info-row"><div class="info-ico">🕐</div><div class="info-key">Horarios</div><div class="info-val">${d.horarios}</div></div></div></div>`;
+
+    if(p.esposa || p.cumple){
+      h += `<div class="ps"><div class="ps-lbl">Familia</div><div class="info-block">`;
+      if(p.esposa) h += `<div class="info-row"><div class="info-ico">💝</div><div class="info-key">Esposa</div><div class="info-val">${p.esposa}</div></div>`;
+      if(p.cumple) h += `<div class="info-row"><div class="info-ico">🎂</div><div class="info-key">Cumpleaños</div><div class="info-val">${p.cumple}</div></div>`;
+      h += `</div></div>`;
+    }
+
+    if(p.hijos&&p.hijos.length){
+      h += `<div class="ps"><div class="ps-lbl">Hijos</div><div class="hijos-wrap">`;
+      p.hijos.forEach(c=>{
+        h += `<div class="hijo-chip"><div class="hijo-av">${(c.nombre||'?')[0]}</div><div>
+          <div class="hijo-name">${c.nombre}</div>
+          <div class="hijo-age">${c.edad?c.edad+' años · ':''}${c.datos||''}</div>
+        </div></div>`;
+      });
+      h += `</div></div>`;
+    }
+
+    if(p.discipulos && p.discipulos.length){
+      h += '<div class="ps"><div class="ps-lbl">Invirtiendo en</div><div class="disc-wrap">';
+      p.discipulos.forEach(function(name){
+        var ini = name.split(' ').map(function(w){return w[0];}).join('').substring(0,2).toUpperCase();
+        h += '<div class="disc-chip"><div class="disc-av">' + ini + '</div>' + name + '</div>';
+      });
+      h += '</div></div>';
+    }
+
+    if(nd.cumpleEsposa || nd.aniversario || p.cumple){
+      h += `<div class="ps"><div class="ps-lbl">Fechas importantes</div><div class="fechas-wrap">`;
+      if(p.cumple)        h += `<div class="fecha-chip"><div class="fecha-ico">🎂</div><div><div class="fecha-val">${p.cumple}</div><div class="fecha-lbl">Cumple pastor</div></div></div>`;
+      if(nd.cumpleEsposa) h += `<div class="fecha-chip"><div class="fecha-ico">💝</div><div><div class="fecha-val">${nd.cumpleEsposa}</div><div class="fecha-lbl">Cumple esposa</div></div></div>`;
+      if(nd.aniversario)  h += `<div class="fecha-chip"><div class="fecha-ico">💒</div><div><div class="fecha-val">${nd.aniversario}</div><div class="fecha-lbl">Aniversario</div></div></div>`;
+      h += `</div></div>`;
+    }
+
+    if(nd.pasatiempo){
+      const partes = nd.pasatiempo.split(/[,;]+/).map(x=>x.trim()).filter(Boolean);
+      h += `<div class="ps"><div class="ps-lbl">Pasatiempos</div><div class="hobby-wrap">`;
+      partes.forEach(pt=>{
+        h += `<div class="hobby-chip"><span class="hobby-ico">${hobbyIco(pt)}</span>${pt}</div>`;
+      });
+      h += `</div></div>`;
+    }
+
+    if(nd.zapatos || nd.camisa || nd.pantalon){
+      h += `<div class="ps"><div class="ps-lbl">Tallas para regalo</div><div class="tallas-grid">`;
+      if(nd.zapatos) h += `<div class="talla-tile"><div class="talla-ico">👟</div><div class="talla-val">${nd.zapatos}</div><div class="talla-lbl">Zapatos</div></div>`;
+      if(nd.camisa)  h += `<div class="talla-tile"><div class="talla-ico">👕</div><div class="talla-val">${nd.camisa}</div><div class="talla-lbl">Camisa</div></div>`;
+      if(nd.pantalon)h += `<div class="talla-tile"><div class="talla-ico">👖</div><div class="talla-val">${nd.pantalon}</div><div class="talla-lbl">Pantalón</div></div>`;
+      h += `</div></div>`;
+    }
+
+    if(nd.direccion || nd.amazon){
+      h += `<div class="ps"><div class="ps-lbl">Envío / Regalo</div><div class="dir-block">
+        <div class="dir-ico">📦</div>
+        <div class="dir-body">
+          ${nd.direccion?`<div class="dir-text">${nd.direccion}</div>`:''}
+          ${nd.amazon?`<div class="dir-email">✉ ${nd.amazon}</div>`:''}
         </div>
-      </div>`;
-    });
-    h += `</div></div>`;
+      </div></div>`;
+    }
   }
 
   h += `<div style="height:28px"></div>`;
@@ -3785,9 +3936,14 @@ function renderDashboard(){
       var initials = (p.nombre[0]+(p.apellido||'')[0]||'').toUpperCase();
       var nivelLabel = {critical:'Urgente', watch:'Observar', stable:'Estable'};
       var nivelCls = {critical:'pw-nivel-red', watch:'pw-nivel-yellow', stable:'pw-nivel-green'};
-      h += '<div class="pw-priority-card pw-border-'+item.nivel+'" data-nombre="'+p.nombre+'" onclick="var el=this;openPastor(el.dataset.nombre)">';
+      var photo = pastorPhotos[p.nombre];
+      var avHtml = photo
+        ? '<div class="pw-pc-av"><img src="'+photo+'"></div>'
+        : '<div class="pw-pc-av" style="background:'+col+'">'+initials+'</div>';
+      var cardTint = item.nivel==='critical' ? ' pw-card-critical' : item.nivel==='watch' ? ' pw-card-watch' : '';
+      h += '<div class="pw-priority-card pw-border-'+item.nivel+cardTint+'" data-nombre="'+p.nombre+'" onclick="var el=this;openPastor(el.dataset.nombre)">';
       h += '<div class="pw-pc-top">';
-      h += '<div class="pw-pc-av" style="background:'+col+'">'+initials+'</div>';
+      h += avHtml;
       h += '<div class="pw-pc-info">';
       h += '<div class="pw-pc-name">'+p.nombre+' '+(p.apellido||'')+'</div>';
       h += '<div class="pw-pc-sub">'+p.iglesia+'</div>';
@@ -3844,20 +4000,20 @@ function renderDashboard(){
   h += '<div class="pw-col">';
   h += '<div class="pw-section-label">Salud del compañerismo</div>';
   h += '<div class="pw-card">';
+  h += '<div class="pw-salud-kpis">';
+  if(nCritical) h += '<div class="pw-salud-kpi"><div class="pw-salud-kpi-n" style="color:var(--critical)">'+nCritical+'</div><div class="pw-salud-kpi-l">Urgente</div></div>';
+  if(nWatch)    h += '<div class="pw-salud-kpi"><div class="pw-salud-kpi-n" style="color:var(--watch)">'+nWatch+'</div><div class="pw-salud-kpi-l">Observar</div></div>';
+  h += '<div class="pw-salud-kpi"><div class="pw-salud-kpi-n" style="color:var(--healthy)">'+nStable+'</div><div class="pw-salud-kpi-l">Estable</div></div>';
+  h += '</div>';
   var pctStable = Math.round(nStable/pastores.length*100);
   var pctWatch  = Math.round(nWatch/pastores.length*100);
   var pctCrit   = Math.round(nCritical/pastores.length*100);
   h += '<div class="pw-salud-bar">';
-  if(pctCrit>0)   h += '<div class="pw-sb-seg pw-sb-red" style="width:'+pctCrit+'%" title="Urgente: '+nCritical+'"></div>';
-  if(pctWatch>0)  h += '<div class="pw-sb-seg pw-sb-yellow" style="width:'+pctWatch+'%" title="Observar: '+nWatch+'"></div>';
-  if(pctStable>0) h += '<div class="pw-sb-seg pw-sb-green" style="width:'+pctStable+'%" title="Estable: '+nStable+'"></div>';
+  if(pctCrit>0)   h += '<div class="pw-sb-seg pw-sb-red" style="width:'+pctCrit+'%"></div>';
+  if(pctWatch>0)  h += '<div class="pw-sb-seg pw-sb-yellow" style="width:'+pctWatch+'%"></div>';
+  if(pctStable>0) h += '<div class="pw-sb-seg pw-sb-green" style="width:'+pctStable+'%"></div>';
   h += '</div>';
-  h += '<div class="pw-salud-leyenda">';
-  if(nCritical) h += '<span class="pw-sal-item"><span class="pw-dot pw-dot-red"></span>Urgente: '+nCritical+'</span>';
-  if(nWatch)    h += '<span class="pw-sal-item"><span class="pw-dot pw-dot-yellow"></span>Observar: '+nWatch+'</span>';
-  h += '<span class="pw-sal-item"><span class="pw-dot pw-dot-green"></span>Estable: '+nStable+'</span>';
-  h += '</div>';
-  h += '<div class="pw-salud-meta"><span>'+withRP+' de '+pastores.length+' con reporte personal</span><span>'+totalPend+' pendientes activos</span></div>';
+  h += '<div class="pw-salud-meta"><span>'+withRP+' de '+pastores.length+' con reporte</span><span>'+totalPend+' pendientes</span></div>';
   h += '</div>';
 
   // Próximos cumpleaños
@@ -3976,6 +4132,19 @@ function getReportReason(p){
 var _rrFilter = 'todos';
 var _rrOpen = {};
 
+function fmtRRDate(p){
+  var raw = (p.reporte_personal&&p.reporte_personal.fecha)||'';
+  if(!raw) raw = (p.reunion||'').toString().trim();
+  if(!raw) return {top:'—', bot:'pendiente'};
+  var MO=['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+  var iso = raw.match(/(\d{4})-(\d{2})-(\d{2})/);
+  if(iso) return {top: parseInt(iso[3])+' '+MO[parseInt(iso[2])-1], bot: iso[1]};
+  var ESP={enero:0,febrero:1,marzo:2,abril:3,mayo:4,junio:5,julio:6,agosto:7,septiembre:8,octubre:9,noviembre:10,diciembre:11};
+  var sm = raw.match(/(\d{1,2})[°\s]+(?:de\s+)?(\w+)[,\s]+(\d{4})/i);
+  if(sm&&ESP[sm[2].toLowerCase()]!==undefined) return {top: sm[1]+' '+MO[ESP[sm[2].toLowerCase()]], bot: sm[3]};
+  return {top: raw.length>10 ? raw.slice(0,9)+'…' : raw, bot: ''};
+}
+
 function renderReportes(){
   var withRP    = pastores.filter(function(p){return p.reporte_personal&&p.reporte_personal.metricas;});
   var withoutRP = pastores.filter(function(p){return !p.reporte_personal||!p.reporte_personal.metricas;});
@@ -4019,6 +4188,9 @@ function renderReportes(){
     return '<button class="'+cls+'" onclick="_rrFilter=\''+f.id+'\';renderReportes()">'+f.lbl+'</button>';
   }).join('');
 
+  var avgC = generalAvg==='—'?'gray':parseFloat(generalAvg)>=8.5?'green':parseFloat(generalAvg)>=7?'gold':'red';
+  var avgNumColor = generalAvg==='—'?'var(--ink3)':parseFloat(generalAvg)>=8.5?'var(--healthy)':parseFloat(generalAvg)>=7?'var(--watch)':'var(--critical)';
+
   var rowsHtml = filtered.map(function(p,i){
     var pidx = pastores.indexOf(p);
     var avg  = getReportAvg(p);
@@ -4026,25 +4198,37 @@ function renderReportes(){
     var score = avg===null?'—':avg.toFixed(1);
     var reason = avg===null?'':getReportReason(p);
     var lowest = getLowestAreas(p);
-    var fecha = (p.reporte_personal&&p.reporte_personal.fecha)||p.reunion||'Pendiente';
     var col = p.zona?'var(--'+p.zona+')':'var(--ink3)';
     var init = ((p.nombre||'')[0]+((p.apellido||'')[0]||'')).toUpperCase();
+    var fd = fmtRRDate(p);
+
+    var avatarContent = p.foto
+      ? '<img src="'+p.foto+'" alt="" onerror="this.style.display=\'none\';this.parentNode.textContent=\''+init+'\'">'
+      : init;
+    var avatarBg = p.foto ? 'var(--surface2)' : col;
 
     var pillsHtml = lowest.map(function(a){
       var cls = a.v<=6?'rr-pill rr-pill-red':a.v<=7.5?'rr-pill rr-pill-yellow':'rr-pill';
       return '<span class="'+cls+'">'+a.k+' '+a.v+'</span>';
     }).join('');
 
-    // Detail panel
-    var det = '';
-    if(p.reporte_personal){
-      det = '<div class="rr-detail" id="rrd_'+pidx+'">'+renderExpandedReport(p)+'</div>';
-    }
+    var verBtn = '<button class="rr-ver-btn" onclick="event.stopPropagation();openPanel('+pidx+')">Ver perfil →</button>';
 
-        return '<div>'
+    var det = '<div class="rr-detail" id="rrd_'+pidx+'">';
+    if(p.reporte_personal){
+      det += renderExpandedReport(p)
+           + '<div style="padding:0 16px 14px;text-align:right">'+verBtn+'</div>';
+    } else {
+      det += '<div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px">'
+           + '<span style="font-size:12px;color:var(--ink3)">Sin reporte registrado.</span>'
+           + verBtn+'</div>';
+    }
+    det += '</div>';
+
+    return '<div>'
       +'<div class="rr-row rr-'+st.key+'" onclick="rrToggle('+pidx+')">'
-      +'<div class="rr-date">'+fecha+'</div>'
-      +'<div class="rr-avatar" style="background:'+col+'">'+init+'</div>'
+      +'<div class="rr-date"><div class="rr-date-d">'+fd.top+'</div>'+(fd.bot?'<div class="rr-date-m">'+fd.bot+'</div>':'')+'</div>'
+      +'<div class="rr-avatar" style="background:'+avatarBg+'">'+avatarContent+'</div>'
       +'<div>'
         +'<div class="rr-name">'+p.nombre+' '+(p.apellido||'')+'</div>'
         +'<div class="rr-church">'+p.iglesia+'</div>'
@@ -4069,10 +4253,10 @@ function renderReportes(){
         +withRP.length+' reportes · '+withoutRP.length+' pendientes · promedio general '+generalAvg+'</div>'
     +'</div>'
     +'<div class="rr-summary">'
-      +'<div class="rr-stat"><div class="rr-stat-num">'+withRP.length+'</div><div class="rr-stat-lbl">Con reporte</div></div>'
-      +'<div class="rr-stat"><div class="rr-stat-num">'+generalAvg+'</div><div class="rr-stat-lbl">Promedio general</div></div>'
-      +'<div class="rr-stat"><div class="rr-stat-num" style="color:var(--watch)">'+nObserv+'</div><div class="rr-stat-lbl">Observación</div></div>'
-      +'<div class="rr-stat"><div class="rr-stat-num" style="color:var(--ink3)">'+withoutRP.length+'</div><div class="rr-stat-lbl">Sin reporte</div></div>'
+      +'<div class="rr-stat rr-stat-green"><div class="rr-stat-num" style="color:var(--healthy)">'+withRP.length+'</div><div class="rr-stat-lbl">Con reporte</div></div>'
+      +'<div class="rr-stat rr-stat-gray"><div class="rr-stat-num" style="color:var(--ink3)">'+withoutRP.length+'</div><div class="rr-stat-lbl">Sin reporte</div></div>'
+      +'<div class="rr-stat rr-stat-red"><div class="rr-stat-num" style="color:var(--critical)">'+nAttencion+'</div><div class="rr-stat-lbl">En atención</div></div>'
+      +'<div class="rr-stat rr-stat-'+avgC+'"><div class="rr-stat-num" style="color:'+avgNumColor+'">'+generalAvg+'</div><div class="rr-stat-lbl">Promedio general</div></div>'
     +'</div>'
     +'<div class="rr-filters">'+filtersHtml+'</div>'
     +'<div class="rr-list">'+rowsHtml+'</div>'
@@ -4098,58 +4282,96 @@ let sFilter = 'todos';
 const taskStates = {};
 function renderSeguimiento(){
   const allTasks = [];
-  pastores.forEach(p=>{
-    (p.pendientes||[]).forEach((t,i)=>{
-      const id = p.nombre+'_'+i;
+  pastores.forEach(function(p, pi){
+    var pri = calcPriority(p);
+    (p.pendientes||[]).forEach(function(t,i){
+      var id = p.nombre+'_'+i;
       allTasks.push({
         id, text:t,
         pastor:(p.nombre+' '+(p.apellido||'')).trim(),
-        zona:p.zona,
+        zona:p.zona, pidx:pi, pastorPri:pri,
         isHealth:/salud|cirugía|médic|foniatra/i.test(t),
         isApproved:/aprobad/i.test(t),
-        state:taskStates[id]||'pend'
+        state:taskStates[id]||'pend',
       });
     });
   });
-  const filtered = sFilter==='todos'?allTasks:sFilter==='salud'?allTasks.filter(t=>t.isHealth):allTasks.filter(t=>t.zona===sFilter);
-  const cnt = {pend:0,prog:0,done:0};
-  allTasks.forEach(t=>cnt[t.state]=(cnt[t.state]||0)+1);
 
-  let h = `<div class="view-wrap">
+  var filtered = sFilter==='todos' ? allTasks
+    : sFilter==='salud'  ? allTasks.filter(function(t){return t.isHealth;})
+    : allTasks.filter(function(t){return t.zona===sFilter;});
+
+  var cnt = {pend:0, prog:0, done:0, health:0};
+  allTasks.forEach(function(t){
+    cnt[t.state] = (cnt[t.state]||0) + 1;
+    if(t.isHealth) cnt.health++;
+  });
+
+  // Group: urgent (health or urgent pastor) / regular active / done
+  var gUrgent  = filtered.filter(function(t){ return t.state!=='done' && (t.isHealth || t.pastorPri==='urgent'); });
+  var gRegular = filtered.filter(function(t){ return t.state!=='done' && !t.isHealth && t.pastorPri!=='urgent'; });
+  var gDone    = filtered.filter(function(t){ return t.state==='done'; });
+
+  // Within regular: pending before in-progress
+  gRegular.sort(function(a,b){ return (a.state==='prog'?1:0)-(b.state==='prog'?1:0); });
+
+  function taskHtml(t){
+    var cls = (t.state==='done'?'tdone':t.state==='prog'?'tprog':'') + (t.isHealth?' thealth':'');
+    return `<div class="task ${cls}" onclick="cycleTask('${t.id}')">
+      <div class="tcheck">${t.state==='done'?'✓':''}</div>
+      <div style="flex:1;min-width:0">
+        <div class="ttitle">${t.text}</div>
+        <div class="tmeta">
+          <span class="tpastor">${t.pastor}</span>
+          <span class="tzone" style="background:${ZTEXTBG[t.zona]||'#222'};color:${ZCOLORS[t.zona]||'#888'}">${(t.zona||'').toUpperCase()}</span>
+          ${t.isHealth?'<span style="font-family:var(--sans);font-size:8.5px;color:var(--critical)">⚕ Salud</span>':''}
+          ${t.isApproved?'<span style="font-family:var(--sans);font-size:8.5px;color:var(--healthy)">✓ Aprobado</span>':''}
+          ${t.state==='prog'?'<span style="font-family:var(--sans);font-size:8.5px;color:var(--norte)">En proceso</span>':''}
+        </div>
+      </div>
+      <button class="task-view-btn" onclick="event.stopPropagation();openPanel(${t.pidx})">Ver →</button>
+    </div>`;
+  }
+
+  function groupHtml(label, tasks, accentColor){
+    if(!tasks.length) return '';
+    var labelStyle = accentColor ? `style="color:${accentColor}"` : '';
+    return `<div class="seg-group-hdr">
+      <div class="seg-group-label" ${labelStyle}>${label}</div>
+      <div class="seg-group-count">${tasks.length}</div>
+      <div class="seg-group-line"></div>
+    </div>${tasks.map(taskHtml).join('')}`;
+  }
+
+  var healthKpi = cnt.health
+    ? `<div class="sk" style="border-top-color:var(--critical)"><div class="sk-n" style="color:var(--critical)">${cnt.health}</div><div class="sk-l">De salud</div></div>`
+    : '';
+
+  var h = `<div class="view-wrap">
     <div class="view-title">Seguimiento</div>
-    <div class="view-sub">Tareas y pendientes activos por pastor</div>
+    <div class="view-sub">Pendientes activos por pastor</div>
     <div class="seg-kpis">
-      <div class="sk"><div class="sk-n" style="color:var(--qro)">${cnt.pend||0}</div><div class="sk-l">Pendiente</div></div>
-      <div class="sk"><div class="sk-n" style="color:var(--norte)">${cnt.prog||0}</div><div class="sk-l">En proceso</div></div>
-      <div class="sk"><div class="sk-n" style="color:var(--healthy)">${cnt.done||0}</div><div class="sk-l">Completado</div></div>
+      ${healthKpi}
+      <div class="sk" style="border-top-color:var(--watch)"><div class="sk-n" style="color:var(--watch)">${cnt.pend||0}</div><div class="sk-l">Pendiente</div></div>
+      <div class="sk" style="border-top-color:var(--norte)"><div class="sk-n" style="color:var(--norte)">${cnt.prog||0}</div><div class="sk-l">En proceso</div></div>
+      <div class="sk" style="border-top-color:var(--healthy)"><div class="sk-n" style="color:var(--healthy)">${cnt.done||0}</div><div class="sk-l">Resuelto</div></div>
     </div>
     <div class="filters">
-      ${['todos','salud','qro','norte','sur','centro','otro'].map(f=>`<button class="f-btn${sFilter===f?' active':''}" onclick="sFilter='${f}';renderSeguimiento()">${f==='salud'?'⚕ Salud':f==='todos'?'Todos':f.toUpperCase()}</button>`).join('')}
+      <span class="seg-filter-sep">Tipo</span>
+      ${['todos','salud'].map(function(f){ return `<button class="f-btn${sFilter===f?' active':''}" onclick="sFilter='${f}';renderSeguimiento()">${f==='salud'?'⚕ Salud':'Todos'}</button>`; }).join('')}
+      <span class="seg-filter-sep">Zona</span>
+      ${['qro','norte','sur','centro','otro'].map(function(f){ return `<button class="f-btn${sFilter===f?' active':''}" onclick="sFilter='${f}';renderSeguimiento()">${f.toUpperCase()}</button>`; }).join('')}
     </div>
     <div class="task-list">`;
 
   if(!filtered.length){
     h += `<div class="empty-state"><div class="empty-ico">✓</div><div class="empty-txt">Todo al día</div><div class="empty-sub">Sin pendientes en esta categoría</div></div>`;
   } else {
-    filtered.forEach(t=>{
-      const cls = t.state==='done'?'tdone':t.state==='prog'?'tprog':'';
-      const slbl = t.state==='done'?'Listo':t.state==='prog'?'En proceso':'Pendiente';
-      const scls = t.state==='done'?'sd':t.state==='prog'?'si':'sp';
-      h+=`<div class="task ${cls}" onclick="cycleTask('${t.id}')">
-        <div class="tcheck">${t.state==='done'?'✓':''}</div>
-        <div style="flex:1;min-width:0">
-          <div class="ttitle">${t.text}</div>
-          <div class="tmeta">
-            <span class="tpastor">${t.pastor}</span>
-            <span class="tzone" style="background:${ZTEXTBG[t.zona]||'#222'};color:${ZCOLORS[t.zona]||'#888'}">${t.zona.toUpperCase()}</span>
-            ${t.isHealth?'<span style="font-family: var(--sans);font-size:8.5px;color:var(--critical)">⚕ Salud</span>':''}
-            ${t.isApproved?'<span style="font-family: var(--sans);font-size:8.5px;color:var(--healthy)">✓ Aprobado</span>':''}
-          </div>
-        </div>
-        <div class="tstatus ${scls}">${slbl}</div>
-      </div>`;
-    });
+    h += groupHtml('Requieren atención', gUrgent, 'var(--critical)');
+    h += groupHtml('En seguimiento', gRegular, null);
+    h += groupHtml('Resueltos', gDone, null);
   }
+
   h += `</div></div>`;
   document.getElementById('view-seguimiento').innerHTML = h;
   document.getElementById('nb-seg').textContent = cnt.pend||0;
