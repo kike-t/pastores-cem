@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!--
+  PASTORES CEM — v2.0.0
+  Fase 1 (Fundación): normalizadores, IDs estables, catálogos, NAV_STATE.
+  Ver CHANGELOG_V2 dentro del script principal para el detalle.
+-->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -3014,6 +3019,35 @@ const churchPhotos = {
 }
 
 /* ═══════════════════════════════════════════════════
+   FASE 1 — Índices por id para directorio/pastorPhotos/churchPhotos.
+   Los tres objetos originales (keyed por nombre de pila, o por nombre
+   de iglesia en el caso de churchPhotos) NO se tocan ni se renombran —
+   se conservan intactos por compatibilidad. Esto solo agrega un mapa
+   paralelo {id -> valor} construido a partir de `pastores`, para que
+   el código pueda migrar a consultar por id sin perder acceso al dato
+   viejo mientras dure la transición.
+═══════════════════════════════════════════════════ */
+const directorioById = {};
+const pastorPhotosById = {};
+const churchPhotosById = {};
+pastores.forEach(function(p){
+  var pid = getPastorId(p);
+  var legacyDir = directorio[p.nombre] || directorio[(p.nombre||'').split(' ')[0]];
+  if(legacyDir) directorioById[pid] = legacyDir;
+  var legacyPhoto = pastorPhotos[p.nombre];
+  if(legacyPhoto) pastorPhotosById[pid] = legacyPhoto;
+  var legacyChurch = churchPhotos[p.iglesia];
+  if(legacyChurch) churchPhotosById[pid] = legacyChurch;
+});
+/* Helper de lookup: id primero, nombre como fallback — para usarse en
+   los puntos donde hoy se consulta directorio[p.nombre] directamente. */
+function lookupByIdOrName(idIndex, legacyStore, p, legacyKeyFn){
+  var pid = getPastorId(p);
+  if(idIndex[pid]) return idIndex[pid];
+  return legacyKeyFn(p, legacyStore);
+}
+
+/* ═══════════════════════════════════════════════════
    CONFIGURACIÓN GLOBAL
 ═══════════════════════════════════════════════════ */
 const ZONES = [
@@ -3053,8 +3087,150 @@ const SK = 'pastores_cem_v10';
    perdían, provocando que Reportes mostrara 0 aun cuando el HTML sí los trae. */
 const PASTORES_BASE = JSON.parse(JSON.stringify(pastores));
 
+/* ═══════════════════════════════════════════════════════════════
+   FASE 1 — FUNDACIÓN (v2.0.0)
+   Normalizadores, IDs estables, catálogos, navegación preparada.
+   Ver CHANGELOG_V2 más abajo para el detalle de esta fase.
+═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   CHANGELOG_V2
+   ─────────────────────────────────────────────────────────────
+   v2.0.0 (Fase 1 — Fundación, según auditoría aprobada):
+   - getPastorId(p): id único como fuente de verdad, con fallback a
+     nombre+apellido para registros sin id.
+   - pastorDataKey/hydratePastorList: emparejamiento id-primero,
+     nombre-como-fallback (antes solo emparejaba por nombre).
+   - directorioById / pastorPhotosById / churchPhotosById: índices
+     paralelos por id, construidos desde los datos ya cargados. Los
+     objetos originales (directorio/pastorPhotos/churchPhotos) NO se
+     tocan ni renombran — compatibilidad total durante la transición.
+   - DEFAULT_PASTOR / DEFAULT_CHURCH_REPORT / normalizePastor() /
+     normalizeChurchReport(): esquema completo sin inventar datos
+     donde no había (null/[] explícitos, nunca "0" por ausencia).
+   - schemaVersion agregado en memoria; no se fuerza migración de
+     Firestore — los documentos viejos sin este campo siguen cargando.
+   - saveForm() normaliza antes de guardar.
+   - saveCloud()/delP() consolidan su id local duplicado en getPastorId().
+   - runNormalizationDiagnostics(): reporte visible en consola de
+     cuántos pastores se normalizaron vs. quedaron igual, y advertencias.
+   - NAV_STATE preparado (sección 04 de la especificación); goTo() no
+     cambió de comportamiento visual, solo se le añadirá el espejo de
+     estado en el bloque de INIT.
+   NO incluido en esta fase (explícitamente fuera de alcance):
+   módulo Iglesias independiente, Soul Dashboard, check-ins, care
+   plans, scores nuevos, nuevas colecciones de tareas, autenticación.
+   APORTACIONES queda sin migrar — deuda documentada para su fase.
+═══════════════════════════════════════════════════════════════ */
+const SCHEMA_VERSION = 2;
+
+/* getPastorId: id si existe (25/25 pastores ya lo tienen desde la
+   auditoría anterior); si no, cae a la clave legacy nombre+apellido.
+   Consolida en un solo lugar la lógica que antes vivía duplicada e
+   inline dentro de saveCloud/delP. */
+function getPastorId(p){
+  if(!p) return '';
+  if(p.id) return p.id;
+  return (String(p.nombre||'')+'_'+String(p.apellido||'')).replace(/\s+/g,'_').toLowerCase();
+}
+
+/* DEFAULT_PASTOR — basado en el censo real de campos (25 pastores),
+   NO en un esquema teórico. Los campos objeto/array "opcionales" usan
+   null o [] explícito — nunca un objeto con métricas en 0, para que
+   "sin información" jamás se lea como "cero". */
+const DEFAULT_PASTOR = {
+  id: null,
+  nombre: '', apellido: '', iglesia: '', ciudad: '', zona: '',
+  esposa: '', cumple: '', avatar: '', hijos: [],
+  notas: '', reunion: '', pendientes: [], tags: [], discipulos: [],
+  email: null,
+  reporte_personal: null,
+  reporte_personal_yabeth: null,
+  historial_salud: [],
+  reunion_data: null,
+  notas_data: null,
+  iglesia_reporte: null,
+  dife_reporte: null,
+  eventos_reino2026: [],
+  carpetaDrive: null,
+  aniversario_iglesia: null,
+  disc: null, dones: null, aprendizaje: null,
+  schemaVersion: 1,
+  updatedAt: null
+};
+
+/* DEFAULT_CHURCH_REPORT — mismo criterio: stats/logros/plan2026 ausentes
+   quedan ausentes, no se inventa un "[]" o "0" donde no se reportó. */
+const DEFAULT_CHURCH_REPORT = {
+  nombre: null, periodo: null, stats: null,
+  logros: null, plan2026: null, proyectos: null, areas_mejora: null
+};
+
+/* normalizePastor: fusiona defaults con el dato real. El dato real
+   SIEMPRE gana (spread de raw al final). No renombra ni borra campos
+   desconocidos — cualquier propiedad extra que ya traiga `raw` y no
+   esté en DEFAULT_PASTOR se conserva igual, porque el spread la copia
+   tal cual. schemaVersion sube al mínimo requerido, pero esto vive en
+   memoria: no se fuerza una escritura a Firestore por normalizar. */
+function normalizePastor(raw){
+  raw = raw || {};
+  var out = Object.assign({}, DEFAULT_PASTOR, raw);
+  if(raw.iglesia_reporte){
+    out.iglesia_reporte = normalizeChurchReport(raw.iglesia_reporte);
+  }
+  out.schemaVersion = Math.max(raw.schemaVersion || 1, SCHEMA_VERSION);
+  out.id = raw.id || null; // nunca inventar un id aquí — eso lo hace ensurePastorId más abajo si hace falta
+  return out;
+}
+
+function normalizeChurchReport(raw){
+  if(!raw) return null; // ausencia real de reporte de iglesia — no se crea uno vacío
+  return Object.assign({}, DEFAULT_CHURCH_REPORT, raw);
+}
+
+/* Diagnóstico de normalización (sección "manejo de errores" de la
+   auditoría) — cuenta qué pasó al normalizar, para que quede visible
+   en consola qué tan limpio (o no) está el dato real, sin exponer
+   contenido sensible. */
+function runNormalizationDiagnostics(list){
+  var report = { total: list.length, normalizados: 0, sinCambio: 0, advertencias: [] };
+  list.forEach(function(p, i){
+    try{
+      var before = JSON.stringify(p);
+      var n = normalizePastor(p);
+      var after = JSON.stringify(n);
+      if(before !== after) report.normalizados++; else report.sinCambio++;
+    }catch(e){
+      report.advertencias.push('Pastor #'+i+' ('+(p&&p.nombre)+'): '+e.message);
+    }
+  });
+  console.table ? console.table([report]) : console.log(report);
+  if(report.advertencias.length){
+    console.warn('Advertencias de normalización:', report.advertencias);
+  }
+  return report;
+}
+
+/* NAV_STATE (sección 04 de la especificación) — se prepara la variable
+   de estado que describe la spec, pero NO cambia el comportamiento
+   visual de goTo(): por ahora es solo un espejo informativo que se
+   actualiza al navegar, para no tener que rediseñar goTo() dos veces
+   cuando llegue la fase de navegación real. */
+var NAV_STATE = {
+  activeModule: 'dashboard',
+  selectedPastorId: null,
+  selectedChurchId: null,
+  selectedReportId: null,
+  filters: {}
+};
+
+
+/* pastorDataKey — FASE 1: ahora prioriza `id` (25/25 pastores ya lo
+   tienen). El emparejamiento por nombre+apellido normalizado se
+   conserva como fallback SOLO para registros antiguos de Firestore o
+   localStorage que se guardaron antes de que existiera `id`. */
 function pastorDataKey(p){
-  return [p&&p.nombre, p&&p.apellido].map(function(v){
+  if(p && p.id) return 'id:'+p.id;
+  return 'name:'+[p&&p.nombre, p&&p.apellido].map(function(v){
     return String(v||'').trim().toLowerCase()
       .normalize('NFD').replace(/[\u0300-\u036f]/g,'');
   }).join('|');
@@ -3073,14 +3249,63 @@ function mergePastorData(base, saved){
   return merged;
 }
 
+/* hydratePastorList — FASE 1 (corregido tras revisión): unión NO
+   destructiva entre PASTORES_BASE y lo guardado (localStorage/Firebase).
+   ANTES: `savedList.map(...)` — si la lista guardada venía incompleta
+   (por ejemplo, Firebase con menos documentos que PASTORES_BASE), los
+   pastores de la base que no aparecían en savedList se perdían del
+   estado. AHORA:
+     1. Se recorre PASTORES_BASE en su orden original — cada pastor de
+        la base se conserva SIEMPRE, se fusiona con su versión guardada
+        si existe (la guardada gana), o se queda tal cual si no hay
+        guardado correspondiente.
+     2. Los registros que existen SOLO en lo guardado (pastores nuevos
+        agregados después de que se congeló PASTORES_BASE) se agregan
+        al final.
+     3. El emparejamiento es primero por `id`, con fallback a nombre
+        legacy — igual que antes.
+     4. Un índice por id final evita duplicados. */
 function hydratePastorList(savedList){
-  if(!Array.isArray(savedList) || !savedList.length) return PASTORES_BASE.slice();
-  var baseByKey = {};
-  PASTORES_BASE.forEach(function(p){ baseByKey[pastorDataKey(p)] = p; });
-  return savedList.map(function(saved){
-    var base = baseByKey[pastorDataKey(saved)];
-    return base ? mergePastorData(base, saved) : saved;
+  if(!Array.isArray(savedList)) savedList = [];
+  var baseById = {};
+  var baseByName = {};
+  PASTORES_BASE.forEach(function(p){
+    if(p.id) baseById[p.id] = p;
+    baseByName[pastorDataKey({nombre:p.nombre, apellido:p.apellido})] = p;
   });
+  var savedById = {};
+  var savedByName = {};
+  savedList.forEach(function(s){
+    if(!s) return;
+    if(s.id) savedById[s.id] = s;
+    else savedByName[pastorDataKey(s)] = s;
+  });
+
+  var seenIds = {};
+  var result = [];
+  function push(p){
+    var fid = getPastorId(p);
+    if(seenIds[fid]) return; // ya está — no duplicar
+    seenIds[fid] = true;
+    result.push(p);
+  }
+
+  // 1. La base nunca desaparece — se fusiona con lo guardado si existe.
+  PASTORES_BASE.forEach(function(basePastor){
+    var saved = (basePastor.id && savedById[basePastor.id])
+      || savedByName[pastorDataKey({nombre:basePastor.nombre, apellido:basePastor.apellido})];
+    var merged = saved ? mergePastorData(basePastor, saved) : basePastor;
+    push(normalizePastor(merged));
+  });
+
+  // 2. Lo que solo existe en lo guardado (pastores nuevos) se conserva también.
+  savedList.forEach(function(saved){
+    if(!saved) return;
+    var base = (saved.id && baseById[saved.id]) || baseByName[pastorDataKey(saved)];
+    if(!base) push(normalizePastor(saved));
+  });
+
+  return result;
 }
 
 /* Prioridad de datos: base incluida < localStorage < Firebase. La diferencia
@@ -3099,6 +3324,19 @@ try{
   }
 }catch(e){
   console.error('Error leyendo localStorage ('+SK+'):', e);
+}
+
+/* FASE 1 — normalizar el arreglo en memoria siempre, incluso en arranque
+   en frío sin localStorage ni Firebase todavía disponible. hydratePastorList
+   ya normaliza cuando hay datos guardados; esto cubre el caso en que
+   `pastores` sigue siendo el arreglo crudo del HTML. Es idempotente —
+   normalizar dos veces no cambia nada la segunda vez. */
+try{
+  const normalizedBoot = pastores.map(normalizePastor);
+  pastores.length = 0;
+  normalizedBoot.forEach(function(p){ pastores.push(p); });
+}catch(e){
+  console.error('Error normalizando pastores en el arranque:', e);
 }
 
 /* Indicador de sincronización — estado visible, nunca "Guardado" si algo falló */
@@ -3424,6 +3662,7 @@ function extractNotas(notas){
 let currentView = 'dashboard';
 function goTo(view, btn){
   currentView = view;
+  NAV_STATE.activeModule = view; // espejo informativo (Fase 1) — no cambia nada visual
   const pageMeta = {
     dashboard:['Inicio','Panorama y prioridades de acompañamiento'],
     pastores:['Pastores','Directorio y contexto pastoral'],
@@ -3955,7 +4194,7 @@ function renderBigPicture(){
     topPastors.forEach(function(p,i){
       var pri=calcPriority(p);
       var ha=getHealthAvg(p);
-      var photo=pastorPhotos[p.nombre];
+      var photo=pastorPhotosById[getPastorId(p)]||pastorPhotos[p.nombre];
       var col=pcol(p);
       var av=photo?'<img src="'+photo+'">':'<span style="font-size:10px;font-weight:700;color:#000">'+(p.nombre[0]+(p.apellido||'')[0]||'').toUpperCase()+'</span>';
       var reasons=[];
@@ -4286,7 +4525,7 @@ function renderPastores(){
     gps.forEach(function(p, i){
       var idx = pastores.indexOf(p);
       var full = (p.nombre+' '+(p.apellido||'')).trim();
-      var photo = pastorPhotos[p.nombre];
+      var photo = pastorPhotosById[getPastorId(p)]||pastorPhotos[p.nombre];
       var col = pcol(p);
       var hasRP = !!p.reporte_personal;
       var pri = calcPriority(p);
@@ -4383,12 +4622,12 @@ function openPastor(nombre){
 function openPanel(idx){
   window._currentPanelIdx = idx;
   const p = pastores[idx];
-  const d = directorio[p.nombre] || directorio[(p.nombre||'').split(' ')[0]] || {};
+  const d = directorioById[getPastorId(p)] || directorio[p.nombre] || directorio[(p.nombre||'').split(' ')[0]] || {};
   const full = (p.nombre+' '+(p.apellido||'')).trim();
-  const photo = pastorPhotos[p.nombre];
+  const photo = pastorPhotosById[getPastorId(p)]||pastorPhotos[p.nombre];
   const col = pcol(p);
   const zc = ZCOLORS[p.zona]||'#888';
-  const ch = churchPhotos[p.iglesia]||{grad:'linear-gradient(135deg,#111,#1a1a1a)',city:p.ciudad||''};
+  const ch = churchPhotosById[getPastorId(p)] || churchPhotos[p.iglesia] || {grad:'linear-gradient(135deg,#111,#1a1a1a)',city:p.ciudad||''};
   const nd = extractNotas(p.notas||'');
   const totalPend = (p.pendientes||[]).length;
   const hasRP = !!p.reporte_personal;
@@ -5349,7 +5588,7 @@ function renderDashboard(){
       var initials = (p.nombre[0]+(p.apellido||'')[0]||'').toUpperCase();
       var nivelLabel = {critical:'Atención hoy', watch:'Esta semana', stable:'Estable'};
       var nivelCls = {critical:'pw-nivel-red', watch:'pw-nivel-yellow', stable:'pw-nivel-green'};
-      var dirDatos = directorio[p.nombre] || directorio[(p.nombre||'').split(' ')[0]] || {};
+      var dirDatos = directorioById[getPastorId(p)] || directorio[p.nombre] || directorio[(p.nombre||'').split(' ')[0]] || {};
       var tieneContacto = !!(dirDatos.tel || dirDatos.email);
       h += '<div class="pw-priority-card pw-border-'+item.nivel+'" data-nombre="'+p.nombre+'">';
       h += '<div class="pw-pc-top" style="cursor:pointer" onclick="openPastor(this.closest(\'.pw-priority-card\').dataset.nombre)">';
@@ -5864,12 +6103,16 @@ function saveForm(){
   p.updatedAt = new Date().toISOString();
   p.pendientes=(p.pendientes||[]).filter(x=>x.trim());
   p.hijos=(p.hijos||[]).filter(h=>h.nombre);
-  if(editIdx===-1) pastores.push(p); else pastores[editIdx]=p;
+  /* FASE 1: normalizar antes de guardar — asegura schemaVersion y forma
+     completa sin perder ningún campo (normalizePastor conserva todo lo
+     que ya traía `p`, incluidos campos que esta función no conoce). */
+  const normalized = normalizePastor(p);
+  if(editIdx===-1) pastores.push(normalized); else pastores[editIdx]=normalized;
   saveAll(); closeEF(); renderPastores();
 }
 function delP(i){
   const nombre = pastores[i].nombre;
-  const idBorrar = pastores[i].id || (pastores[i].nombre+'_'+(pastores[i].apellido||'')).replace(/\s+/g,'_').toLowerCase();
+  const idBorrar = getPastorId(pastores[i]);
   showConfirm('¿Eliminar a '+nombre+'? Esta acción no se puede deshacer.', function(){
     pastores.splice(i,1);
     try{ localStorage.setItem(SK, JSON.stringify(pastores)); }catch(e){ console.error('Error guardando localStorage tras borrar:', e); }
@@ -5891,12 +6134,9 @@ function closeEF(){document.getElementById('ef-bg').classList.remove('open');win
 async function saveCloud(){
   if(!window.fsSetDoc||!window.db) return false;
   try{
-    /* IDs permanentes (sección 4 de la auditoría): cada pastor trae su propio
-       `id` fijo desde el HTML — ya no se deriva de nombre+apellido, así que
-       dos personas con el mismo nombre no se pisan entre sí. Los registros
-       muy viejos que por algún motivo no tuvieran id (no debería pasar,
-       pero por seguridad) caen a un id derivado, igual que antes. */
-    const idOf = p => p.id || (p.nombre+'_'+(p.apellido||'')).replace(/\s+/g,'_').toLowerCase();
+    /* IDs permanentes (sección 4 de la auditoría): getPastorId() consolida
+       en un solo lugar la misma lógica que antes vivía duplicada aquí. */
+    const idOf = getPastorId;
 
     /* Limpieza de huérfanos (sección 3): traer qué IDs existen hoy en
        Firestore y borrar los que ya no están en la lista local (por
@@ -5950,6 +6190,12 @@ document.addEventListener('DOMContentLoaded', function(){
   soloPastores.forEach(sel=>{ document.querySelectorAll(sel).forEach(el=>{ el.style.display='none'; }); });
   renderDashboard();
   updateBadges();
+  /* FASE 1 — runNormalizationDiagnostics(pastores) queda disponible para
+     invocarla manualmente desde la consola del navegador si hace falta
+     revisar cuántos pastores se normalizaron. Se quitó la llamada
+     automática al cargar porque algunas herramientas de vista previa
+     no imprimen console.table de forma legible (se ve como
+     "[object Object]" en vez de una tabla). */
 });
 </script>
 </body>
